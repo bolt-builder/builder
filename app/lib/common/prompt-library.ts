@@ -1,4 +1,5 @@
 import { getFineTunedPrompt } from './prompts/new-prompt';
+import { getCompactPrompt } from './prompts/compact-prompt';
 import type { DesignScheme } from '~/types/design-scheme';
 
 export interface PromptOptions {
@@ -33,6 +34,12 @@ export class PromptLibrary {
       description: 'A fine tuned prompt for better results and less token usage',
       get: (options) =>
         getFineTunedPrompt(options.cwd, options.supabase, options.designScheme, options.flutterAvailable),
+    },
+    compact: {
+      label: 'Compact Prompt (small models)',
+      description:
+        'A minimal prompt (~1/8 the size of the default) for small-context or small-parameter models. Auto-selected for models with very small context windows.',
+      get: (options) => getCompactPrompt(options.cwd, options.supabase, options.designScheme, options.flutterAvailable),
     },
   };
   static getList() {

@@ -340,8 +340,25 @@ export async function streamText(props: {
     `Token limits for model ${modelDetails.name}: maxTokens=${safeMaxTokens}, maxTokenAllowed=${modelDetails.maxTokenAllowed}, maxCompletionTokens=${modelDetails.maxCompletionTokens}`,
   );
 
+  /*
+   * Auto-select the compact prompt for very small context windows: the full
+   * fine-tuned prompt (~10k tokens) would crowd out code context and output.
+   * An explicitly chosen non-default prompt is always respected.
+   */
+  const SMALL_CONTEXT_THRESHOLD = 16000;
+  const effectivePromptId =
+    (!promptId || promptId === 'default') && (modelDetails.maxTokenAllowed ?? 128000) <= SMALL_CONTEXT_THRESHOLD
+      ? 'compact'
+      : promptId || 'default';
+
+  if (effectivePromptId !== (promptId || 'default')) {
+    logger.info(
+      `Auto-selected compact prompt for small-context model ${modelDetails.name} (context: ${modelDetails.maxTokenAllowed})`,
+    );
+  }
+
   let systemPrompt =
-    PromptLibrary.getPromptFromLibrary(promptId || 'default', {
+    PromptLibrary.getPromptFromLibrary(effectivePromptId, {
       cwd: WORK_DIR,
       allowedHtmlElements: allowedHTMLElements,
       modificationTagName: MODIFICATIONS_TAG_NAME,
