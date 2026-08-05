@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { runtime } from '~/lib/runtime';
@@ -9,6 +9,14 @@ import { useFileContent } from '~/lib/hooks/useFileContent';
 import { workbenchStore } from '~/lib/stores/workbench';
 import { memoryStore, addMemoryEntry, removeMemoryEntry } from '~/lib/stores/agentMemory';
 import { useMemorySync } from '~/lib/hooks/useMemorySync';
+import {
+  KNOWLEDGE_ALLOWED_EXTENSIONS,
+  KNOWLEDGE_DIR_ABSOLUTE,
+  KNOWLEDGE_DIR_RELATIVE,
+  KNOWLEDGE_MAX_FILE_SIZE,
+  collectKnowledgeDocuments,
+  sanitizeKnowledgeFileName,
+} from '~/lib/common/knowledge';
 
 const logger = createScopedLogger('ProjectMemory');
 
@@ -67,7 +75,16 @@ function formatRelativeTime(isoTimestamp: string): string {
 }
 
 /** Sections shown in the tab switcher */
-type MemorySection = 'project' | 'agent';
+type MemorySection = 'project' | 'knowledge' | 'agent';
+
+/** Format a byte-ish character count for display. */
+function formatSize(chars: number): string {
+  if (chars < 1024) {
+    return `${chars} B`;
+  }
+
+  return `${(chars / 1024).toFixed(1)} KB`;
+}
 
 export default function ProjectMemoryTab() {
   const fileContent = useFileContent(PROJECT_MEMORY_PATH);
@@ -89,6 +106,11 @@ export default function ProjectMemoryTab() {
 
   // Delete-confirmation UI state
   const [deleteTarget, setDeleteTarget] = useState<{ category: string; key: string } | null>(null);
+
+  // Knowledge base UI state
+  const [isUploading, setIsUploading] = useState(false);
+  const [deleteDocTarget, setDeleteDocTarget] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Ensure MEMORY.md stays in sync with the store
   useMemorySync();
@@ -147,6 +169,85 @@ export default function ProjectMemoryTab() {
     setContent(originalContent);
     setHasUnsavedChanges(false);
   }, [originalContent]);
+
+  /* ---- Knowledge base helpers ---- */
+
+  const knowledgeDocuments = useMemo(() => collectKnowledgeDocuments(files), [files]);
+
+  const handleUploadDocuments = useCallback(async (fileList: FileList | null) => {
+    if (!fileList || fileList.length === 0) {
+      return;
+    }
+
+    setIsUploading(true);
+
+    let uploaded = 0;
+
+    try {
+      const rt = await runtime;
+
+      for (const file of Array.from(fileList)) {
+        const name = sanitizeKnowledgeFileName(file.name);
+
+        if (!name) {
+          toast.warning(
+            `"${file.name}" skipped — only ${KNOWLEDGE_ALLOWED_EXTENSIONS.join(', ')} files are supported.`,
+          );
+          continue;
+        }
+
+        if (file.size > KNOWLEDGE_MAX_FILE_SIZE) {
+          toast.warning(`"${file.name}" skipped — larger than ${Math.round(KNOWLEDGE_MAX_FILE_SIZE / 1024)} KB.`);
+          continue;
+        }
+
+        const text = await file.text();
+
+        if (!text.trim()) {
+          toast.warning(`"${file.name}" skipped — file is empty.`);
+          continue;
+        }
+
+        await rt.fs.writeFile(`${KNOWLEDGE_DIR_RELATIVE}/${name}`, text);
+
+        // Mirror into the files store so injection works without waiting on the watcher
+        workbenchStore.files.setKey(`${KNOWLEDGE_DIR_ABSOLUTE}/${name}`, {
+          type: 'file',
+          content: text,
+          isBinary: false,
+        });
+
+        uploaded += 1;
+      }
+
+      if (uploaded > 0) {
+        toast.success(`Added ${uploaded} document${uploaded === 1 ? '' : 's'} to the knowledge base.`);
+      }
+    } catch (error) {
+      logger.error('Failed to upload knowledge documents:', error);
+      toast.error('Failed to upload documents. Please try again.');
+    } finally {
+      setIsUploading(false);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  }, []);
+
+  const handleDeleteDocument = useCallback(async (name: string) => {
+    try {
+      const rt = await runtime;
+      await rt.fs.rm(`${KNOWLEDGE_DIR_RELATIVE}/${name}`);
+      workbenchStore.files.setKey(`${KNOWLEDGE_DIR_ABSOLUTE}/${name}`, undefined);
+      toast.success(`Removed "${name}" from the knowledge base.`);
+    } catch (error) {
+      logger.error(`Failed to delete knowledge document: ${name}`, error);
+      toast.error(`Failed to remove "${name}". Please try again.`);
+    } finally {
+      setDeleteDocTarget(null);
+    }
+  }, []);
 
   /* ---- Agent Memory helpers ---- */
 
@@ -225,6 +326,25 @@ export default function ProjectMemoryTab() {
             <span className="flex items-center gap-1.5">
               <div className="i-ph:file-text w-3.5 h-3.5" />
               PROJECT.md
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveSection('knowledge')}
+            className={cn(
+              'px-3 py-1.5 text-xs rounded-md font-medium transition-colors duration-200',
+              activeSection === 'knowledge'
+                ? 'bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text'
+                : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              <div className="i-ph:books w-3.5 h-3.5" />
+              Knowledge
+              {knowledgeDocuments.length > 0 && (
+                <span className="ml-1 px-1.5 py-0 text-[10px] rounded-full bg-devonz-elements-item-contentAccent/15 text-devonz-elements-item-contentAccent font-semibold">
+                  {knowledgeDocuments.length}
+                </span>
+              )}
             </span>
           </button>
           <button
@@ -371,6 +491,129 @@ export default function ProjectMemoryTab() {
             <div className="text-xs text-devonz-elements-textTertiary">
               File location:{' '}
               <code className="px-1 py-0.5 rounded bg-devonz-elements-background-depth-2">{PROJECT_MEMORY_PATH}</code>
+            </div>
+          </>
+        )}
+
+        {/* ============ Knowledge Base Section ============ */}
+        {activeSection === 'knowledge' && (
+          <>
+            {/* Header */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-medium text-devonz-elements-textPrimary">Knowledge Base</h3>
+                  {knowledgeDocuments.length > 0 ? (
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/10 text-green-500 font-medium">
+                      {knowledgeDocuments.length} {knowledgeDocuments.length === 1 ? 'document' : 'documents'}
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-gray-500/10 text-gray-500 font-medium">
+                      Empty
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className={cn(
+                    'px-3 py-1.5 text-xs rounded-md font-medium',
+                    'bg-devonz-elements-button-primary-background',
+                    'text-devonz-elements-button-primary-text',
+                    'hover:bg-devonz-elements-button-primary-backgroundHover',
+                    'disabled:opacity-50 disabled:cursor-not-allowed',
+                    'transition-colors duration-200',
+                    'flex items-center gap-1.5',
+                  )}
+                >
+                  <div className="i-ph:upload-simple w-3.5 h-3.5" />
+                  {isUploading ? 'Uploading...' : 'Upload Documents'}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept={KNOWLEDGE_ALLOWED_EXTENSIONS.join(',')}
+                  className="hidden"
+                  aria-label="Upload knowledge documents"
+                  onChange={(e) => void handleUploadDocuments(e.target.files)}
+                />
+              </div>
+              <p className="text-sm text-devonz-elements-textSecondary">
+                Upload reference documents — coding style guides, API docs, specs — and the AI will consult them in
+                every conversation for this project. Supported formats: {KNOWLEDGE_ALLOWED_EXTENSIONS.join(', ')} (max{' '}
+                {Math.round(KNOWLEDGE_MAX_FILE_SIZE / 1024)} KB each).
+              </p>
+            </div>
+
+            {/* Document list */}
+            {knowledgeDocuments.length === 0 ? (
+              <div
+                className={cn(
+                  'p-8 rounded-lg text-center',
+                  'bg-devonz-elements-background-depth-2',
+                  'border border-dashed border-devonz-elements-borderColor',
+                )}
+              >
+                <div className="i-ph:books w-8 h-8 mx-auto mb-2 text-devonz-elements-textTertiary" />
+                <p className="text-sm text-devonz-elements-textSecondary">
+                  No documents yet. Upload style guides or reference material to give the AI project-specific knowledge.
+                </p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {knowledgeDocuments.map((doc) => (
+                  <div
+                    key={doc.path}
+                    className={cn(
+                      'flex items-center justify-between gap-3 px-3 py-2 rounded-lg',
+                      'bg-devonz-elements-background-depth-2',
+                      'border border-devonz-elements-borderColor',
+                    )}
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="i-ph:file-text w-4 h-4 shrink-0 text-devonz-elements-item-contentAccent" />
+                      <span className="text-sm text-devonz-elements-textPrimary truncate">{doc.name}</span>
+                      <span className="text-xs text-devonz-elements-textTertiary shrink-0">
+                        {formatSize(doc.content.length)}
+                      </span>
+                    </div>
+                    {deleteDocTarget === doc.name ? (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => void handleDeleteDocument(doc.name)}
+                          className="px-2 py-1 text-xs rounded-md font-medium bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors duration-200"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => setDeleteDocTarget(null)}
+                          className="px-2 py-1 text-xs rounded-md font-medium text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors duration-200"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setDeleteDocTarget(doc.name)}
+                        aria-label={`Remove ${doc.name}`}
+                        className="p-1.5 rounded-md text-devonz-elements-textTertiary hover:text-red-500 hover:bg-red-500/10 transition-colors duration-200 shrink-0"
+                      >
+                        <div className="i-ph:trash w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Storage path info */}
+            <div className="text-xs text-devonz-elements-textTertiary">
+              Documents are stored in{' '}
+              <code className="px-1 py-0.5 rounded bg-devonz-elements-background-depth-2">
+                {KNOWLEDGE_DIR_ABSOLUTE}
+              </code>{' '}
+              and travel with the project.
             </div>
           </>
         )}

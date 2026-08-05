@@ -11,6 +11,7 @@ import { AGENT_MODE_FULL_SYSTEM_PROMPT } from '~/lib/agent/prompts';
 import { DEFAULT_MODEL, DEFAULT_PROVIDER, MODIFICATIONS_TAG_NAME, PROVIDER_LIST, WORK_DIR } from '~/utils/constants';
 import type { IProviderSetting } from '~/types/model';
 import { PromptLibrary } from '~/lib/common/prompt-library';
+import { buildKnowledgeBaseSection } from '~/lib/common/knowledge';
 import { allowedHTMLElements } from '~/utils/markdown';
 import { createScopedLogger } from '~/utils/logger';
 import { createFilesContext, extractPropertiesFromMessage } from './utils';
@@ -495,6 +496,14 @@ The following are project-specific instructions from the user's PROJECT.md (or D
 ${projectMemoryContent}
 </project_memory>
 `;
+  }
+
+  // Knowledge base: user-uploaded reference documents from .devonz/knowledge/
+  const knowledgeBaseSection = buildKnowledgeBaseSection(files);
+
+  if (knowledgeBaseSection) {
+    logger.info('Injecting knowledge base documents into system prompt');
+    systemPrompt = `${systemPrompt}\n\n${knowledgeBaseSection}\n`;
   }
 
   logger.info(`Sending llm call to ${provider.name} with model ${modelDetails.name}`);
