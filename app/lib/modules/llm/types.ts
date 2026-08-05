@@ -13,7 +13,7 @@ export interface ModelInfo {
   maxCompletionTokens?: number;
 
   /**
-   * Optional fallback model in "provider/model" format (e.g. "anthropic/claude-3-haiku-20240307").
+   * Optional fallback model in "provider/model" format (e.g. "anthropic/claude-haiku-4-5-20251001").
    * When set, the system will retry with this model if the primary model call fails
    * due to rate limits, auth errors, or timeouts. Capped at 1 fallback attempt.
    */

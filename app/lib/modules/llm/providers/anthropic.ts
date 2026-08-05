@@ -14,30 +14,32 @@ export default class AnthropicProvider extends BaseProvider {
 
   staticModels: ModelInfo[] = [
     /*
-     * Essential fallback models - only the most stable/reliable ones
-     * Claude 3.5 Sonnet: 200k context, excellent for complex reasoning and coding
+     * Essential fallback models - current, non-retired model IDs only.
+     * (claude-3-5-sonnet-* and claude-3-haiku-20240307 are retired and
+     * return 404 from the Anthropic API.)
+     * Claude Sonnet 4.5: 200k context, best coding model
      */
     {
-      name: 'claude-3-5-sonnet-20241022',
-      label: 'Claude 3.5 Sonnet',
+      name: 'claude-sonnet-4-5-20250929',
+      label: 'Claude Sonnet 4.5',
       provider: 'Anthropic',
       maxTokenAllowed: 200000,
-      maxCompletionTokens: 128000,
+      maxCompletionTokens: 64000,
     },
 
-    // Claude 3 Haiku: 200k context, fastest and most cost-effective
+    // Claude Haiku 4.5: 200k context, fastest and most cost-effective
     {
-      name: 'claude-3-haiku-20240307',
-      label: 'Claude 3 Haiku',
+      name: 'claude-haiku-4-5-20251001',
+      label: 'Claude Haiku 4.5',
       provider: 'Anthropic',
       maxTokenAllowed: 200000,
-      maxCompletionTokens: 128000,
+      maxCompletionTokens: 64000,
     },
 
-    // Claude Opus 4: 200k context, 32k output limit (latest flagship model)
+    // Claude Opus 4.1: 200k context, 32k output limit (flagship)
     {
-      name: 'claude-opus-4-20250514',
-      label: 'Claude 4 Opus',
+      name: 'claude-opus-4-1-20250805',
+      label: 'Claude Opus 4.1',
       provider: 'Anthropic',
       maxTokenAllowed: 200000,
       maxCompletionTokens: 32000,
@@ -87,14 +89,8 @@ export default class AnthropicProvider extends BaseProvider {
       // Anthropic provides max_tokens in their API response
       if (m.max_tokens) {
         contextWindow = m.max_tokens;
-      } else if (m.id?.includes('claude-3-5-sonnet')) {
-        contextWindow = 200000; // Claude 3.5 Sonnet has 200k context
-      } else if (m.id?.includes('claude-3-haiku')) {
-        contextWindow = 200000; // Claude 3 Haiku has 200k context
-      } else if (m.id?.includes('claude-3-opus')) {
-        contextWindow = 200000; // Claude 3 Opus has 200k context
-      } else if (m.id?.includes('claude-3-sonnet')) {
-        contextWindow = 200000; // Claude 3 Sonnet has 200k context
+      } else if (m.id?.startsWith('claude-')) {
+        contextWindow = 200000; // All current Claude models have at least 200k context
       }
 
       // Determine completion token limits based on specific model

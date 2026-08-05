@@ -14,10 +14,29 @@ export default class OpenAIProvider extends BaseProvider {
 
   staticModels: ModelInfo[] = [
     /*
-     * Essential fallback models - only the most stable/reliable ones
-     * GPT-4o: 128k context, 4k standard output (64k with long output mode)
+     * Essential fallback models - current, non-retired model IDs only.
+     * (o1-preview and o1-mini are retired; gpt-3.5-turbo is legacy.)
+     * GPT-5.1: 400k context, flagship reasoning model
      */
-    { name: 'gpt-4o', label: 'GPT-4o', provider: 'OpenAI', maxTokenAllowed: 128000, maxCompletionTokens: 4096 },
+    { name: 'gpt-5.1', label: 'GPT-5.1', provider: 'OpenAI', maxTokenAllowed: 400000, maxCompletionTokens: 128000 },
+
+    // GPT-5: 400k context, reasoning model
+    { name: 'gpt-5', label: 'GPT-5', provider: 'OpenAI', maxTokenAllowed: 400000, maxCompletionTokens: 128000 },
+
+    // GPT-5 Mini: 400k context, cost-effective reasoning model
+    {
+      name: 'gpt-5-mini',
+      label: 'GPT-5 Mini',
+      provider: 'OpenAI',
+      maxTokenAllowed: 400000,
+      maxCompletionTokens: 128000,
+    },
+
+    // GPT-4.1: 1M context, strong non-reasoning coding model
+    { name: 'gpt-4.1', label: 'GPT-4.1', provider: 'OpenAI', maxTokenAllowed: 1000000, maxCompletionTokens: 32768 },
+
+    // GPT-4o: 128k context
+    { name: 'gpt-4o', label: 'GPT-4o', provider: 'OpenAI', maxTokenAllowed: 128000, maxCompletionTokens: 16384 },
 
     // GPT-4o Mini: 128k context, cost-effective alternative
     {
@@ -25,29 +44,8 @@ export default class OpenAIProvider extends BaseProvider {
       label: 'GPT-4o Mini',
       provider: 'OpenAI',
       maxTokenAllowed: 128000,
-      maxCompletionTokens: 4096,
+      maxCompletionTokens: 16384,
     },
-
-    // GPT-3.5-turbo: 16k context, fast and cost-effective
-    {
-      name: 'gpt-3.5-turbo',
-      label: 'GPT-3.5 Turbo',
-      provider: 'OpenAI',
-      maxTokenAllowed: 16000,
-      maxCompletionTokens: 4096,
-    },
-
-    // o1-preview: 128k context, 32k output limit (reasoning model)
-    {
-      name: 'o1-preview',
-      label: 'o1-preview',
-      provider: 'OpenAI',
-      maxTokenAllowed: 128000,
-      maxCompletionTokens: 32000,
-    },
-
-    // o1-mini: 128k context, 65k output limit (reasoning model)
-    { name: 'o1-mini', label: 'o1-mini', provider: 'OpenAI', maxTokenAllowed: 128000, maxCompletionTokens: 65000 },
   ];
 
   async getDynamicModels(

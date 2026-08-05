@@ -13,48 +13,36 @@ export default class CohereProvider extends BaseProvider {
   };
 
   staticModels: ModelInfo[] = [
+    /*
+     * Current model IDs only. The legacy command / command-light /
+     * command-nightly family was deprecated by Cohere.
+     */
+    {
+      name: 'command-a-03-2025',
+      label: 'Command A',
+      provider: 'Cohere',
+      maxTokenAllowed: 256000,
+      maxCompletionTokens: 8192,
+    },
     {
       name: 'command-r-plus-08-2024',
-      label: 'Command R plus Latest',
+      label: 'Command R plus',
       provider: 'Cohere',
-      maxTokenAllowed: 4096,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 4000,
     },
     {
       name: 'command-r-08-2024',
-      label: 'Command R Latest',
+      label: 'Command R',
       provider: 'Cohere',
-      maxTokenAllowed: 4096,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 4000,
     },
     {
-      name: 'command-r-plus',
-      label: 'Command R plus',
+      name: 'command-r7b-12-2024',
+      label: 'Command R7B',
       provider: 'Cohere',
-      maxTokenAllowed: 4096,
-      maxCompletionTokens: 4000,
-    },
-    { name: 'command-r', label: 'Command R', provider: 'Cohere', maxTokenAllowed: 4096, maxCompletionTokens: 4000 },
-    { name: 'command', label: 'Command', provider: 'Cohere', maxTokenAllowed: 4096, maxCompletionTokens: 4000 },
-    {
-      name: 'command-nightly',
-      label: 'Command Nightly',
-      provider: 'Cohere',
-      maxTokenAllowed: 4096,
-      maxCompletionTokens: 4000,
-    },
-    {
-      name: 'command-light',
-      label: 'Command Light',
-      provider: 'Cohere',
-      maxTokenAllowed: 4096,
-      maxCompletionTokens: 4000,
-    },
-    {
-      name: 'command-light-nightly',
-      label: 'Command Light Nightly',
-      provider: 'Cohere',
-      maxTokenAllowed: 4096,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 4000,
     },
     {

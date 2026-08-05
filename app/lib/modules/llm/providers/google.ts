@@ -13,26 +13,38 @@ export default class GoogleProvider extends BaseProvider {
   };
 
   staticModels: ModelInfo[] = [
+    /*
+     * Current stable model IDs only. The old 2.5 preview snapshots
+     * (gemini-2.5-*-preview-*) were decommissioned and return 404,
+     * which made every Google request fail out of the box.
+     */
     {
-      name: 'gemini-2.5-pro-preview-05-06',
+      name: 'gemini-2.5-pro',
       label: 'Gemini 2.5 Pro',
       provider: 'Google',
       maxTokenAllowed: 1048576,
       maxCompletionTokens: 65536,
     },
     {
-      name: 'gemini-2.5-flash-preview-04-17',
+      name: 'gemini-2.5-flash',
       label: 'Gemini 2.5 Flash',
       provider: 'Google',
       maxTokenAllowed: 1048576,
       maxCompletionTokens: 65536,
     },
     {
-      name: 'gemini-2.0-flash',
-      label: 'Gemini 2.0 Flash',
+      name: 'gemini-2.5-flash-lite',
+      label: 'Gemini 2.5 Flash Lite',
       provider: 'Google',
       maxTokenAllowed: 1048576,
-      maxCompletionTokens: 8192,
+      maxCompletionTokens: 65536,
+    },
+    {
+      name: 'gemini-3-pro-preview',
+      label: 'Gemini 3 Pro (Preview)',
+      provider: 'Google',
+      maxTokenAllowed: 1048576,
+      maxCompletionTokens: 65536,
     },
   ];
 

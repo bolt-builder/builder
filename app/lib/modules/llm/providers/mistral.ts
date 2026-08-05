@@ -13,67 +13,51 @@ export default class MistralProvider extends BaseProvider {
   };
 
   staticModels: ModelInfo[] = [
+    /*
+     * Current model IDs only. The legacy open-weight endpoints
+     * (open-mistral-7b, open-mixtral-*, open-codestral-mamba,
+     * open-mistral-nemo) were retired by Mistral.
+     */
     {
-      name: 'open-mistral-7b',
-      label: 'Mistral 7B',
+      name: 'mistral-large-latest',
+      label: 'Mistral Large',
       provider: 'Mistral',
-      maxTokenAllowed: 8000,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 8192,
     },
     {
-      name: 'open-mixtral-8x7b',
-      label: 'Mistral 8x7B',
+      name: 'mistral-medium-latest',
+      label: 'Mistral Medium',
       provider: 'Mistral',
-      maxTokenAllowed: 8000,
-      maxCompletionTokens: 8192,
-    },
-    {
-      name: 'open-mixtral-8x22b',
-      label: 'Mistral 8x22B',
-      provider: 'Mistral',
-      maxTokenAllowed: 8000,
-      maxCompletionTokens: 8192,
-    },
-    {
-      name: 'open-codestral-mamba',
-      label: 'Codestral Mamba',
-      provider: 'Mistral',
-      maxTokenAllowed: 8000,
-      maxCompletionTokens: 8192,
-    },
-    {
-      name: 'open-mistral-nemo',
-      label: 'Mistral Nemo',
-      provider: 'Mistral',
-      maxTokenAllowed: 8000,
-      maxCompletionTokens: 8192,
-    },
-    {
-      name: 'ministral-8b-latest',
-      label: 'Mistral 8B',
-      provider: 'Mistral',
-      maxTokenAllowed: 8000,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 8192,
     },
     {
       name: 'mistral-small-latest',
       label: 'Mistral Small',
       provider: 'Mistral',
-      maxTokenAllowed: 8000,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 8192,
     },
     {
       name: 'codestral-latest',
       label: 'Codestral',
       provider: 'Mistral',
-      maxTokenAllowed: 8000,
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 8192,
     },
     {
-      name: 'mistral-large-latest',
-      label: 'Mistral Large Latest',
+      name: 'devstral-small-latest',
+      label: 'Devstral Small',
       provider: 'Mistral',
-      maxTokenAllowed: 8000,
+      maxTokenAllowed: 128000,
+      maxCompletionTokens: 8192,
+    },
+    {
+      name: 'ministral-8b-latest',
+      label: 'Ministral 8B',
+      provider: 'Mistral',
+      maxTokenAllowed: 128000,
       maxCompletionTokens: 8192,
     },
   ];

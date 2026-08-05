@@ -33,12 +33,6 @@ export default class AmazonBedrockProvider extends BaseProvider {
       maxTokenAllowed: 4096,
     },
     {
-      name: 'anthropic.claude-3-sonnet-20240229-v1:0',
-      label: 'Claude 3 Sonnet (Bedrock)',
-      provider: 'AmazonBedrock',
-      maxTokenAllowed: 4096,
-    },
-    {
       name: 'anthropic.claude-3-haiku-20240307-v1:0',
       label: 'Claude 3 Haiku (Bedrock)',
       provider: 'AmazonBedrock',

@@ -226,7 +226,7 @@ export interface FallbackEvent {
   /** Provider + model that failed (e.g. "openai/gpt-4o") */
   primaryModel: string;
 
-  /** Provider + model used as fallback (e.g. "anthropic/claude-3-haiku-20240307") */
+  /** Provider + model used as fallback (e.g. "anthropic/claude-haiku-4-5-20251001") */
   fallbackModel: string;
 
   /** Error category from the primary failure */
