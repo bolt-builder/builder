@@ -122,7 +122,11 @@ export class LLMManager {
     let enabledProviders = Array.from(this._providers.values()).map((p) => p.name);
 
     if (providerSettings && Object.keys(providerSettings).length > 0) {
-      enabledProviders = enabledProviders.filter((p) => providerSettings[p].enabled);
+      /*
+       * A stale settings cookie may predate newly registered providers, so a
+       * missing entry must not crash the whole model list — default to enabled.
+       */
+      enabledProviders = enabledProviders.filter((p) => providerSettings[p]?.enabled ?? true);
     }
 
     // Get dynamic models from all providers that support them

@@ -2,7 +2,13 @@ import { BaseProvider } from '~/lib/modules/llm/base-provider';
 import type { ModelInfo } from '~/lib/modules/llm/types';
 import type { IProviderSetting } from '~/types/model';
 import type { LanguageModelV1 } from 'ai';
-import { createVertex } from '@ai-sdk/google-vertex';
+
+/*
+ * The /edge entry authenticates with Web Crypto instead of google-auth-library,
+ * keeping Node-only modules out of the client bundle (providers are bundled
+ * client-side via PROVIDER_LIST in ~/utils/constants).
+ */
+import { createVertex } from '@ai-sdk/google-vertex/edge';
 
 /**
  * Google Vertex AI credentials. Like AWS Bedrock and Azure OpenAI, the
@@ -123,13 +129,11 @@ export default class GoogleVertexProvider extends BaseProvider {
     const vertex = createVertex({
       project: config.projectId,
       location: config.location,
-      googleAuthOptions: {
-        credentials: {
-          client_email: config.clientEmail,
+      googleCredentials: {
+        clientEmail: config.clientEmail,
 
-          // Pasted JSON often carries literal \n sequences in the private key.
-          private_key: config.privateKey.replace(/\\n/g, '\n'),
-        },
+        // Pasted JSON often carries literal \n sequences in the private key.
+        privateKey: config.privateKey.replace(/\\n/g, '\n'),
       },
     });
 
