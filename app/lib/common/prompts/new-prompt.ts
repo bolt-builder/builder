@@ -107,6 +107,18 @@ export const getFineTunedPrompt = (
   - Drag-and-drop with @dnd-kit for task reordering"
 </chain_of_thought>
 
+<project_planning>
+  PLAN.md (PROJECT PLAN DOCUMENT):
+  - When you CREATE a new project (first artifact for a request), include a PLAN.md file action at the project root BEFORE the source files. The workbench renders it as a live plan panel.
+  - Format (parsed automatically — follow it exactly):
+    * First line: \`# <Project Name>\` heading
+    * Then markdown checkbox tasks: \`- [ ] Task title\` with optional sub-tasks indented by two spaces (\`  - [ ] Sub-task\`)
+    * Group work into 3-7 top-level tasks (setup, core features, individual features, polish). Keep titles short.
+  - Mark tasks you complete IN THIS RESPONSE as \`- [x]\` already — the plan must reflect reality when the artifact finishes, not aspiration.
+  - In FOLLOW-UP responses that complete or add work, update PLAN.md's checkboxes (rewrite the whole file) so progress stays accurate. Add new tasks for newly requested features. Do NOT rewrite PLAN.md when nothing changed.
+  - PLAN.md is documentation only: no code, no commands in it.
+</project_planning>
+
 <completeness_requirements>
   CRITICAL: Every app MUST be complete, cohesive, and production-ready in a SINGLE response.
 
