@@ -5,8 +5,10 @@ import CohereProvider from './providers/cohere';
 import DeepseekProvider from './providers/deepseek';
 import FireworksProvider from './providers/fireworks';
 import GoogleProvider from './providers/google';
+import GoogleVertexProvider from './providers/google-vertex';
 import GroqProvider from './providers/groq';
 import HuggingFaceProvider from './providers/huggingface';
+import IBMWatsonxProvider from './providers/ibm-watsonx';
 import LMStudioProvider from './providers/lmstudio';
 import MistralProvider from './providers/mistral';
 import OllamaProvider from './providers/ollama';
@@ -30,8 +32,10 @@ export {
   DeepseekProvider,
   FireworksProvider,
   GoogleProvider,
+  GoogleVertexProvider,
   GroqProvider,
   HuggingFaceProvider,
+  IBMWatsonxProvider,
   HyperbolicProvider,
   MistralProvider,
   MoonshotProvider,

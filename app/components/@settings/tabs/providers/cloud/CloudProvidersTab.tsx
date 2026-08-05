@@ -20,8 +20,10 @@ type ProviderName =
   | 'Deepseek'
   | 'Github'
   | 'Google'
+  | 'GoogleVertex'
   | 'Groq'
   | 'HuggingFace'
+  | 'IBMWatsonx'
   | 'Hyperbolic'
   | 'Mistral'
   | 'OpenAI'
@@ -45,8 +47,10 @@ const PROVIDER_ICONS: Record<ProviderName, string> = {
   Fireworks: 'i-ph:fire',
   Github: 'i-ph:github-logo',
   Google: 'i-ph:google-logo',
+  GoogleVertex: 'i-ph:google-logo',
   Groq: 'i-ph:lightning',
   HuggingFace: 'i-ph:robot',
+  IBMWatsonx: 'i-ph:buildings',
   Hyperbolic: 'i-ph:infinity',
   Mistral: 'i-ph:wind',
   Moonshot: 'i-ph:moon',
@@ -69,8 +73,10 @@ const PROVIDER_DESCRIPTIONS: Partial<Record<ProviderName, string>> = {
   Fireworks: 'Fast inference on open-source models',
   Github: 'Use OpenAI models hosted through GitHub',
   Google: 'Gemini and other Google AI models',
+  GoogleVertex: 'Gemini on Google Cloud Vertex AI (key as service-account JSON)',
   Groq: 'Ultra-low latency LLM inference',
   HuggingFace: 'Open-source models from HuggingFace',
+  IBMWatsonx: 'IBM Granite models via the watsonx.ai model gateway',
   Hyperbolic: 'Scalable AI model serving',
   Mistral: 'European AI models by Mistral AI',
   Moonshot: 'Chinese and multilingual AI models',
