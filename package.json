@@ -136,7 +136,6 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^2.6.1",
     "unist-util-visit": "^5.1.0",
-    "vite-plugin-node-polyfills": "^0.28.0",
     "ws": "^8.21.2",
     "zod": "^3.25.76"
   },
@@ -179,6 +178,7 @@
     "unified": "^11.0.5",
     "unocss": "^0.61.9",
     "vite": "^5.4.21",
+    "vite-plugin-node-polyfills": "^0.22.0",
     "vite-plugin-optimize-css-modules": "^1.4.0",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^2.1.9"
