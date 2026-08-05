@@ -624,6 +624,7 @@ export class WorkbenchStore {
       () => {
         this.clearAlert();
       },
+      (filePath) => this.#filesStore.isUserModified(filePath),
     );
 
     if (preloaded) {

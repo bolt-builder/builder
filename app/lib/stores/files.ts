@@ -646,6 +646,15 @@ export class FilesStore {
     return modifiedFiles;
   }
 
+  /**
+   * True when the user manually edited (and saved) this file since the last
+   * AI turn. Used by the action runner to route conflicting AI writes through
+   * the staged-changes review flow instead of silently overwriting.
+   */
+  isUserModified(filePath: string): boolean {
+    return this.#modifiedFiles.has(filePath);
+  }
+
   resetFileModifications() {
     this.#modifiedFiles.clear();
   }

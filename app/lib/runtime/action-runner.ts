@@ -134,6 +134,9 @@ export class ActionRunner {
   /** When true, file actions are skipped (files already on disk from server-side clone). */
   preloaded = false;
 
+  /** Returns true when the user manually edited the file since the last AI turn (conflict detection). */
+  #isUserModifiedFile?: (filePath: string) => boolean;
+
   constructor(
     runtimePromise: Promise<RuntimeProvider>,
     getShellTerminal: () => DevonzShell,
@@ -141,6 +144,7 @@ export class ActionRunner {
     onSupabaseAlert?: (alert: SupabaseAlert) => void,
     onDeployAlert?: (alert: DeployAlert) => void,
     onClearAlert?: () => void,
+    isUserModifiedFile?: (filePath: string) => boolean,
   ) {
     this.#runtime = runtimePromise;
     this.#shellTerminal = getShellTerminal;
@@ -148,6 +152,7 @@ export class ActionRunner {
     this.onClearAlert = onClearAlert;
     this.onSupabaseAlert = onSupabaseAlert;
     this.onDeployAlert = onDeployAlert;
+    this.#isUserModifiedFile = isUserModifiedFile;
   }
 
   addAction(data: ActionCallbackData) {
@@ -684,6 +689,31 @@ export class ActionRunner {
       }
     }
 
+    /*
+     * Conflict prevention: diffs against files the user manually edited since
+     * the last AI turn go through the staged-changes review instead of being
+     * applied silently.
+     */
+    const absoluteDiffPath = action.filePath.startsWith('/')
+      ? action.filePath
+      : `${runtime.workdir}/${action.filePath}`;
+
+    if (this.#isUserModifiedFile?.(absoluteDiffPath)) {
+      stageChange({
+        filePath: action.filePath,
+        type: 'modify',
+        originalContent: currentContent,
+        newContent: result,
+        actionId: `action-${Date.now()}`,
+        messageId: action.messageId,
+        description: `Modify ${relativePath} (conflicts with your manual edits — review required)`,
+      });
+
+      logger.debug(`Diff staged due to user-edit conflict: ${relativePath}`);
+
+      return;
+    }
+
     // Write the result back to the file
     await runtime.fs.writeFile(relativePath, result);
     logger.debug(
@@ -719,9 +749,29 @@ export class ActionRunner {
      */
     const relativePath = toRelativePath(runtime.workdir, action.filePath);
 
+    /*
+     * Lock enforcement: full-file writes must respect locks the same way
+     * diff actions do (isFileLocked also covers locked parent folders).
+     */
+    const lockStatus = isFileLocked(getCurrentChatId(), action.filePath);
+
+    if (lockStatus.locked) {
+      const lockedBy = lockStatus.lockedBy ? ` (locked by ${lockStatus.lockedBy})` : '';
+      throw new Error(`Cannot write locked file: ${action.filePath}${lockedBy}`);
+    }
+
+    /*
+     * Conflict prevention: if the user manually edited this file since the
+     * last AI turn, never overwrite it silently — route the write through the
+     * staged-changes review flow even when staging is globally disabled.
+     */
+    const absolutePath = action.filePath.startsWith('/') ? action.filePath : `${runtime.workdir}/${action.filePath}`;
+    const hasUserEditConflict = this.#isUserModifiedFile?.(absolutePath) ?? false;
+
     // Check if staging is enabled and if this file should be staged
     const stagingState = stagingStore.get();
-    const shouldStage = stagingState.settings.isEnabled && !this.#shouldAutoApprove(action.filePath);
+    const shouldStage =
+      hasUserEditConflict || (stagingState.settings.isEnabled && !this.#shouldAutoApprove(action.filePath));
 
     if (shouldStage) {
       // Read original content if file exists (for modify detection)
@@ -744,10 +794,12 @@ export class ActionRunner {
         newContent: action.content,
         actionId: `action-${Date.now()}`,
         messageId: action.messageId, // Pass messageId for rewind on reject
-        description: `${changeType === 'create' ? 'Create' : 'Modify'} ${relativePath}`,
+        description: hasUserEditConflict
+          ? `Modify ${relativePath} (conflicts with your manual edits — review required)`
+          : `${changeType === 'create' ? 'Create' : 'Modify'} ${relativePath}`,
       });
 
-      logger.debug(`File change staged: ${relativePath} (${changeType})`);
+      logger.debug(`File change staged: ${relativePath} (${changeType}, userEditConflict: ${hasUserEditConflict})`);
 
       return;
     }
