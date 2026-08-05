@@ -973,12 +973,12 @@ export const Preview = memo(({ setSelectedElement }: PreviewProps) => {
           }}
         />
       )}
-      <div className="bg-devonz-elements-background-depth-2 p-2 flex items-center gap-2">
+      <div className="bg-devonz-elements-background-depth-2 px-3 py-2 flex items-center gap-2 border-b border-devonz-elements-borderColor">
         <div className="flex items-center gap-2">
-          <IconButton icon="i-ph:arrow-clockwise" aria-label="Reload preview" onClick={reloadPreview} />
+          <IconButton icon="i-ph:arrow-clockwise" size="lg" aria-label="Reload preview" onClick={reloadPreview} />
         </div>
 
-        <div className="flex-grow flex items-center gap-2 bg-devonz-elements-preview-addressBar-background border border-devonz-elements-borderColor text-devonz-elements-preview-addressBar-text rounded-md px-2.5 py-1 text-sm transition-colors hover:bg-devonz-elements-preview-addressBar-backgroundHover focus-within:bg-devonz-elements-preview-addressBar-backgroundActive focus-within:border-accent-500/60 focus-within:text-devonz-elements-preview-addressBar-textActive">
+        <div className="flex-grow flex items-center gap-2.5 h-9 bg-devonz-elements-preview-addressBar-background border border-devonz-elements-borderColor text-devonz-elements-preview-addressBar-text rounded-lg px-3 text-sm transition-colors hover:bg-devonz-elements-preview-addressBar-backgroundHover focus-within:bg-devonz-elements-preview-addressBar-backgroundActive focus-within:border-accent-500/60 focus-within:text-devonz-elements-preview-addressBar-textActive">
           <span className="i-ph:plugs-connected text-devonz-elements-textTertiary shrink-0" title="Local dev server" />
           {/* Port dropdown - only visible when multiple ports available */}
           {previews.length > 1 && (

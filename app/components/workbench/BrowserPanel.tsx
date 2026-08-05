@@ -111,12 +111,24 @@ export const BrowserPanel = memo(() => {
   return (
     <div className="w-full h-full flex flex-col bg-devonz-elements-background-depth-1">
       {/* Toolbar */}
-      <div className="flex items-center gap-1.5 px-2 py-1.5 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2">
-        <IconButton icon="i-ph:caret-left" aria-label="Go back" disabled={!canGoBack} onClick={goBack} />
-        <IconButton icon="i-ph:caret-right" aria-label="Go forward" disabled={!canGoForward} onClick={goForward} />
-        <IconButton icon="i-ph:arrow-clockwise" aria-label="Reload page" disabled={!currentUrl} onClick={reload} />
+      <div className="flex items-center gap-1.5 px-3 py-2 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2">
+        <IconButton icon="i-ph:caret-left" size="lg" aria-label="Go back" disabled={!canGoBack} onClick={goBack} />
+        <IconButton
+          icon="i-ph:caret-right"
+          size="lg"
+          aria-label="Go forward"
+          disabled={!canGoForward}
+          onClick={goForward}
+        />
+        <IconButton
+          icon="i-ph:arrow-clockwise"
+          size="lg"
+          aria-label="Reload page"
+          disabled={!currentUrl}
+          onClick={reload}
+        />
 
-        <div className="flex-grow flex items-center gap-2 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-md px-2.5 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
+        <div className="flex-grow flex items-center gap-2.5 h-9 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-lg px-3 text-sm focus-within:border-accent-500/60 transition-colors">
           <span
             className={
               isLoading
@@ -126,7 +138,7 @@ export const BrowserPanel = memo(() => {
           />
           <input
             aria-label="Browser URL"
-            className="w-full bg-transparent outline-none text-xs font-mono truncate text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary"
+            className="w-full bg-transparent outline-none text-[13px] truncate text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary"
             type="text"
             inputMode="url"
             autoComplete="off"
@@ -146,6 +158,7 @@ export const BrowserPanel = memo(() => {
 
         <IconButton
           icon="i-ph:arrow-square-out"
+          size="lg"
           aria-label="Open in new tab"
           disabled={!currentUrl}
           onClick={openInNewTab}
