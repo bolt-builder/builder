@@ -3,28 +3,23 @@ import { WORK_DIR } from '~/utils/constants';
 import { allowedHTMLElements } from '~/utils/markdown';
 import { stripIndents } from '~/utils/stripIndent';
 
-const getFrameworkMandateSection = (flutterAvailable?: boolean) =>
-  flutterAvailable
-    ? `FRAMEWORK MANDATE (CRITICAL — NON-NEGOTIABLE):
-    - DEFAULT to Vite + React for all web projects.
-    - FLUTTER EXCEPTION: The Flutter SDK is installed on this machine. If (and ONLY if) the user EXPLICITLY asks for a Flutter app, build a Flutter project instead — follow <flutter_instructions>. NEVER choose Flutter on your own; when in doubt, use Vite + React.
-    - NEVER use Astro, Next.js, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other web framework.
-    - NEVER import from: "next", "next/*", "@next/*", "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
-    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base") — ALWAYS use a React-compatible tsconfig with "jsx": "react-jsx"
-    - NEVER use Next.js patterns: no "use client", no "use server", no getServerSideProps, no app/page.tsx routing, no next/image, no next/link, no next/router
-    - SELF-CHECK: If you find yourself writing \`import ... from "next/..."\` or \`extends: "astro/..."\`, STOP — you are using the wrong framework. Use Vite + React instead.
-    - For routing, use react-router-dom (v6 or v7) with BrowserRouter — NOT file-based routing
-    - For SSR/SSG, you CANNOT use it — this is a client-side Vite project. All rendering is client-side.`
-    : `FRAMEWORK MANDATE (CRITICAL — NON-NEGOTIABLE):
-    - ALWAYS use Vite + React for web projects. This is the ONLY supported framework stack.
-    - NEVER use Astro, Next.js, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other framework.
-    - NEVER generate Flutter/Dart projects — the Flutter SDK is NOT installed on this machine. If the user asks for a Flutter app, explain that Flutter is not installed and offer a Vite + React web app instead.
-    - NEVER import from: "next", "next/*", "@next/*", "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
-    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base") — ALWAYS use a React-compatible tsconfig with "jsx": "react-jsx"
-    - NEVER use Next.js patterns: no "use client", no "use server", no getServerSideProps, no app/page.tsx routing, no next/image, no next/link, no next/router
-    - SELF-CHECK: If you find yourself writing \`import ... from "next/..."\` or \`extends: "astro/..."\`, STOP — you are using the wrong framework. Use Vite + React instead.
-    - For routing, use react-router-dom (v6 or v7) with BrowserRouter — NOT file-based routing
-    - For SSR/SSG, you CANNOT use it — this is a client-side Vite project. All rendering is client-side.`;
+const getFrameworkMandateSection = (flutterAvailable?: boolean) => {
+  const flutterRule = flutterAvailable
+    ? `- FLUTTER EXCEPTION: The Flutter SDK is installed on this machine. If (and ONLY if) the user EXPLICITLY asks for a Flutter app, build a Flutter project instead — follow <flutter_instructions>. NEVER choose Flutter on your own; when in doubt, use the web stacks below.`
+    : `- NEVER generate Flutter/Dart projects — the Flutter SDK is NOT installed on this machine. If the user asks for a Flutter app, explain that Flutter is not installed and offer a web app instead.`;
+
+  return `FRAMEWORK SELECTION (CRITICAL — NON-NEGOTIABLE):
+    - FRONTEND-ONLY apps (UIs, landing pages, games, dashboards with client-side or mocked data, anything without real server-side logic): use Vite + React. This is the DEFAULT — when in doubt, choose Vite + React.
+    - FULLSTACK apps (the user genuinely needs server-side functionality: real API routes, database access with server-held secrets, server-side auth/sessions, webhooks, server-processed uploads, SSR/SSG): use Next.js with the App Router. Do NOT bolt an Express/Koa server onto a Vite app — Next.js is the supported fullstack stack.
+    ${flutterRule}
+    - NEVER use Astro, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other web framework. Only Vite + React (frontend-only) and Next.js (fullstack) are supported.
+    - NEVER import from: "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
+    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base")
+    - NEVER mix the two stacks inside one project:
+      * In a Vite project: NEVER import from "next", "next/*", or "@next/*"; no "use client"/"use server", no getServerSideProps, no file-based routing, no next/image, next/link, or next/router. Use react-router-dom (v6 or v7) with BrowserRouter for routing. No SSR/SSG — all rendering is client-side.
+      * In a Next.js project: use App Router conventions (app/layout.tsx, app/page.tsx, route handlers in app/api/**/route.ts), next/link and next/image; do NOT add react-router-dom or a vite.config.
+    - SELF-CHECK: BEFORE writing package.json, decide explicitly — does this app need real server-side logic? NO → Vite + React. YES → Next.js App Router. Then stay consistent with that choice in every file. If mid-build you realize a Vite app needs a real backend, STOP and rebuild it as Next.js rather than hacking a server into Vite.`;
+};
 
 const getFlutterInstructionsSection = (flutterAvailable?: boolean) =>
   flutterAvailable
@@ -245,7 +240,7 @@ export const getFineTunedPrompt = (
     - vite.config.ts uses \`export default defineConfig({ ... })\` — already ESM, no changes needed
     - NEVER use \`module.exports\` or \`require()\` in ANY config file — always use \`export default\` and \`import\`
 
-  - Use Vite for web servers, but keep the version already present in package.json/template unless the user explicitly asks for an upgrade
+  - Keep the framework version already present in package.json/template unless the user explicitly asks for an upgrade
   - NEVER hardcode port 5173 — it is reserved by the Devonz host runtime. If you need to set a port, use 3000
   - Do NOT set custom ports in vite.config unless the user explicitly requests a specific port
   - ALWAYS choose Node.js scripts over shell scripts
@@ -568,11 +563,11 @@ ${getFlutterInstructionsSection(flutterAvailable)}
     - SELF-CHECK: After writing App.tsx, mentally render it — if it shows a blank page or template default, FIX IT.
 
   ENTRY POINT FILES (CRITICAL — #1 CAUSE OF "BLANK PAGE" BUGS):
-    - You MUST ALWAYS write index.html with the correct mount point (<div id="root"></div> for React) and script reference (/src/main.tsx for React)
-    - You MUST ALWAYS write src/main.tsx (or equivalent entry point) that imports and renders the root component
-    - File ordering: index.html FIRST, then src/main.tsx, then App.tsx, then other components
-    - SELF-CHECK: Trace the chain: index.html → script src → main.tsx → imports App → App renders feature. If ANY link is broken, the app shows a blank page.
-    - NEVER assume the template's index.html and entry point are already correct — ALWAYS include them in your artifact.
+    - Vite projects: You MUST ALWAYS write index.html with the correct mount point (<div id="root"></div>) and script reference (/src/main.tsx), plus src/main.tsx that imports and renders the root component
+    - Vite file ordering: index.html FIRST, then src/main.tsx, then App.tsx, then other components
+    - Next.js projects: You MUST ALWAYS write app/layout.tsx (with <html> and <body>) and app/page.tsx — there is no index.html or main.tsx
+    - SELF-CHECK (Vite): Trace the chain: index.html → script src → main.tsx → imports App → App renders feature. (Next.js): layout.tsx wraps children → page.tsx renders the feature. If ANY link is broken, the app shows a blank page.
+    - NEVER assume the template's entry point files are already correct — ALWAYS include them in your artifact.
 
   TEMPLATE COMPONENT REUSE (CRITICAL):
     - If the template includes pre-built UI components (listed in the user message), you MUST import and use them.
@@ -595,11 +590,12 @@ ${getFlutterInstructionsSection(flutterAvailable)}
     - REVERSE CHECK: Also scan for imports that are NOT used in the file. If a package is imported but no exported name from it appears in the code, REMOVE that import. Clean code has zero unused imports.
 
   TSCONFIG CONSISTENCY (CRITICAL — FRAMEWORK MISMATCH ERRORS):
-    - tsconfig.json MUST use "jsx": "react-jsx" — you are ALWAYS building React projects
     - NEVER extend "astro/tsconfigs/strict", "astro/tsconfigs/base", or any non-React tsconfig
-    - NEVER include "astro" in tsconfig "types" array — use ["vite/client"] instead
-    - Correct React tsconfig: { "compilerOptions": { "target": "ES2020", "module": "ESNext", "moduleResolution": "bundler", "jsx": "react-jsx", "strict": true, "esModuleInterop": true, "skipLibCheck": true, "forceConsistentCasingInFileNames": true, "resolveJsonModule": true, "isolatedModules": true, "noEmit": true, "types": ["vite/client"], "baseUrl": ".", "paths": { "@/*": ["./src/*"] } }, "include": ["src"] }
-    - SELF-CHECK before writing tsconfig.json: Does it say "react-jsx"? Does it NOT mention astro/next/svelte? If not, fix it.
+    - NEVER include "astro" in the tsconfig "types" array
+    - Vite projects: "jsx": "react-jsx" and "types": ["vite/client"]
+    - Correct Vite React tsconfig: { "compilerOptions": { "target": "ES2020", "module": "ESNext", "moduleResolution": "bundler", "jsx": "react-jsx", "strict": true, "esModuleInterop": true, "skipLibCheck": true, "forceConsistentCasingInFileNames": true, "resolveJsonModule": true, "isolatedModules": true, "noEmit": true, "types": ["vite/client"], "baseUrl": ".", "paths": { "@/*": ["./src/*"] } }, "include": ["src"] }
+    - Next.js projects: "jsx": "preserve" with the "next" plugin ({ "plugins": [{ "name": "next" }] }), "moduleResolution": "bundler", and "include" covering app/ — the standard Next.js-generated tsconfig shape
+    - SELF-CHECK before writing tsconfig.json: Does it match the chosen stack (Vite → "react-jsx" + vite/client; Next.js → "preserve" + next plugin)? Does it NOT mention astro/svelte? If not, fix it.
 
   FOLLOW-UP RESPONSE DISCIPLINE (CRITICAL):
     - When the user asks to fix SPECIFIC files, ONLY modify those files — no unnecessary config rewrites.
@@ -754,12 +750,12 @@ The coffee shop menu is now running.</assistant_response>
 
 <self_validation>
   PRE-SEND CHECKLIST:
-  [ ] FRAMEWORK: Using Vite + React ONLY. No Astro, Next.js, SvelteKit, or other frameworks. No "next/*" or "astro" imports
+  [ ] FRAMEWORK: Matches the selection policy — Vite + React for frontend-only, Next.js (App Router) for fullstack. No Astro/SvelteKit/other frameworks. No cross-stack imports (no "next/*" in Vite projects; no react-router-dom in Next.js projects)
   [ ] CONFIG FORMAT: postcss.config.mjs (NOT .js) with \`export default\`, tailwind.config.mjs/ts (NOT .js). No \`module.exports\` or \`require()\` anywhere
-  [ ] TSCONFIG: Has "jsx": "react-jsx". Does NOT extend astro or next tsconfig. Has "types": ["vite/client"]
+  [ ] TSCONFIG: Matches the stack — Vite: "jsx": "react-jsx" + "types": ["vite/client"]; Next.js: "jsx": "preserve" + next plugin. Never extends astro tsconfig
   [ ] Every JSX \`<Tag />\` has a matching import; every \`from 'pkg'\` exists in package.json (incl. companion deps)
   [ ] No unused imports; import complexity matches app; import paths correct (\`../\` count); no duplicate identifiers
-  [ ] File order: package.json → index.html → main.tsx → App.tsx → components → configs → npm install --legacy-peer-deps → npm run dev
+  [ ] File order (Vite): package.json → index.html → main.tsx → App.tsx → components → configs → npm install --legacy-peer-deps → npm run dev. (Next.js): package.json → app/layout.tsx → app/page.tsx → components → route handlers → configs → npm install --legacy-peer-deps → npm run dev
   [ ] App.tsx renders the FEATURE. No mock arrays, no API keys, no TODOs. COMPLETE in this response
   [ ] Template components: IMPORT, don't recreate. Follow-ups: ONLY modify asked files. File count minimal
 </self_validation>
