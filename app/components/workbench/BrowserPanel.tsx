@@ -94,14 +94,15 @@ async function postBrowserOp(body: Record<string, unknown>): Promise<Response> {
 
 export const BrowserPanel = memo(() => {
   const viewportRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const sessionIdRef = useRef<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
   const frameSizeRef = useRef<{ width: number; height: number }>({ width: 1280, height: 720 });
   const lastMoveSentRef = useRef(0);
+  const frameSeqRef = useRef(0);
 
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [frameSrc, setFrameSrc] = useState<string | null>(null);
+  const [hasFrame, setHasFrame] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [currentUrl, setCurrentUrl] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -111,6 +112,40 @@ export const BrowserPanel = memo(() => {
   const [isConnecting, setIsConnecting] = useState(false);
 
   const urlInputFocusedRef = useRef(false);
+
+  /**
+   * Draw an incoming frame onto the canvas. Decoding into an Image first and
+   * painting only when decode completes avoids the flicker an <img> src swap
+   * produces (blank while the new JPEG decodes), which showed up as glitching
+   * during page navigations. A sequence counter drops stale frames that
+   * finish decoding out of order.
+   */
+  const drawFrame = useCallback((frame: FrameMessage) => {
+    const seq = ++frameSeqRef.current;
+    const image = new Image();
+
+    image.onload = () => {
+      if (seq !== frameSeqRef.current) {
+        return; // A newer frame already decoded
+      }
+
+      const canvas = canvasRef.current;
+
+      if (!canvas) {
+        return;
+      }
+
+      if (canvas.width !== frame.width || canvas.height !== frame.height) {
+        canvas.width = frame.width;
+        canvas.height = frame.height;
+      }
+
+      frameSizeRef.current = { width: frame.width, height: frame.height };
+      canvas.getContext('2d')?.drawImage(image, 0, 0, frame.width, frame.height);
+      setHasFrame(true);
+    };
+    image.src = `data:image/jpeg;base64,${frame.data}`;
+  }, []);
 
   /** Ensure a server browser session + SSE stream exist; returns sessionId. */
   const ensureSession = useCallback(async (): Promise<string | null> => {
@@ -146,9 +181,7 @@ export const BrowserPanel = memo(() => {
           const message = JSON.parse(event.data) as FrameMessage | StateMessage | { type: string; error?: string };
 
           if (message.type === 'frame') {
-            const frame = message as FrameMessage;
-            frameSizeRef.current = { width: frame.width, height: frame.height };
-            setFrameSrc(`data:image/jpeg;base64,${frame.data}`);
+            drawFrame(message as FrameMessage);
           } else if (message.type === 'state') {
             const state = message as StateMessage;
 
@@ -185,7 +218,7 @@ export const BrowserPanel = memo(() => {
     } finally {
       setIsConnecting(false);
     }
-  }, []);
+  }, [drawFrame]);
 
   // Tear the session down when the panel unmounts.
   useEffect(() => {
@@ -297,23 +330,32 @@ export const BrowserPanel = memo(() => {
     }
   }, [currentUrl]);
 
-  /** Map a pointer event on the scaled <img> to remote page coordinates. */
+  /**
+   * Map a pointer event on the scaled canvas to remote page coordinates,
+   * accounting for object-contain letterboxing so clicks near the edges
+   * don't drift when the panel and page aspect ratios differ.
+   */
   const toRemoteCoords = useCallback((event: { clientX: number; clientY: number }) => {
-    const image = imageRef.current;
+    const canvas = canvasRef.current;
 
-    if (!image) {
+    if (!canvas) {
       return null;
     }
 
-    const rect = image.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
 
     if (rect.width === 0 || rect.height === 0) {
       return null;
     }
 
     const { width: frameWidth, height: frameHeight } = frameSizeRef.current;
-    const x = ((event.clientX - rect.left) / rect.width) * frameWidth;
-    const y = ((event.clientY - rect.top) / rect.height) * frameHeight;
+    const scale = Math.min(rect.width / frameWidth, rect.height / frameHeight);
+    const contentWidth = frameWidth * scale;
+    const contentHeight = frameHeight * scale;
+    const offsetX = (rect.width - contentWidth) / 2;
+    const offsetY = (rect.height - contentHeight) / 2;
+    const x = (event.clientX - rect.left - offsetX) / scale;
+    const y = (event.clientY - rect.top - offsetY) / scale;
 
     return { x: Math.max(0, Math.min(frameWidth, x)), y: Math.max(0, Math.min(frameHeight, y)) };
   }, []);
@@ -484,7 +526,7 @@ export const BrowserPanel = memo(() => {
             tabIndex={0}
             role="application"
             aria-label="Embedded browser page"
-            className="w-full h-full bg-white outline-none overflow-hidden flex items-start justify-center"
+            className="w-full h-full bg-devonz-elements-background-depth-2 outline-none overflow-hidden relative"
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerMove={onPointerMove}
@@ -493,16 +535,18 @@ export const BrowserPanel = memo(() => {
             onKeyUp={onKeyUp}
             onContextMenu={(event) => event.preventDefault()}
           >
-            {frameSrc ? (
-              <img
-                ref={imageRef}
-                src={frameSrc}
-                alt="Browser page"
-                draggable={false}
-                className="w-full h-full object-contain select-none"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-devonz-elements-textTertiary">
+            {isLoading && (
+              <div className="absolute top-0 left-0 right-0 h-0.5 z-10 overflow-hidden">
+                <div className="h-full w-1/3 bg-accent-500 browser-loading-bar" />
+              </div>
+            )}
+            <canvas
+              ref={canvasRef}
+              aria-label="Browser page"
+              className={`w-full h-full object-contain select-none ${hasFrame ? '' : 'opacity-0'}`}
+            />
+            {!hasFrame && (
+              <div className="absolute inset-0 flex items-center justify-center text-devonz-elements-textTertiary">
                 <span className="i-svg-spinners:90-ring-with-bg text-2xl" />
               </div>
             )}

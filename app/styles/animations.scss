@@ -48,6 +48,21 @@
   }
 }
 
+/* Indeterminate loading bar for the workbench Browser tab */
+.browser-loading-bar {
+  animation: browserLoadingSlide 1.2s ease-in-out infinite;
+}
+
+@keyframes browserLoadingSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(400%);
+  }
+}
+
 /* Respect user motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animated {
@@ -56,6 +71,11 @@
   }
 
   .dropdown-animation {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .browser-loading-bar {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
