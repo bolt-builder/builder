@@ -26,6 +26,7 @@ import {
 
 import { isAgentModeEnabled } from '~/lib/stores/agentMode';
 import { getAgentOrchestrator } from '~/lib/services/agentOrchestratorService';
+import { enrichWithSourceContext } from '~/lib/inspector/source-context';
 import { createScopedLogger } from '~/utils/logger';
 import { sanitizeCSSValue } from '~/utils/sanitize';
 import { buildElementSelector } from '~/utils/selector';
@@ -147,11 +148,11 @@ export function useInspectorAI(onAIAction: ((message: string) => void) | undefin
       const cssContent = sections.join('\n');
 
       // Fire-and-forget with graceful fallback to onAIAction
-      void routeThroughAgentPipeline('app/styles/inspector-overrides.css', cssContent).then((success) => {
+      void routeThroughAgentPipeline('app/styles/inspector-overrides.css', cssContent).then(async (success) => {
         if (!success) {
           // Fallback: dispatch the original prompt so the user isn't stuck
           const fallbackMessage = buildApplyWithAIMessage(selector, styleEntries, textEdit);
-          onAIAction?.(fallbackMessage);
+          onAIAction?.(await enrichWithSourceContext(fallbackMessage, element));
         }
       });
 
@@ -164,7 +165,7 @@ export function useInspectorAI(onAIAction: ((message: string) => void) | undefin
 
     // ── Existing behaviour: dispatch as plain chat message ─────────────
     const message = buildApplyWithAIMessage(selector, styleEntries, textEdit);
-    onAIAction?.(message);
+    void enrichWithSourceContext(message, element).then((enriched) => onAIAction?.(enriched));
 
     // Close panel after dispatching
     inspectorPanelVisibleAtom.set(false);

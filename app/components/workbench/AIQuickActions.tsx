@@ -2,6 +2,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import type { ElementInfo } from './inspector-types';
 import { buildElementSelector } from '~/utils/selector';
 import { CLICK_DEBOUNCE_MS } from '~/lib/inspector/constants';
+import { enrichWithSourceContext } from '~/lib/inspector/source-context';
 
 interface AiQuickActionsProps {
   selectedElement: ElementInfo | null;
@@ -144,7 +145,9 @@ export const AiQuickActions = ({ selectedElement, onAIAction }: AiQuickActionsPr
       clickTimerRef.current = setTimeout(() => setClickedActionId(null), CLICK_DEBOUNCE_MS);
 
       const prompt = action.generatePrompt(selectedElement);
-      onAIAction(prompt);
+
+      // Enrich with the element's source file/line + code snippet when known
+      void enrichWithSourceContext(prompt, selectedElement).then((enriched) => onAIAction(enriched));
     },
     [selectedElement, onAIAction, clickedActionId],
   );
