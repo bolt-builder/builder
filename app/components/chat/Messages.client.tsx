@@ -13,6 +13,9 @@ import { toast } from 'sonner';
 import type { ProviderInfo } from '~/types/model';
 import type { BranchMetadata } from '~/lib/agent/types';
 import { agentModeStore } from '~/lib/stores/agentMode';
+import { versionsStore } from '~/lib/stores/versions';
+import { checkout } from '~/lib/runtime/git-client';
+import { runtimeContext } from '~/lib/runtime';
 import { createScopedLogger } from '~/utils/logger';
 
 const logger = createScopedLogger('Messages');
@@ -267,7 +270,36 @@ export function Messages(props: MessagesProps) {
     }
   }, [location.pathname]);
 
-  const handleRewind = (messageId: string) => {
+  const handleRewind = async (messageId: string) => {
+    /*
+     * Checkpoint-aware rewind: every AI turn auto-commits the workspace and links
+     * the commit SHA to the message via versionsStore. Restore the files to that
+     * checkpoint before truncating the chat, so rewind rolls back code AND
+     * conversation together (bolt.new-style checkpoints). Falls back to a
+     * chat-only rewind when no checkpoint commit exists for the message.
+     */
+    try {
+      // Read projectId at call time since runtimeContext is non-reactive
+      const projectId = runtimeContext.projectId;
+      const checkpoint = versionsStore
+        .getAllVersions()
+        .filter((version) => version.messageId === messageId && version.commitSha)
+        .sort((a, b) => b.timestamp - a.timestamp)[0];
+
+      if (projectId && checkpoint?.commitSha) {
+        const success = await checkout(projectId, checkpoint.commitSha);
+
+        if (!success) {
+          toast.warning('Could not restore files for this checkpoint — rewinding chat only');
+        }
+      } else {
+        toast.info('No file checkpoint found for this message — rewinding chat only');
+      }
+    } catch (error) {
+      logger.error('Checkpoint restore failed during rewind', error);
+      toast.warning('Could not restore files for this checkpoint — rewinding chat only');
+    }
+
     const searchParams = new URLSearchParams(location.search);
     searchParams.set('rewindTo', messageId);
     window.location.search = searchParams.toString();

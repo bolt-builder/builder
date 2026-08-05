@@ -257,11 +257,11 @@ export const AssistantMessage = memo(
           {(onRewind || onFork) && messageId && (
             <div className="flex gap-1.5">
               {onRewind && (
-                <WithTooltip tooltip="Revert to this message">
+                <WithTooltip tooltip="Restore checkpoint (chat + code)">
                   <button
                     onClick={() => onRewind(messageId)}
                     key="i-ph:arrow-u-up-left"
-                    aria-label="Revert to this message"
+                    aria-label="Restore checkpoint (chat + code)"
                     className="i-ph:arrow-u-up-left text-lg text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary transition-colors"
                   />
                 </WithTooltip>

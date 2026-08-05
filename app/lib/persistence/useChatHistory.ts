@@ -116,8 +116,15 @@ export function useChatHistory() {
           // No archived messages needed when loading full history
           setArchivedMessages([]);
 
-          // Still restore files from snapshot for instant load (if snapshot exists)
-          if (validSnapshot?.files && Object.keys(validSnapshot.files).length > 0) {
+          /*
+           * Still restore files from snapshot for instant load (if snapshot exists).
+           * SKIP this during a rewind: handleRewind has just checked out the
+           * checkpoint commit for the target message, and the latest snapshot
+           * would overwrite that restored working tree with newer files. The
+           * runtime's initial walk populates the store from the actual
+           * (checked-out) tree instead.
+           */
+          if (!rewindId && validSnapshot?.files && Object.keys(validSnapshot.files).length > 0) {
             /*
              * For normal reloads (not rewind), still restore from snapshot for instant load
              * Set flag SYNCHRONOUSLY before setInitialMessages triggers message parsing
