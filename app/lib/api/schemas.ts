@@ -132,6 +132,68 @@ export const terminalRequestSchema = z.discriminatedUnion('op', [
   }),
 ]);
 
+const browserSessionIdSchema = z.string().min(1, 'sessionId is required');
+
+/** Schema for POST /api/browser operations (embedded real-browser sessions). */
+export const browserRequestSchema = z.discriminatedUnion('op', [
+  z.object({
+    op: z.literal('create'),
+    width: z.number().int().positive().optional(),
+    height: z.number().int().positive().optional(),
+  }),
+  z.object({
+    op: z.literal('navigate'),
+    sessionId: browserSessionIdSchema,
+    url: z.string().url(),
+  }),
+  z.object({ op: z.literal('back'), sessionId: browserSessionIdSchema }),
+  z.object({ op: z.literal('forward'), sessionId: browserSessionIdSchema }),
+  z.object({ op: z.literal('reload'), sessionId: browserSessionIdSchema }),
+  z.object({
+    op: z.literal('mouse'),
+    sessionId: browserSessionIdSchema,
+    event: z.discriminatedUnion('kind', [
+      z.object({ kind: z.literal('move'), x: z.number(), y: z.number() }),
+      z.object({
+        kind: z.literal('down'),
+        x: z.number(),
+        y: z.number(),
+        button: z.enum(['left', 'middle', 'right']),
+        clickCount: z.number().int().min(1).max(3),
+      }),
+      z.object({
+        kind: z.literal('up'),
+        x: z.number(),
+        y: z.number(),
+        button: z.enum(['left', 'middle', 'right']),
+      }),
+      z.object({
+        kind: z.literal('wheel'),
+        x: z.number(),
+        y: z.number(),
+        deltaX: z.number(),
+        deltaY: z.number(),
+      }),
+    ]),
+  }),
+  z.object({
+    op: z.literal('key'),
+    sessionId: browserSessionIdSchema,
+    event: z.discriminatedUnion('kind', [
+      z.object({ kind: z.literal('down'), key: z.string().min(1).max(32) }),
+      z.object({ kind: z.literal('up'), key: z.string().min(1).max(32) }),
+      z.object({ kind: z.literal('insertText'), text: z.string().max(4096) }),
+    ]),
+  }),
+  z.object({
+    op: z.literal('resize'),
+    sessionId: browserSessionIdSchema,
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  }),
+  z.object({ op: z.literal('close'), sessionId: browserSessionIdSchema }),
+]);
+
 /** Schema for POST /api/runtime/search. */
 export const searchRequestSchema = z.object({
   projectId: projectIdSchema,

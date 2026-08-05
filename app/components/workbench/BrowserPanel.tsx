@@ -1,10 +1,15 @@
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IconButton } from '~/components/ui/IconButton';
+import { csrfFetch } from '~/lib/api/csrf-client';
+import { createScopedLogger } from '~/utils/logger';
+
+const logger = createScopedLogger('BrowserPanel');
 
 /**
- * Built-in browser view (next to Code / Preview). Unlike Preview, which is
- * bound to the dev-server of the running project, this is a free-navigation
- * embedded browser for docs, references, and testing external URLs.
+ * Built-in browser view (next to Code / Preview). A real server-side Chrome
+ * instance renders the page; frames are streamed here over SSE and user
+ * input (mouse / keyboard / scroll) is forwarded back. Unlike an iframe
+ * this renders any site, including ones that block embedding.
  */
 
 const QUICK_LINKS: Array<{ label: string; url: string; icon: string }> = [
@@ -15,6 +20,33 @@ const QUICK_LINKS: Array<{ label: string; url: string; icon: string }> = [
   { label: 'Can I Use', url: 'https://caniuse.com', icon: 'i-ph:check-square' },
   { label: 'DevDocs', url: 'https://devdocs.io', icon: 'i-ph:books' },
 ];
+
+const MOUSE_BUTTONS: Record<number, 'left' | 'middle' | 'right'> = {
+  0: 'left',
+  1: 'middle',
+  2: 'right',
+};
+
+/** Keys forwarded on keydown/keyup; printable characters go through insertText. */
+const CONTROL_KEYS = new Set([
+  'Enter',
+  'Backspace',
+  'Delete',
+  'Tab',
+  'Escape',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+  'Shift',
+  'Control',
+  'Alt',
+  'Meta',
+]);
 
 function normalizeUrl(raw: string): string | undefined {
   const trimmed = raw.trim();
@@ -32,71 +64,230 @@ function normalizeUrl(raw: string): string | undefined {
     return `https://${trimmed}`;
   }
 
-  // Anything else becomes a DuckDuckGo search (no API key, embeds cleanly)
+  // Anything else becomes a DuckDuckGo search
   return `https://duckduckgo.com/?q=${encodeURIComponent(trimmed)}`;
 }
 
+interface FrameMessage {
+  type: 'frame';
+  data: string;
+  width: number;
+  height: number;
+}
+
+interface StateMessage {
+  type: 'state';
+  url: string;
+  title: string;
+  loading: boolean;
+  canGoBack: boolean;
+  canGoForward: boolean;
+}
+
+async function postBrowserOp(body: Record<string, unknown>): Promise<Response> {
+  return csrfFetch('/api/browser', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}
+
 export const BrowserPanel = memo(() => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const sessionIdRef = useRef<string | null>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
+  const frameSizeRef = useRef<{ width: number; height: number }>({ width: 1280, height: 720 });
+  const lastMoveSentRef = useRef(0);
+
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [frameSrc, setFrameSrc] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [currentUrl, setCurrentUrl] = useState<string | undefined>(undefined);
-  const [history, setHistory] = useState<string[]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
   const [isLoading, setIsLoading] = useState(false);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoForward, setCanGoForward] = useState(false);
+  const [sessionError, setSessionError] = useState<string | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
-  const canGoBack = historyIndex > 0;
-  const canGoForward = historyIndex >= 0 && historyIndex < history.length - 1;
+  const urlInputFocusedRef = useRef(false);
+
+  /** Ensure a server browser session + SSE stream exist; returns sessionId. */
+  const ensureSession = useCallback(async (): Promise<string | null> => {
+    if (sessionIdRef.current) {
+      return sessionIdRef.current;
+    }
+
+    setIsConnecting(true);
+    setSessionError(null);
+
+    try {
+      const rect = viewportRef.current?.getBoundingClientRect();
+      const response = await postBrowserOp({
+        op: 'create',
+        width: rect ? Math.round(rect.width) : undefined,
+        height: rect ? Math.round(rect.height) : undefined,
+      });
+      const json = (await response.json()) as { data?: { sessionId?: string }; error?: { message?: string } };
+
+      if (!response.ok || !json.data?.sessionId) {
+        throw new Error(json.error?.message || 'Failed to start the embedded browser');
+      }
+
+      const id = json.data.sessionId;
+      sessionIdRef.current = id;
+      setSessionId(id);
+
+      const eventSource = new EventSource(`/api/browser?op=stream&sessionId=${encodeURIComponent(id)}`);
+      eventSourceRef.current = eventSource;
+
+      eventSource.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data) as FrameMessage | StateMessage | { type: string; error?: string };
+
+          if (message.type === 'frame') {
+            const frame = message as FrameMessage;
+            frameSizeRef.current = { width: frame.width, height: frame.height };
+            setFrameSrc(`data:image/jpeg;base64,${frame.data}`);
+          } else if (message.type === 'state') {
+            const state = message as StateMessage;
+
+            if (state.url && state.url !== 'about:blank') {
+              setCurrentUrl(state.url);
+
+              if (!urlInputFocusedRef.current) {
+                setInputValue(state.url);
+              }
+            }
+
+            setIsLoading(state.loading);
+            setCanGoBack(state.canGoBack);
+            setCanGoForward(state.canGoForward);
+          } else if (message.type === 'error') {
+            setSessionError((message as { error?: string }).error || 'Browser stream error');
+          }
+        } catch (err) {
+          logger.error('Failed to parse browser stream message', err);
+        }
+      };
+
+      eventSource.onerror = () => {
+        if (eventSource.readyState === EventSource.CLOSED) {
+          logger.warn('Browser stream closed');
+        }
+      };
+
+      return id;
+    } catch (err) {
+      setSessionError(err instanceof Error ? err.message : String(err));
+
+      return null;
+    } finally {
+      setIsConnecting(false);
+    }
+  }, []);
+
+  // Tear the session down when the panel unmounts.
+  useEffect(() => {
+    return () => {
+      eventSourceRef.current?.close();
+      eventSourceRef.current = null;
+
+      const id = sessionIdRef.current;
+
+      if (id) {
+        sessionIdRef.current = null;
+        void postBrowserOp({ op: 'close', sessionId: id }).catch(() => {});
+      }
+    };
+  }, []);
+
+  // Keep the remote viewport matched to the panel size.
+  useEffect(() => {
+    if (!sessionId || !viewportRef.current) {
+      return undefined;
+    }
+
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+
+      if (!entry) {
+        return;
+      }
+
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(() => {
+        const { width, height } = entry.contentRect;
+
+        if (width > 0 && height > 0 && sessionIdRef.current) {
+          void postBrowserOp({
+            op: 'resize',
+            sessionId: sessionIdRef.current,
+            width: Math.round(width),
+            height: Math.round(height),
+          }).catch(() => {});
+        }
+      }, 300);
+    });
+
+    observer.observe(viewportRef.current);
+
+    return () => {
+      observer.disconnect();
+
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [sessionId]);
 
   const navigateTo = useCallback(
-    (url: string, { recordHistory = true }: { recordHistory?: boolean } = {}) => {
+    async (url: string) => {
+      setIsLoading(true);
       setCurrentUrl(url);
       setInputValue(url);
-      setIsLoading(true);
 
-      if (recordHistory) {
-        setHistory((prev) => {
-          const next = [...prev.slice(0, historyIndex + 1), url];
-          setHistoryIndex(next.length - 1);
+      const id = await ensureSession();
 
-          return next;
-        });
+      if (!id) {
+        setIsLoading(false);
+        return;
       }
+
+      void postBrowserOp({ op: 'navigate', sessionId: id, url }).catch(() => setIsLoading(false));
     },
-    [historyIndex],
+    [ensureSession],
   );
 
   const goBack = useCallback(() => {
-    if (!canGoBack) {
-      return;
+    if (sessionIdRef.current) {
+      void postBrowserOp({ op: 'back', sessionId: sessionIdRef.current }).catch(() => {});
     }
-
-    const nextIndex = historyIndex - 1;
-    setHistoryIndex(nextIndex);
-    navigateTo(history[nextIndex], { recordHistory: false });
-  }, [canGoBack, history, historyIndex, navigateTo]);
+  }, []);
 
   const goForward = useCallback(() => {
-    if (!canGoForward) {
-      return;
+    if (sessionIdRef.current) {
+      void postBrowserOp({ op: 'forward', sessionId: sessionIdRef.current }).catch(() => {});
     }
-
-    const nextIndex = historyIndex + 1;
-    setHistoryIndex(nextIndex);
-    navigateTo(history[nextIndex], { recordHistory: false });
-  }, [canGoForward, history, historyIndex, navigateTo]);
+  }, []);
 
   const reload = useCallback(() => {
-    if (iframeRef.current && currentUrl) {
+    if (sessionIdRef.current) {
       setIsLoading(true);
-      iframeRef.current.src = currentUrl;
+      void postBrowserOp({ op: 'reload', sessionId: sessionIdRef.current }).catch(() => {});
     }
-  }, [currentUrl]);
+  }, []);
 
   const onSubmit = useCallback(() => {
     const url = normalizeUrl(inputValue);
 
     if (url) {
-      navigateTo(url);
+      void navigateTo(url);
     }
   }, [inputValue, navigateTo]);
 
@@ -106,7 +297,134 @@ export const BrowserPanel = memo(() => {
     }
   }, [currentUrl]);
 
+  /** Map a pointer event on the scaled <img> to remote page coordinates. */
+  const toRemoteCoords = useCallback((event: { clientX: number; clientY: number }) => {
+    const image = imageRef.current;
+
+    if (!image) {
+      return null;
+    }
+
+    const rect = image.getBoundingClientRect();
+
+    if (rect.width === 0 || rect.height === 0) {
+      return null;
+    }
+
+    const { width: frameWidth, height: frameHeight } = frameSizeRef.current;
+    const x = ((event.clientX - rect.left) / rect.width) * frameWidth;
+    const y = ((event.clientY - rect.top) / rect.height) * frameHeight;
+
+    return { x: Math.max(0, Math.min(frameWidth, x)), y: Math.max(0, Math.min(frameHeight, y)) };
+  }, []);
+
+  const sendMouse = useCallback((event: Record<string, unknown>) => {
+    if (sessionIdRef.current) {
+      void postBrowserOp({ op: 'mouse', sessionId: sessionIdRef.current, event }).catch(() => {});
+    }
+  }, []);
+
+  const onPointerDown = useCallback(
+    (event: React.PointerEvent) => {
+      event.preventDefault();
+      viewportRef.current?.focus();
+
+      const coords = toRemoteCoords(event);
+
+      if (coords) {
+        sendMouse({
+          kind: 'down',
+          ...coords,
+          button: MOUSE_BUTTONS[event.button] ?? 'left',
+          clickCount: event.detail > 0 ? Math.min(event.detail, 3) : 1,
+        });
+      }
+    },
+    [sendMouse, toRemoteCoords],
+  );
+
+  const onPointerUp = useCallback(
+    (event: React.PointerEvent) => {
+      const coords = toRemoteCoords(event);
+
+      if (coords) {
+        sendMouse({ kind: 'up', ...coords, button: MOUSE_BUTTONS[event.button] ?? 'left' });
+      }
+    },
+    [sendMouse, toRemoteCoords],
+  );
+
+  const onPointerMove = useCallback(
+    (event: React.PointerEvent) => {
+      const now = Date.now();
+
+      // Throttle move events to ~30/s
+      if (now - lastMoveSentRef.current < 33) {
+        return;
+      }
+
+      lastMoveSentRef.current = now;
+
+      const coords = toRemoteCoords(event);
+
+      if (coords) {
+        sendMouse({ kind: 'move', ...coords });
+      }
+    },
+    [sendMouse, toRemoteCoords],
+  );
+
+  const onWheel = useCallback(
+    (event: React.WheelEvent) => {
+      const coords = toRemoteCoords(event);
+
+      if (coords) {
+        sendMouse({ kind: 'wheel', ...coords, deltaX: event.deltaX, deltaY: event.deltaY });
+      }
+    },
+    [sendMouse, toRemoteCoords],
+  );
+
+  const sendKey = useCallback((event: Record<string, unknown>) => {
+    if (sessionIdRef.current) {
+      void postBrowserOp({ op: 'key', sessionId: sessionIdRef.current, event }).catch(() => {});
+    }
+  }, []);
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (!sessionIdRef.current) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const hasModifier = event.ctrlKey || event.metaKey || event.altKey;
+
+      if (event.key.length === 1 && !hasModifier) {
+        sendKey({ kind: 'insertText', text: event.key });
+      } else if (CONTROL_KEYS.has(event.key) || hasModifier) {
+        sendKey({ kind: 'down', key: event.key });
+      }
+    },
+    [sendKey],
+  );
+
+  const onKeyUp = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (!sessionIdRef.current) {
+        return;
+      }
+
+      if (CONTROL_KEYS.has(event.key) || event.ctrlKey || event.metaKey || event.altKey) {
+        sendKey({ kind: 'up', key: event.key });
+      }
+    },
+    [sendKey],
+  );
+
   const quickLinks = useMemo(() => QUICK_LINKS, []);
+  const showRemoteView = Boolean(currentUrl && !sessionError);
 
   return (
     <div className="w-full h-full flex flex-col bg-devonz-elements-background-depth-1">
@@ -119,7 +437,7 @@ export const BrowserPanel = memo(() => {
         <div className="flex-grow flex items-center gap-1 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-full px-3 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
           <span
             className={
-              isLoading
+              isLoading || isConnecting
                 ? 'i-svg-spinners:90-ring-with-bg text-accent-500 shrink-0'
                 : 'i-ph:globe-simple text-devonz-elements-textTertiary shrink-0'
             }
@@ -134,6 +452,12 @@ export const BrowserPanel = memo(() => {
             placeholder="Enter a URL or search…"
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
+            onFocus={() => {
+              urlInputFocusedRef.current = true;
+            }}
+            onBlur={() => {
+              urlInputFocusedRef.current = false;
+            }}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 onSubmit();
@@ -153,31 +477,68 @@ export const BrowserPanel = memo(() => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 relative">
-        {currentUrl ? (
-          <iframe
-            ref={iframeRef}
-            title="Built-in browser"
-            className="border-none w-full h-full bg-white"
-            src={currentUrl}
-            onLoad={() => setIsLoading(false)}
-            sandbox="allow-scripts allow-forms allow-popups allow-modals allow-same-origin allow-downloads"
-            referrerPolicy="no-referrer"
-          />
+      <div className="flex-1 relative min-h-0">
+        {showRemoteView ? (
+          <div
+            ref={viewportRef}
+            tabIndex={0}
+            role="application"
+            aria-label="Embedded browser page"
+            className="w-full h-full bg-white outline-none overflow-hidden flex items-start justify-center"
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerMove={onPointerMove}
+            onWheel={onWheel}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onContextMenu={(event) => event.preventDefault()}
+          >
+            {frameSrc ? (
+              <img
+                ref={imageRef}
+                src={frameSrc}
+                alt="Browser page"
+                draggable={false}
+                className="w-full h-full object-contain select-none"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-devonz-elements-textTertiary">
+                <span className="i-svg-spinners:90-ring-with-bg text-2xl" />
+              </div>
+            )}
+          </div>
+        ) : sessionError ? (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center text-devonz-elements-textSecondary">
+            <span className="i-ph:warning-circle text-4xl text-devonz-elements-icon-error" />
+            <p className="text-sm font-medium text-devonz-elements-textPrimary">Embedded browser unavailable</p>
+            <p className="text-xs max-w-md text-devonz-elements-textTertiary">{sessionError}</p>
+            <button
+              onClick={() => {
+                setSessionError(null);
+
+                if (currentUrl) {
+                  void navigateTo(currentUrl);
+                }
+              }}
+              className="mt-2 px-3 py-1.5 rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3 text-xs text-devonz-elements-textPrimary transition-colors"
+            >
+              Try again
+            </button>
+          </div>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-6 text-devonz-elements-textSecondary">
             <div className="flex flex-col items-center gap-2">
               <span className="i-ph:globe-hemisphere-west text-5xl text-devonz-elements-textTertiary" />
-              <p className="text-sm">Browse documentation and references without leaving the workbench</p>
+              <p className="text-sm">Browse the web without leaving the workbench</p>
               <p className="text-xs text-devonz-elements-textTertiary">
-                Note: some sites block embedding and will only open in a new tab
+                Rendered by a real Chrome instance — works on any site
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {quickLinks.map((link) => (
                 <button
                   key={link.url}
-                  onClick={() => navigateTo(link.url)}
+                  onClick={() => void navigateTo(link.url)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3 hover:border-accent-500/40 text-xs text-devonz-elements-textPrimary transition-colors"
                 >
                   <span className={`${link.icon} text-base text-accent-500`} />
