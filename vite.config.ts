@@ -26,7 +26,14 @@ export default defineConfig((config) => {
     },
     build: {
       target: 'esnext',
-      sourcemap: true,
+
+      /*
+       * Production sourcemaps are opt-in (SOURCEMAP=true pnpm run build).
+       * They expose server code in the browser (Vite warns loudly about this)
+       * and generating them for large chunks like monaco-editor can exhaust
+       * memory on 8 GB machines.
+       */
+      sourcemap: process.env.SOURCEMAP === 'true',
       rollupOptions: {
         // Externalize undici and util/types for client builds - these are server-only modules
         external: ['undici', 'util/types', 'node:util/types'],
@@ -194,7 +201,12 @@ export default defineConfig((config) => {
         '@xterm/addon-web-links',
         '@xterm/xterm',
       ],
-      exclude: ['undici'],
+      /*
+       * monaco-editor must NOT be pre-bundled: its `?worker` imports resolve
+       * against the real package files, and the dep optimizer breaks that
+       * (".vite/deps/ts.worker.js?worker_file" does not exist).
+       */
+      exclude: ['undici', 'monaco-editor'],
     },
   };
 });

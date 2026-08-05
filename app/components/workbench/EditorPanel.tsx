@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { memo, useDeferredValue, useMemo } from 'react';
+import { lazy, memo, Suspense, useDeferredValue, useMemo } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import * as Tabs from '@radix-ui/react-tabs';
 import {
@@ -21,6 +21,7 @@ import { FileBreadcrumb } from './FileBreadcrumb';
 import { FileTree } from './FileTree';
 import { DEFAULT_TERMINAL_SIZE, TerminalTabs } from './terminal/TerminalTabs';
 import { workbenchStore } from '~/lib/stores/workbench';
+import { useMonacoEditorStore } from '~/lib/stores/settings';
 import { fileGenerationStatus } from '~/lib/stores/files';
 import { Search } from './Search';
 import { cn } from '~/utils/cn';
@@ -43,6 +44,16 @@ const DEFAULT_EDITOR_SIZE = 100 - DEFAULT_TERMINAL_SIZE;
 
 const editorSettings: EditorSettings = { tabSize: 2 };
 
+const MonacoEditor = lazy(() =>
+  import('~/components/editor/monaco/MonacoEditor').then((module) => ({ default: module.MonacoEditor })),
+);
+
+const editorLoadingFallback = (
+  <div className="flex items-center justify-center h-full text-devonz-elements-textTertiary">
+    <span className="i-svg-spinners:90-ring-with-bg text-xl" />
+  </div>
+);
+
 export const EditorPanel = memo(
   ({
     unsavedFiles,
@@ -62,6 +73,7 @@ export const EditorPanel = memo(
     const theme = useStore(themeStore);
     const showTerminal = useStore(workbenchStore.showTerminal);
 
+    const useMonaco = useStore(useMonacoEditorStore);
     const rawGenStatus = useStore(fileGenerationStatus);
     const genStatus = useDeferredValue(rawGenStatus);
     const isFileGenerating = editorDocument ? genStatus[editorDocument.filePath] === 'generating' : false;
@@ -202,16 +214,32 @@ export const EditorPanel = memo(
                     Generating…
                   </div>
                 )}
-                <CodeMirrorEditor
-                  theme={theme}
-                  editable={!isStreaming && editorDocument !== undefined}
-                  settings={editorSettings}
-                  doc={editorDocument}
-                  autoFocusOnDocumentChange={!isMobile()}
-                  onScroll={onEditorScroll}
-                  onChange={onEditorChange}
-                  onSave={onFileSave}
-                />
+                {/* .env files stay on CodeMirror for secret-value masking parity */}
+                {useMonaco && !editorDocument?.filePath.includes('.env') ? (
+                  <Suspense fallback={editorLoadingFallback}>
+                    <MonacoEditor
+                      theme={theme}
+                      editable={!isStreaming && editorDocument !== undefined}
+                      settings={editorSettings}
+                      doc={editorDocument}
+                      autoFocusOnDocumentChange={!isMobile()}
+                      onScroll={onEditorScroll}
+                      onChange={onEditorChange}
+                      onSave={onFileSave}
+                    />
+                  </Suspense>
+                ) : (
+                  <CodeMirrorEditor
+                    theme={theme}
+                    editable={!isStreaming && editorDocument !== undefined}
+                    settings={editorSettings}
+                    doc={editorDocument}
+                    autoFocusOnDocumentChange={!isMobile()}
+                    onScroll={onEditorScroll}
+                    onChange={onEditorChange}
+                    onSave={onFileSave}
+                  />
+                )}
               </div>
             </Panel>
           </PanelGroup>

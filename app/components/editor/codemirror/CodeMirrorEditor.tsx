@@ -58,7 +58,7 @@ export interface ScrollPosition {
 }
 
 interface EditorUpdate {
-  selection: EditorSelection;
+  selection?: EditorSelection;
   content: string;
 }
 

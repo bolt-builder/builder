@@ -10,6 +10,7 @@ import { useStore } from '@nanostores/react';
 import { stagingStore, updateSettings as updateStagingSettings } from '~/lib/stores/staging';
 import { autoFixStore, updateAutoFixSettings } from '~/lib/stores/autofix';
 import { agentModeStore, updateAgentModeSettings } from '~/lib/stores/agentMode';
+import { useMonacoEditorStore, updateUseMonacoEditor } from '~/lib/stores/settings';
 
 // Tab sections for Features
 const featureTabSections = [
@@ -137,6 +138,8 @@ export default function FeaturesTab() {
     setPromptId,
     promptId,
   } = useSettings();
+
+  const useMonacoEditor = useStore(useMonacoEditorStore);
 
   // Staging settings from staging store
   const stagingState = useStore(stagingStore);
@@ -267,6 +270,12 @@ export default function FeaturesTab() {
           break;
         }
 
+        case 'useMonacoEditor': {
+          updateUseMonacoEditor(enabled);
+          toast.success(`Monaco editor ${enabled ? 'enabled' : 'disabled'}`);
+          break;
+        }
+
         default:
           break;
       }
@@ -332,6 +341,15 @@ export default function FeaturesTab() {
         enabled: enableThinking,
         tooltip:
           'When enabled, supported models will use extended thinking/reasoning for deeper analysis. Uses ~25% of output token budget for thinking.',
+      },
+      {
+        id: 'useMonacoEditor',
+        title: 'Monaco Editor (VS Code)',
+        description: 'Use the Monaco editor from VS Code instead of CodeMirror',
+        icon: 'i-ph:code',
+        enabled: useMonacoEditor,
+        tooltip:
+          'When enabled, the code editor in the workbench uses Monaco (the editor that powers VS Code) with IntelliSense-style autocomplete and richer language support. .env files always use CodeMirror so secret values stay masked.',
       },
     ],
     beta: [

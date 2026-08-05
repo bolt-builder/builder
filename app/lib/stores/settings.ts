@@ -488,6 +488,7 @@ const SETTINGS_KEYS = {
   DEVELOPER_MODE: 'isDeveloperMode',
   AUTO_SWITCH_TO_FILE: 'autoSwitchToFile',
   ENABLE_THINKING: 'enableThinking',
+  MONACO_EDITOR: 'useMonacoEditor',
 } as const;
 
 // Initialize settings from localStorage or defaults
@@ -519,6 +520,7 @@ const getInitialSettings = () => {
     developerMode: getStoredBoolean(SETTINGS_KEYS.DEVELOPER_MODE, false),
     autoSwitchToFile: getStoredBoolean(SETTINGS_KEYS.AUTO_SWITCH_TO_FILE, false),
     enableThinking: getStoredBoolean(SETTINGS_KEYS.ENABLE_THINKING, false),
+    useMonacoEditor: getStoredBoolean(SETTINGS_KEYS.MONACO_EDITOR, false),
   };
 };
 
@@ -532,6 +534,7 @@ export const isEventLogsEnabled = atom<boolean>(initialSettings.eventLogs);
 export const promptStore = atom<string>(initialSettings.promptId);
 export const autoSwitchToFileStore = atom<boolean>(initialSettings.autoSwitchToFile);
 export const enableThinkingStore = atom<boolean>(initialSettings.enableThinking);
+export const useMonacoEditorStore = atom<boolean>(initialSettings.useMonacoEditor);
 
 // Helper functions to update settings with persistence
 export const updateLatestBranch = (enabled: boolean) => {
@@ -547,6 +550,11 @@ export const updateAutoSwitchToFile = (enabled: boolean) => {
 export const updateEnableThinking = (enabled: boolean) => {
   enableThinkingStore.set(enabled);
   localStorage.setItem(SETTINGS_KEYS.ENABLE_THINKING, JSON.stringify(enabled));
+};
+
+export const updateUseMonacoEditor = (enabled: boolean) => {
+  useMonacoEditorStore.set(enabled);
+  localStorage.setItem(SETTINGS_KEYS.MONACO_EDITOR, JSON.stringify(enabled));
 };
 
 export const updateAutoSelectTemplate = (enabled: boolean) => {
