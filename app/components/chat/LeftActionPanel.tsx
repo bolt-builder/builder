@@ -59,30 +59,24 @@ export function LeftActionPanel({ importChat }: LeftActionPanelProps) {
     }
   };
 
-  const buttonBaseClass = cn(
-    '!flex w-full items-center gap-2 justify-center',
+  /*
+   * Prompt-first home: import/clone are secondary actions rendered as a quiet
+   * ghost-button row below the prompt box, not chunky cards above it.
+   */
+  const compactButtonClass = cn(
+    '!flex items-center gap-1.5 justify-center',
+    'h-8 px-3 py-0 rounded-lg text-xs font-medium',
     'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
-    'border border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive',
-    'h-10 px-4 py-2',
+    'border border-transparent hover:border-devonz-elements-borderColor',
+    'bg-transparent hover:bg-devonz-elements-bg-depth-3',
     'transition-all duration-200 ease-in-out',
-    'rounded-lg text-sm font-medium',
-    'hover:bg-devonz-elements-bg-depth-3',
-  );
-
-  const primaryButtonClass = cn(
-    '!flex w-full items-center gap-2 justify-center',
-    'text-devonz-elements-textPrimary',
-    'bg-gradient-to-r from-[#1e3a5f] to-[#2d4a6f]',
-    'border border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive',
-    'h-10 px-4 py-2',
-    'transition-all duration-200 ease-in-out',
-    'rounded-lg text-sm font-medium',
-    'hover:from-[#2a4a6f] hover:to-[#3d5a7f]',
-    'shadow-[0_2px_8px_rgba(30,58,95,0.3)]',
+    'shadow-none',
   );
 
   return (
-    <div className="grid grid-cols-3 gap-3 w-full max-w-xl items-stretch">
+    <div className="flex flex-wrap items-center justify-center gap-1">
+      <span className="text-xs text-devonz-elements-textTertiary mr-1">or start from</span>
+
       {/* Hidden file input */}
       <input
         type="file"
@@ -94,40 +88,33 @@ export function LeftActionPanel({ importChat }: LeftActionPanelProps) {
       />
 
       {/* Import Chat Button */}
-      <div className="flex h-10">
-        <Button
-          onClick={() => {
-            const input = document.getElementById('chat-import-left');
-            input?.click();
-          }}
-          variant="default"
-          className={buttonBaseClass}
-          style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)', width: '100%', height: '100%' }}
-        >
-          <span className="i-ph:upload-simple w-4 h-4" />
-          <span>Import Chat</span>
-        </Button>
-      </div>
+      <Button
+        onClick={() => {
+          const input = document.getElementById('chat-import-left');
+          input?.click();
+        }}
+        variant="ghost"
+        className={compactButtonClass}
+      >
+        <span className="i-ph:upload-simple w-3.5 h-3.5" />
+        <span>Import Chat</span>
+      </Button>
 
       {/* Import Folder Button */}
-      <div className="flex h-10">
-        <ImportFolderButton
-          importChat={importChat}
-          className={buttonBaseClass}
-          style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)', width: '100%', height: '100%' }}
-        />
-      </div>
+      <ImportFolderButton
+        importChat={importChat}
+        className={compactButtonClass}
+        style={{ backgroundColor: 'transparent' }}
+      />
 
-      {/* Clone a Repo Button - Primary/Highlighted */}
-      <div className="flex h-10">
-        <Suspense>
-          <GitCloneButton
-            importChat={importChat}
-            className={primaryButtonClass}
-            style={{ width: '100%', height: '100%' }}
-          />
-        </Suspense>
-      </div>
+      {/* Clone a Repo Button */}
+      <Suspense>
+        <GitCloneButton
+          importChat={importChat}
+          className={compactButtonClass}
+          style={{ backgroundColor: 'transparent' }}
+        />
+      </Suspense>
     </div>
   );
 }

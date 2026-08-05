@@ -572,7 +572,7 @@ export const BaseChat = React.memo(
               ) : (
                 <>
                   {!chatStarted && (
-                    <div id="intro" className="mt-[8vh] max-w-2xl mx-auto text-center px-4 lg:px-0 relative">
+                    <div id="intro" className="mt-[6vh] max-w-2xl mx-auto text-center px-4 lg:px-0 relative">
                       {/* Liquid Metal 3D Text */}
                       <div className="liquid-metal-container">
                         <h1 className="liquid-metal-text" aria-label="Devonz">
@@ -656,13 +656,6 @@ export const BaseChat = React.memo(
                       </div>
                       {progressAnnotations && <ProgressCompilation data={progressAnnotations} />}
 
-                      {/* Action Buttons Row - Above ChatBox */}
-                      {!chatStarted && (
-                        <div className="flex justify-center gap-3 mb-4 max-w-chat mx-auto w-full">
-                          <LeftActionPanel importChat={importChat} />
-                        </div>
-                      )}
-
                       {/* 3-Column Layout Wrapper */}
                       <div className="flex items-center justify-center gap-4 lg:gap-6 w-full">
                         {/* Center Column - ChatBox */}
@@ -714,6 +707,13 @@ export const BaseChat = React.memo(
                           />
                         </div>
                       </div>
+
+                      {/* Secondary import/clone actions - below the prompt box */}
+                      {!chatStarted && (
+                        <div className="flex justify-center mt-2 max-w-chat mx-auto w-full">
+                          <LeftActionPanel importChat={importChat} />
+                        </div>
+                      )}
                     </div>
                   </StickToBottom>
                   {/* Template Gallery - Below Example Prompts */}

@@ -4,12 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 180px;
+  min-height: 100px;
   perspective: 1000px;
 }
 
 .liquid-metal-text {
-  font-size: clamp(4rem, 12vw, 8rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 900;
   font-family:
     system-ui,
@@ -126,11 +126,11 @@
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .liquid-metal-container {
-    min-height: 120px;
+    min-height: 80px;
   }
 
   .liquid-metal-text {
-    font-size: clamp(3rem, 15vw, 5rem);
+    font-size: clamp(2.25rem, 11vw, 3.25rem);
   }
 }
 
