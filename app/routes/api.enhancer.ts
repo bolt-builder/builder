@@ -142,19 +142,21 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
       primaryError instanceof Error ? primaryError.message : String(primaryError),
     );
 
-    // Only attempt fallback for model-not-found errors (deprecated, removed, 404).
-    // Auth errors, rate limits, and other failures propagate immediately.
+    /*
+     * Only attempt fallback for model-not-found errors (deprecated, removed, 404).
+     * Auth errors, rate limits, and other failures propagate immediately.
+     */
     if (isModelNotFoundError(primaryError)) {
       const llm = LLMManager.getInstance();
-      let candidateModels = llm.getModelList().filter(
-        (m) => m.provider === resolvedProvider.name && m.name !== modelDetails.name,
-      );
+      let candidateModels = llm
+        .getModelList()
+        .filter((m) => m.provider === resolvedProvider.name && m.name !== modelDetails.name);
 
       // If the full model list has no alternatives, fall back to static list
       if (candidateModels.length === 0) {
-        candidateModels = llm.getStaticModelListFromProvider(resolvedProvider).filter(
-          (m) => m.name !== modelDetails.name,
-        );
+        candidateModels = llm
+          .getStaticModelListFromProvider(resolvedProvider)
+          .filter((m) => m.name !== modelDetails.name);
       }
 
       // Limit fallback attempts to avoid excessive API calls
@@ -200,6 +202,7 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
             `Fallback candidate ${resolvedProvider.name}/${candidate.name} failed: ` +
               `${candidateError instanceof Error ? candidateError.message : String(candidateError)}`,
           );
+
           // Continue to next candidate
         }
       }
@@ -232,7 +235,10 @@ async function enhancerAction({ context, request }: ActionFunctionArgs) {
     return errorResponse(
       primaryError instanceof AppError
         ? primaryError
-        : new AppError(AppErrorType.INTERNAL, primaryError instanceof Error ? primaryError.message : 'Internal Server Error'),
+        : new AppError(
+            AppErrorType.INTERNAL,
+            primaryError instanceof Error ? primaryError.message : 'Internal Server Error',
+          ),
     );
   }
 }

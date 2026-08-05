@@ -67,9 +67,11 @@ export class EnhancedStreamingMessageParser extends StreamingMessageParser {
         logger.debug('After reset, output length:', output.length, 'resetFlag:', this._lastResetOccurred);
       }
     } else {
-      // Artifacts ARE present — strip any markdown code blocks that leaked
-      // outside artifact tags. These are file contents the AI included in
-      // explanation text instead of inside <devonzArtifact> actions.
+      /*
+       * Artifacts ARE present — strip any markdown code blocks that leaked
+       * outside artifact tags. These are file contents the AI included in
+       * explanation text instead of inside <devonzArtifact> actions.
+       */
       const stripped = this._stripLeakedCodeBlocks(output);
 
       if (stripped !== output) {

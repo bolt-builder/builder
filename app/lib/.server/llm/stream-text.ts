@@ -733,14 +733,14 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
    * event of the stream and throws if it is an error, enabling the
    * fallback chain to catch deferred provider errors.
    */
-  async function probeStreamForErrors(
-    streamResult: Awaited<ReturnType<typeof _streamText>>,
-  ): Promise<void> {
-    // AI SDK v4's `fullStream` is a GETTER that creates a fresh independent
-    // stream copy each time it's accessed (via internal `teeStream('full')`).
-    // We grab one copy to peek at the first event; downstream consumers
-    // (the monitoring IIFE and `mergeIntoDataStream()`) will each get
-    // their own complete copies when they access the getter later.
+  async function probeStreamForErrors(streamResult: Awaited<ReturnType<typeof _streamText>>): Promise<void> {
+    /*
+     * AI SDK v4's `fullStream` is a GETTER that creates a fresh independent
+     * stream copy each time it's accessed (via internal `teeStream('full')`).
+     * We grab one copy to peek at the first event; downstream consumers
+     * (the monitoring IIFE and `mergeIntoDataStream()`) will each get
+     * their own complete copies when they access the getter later.
+     */
     const probeStream = streamResult.fullStream;
     const iterator = probeStream[Symbol.asyncIterator]();
 
@@ -751,8 +751,10 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
         throw first.value.error ?? new Error('Stream returned an error event');
       }
     } finally {
-      // Always release the probe iterator to prevent resource leaks,
-      // whether we succeeded, found an error, or hit an unexpected exception.
+      /*
+       * Always release the probe iterator to prevent resource leaks,
+       * whether we succeeded, found an error, or hit an unexpected exception.
+       */
       await iterator.return?.();
     }
   }
@@ -774,22 +776,22 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
     }
 
     // Determine fallback candidates — use explicit config or auto-select for model_not_found
-    let effectiveFallbackRoute = fallbackRoute;
+    const effectiveFallbackRoute = fallbackRoute;
 
     if (!effectiveFallbackRoute && errorCategory === 'model_not_found') {
-      // No explicit fallback configured — build a list of candidate models to try.
-      // Prefer dynamic/cached models (represent actually-available API models)
-      // over static list (which may contain deprecated models).
+      /*
+       * No explicit fallback configured — build a list of candidate models to try.
+       * Prefer dynamic/cached models (represent actually-available API models)
+       * over static list (which may contain deprecated models).
+       */
       const llm = LLMManager.getInstance();
-      let candidateModels = llm.getModelList().filter(
-        (m) => m.provider === provider.name && m.name !== modelDetails.name,
-      );
+      let candidateModels = llm
+        .getModelList()
+        .filter((m) => m.provider === provider.name && m.name !== modelDetails.name);
 
       // If the full model list has no alternatives for this provider, fall back to static list
       if (candidateModels.length === 0) {
-        candidateModels = llm.getStaticModelListFromProvider(provider).filter(
-          (m) => m.name !== modelDetails.name,
-        );
+        candidateModels = llm.getStaticModelListFromProvider(provider).filter((m) => m.name !== modelDetails.name);
       }
 
       // Try each candidate until one succeeds with stream probing
@@ -824,8 +826,10 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
               `(primary ${primaryLabel} failed with ${errorCategory})`,
           );
 
-          // Found a working model — break out of candidate loop and skip the
-          // single-route fallback logic below
+          /*
+           * Found a working model — break out of candidate loop and skip the
+           * single-route fallback logic below
+           */
           if (props.wsConnection) {
             pipeStreamToWebSocket(result, props.wsConnection);
           }
@@ -836,6 +840,7 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
             `Fallback candidate ${provider.name}/${candidate.name} failed: ` +
               `${candidateError instanceof Error ? candidateError.message : String(candidateError)}`,
           );
+
           // Continue to next candidate
         }
       }
@@ -854,8 +859,7 @@ ${fileList.map((f) => `- ${f}`).join('\n')}
     );
 
     // Resolve fallback provider + model through the same resolution path as primary
-    const fallbackProvider =
-      PROVIDER_LIST.find((p) => p.name === effectiveFallbackRoute!.provider) || DEFAULT_PROVIDER;
+    const fallbackProvider = PROVIDER_LIST.find((p) => p.name === effectiveFallbackRoute!.provider) || DEFAULT_PROVIDER;
     const fallbackModelDetails = await resolveModel({
       provider: fallbackProvider,
       currentModel: effectiveFallbackRoute!.model,

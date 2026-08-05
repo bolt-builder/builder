@@ -377,13 +377,7 @@ export interface BranchMetadata {
  * Agent execution status
  */
 export type AgentStatus =
-  | 'idle'
-  | 'thinking'
-  | 'executing'
-  | 'waiting_for_approval'
-  | 'waiting_for_user'
-  | 'error'
-  | 'completed';
+  'idle' | 'thinking' | 'executing' | 'waiting_for_approval' | 'waiting_for_user' | 'error' | 'completed';
 
 /**
  * Tool call record

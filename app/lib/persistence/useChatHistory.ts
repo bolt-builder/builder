@@ -433,8 +433,7 @@ export function useChatHistory() {
 
           if (filteredAnnotations.find((annotation) => annotation.type === 'chatSummary')) {
             chatSummary = filteredAnnotations.find((annotation) => annotation.type === 'chatSummary')?.summary as
-              | string
-              | undefined;
+              string | undefined;
           }
 
           // Extract token usage from annotations

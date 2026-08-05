@@ -81,14 +81,7 @@ export interface TaskUpdateAction extends BaseAction {
 }
 
 export type DevonzAction =
-  | FileAction
-  | DiffAction
-  | ShellAction
-  | StartAction
-  | BuildAction
-  | SupabaseAction
-  | PlanAction
-  | TaskUpdateAction;
+  FileAction | DiffAction | ShellAction | StartAction | BuildAction | SupabaseAction | PlanAction | TaskUpdateAction;
 
 export type DevonzActionData = DevonzAction | BaseAction;
 

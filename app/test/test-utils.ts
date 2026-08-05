@@ -134,6 +134,7 @@ export function createMockContext(options: MockContextOptions = {}): LoaderFunct
     request,
     params,
     context,
-    unstable_pattern: '',
+    url: new URL(request.url),
+    pattern: '',
   } as LoaderFunctionArgs & ActionFunctionArgs;
 }

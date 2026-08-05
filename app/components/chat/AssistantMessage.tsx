@@ -62,8 +62,7 @@ interface AssistantMessageProps {
   model?: string;
   provider?: ProviderInfo;
   parts:
-    | (TextUIPart | ReasoningUIPart | ToolInvocationUIPart | SourceUIPart | FileUIPart | StepStartUIPart)[]
-    | undefined;
+    (TextUIPart | ReasoningUIPart | ToolInvocationUIPart | SourceUIPart | FileUIPart | StepStartUIPart)[] | undefined;
   addToolResult: ({ toolCallId, result }: { toolCallId: string; result: unknown }) => void;
 }
 
@@ -121,8 +120,10 @@ function stripRawArtifactTags(text: string): string {
     result = result.replace(CHAIN_OF_THOUGHT_BLOCK_RE, '').replace(CHAIN_OF_THOUGHT_TAG_RE, '');
   }
 
-  // Strip leaked code blocks when artifacts are present — code content
-  // should only appear inside artifact actions, never in chat text
+  /*
+   * Strip leaked code blocks when artifacts are present — code content
+   * should only appear inside artifact actions, never in chat text
+   */
   if (result.includes('__devonzArtifact__')) {
     result = result.replace(LEAKED_CODE_BLOCK_RE, '');
     result = result.replace(UNCLOSED_CODE_BLOCK_RE, '');
@@ -188,8 +189,7 @@ export const AssistantMessage = memo(
     }
 
     const usage = filteredAnnotations.find((annotation) => annotation.type === 'usage')?.value as
-      | { completionTokens: number; promptTokens: number; totalTokens: number }
-      | undefined;
+      { completionTokens: number; promptTokens: number; totalTokens: number } | undefined;
 
     const toolInvocations = parts?.filter((part) => part.type === 'tool-invocation');
     const reasoningParts = parts?.filter((part) => part.type === 'reasoning') as ReasoningUIPart[] | undefined;

@@ -241,7 +241,9 @@ function CodeBlock({ className, code, language = 'shell', maxLines }: CodeBlockP
   if (!html) {
     return (
       <div className={cn('text-xs overflow-x-auto', className)}>
-        <pre><code>{displayCode}</code></pre>
+        <pre>
+          <code>{displayCode}</code>
+        </pre>
       </div>
     );
   }
@@ -254,12 +256,7 @@ function CodeBlock({ className, code, language = 'shell', maxLines }: CodeBlockP
    * 4. DOMPurify is NOT used because it would strip the legitimate <span> elements Shiki needs for highlighting
    * Risk: LOW - Shiki is a trusted, well-maintained library designed for safe code rendering
    */
-  return (
-    <div
-      className={cn('text-xs overflow-x-auto', className)}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
+  return <div className={cn('text-xs overflow-x-auto', className)} dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 // Keep backward compatibility

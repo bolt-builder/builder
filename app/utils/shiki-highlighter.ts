@@ -47,8 +47,7 @@ const THEMES: BundledTheme[] = ['light-plus', 'dark-plus'];
 /** Preserve the highlighter instance across Vite HMR refreshes. */
 let _highlighter: HighlighterGeneric<BundledLanguage, BundledTheme> | undefined =
   ((import.meta.hot?.data as Record<string, unknown> | undefined)?.sharedHighlighter as
-    | HighlighterGeneric<BundledLanguage, BundledTheme>
-    | undefined) ?? undefined;
+    HighlighterGeneric<BundledLanguage, BundledTheme> | undefined) ?? undefined;
 
 let _initPromise: Promise<HighlighterGeneric<BundledLanguage, BundledTheme>> | undefined;
 
@@ -88,11 +87,7 @@ export async function getSharedHighlighter(): Promise<HighlighterGeneric<Bundled
  * If the requested language isn't loaded, attempts to load it dynamically.
  * Falls back to plaintext on any error to prevent unhandled rejections.
  */
-export async function safeCodeToHtml(
-  code: string,
-  lang: string,
-  theme: BundledTheme = 'dark-plus',
-): Promise<string> {
+export async function safeCodeToHtml(code: string, lang: string, theme: BundledTheme = 'dark-plus'): Promise<string> {
   const highlighter = await getSharedHighlighter();
 
   let effectiveLang: BundledLanguage | SpecialLanguage = isSpecialLang(lang as SpecialLanguage)

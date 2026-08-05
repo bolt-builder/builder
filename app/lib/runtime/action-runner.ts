@@ -83,8 +83,7 @@ type FileWriteInput = {
 type BaseActionUpdate = Partial<Pick<BaseActionState, 'status' | 'abort' | 'executed'>>;
 
 export type ActionStateUpdate =
-  | BaseActionUpdate
-  | (Omit<BaseActionUpdate, 'status'> & { status: 'failed'; error: string });
+  BaseActionUpdate | (Omit<BaseActionUpdate, 'status'> & { status: 'failed'; error: string });
 
 type ActionsMap = MapStore<Record<string, ActionState>>;
 
@@ -391,8 +390,10 @@ export class ActionRunner {
       action.content = repairResult.command;
     }
 
-    // Track npm install attempts; inject --legacy-peer-deps only on retry (2nd+ attempt)
-    // This lets real peer dep conflicts surface first, with --legacy-peer-deps as fallback
+    /*
+     * Track npm install attempts; inject --legacy-peer-deps only on retry (2nd+ attempt)
+     * This lets real peer dep conflicts surface first, with --legacy-peer-deps as fallback
+     */
     if (/^npm\s+(install|ci)\b/.test(action.content.trim())) {
       this.#npmInstallAttemptCount++;
 
@@ -497,6 +498,7 @@ export class ActionRunner {
     if (!this.#isLikelyValidCommand(action.content)) {
       logger.warn(`Rejected invalid start command (appears to be error message): ${action.content.substring(0, 80)}`);
       this.#updateAction(actionId, { status: 'complete', executed: true });
+
       return undefined;
     }
 
@@ -525,6 +527,7 @@ export class ActionRunner {
       }
 
       this.#updateAction(actionId, { status: 'complete', executed: true });
+
       return undefined;
     }
 
@@ -587,6 +590,7 @@ export class ActionRunner {
     if (result === 'server-running') {
       logger.debug(`${action.type}: Dev server is running (command did not exit within ${SERVER_READY_TIMEOUT}ms)`);
       this.#updateAction(actionId, { status: 'complete', executed: true });
+
       return undefined;
     }
 
@@ -879,11 +883,7 @@ export class ActionRunner {
    * @param command   The npm install command to run (default: `npm install`; --legacy-peer-deps added on internal retry)
    * @param retries   Max retry attempts
    */
-  async #execNpmInstall(
-    runtime: RuntimeProvider,
-    command = 'npm install',
-    retries = 3,
-  ): Promise<ProcessResult> {
+  async #execNpmInstall(runtime: RuntimeProvider, command = 'npm install', retries = 3): Promise<ProcessResult> {
     for (let attempt = 1; attempt <= retries; attempt++) {
       // On internal retry (2nd+ attempt), add --legacy-peer-deps as fallback for peer dep conflicts
       let attemptCommand = command;
@@ -1174,9 +1174,7 @@ export class ActionRunner {
           }
         }
 
-        logger.info(
-          `Dependency validator found ${missing.length} missing package(s): ${missing.join(', ')}`,
-        );
+        logger.info(`Dependency validator found ${missing.length} missing package(s): ${missing.join(', ')}`);
 
         if (shadcnInstallable.length > 0) {
           for (const { name, version } of shadcnInstallable) {
