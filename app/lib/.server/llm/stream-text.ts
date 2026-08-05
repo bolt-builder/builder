@@ -27,6 +27,7 @@ import {
 import { runPhasePipeline, buildPhaseEvent, getPhaseNames } from './phase-pipeline';
 import type { WebSocket } from 'ws';
 import { pushChatEvent } from '~/lib/.server/ws/ws-handlers';
+import { isFlutterAvailable } from '~/lib/.server/flutter';
 import type { FallbackEvent } from '~/types/api-types';
 
 export type Messages = Message[];
@@ -350,7 +351,8 @@ export async function streamText(props: {
         hasSelectedProject: options?.supabaseConnection?.hasSelectedProject || false,
         credentials: options?.supabaseConnection?.credentials || undefined,
       },
-    }) ?? getFineTunedPrompt(WORK_DIR);
+      flutterAvailable: isFlutterAvailable(),
+    }) ?? getFineTunedPrompt(WORK_DIR, undefined, undefined, isFlutterAvailable());
 
   if (chatMode === 'build' && contextFiles && contextOptimization) {
     const codeContext = createFilesContext(contextFiles, true);

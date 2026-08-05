@@ -28,6 +28,7 @@ export class EnhancedStreamingMessageParser extends StreamingMessageParser {
     ['webcontainer', /^(cat|chmod|cp|echo|hostname|kill|ln|ls|mkdir|mv|ps|pwd|rm|rmdir|xxd)\s*/],
     ['webcontainer-extended', /^(alias|cd|clear|env|false|getconf|head|sort|tail|touch|true|uptime|which)\s*/],
     ['interpreters', /^(node|python|python3|java|go|rust|ruby|php|perl)\s+/],
+    ['flutter', /^(flutter|dart)\s+(pub|run|build|test|analyze|create|doctor|clean|devices|format)/],
     ['text-processing', /^(grep|sed|awk|cut|tr|sort|uniq|wc|diff)\s+/],
     ['archive', /^(tar|zip|unzip|gzip|gunzip)\s+/],
     ['process', /^(ps|top|htop|kill|killall|jobs|nohup)\s*/],

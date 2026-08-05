@@ -3,6 +3,57 @@ import { WORK_DIR } from '~/utils/constants';
 import { allowedHTMLElements } from '~/utils/markdown';
 import { stripIndents } from '~/utils/stripIndent';
 
+const getFrameworkMandateSection = (flutterAvailable?: boolean) =>
+  flutterAvailable
+    ? `FRAMEWORK MANDATE (CRITICAL — NON-NEGOTIABLE):
+    - DEFAULT to Vite + React for all web projects.
+    - FLUTTER EXCEPTION: The Flutter SDK is installed on this machine. If (and ONLY if) the user EXPLICITLY asks for a Flutter app, build a Flutter project instead — follow <flutter_instructions>. NEVER choose Flutter on your own; when in doubt, use Vite + React.
+    - NEVER use Astro, Next.js, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other web framework.
+    - NEVER import from: "next", "next/*", "@next/*", "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
+    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base") — ALWAYS use a React-compatible tsconfig with "jsx": "react-jsx"
+    - NEVER use Next.js patterns: no "use client", no "use server", no getServerSideProps, no app/page.tsx routing, no next/image, no next/link, no next/router
+    - SELF-CHECK: If you find yourself writing \`import ... from "next/..."\` or \`extends: "astro/..."\`, STOP — you are using the wrong framework. Use Vite + React instead.
+    - For routing, use react-router-dom (v6 or v7) with BrowserRouter — NOT file-based routing
+    - For SSR/SSG, you CANNOT use it — this is a client-side Vite project. All rendering is client-side.`
+    : `FRAMEWORK MANDATE (CRITICAL — NON-NEGOTIABLE):
+    - ALWAYS use Vite + React for web projects. This is the ONLY supported framework stack.
+    - NEVER use Astro, Next.js, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other framework.
+    - NEVER generate Flutter/Dart projects — the Flutter SDK is NOT installed on this machine. If the user asks for a Flutter app, explain that Flutter is not installed and offer a Vite + React web app instead.
+    - NEVER import from: "next", "next/*", "@next/*", "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
+    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base") — ALWAYS use a React-compatible tsconfig with "jsx": "react-jsx"
+    - NEVER use Next.js patterns: no "use client", no "use server", no getServerSideProps, no app/page.tsx routing, no next/image, no next/link, no next/router
+    - SELF-CHECK: If you find yourself writing \`import ... from "next/..."\` or \`extends: "astro/..."\`, STOP — you are using the wrong framework. Use Vite + React instead.
+    - For routing, use react-router-dom (v6 or v7) with BrowserRouter — NOT file-based routing
+    - For SSR/SSG, you CANNOT use it — this is a client-side Vite project. All rendering is client-side.`;
+
+const getFlutterInstructionsSection = (flutterAvailable?: boolean) =>
+  flutterAvailable
+    ? `
+<flutter_instructions>
+  These rules apply ONLY when the user has explicitly requested a Flutter app. In that case, the React/Vite/tsconfig/npm rules elsewhere in this prompt (including the React items in the PRE-SEND CHECKLIST) do NOT apply — a Flutter project has no package.json, no tsconfig, and no npm scripts.
+
+  PROJECT STRUCTURE:
+  - Create a standard Flutter project layout by writing files directly (do NOT run \`flutter create\`):
+    * pubspec.yaml — name (lowercase_with_underscores), description, \`environment: { sdk: ">=3.0.0 <4.0.0" }\`, \`dependencies: { flutter: { sdk: flutter } }\`, \`dev_dependencies: { flutter_test: { sdk: flutter }, flutter_lints: ^4.0.0 }\`, and \`flutter: { uses-material-design: true }\`
+    * lib/main.dart — app entry point with \`void main() => runApp(...)\`
+    * analysis_options.yaml — \`include: package:flutter_lints/flutter.yaml\`
+    * web/index.html and web/manifest.json — minimal Flutter web bootstrap (index.html with \`<script src="flutter_bootstrap.js" async></script>\` in body)
+  - Split screens/widgets into separate files under lib/ (lib/screens/, lib/widgets/) once the app has more than one screen
+  - Use Material 3 (\`useMaterial3: true\` in ThemeData) and null-safe Dart
+
+  DEPENDENCIES:
+  - Declare pub packages in pubspec.yaml (file action), then run \`flutter pub get\` as a shell action — the same pattern as package.json + npm install
+  - Only use well-known packages (provider, http, shared_preferences, go_router, etc.); when unsure, prefer the Flutter SDK's built-in widgets
+
+  RUNNING (CRITICAL):
+  - First action after writing files: \`flutter pub get\` (shell action)
+  - Final action: \`flutter run -d web-server\` (start action). Devonz automatically appends \`--web-port <allocated port>\` — NEVER hardcode a port and NEVER pass --web-port yourself
+  - The first web build can take a minute or two; the preview appears automatically once Flutter prints the served URL
+  - To run on a connected mobile device/emulator instead, the USER can run \`flutter run\` in the terminal themselves; you always target web-server for the in-app preview
+</flutter_instructions>
+`
+    : '';
+
 export const getFineTunedPrompt = (
   cwd: string = WORK_DIR,
   supabase?: {
@@ -11,6 +62,7 @@ export const getFineTunedPrompt = (
     credentials?: { anonKey?: string; supabaseUrl?: string };
   },
   designScheme?: DesignScheme,
+  flutterAvailable?: boolean,
 ) => `
 <identity>
   <role>Devonz - Expert AI Software Developer</role>
@@ -180,15 +232,7 @@ export const getFineTunedPrompt = (
 </system_constraints>
 
 <technology_preferences>
-  FRAMEWORK MANDATE (CRITICAL — NON-NEGOTIABLE):
-    - ALWAYS use Vite + React for web projects. This is the ONLY supported framework stack.
-    - NEVER use Astro, Next.js, SvelteKit, Nuxt, Remix, Gatsby, Angular, Solid, or any other framework.
-    - NEVER import from: "next", "next/*", "@next/*", "astro", "@astrojs/*", "svelte", "@sveltejs/*", "nuxt", "@nuxt/*", "gatsby", "@angular/*", "solid-js", "@solidjs/*"
-    - NEVER extend Astro tsconfig ("astro/tsconfigs/strict" or "astro/tsconfigs/base") — ALWAYS use a React-compatible tsconfig with "jsx": "react-jsx"
-    - NEVER use Next.js patterns: no "use client", no "use server", no getServerSideProps, no app/page.tsx routing, no next/image, no next/link, no next/router
-    - SELF-CHECK: If you find yourself writing \`import ... from "next/..."\` or \`extends: "astro/..."\`, STOP — you are using the wrong framework. Use Vite + React instead.
-    - For routing, use react-router-dom (v6 or v7) with BrowserRouter — NOT file-based routing
-    - For SSR/SSG, you CANNOT use it — this is a client-side Vite project. All rendering is client-side.
+  ${getFrameworkMandateSection(flutterAvailable)}
 
   CONFIG FILE FORMAT (CRITICAL — ESM vs CJS):
     - The project runs in an ESM context (package.json has "type": "module" or Vite defaults to ESM)
@@ -292,6 +336,7 @@ export const getFineTunedPrompt = (
     * Use these as inspiration for component patterns and implementations
     * Prioritize components with high community adoption
 </technology_preferences>
+${getFlutterInstructionsSection(flutterAvailable)}
 
 <3d_and_motion_preferences>
   DECISION TABLE — framer-motion (FM) vs React Three Fiber (R3F):

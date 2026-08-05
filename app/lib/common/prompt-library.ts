@@ -14,6 +14,9 @@ export interface PromptOptions {
       supabaseUrl?: string;
     };
   };
+
+  /** Whether the Flutter SDK is installed on the host machine. */
+  flutterAvailable?: boolean;
 }
 
 export class PromptLibrary {
@@ -28,7 +31,8 @@ export class PromptLibrary {
     default: {
       label: 'Default Prompt',
       description: 'A fine tuned prompt for better results and less token usage',
-      get: (options) => getFineTunedPrompt(options.cwd, options.supabase, options.designScheme),
+      get: (options) =>
+        getFineTunedPrompt(options.cwd, options.supabase, options.designScheme, options.flutterAvailable),
     },
   };
   static getList() {

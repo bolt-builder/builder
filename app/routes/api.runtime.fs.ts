@@ -301,7 +301,7 @@ async function fsAction({ request }: ActionFunctionArgs) {
  */
 
 /** Directories to skip during the initial walk. */
-const WALK_SKIP = new Set(['node_modules', '.git', '.next', 'dist', 'build', '.cache']);
+const WALK_SKIP = new Set(['node_modules', '.git', '.next', 'dist', 'build', '.cache', '.dart_tool']);
 
 /**
  * Recursively walk a project directory and return `addDir` / `add` watch

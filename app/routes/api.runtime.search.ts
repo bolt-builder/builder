@@ -46,6 +46,7 @@ const DEFAULT_EXCLUDES = [
   '**/.nuxt/**',
   '**/coverage/**',
   '**/.cache/**',
+  '**/.dart_tool/**',
 ];
 
 /** Maximum file size to search (1 MB). Skip binary / large files. */

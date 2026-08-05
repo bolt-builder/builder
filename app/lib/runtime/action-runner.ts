@@ -562,8 +562,34 @@ export class ActionRunner {
     const runtime = await this.#runtime;
     const freePort = await runtime.allocatePort();
     const isWindows = typeof process !== 'undefined' && process.platform === 'win32';
-    const portEnvPrefix = isWindows ? `set PORT=${freePort}&&` : `PORT=${freePort}`;
-    const commandWithPort = `${portEnvPrefix} ${action.content}`;
+
+    let commandWithPort: string;
+
+    if (/^\s*flutter\s+run\b/.test(action.content)) {
+      /*
+       * Flutter ignores the PORT env var — the web port must be passed as a
+       * CLI flag. Also ensure the web-server device is selected so the run
+       * works headlessly and the URL is printed for port detection.
+       */
+      let flutterCommand = action.content.trim();
+
+      if (!/\s-d\s|\s--device-id\b/.test(flutterCommand)) {
+        flutterCommand += ' -d web-server';
+      }
+
+      if (!/--web-port\b/.test(flutterCommand)) {
+        flutterCommand += ` --web-port ${freePort}`;
+      }
+
+      if (!/--web-hostname\b/.test(flutterCommand)) {
+        flutterCommand += ' --web-hostname localhost';
+      }
+
+      commandWithPort = flutterCommand;
+    } else {
+      const portEnvPrefix = isWindows ? `set PORT=${freePort}&&` : `PORT=${freePort}`;
+      commandWithPort = `${portEnvPrefix} ${action.content}`;
+    }
 
     logger.info(`Starting dev server on allocated port ${freePort}: ${action.content}`);
 
