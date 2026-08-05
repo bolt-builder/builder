@@ -79,6 +79,62 @@ export const TAB_LABELS: Record<TabType, string> = {
   'project-memory': 'Project Memory',
 };
 
+export const TAB_DESCRIPTIONS: Record<TabType, string> = {
+  profile: 'Manage your profile picture, username, and preferences',
+  settings: 'Configure general application preferences',
+  notifications: 'View and manage app notifications',
+  features: 'Explore new and upcoming features, editor and prompt options',
+  data: 'Export, import, back up, or delete your chats and settings',
+  'cloud-providers': 'Configure API keys and models for cloud AI providers',
+  'local-providers': 'Configure Ollama, LM Studio, and OpenAI-compatible endpoints',
+  github: 'Connect your GitHub account and manage repositories',
+  gitlab: 'Connect your GitLab account and manage repositories',
+  netlify: 'Connect Netlify for one-click deployments',
+  vercel: 'Connect Vercel for one-click deployments',
+  supabase: 'Connect Supabase for databases and auth',
+  'event-logs': 'Inspect application events and errors',
+  mcp: 'Manage Model Context Protocol servers and tools',
+  'project-memory': 'Persistent AI instructions, knowledge documents, and agent memory',
+};
+
+/** Extra search terms per tab (matched by the settings search box, in addition to label/description). */
+export const TAB_KEYWORDS: Record<TabType, string[]> = {
+  profile: ['avatar', 'username', 'bio', 'account'],
+  settings: ['general', 'preferences', 'language'],
+  notifications: ['alerts', 'unread', 'sound'],
+  features: ['beta', 'experimental', 'monaco', 'editor', 'prompt', 'library', 'auto select', 'context', 'staging'],
+  data: ['export', 'import', 'backup', 'restore', 'delete', 'chats', 'api keys', 'reset'],
+  'cloud-providers': [
+    'api key',
+    'model',
+    'openai',
+    'anthropic',
+    'claude',
+    'gemini',
+    'google',
+    'groq',
+    'mistral',
+    'azure',
+    'bedrock',
+    'deepseek',
+    'xai',
+    'together',
+    'openrouter',
+    'perplexity',
+    'cohere',
+    'llm',
+  ],
+  'local-providers': ['ollama', 'lm studio', 'openailike', 'endpoint', 'base url', 'llm', 'self-hosted'],
+  github: ['git', 'repository', 'repo', 'clone', 'push', 'token', 'oauth'],
+  gitlab: ['git', 'repository', 'repo', 'clone', 'push', 'token'],
+  netlify: ['deploy', 'hosting', 'publish', 'domain'],
+  vercel: ['deploy', 'hosting', 'publish', 'domain'],
+  supabase: ['database', 'postgres', 'auth', 'storage', 'sql'],
+  'event-logs': ['logs', 'errors', 'debug', 'console'],
+  mcp: ['model context protocol', 'tools', 'server', 'integration'],
+  'project-memory': ['project.md', 'knowledge', 'documents', 'upload', 'style guide', 'memory', 'instructions'],
+};
+
 export const DEFAULT_TAB_CONFIG = [
   // User Window Tabs (Always visible by default)
   { id: 'features', visible: true, window: 'user' as const, order: 0 },

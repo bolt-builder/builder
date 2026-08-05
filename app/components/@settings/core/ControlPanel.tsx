@@ -7,7 +7,7 @@ import { useConnectionStatus } from '~/lib/hooks/useConnectionStatus';
 import { tabConfigurationStore, resetTabConfiguration } from '~/lib/stores/settings';
 import { profileStore } from '~/lib/stores/profile';
 import type { TabType, Profile } from './types';
-import { TAB_LABELS, TAB_ICONS, SIDEBAR_CATEGORIES } from './constants';
+import { TAB_LABELS, TAB_ICONS, TAB_DESCRIPTIONS, TAB_KEYWORDS, SIDEBAR_CATEGORIES } from './constants';
 import { DialogTitle } from '~/components/ui/Dialog';
 import { cn } from '~/utils/cn';
 import { createScopedLogger } from '~/utils/logger';
@@ -50,9 +50,23 @@ interface ControlPanelProps {
 // Beta status for experimental features
 const BETA_TABS = new Set<TabType>(['local-providers', 'mcp']);
 
+/** Does a tab match the sidebar search query? Checks label, description, and keywords. */
+function tabMatchesQuery(tabId: TabType, normalizedQuery: string): boolean {
+  if (TAB_LABELS[tabId].toLowerCase().includes(normalizedQuery)) {
+    return true;
+  }
+
+  if (TAB_DESCRIPTIONS[tabId]?.toLowerCase().includes(normalizedQuery)) {
+    return true;
+  }
+
+  return (TAB_KEYWORDS[tabId] ?? []).some((keyword) => keyword.includes(normalizedQuery));
+}
+
 export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) => {
   // State
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Store values
   const tabConfiguration = useStore(tabConfigurationStore);
@@ -90,8 +104,8 @@ export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) =
       .sort((a, b) => a.order - b.order);
   }, [tabConfiguration, profile?.preferences?.notifications]);
 
-  // Build categorized tab list from visible tabs
-  const categorizedTabs = useMemo(() => {
+  // Build categorized tab list from visible tabs (unfiltered — used for default-tab selection)
+  const allCategorizedTabs = useMemo(() => {
     const visibleTabIds = new Set(visibleTabs.map((t) => t.id));
 
     return SIDEBAR_CATEGORIES.map((category) => ({
@@ -100,17 +114,40 @@ export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) =
     })).filter((category) => category.tabs.length > 0);
   }, [visibleTabs]);
 
-  // Flat list of all visible tab IDs for keyboard navigation
+  // Apply the sidebar search filter (category label matches keep the whole category)
+  const categorizedTabs = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    if (!normalizedQuery) {
+      return allCategorizedTabs;
+    }
+
+    return allCategorizedTabs
+      .map((category) => ({
+        ...category,
+        tabs: category.label.toLowerCase().includes(normalizedQuery)
+          ? category.tabs
+          : category.tabs.filter((tabId) => tabMatchesQuery(tabId, normalizedQuery)),
+      }))
+      .filter((category) => category.tabs.length > 0);
+  }, [allCategorizedTabs, searchQuery]);
+
+  // Flat list of visible (filtered) tab IDs for keyboard navigation
   const flatTabIds = useMemo(() => categorizedTabs.flatMap((cat) => cat.tabs), [categorizedTabs]);
+
+  // First tab overall — the default selection when no initialTab is given (VS Code style)
+  const defaultTabId = allCategorizedTabs[0]?.tabs[0] ?? null;
 
   // Reset to default view when modal opens/closes
   useEffect(() => {
     if (open) {
-      setActiveTab(initialTab ?? null);
+      setActiveTab((prev) => prev ?? initialTab ?? defaultTabId);
     } else {
       setActiveTab(null);
     }
-  }, [open, initialTab]);
+
+    setSearchQuery('');
+  }, [open, initialTab, defaultTabId]);
 
   // Handle closing
   const handleClose = useCallback(() => {
@@ -226,18 +263,52 @@ export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) =
 
           <RadixDialog.Content
             aria-describedby={undefined}
-            onEscapeKeyDown={handleClose}
-            className="dark relative z-[101] w-[1000px] h-[80vh] rounded-xl shadow-2xl border border-devonz-elements-borderColor flex overflow-hidden"
+            onEscapeKeyDown={(event) => {
+              // First Escape clears an active search; second closes the panel
+              if (searchQuery) {
+                event.preventDefault();
+                setSearchQuery('');
+
+                return;
+              }
+
+              handleClose();
+            }}
+            className="dark relative z-[101] w-[min(1200px,96vw)] h-[92vh] rounded-xl shadow-2xl border border-devonz-elements-borderColor flex overflow-hidden"
             style={{ backgroundColor: 'var(--devonz-elements-bg-depth-1)' }}
           >
             {/* Sidebar */}
             <div
-              className="w-52 border-r border-devonz-elements-borderColor flex flex-col"
+              className="w-60 border-r border-devonz-elements-borderColor flex flex-col"
               style={{ backgroundColor: 'var(--devonz-elements-bg-depth-1)' }}
             >
               {/* Header */}
-              <div className="px-4 py-4 border-b border-devonz-elements-borderColor">
+              <div className="px-4 pt-4 pb-3 border-b border-devonz-elements-borderColor flex flex-col gap-3">
                 <h2 className="text-sm font-semibold text-devonz-elements-textPrimary">Settings</h2>
+                <div className="relative">
+                  <div className="i-ph:magnifying-glass w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-devonz-elements-textTertiary pointer-events-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && flatTabIds.length > 0) {
+                        e.preventDefault();
+                        handleTabClick(flatTabIds[0]);
+                      }
+                    }}
+                    placeholder="Search settings..."
+                    aria-label="Search settings"
+                    className={cn(
+                      'w-full pl-8 pr-2.5 py-1.5 text-xs rounded-md',
+                      'border border-devonz-elements-borderColor',
+                      'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
+                      'focus:outline-none focus:ring-1 focus:ring-devonz-elements-focus',
+                      'transition-colors duration-150',
+                    )}
+                    style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)' }}
+                  />
+                </div>
               </div>
 
               {/* Categorized Nav */}
@@ -247,6 +318,14 @@ export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) =
                 aria-label="Settings"
                 aria-orientation="vertical"
               >
+                {categorizedTabs.length === 0 && (
+                  <div className="px-4 py-6 text-center">
+                    <div className="i-ph:magnifying-glass w-5 h-5 mx-auto mb-2 text-devonz-elements-textTertiary" />
+                    <p className="text-xs text-devonz-elements-textSecondary">
+                      No settings match &ldquo;{searchQuery}&rdquo;
+                    </p>
+                  </div>
+                )}
                 {categorizedTabs.map((category, catIndex) => (
                   <div key={category.id} className={cn(catIndex > 0 ? 'mt-3' : '')}>
                     {/* Category Header */}
@@ -311,9 +390,14 @@ export const ControlPanel = ({ open, onClose, initialTab }: ControlPanelProps) =
             >
               {/* Content Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-devonz-elements-borderColor">
-                <DialogTitle className="text-sm font-semibold text-devonz-elements-textPrimary">
-                  {activeTab ? TAB_LABELS[activeTab] : 'Settings'}
-                </DialogTitle>
+                <div className="flex flex-col gap-0.5 min-w-0">
+                  <DialogTitle className="text-sm font-semibold text-devonz-elements-textPrimary">
+                    {activeTab ? TAB_LABELS[activeTab] : 'Settings'}
+                  </DialogTitle>
+                  {activeTab && TAB_DESCRIPTIONS[activeTab] && (
+                    <p className="text-xs text-devonz-elements-textTertiary truncate">{TAB_DESCRIPTIONS[activeTab]}</p>
+                  )}
+                </div>
                 <button
                   onClick={handleClose}
                   aria-label="Close settings"
