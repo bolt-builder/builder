@@ -42,6 +42,7 @@
   "dependencies": {
     "@ai-sdk/amazon-bedrock": "^1.1.6",
     "@ai-sdk/anthropic": "1.2.12",
+    "@ai-sdk/azure": "1.3.25",
     "@ai-sdk/cerebras": "^0.2.16",
     "@ai-sdk/cohere": "1.2.10",
     "@ai-sdk/deepseek": "0.2.16",

@@ -1,4 +1,5 @@
 import AnthropicProvider from './providers/anthropic';
+import AzureOpenAIProvider from './providers/azure-openai';
 import CerebrasProvider from './providers/cerebras';
 import CohereProvider from './providers/cohere';
 import DeepseekProvider from './providers/deepseek';
@@ -23,6 +24,7 @@ import ZaiProvider from './providers/z-ai';
 
 export {
   AnthropicProvider,
+  AzureOpenAIProvider,
   CerebrasProvider,
   CohereProvider,
   DeepseekProvider,

@@ -15,6 +15,7 @@ import { CloudProviderCard } from './CloudProviderCard';
 type ProviderName =
   | 'AmazonBedrock'
   | 'Anthropic'
+  | 'AzureOpenAI'
   | 'Cohere'
   | 'Deepseek'
   | 'Github'
@@ -37,6 +38,7 @@ type ProviderName =
 const PROVIDER_ICONS: Record<ProviderName, string> = {
   AmazonBedrock: 'i-ph:amazon-logo',
   Anthropic: 'i-ph:brain',
+  AzureOpenAI: 'i-ph:windows-logo',
   Cerebras: 'i-ph:cpu',
   Cohere: 'i-ph:cpu',
   Deepseek: 'i-ph:code',
@@ -60,6 +62,7 @@ const PROVIDER_ICONS: Record<ProviderName, string> = {
 const PROVIDER_DESCRIPTIONS: Partial<Record<ProviderName, string>> = {
   AmazonBedrock: 'Access AI models through AWS Bedrock',
   Anthropic: 'Access Claude and other Anthropic models',
+  AzureOpenAI: 'OpenAI models hosted on Azure (key as JSON with resourceName or baseUrl)',
   Cerebras: 'Ultra-fast inference with Cerebras hardware',
   Cohere: 'NLP and generation models by Cohere',
   Deepseek: 'Advanced reasoning and coding models',
