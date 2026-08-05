@@ -15,6 +15,7 @@ import type { DesignScheme } from '~/types/design-scheme';
 import type { ElementInfo } from '~/components/workbench/inspector-types';
 import { ChatModeSelector } from './ChatModeSelector';
 import { AgentToggle } from './AgentToggle';
+import { PromptTemplates } from './PromptTemplates';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { TabType } from '~/components/@settings/core/types';
 
@@ -323,6 +324,15 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
                   <div className="i-devonz:stars text-xl"></div>
                 )}
               </IconButton>
+
+              <PromptTemplates
+                input={props.input}
+                onInsert={(text) => {
+                  props.handleInputChange?.({
+                    target: { value: text },
+                  } as React.ChangeEvent<HTMLTextAreaElement>);
+                }}
+              />
 
               <SpeechRecognitionButton
                 isListening={props.isListening}
