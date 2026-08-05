@@ -8,7 +8,6 @@ import {
   type OnChangeCallback as OnEditorChange,
   type OnScrollCallback as OnEditorScroll,
 } from '~/components/editor/codemirror/CodeMirrorEditor';
-import { IconButton } from '~/components/ui/IconButton';
 import { Slider, type SliderOptions } from '~/components/ui/Slider';
 import { workbenchStore, type WorkbenchViewType } from '~/lib/stores/workbench';
 import { cn } from '~/utils/cn';
@@ -262,17 +261,20 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
             'border-l border-devonz-elements-borderColor': !fullWidth,
           })}
         >
-          <div className="flex items-center px-3 py-2.5 border-b border-devonz-elements-borderColor gap-2 bg-devonz-elements-background-depth-2/80">
+          <div className="flex items-center h-13 min-h-13 px-3.5 border-b border-devonz-elements-borderColor gap-2.5 bg-devonz-elements-background-depth-2/80">
             <button
               aria-label="Toggle file explorer"
-              className={`${showChat ? 'i-ph:sidebar-simple-fill' : 'i-ph:sidebar-simple'} text-lg text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors mr-1`}
+              title="Toggle chat panel"
+              className="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 transition-colors"
               disabled={!canHideChat || isSmallViewport}
               onClick={() => {
                 if (canHideChat) {
                   chatStore.setKey('showChat', !showChat);
                 }
               }}
-            />
+            >
+              <span className={`${showChat ? 'i-ph:sidebar-simple-fill' : 'i-ph:sidebar-simple'} text-lg block`} />
+            </button>
             <Slider selected={selectedView} options={sliderOptions} setSelected={setSelectedView} />
 
             <div className="ml-auto" />
@@ -287,7 +289,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                     disabled={isSyncing || streaming}
                     title="Sync files"
                     aria-label="Sync files"
-                    className="p-1.5 rounded-md bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-50 outline-accent-500 transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-50 outline-accent-500 transition-colors"
                   >
                     <span className={cn('text-lg block', isSyncing ? 'i-ph:spinner animate-spin' : 'i-ph:swap')} />
                   </DropdownMenu.Trigger>
@@ -328,7 +330,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                   title="Toggle terminal"
                   aria-label="Toggle terminal"
                   className={cn(
-                    'p-1.5 rounded-md bg-transparent transition-colors outline-accent-500',
+                    'w-9 h-9 flex items-center justify-center rounded-lg bg-transparent transition-colors outline-accent-500',
                     showTerminal
                       ? 'text-accent-500 bg-devonz-elements-background-depth-3'
                       : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3',
@@ -339,15 +341,16 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
               </div>
             )}
 
-            <IconButton
-              icon="i-ph:x-circle"
-              className="-mr-1"
-              size="xl"
+            <button
               aria-label="Close workbench"
+              title="Close workbench"
+              className="w-9 h-9 flex items-center justify-center rounded-lg bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 transition-colors"
               onClick={() => {
                 workbenchStore.showWorkbench.set(false);
               }}
-            />
+            >
+              <span className="i-ph:x text-lg block" />
+            </button>
           </div>
           {/* Plan component - shows when planning is active */}
           <Suspense fallback={null}>

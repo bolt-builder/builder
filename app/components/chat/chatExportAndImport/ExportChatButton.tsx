@@ -4,9 +4,9 @@ import { cn } from '~/utils/cn';
 
 export const ExportChatButton = ({ exportChat }: { exportChat?: () => void }) => {
   return (
-    <div className="flex border border-devonz-elements-borderColor rounded-md overflow-hidden">
+    <div className="flex">
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7">
+        <DropdownMenu.Trigger className="h-9 rounded-lg items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3.5 text-[13px] font-medium bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7">
           Export
           <span className={cn('i-ph:caret-down transition-transform')} />
         </DropdownMenu.Trigger>
