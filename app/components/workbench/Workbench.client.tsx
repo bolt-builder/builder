@@ -17,6 +17,7 @@ import { createScopedLogger, renderLogger } from '~/utils/logger';
 import { EditorPanel } from './EditorPanel';
 
 const Preview = lazy(() => import('./Preview').then((m) => ({ default: m.Preview })));
+const BrowserPanel = lazy(() => import('./BrowserPanel').then((m) => ({ default: m.BrowserPanel })));
 const Versions = lazy(() => import('./Versions').then((m) => ({ default: m.Versions })));
 const Plan = lazy(() => import('./Plan').then((m) => ({ default: m.Plan })));
 const StagedChangesPanel = lazy(() => import('./StagedChangesPanel').then((m) => ({ default: m.StagedChangesPanel })));
@@ -57,10 +58,17 @@ const sliderOptions: SliderOptions<WorkbenchViewType> = {
   left: {
     value: 'code',
     text: 'Code',
+    icon: 'i-ph:code-bold',
   },
-  right: {
+  middle: {
     value: 'preview',
     text: 'Preview',
+    icon: 'i-ph:monitor-play',
+  },
+  right: {
+    value: 'browser',
+    text: 'Browser',
+    icon: 'i-ph:globe-simple',
   },
 };
 
@@ -73,6 +81,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
   const currentDocument = useStore(workbenchStore.currentDocument);
   const unsavedFiles = useStore(workbenchStore.unsavedFiles);
   const selectedView = useStore(workbenchStore.currentView);
+  const showTerminal = useStore(workbenchStore.showTerminal);
   const { showChat } = useStore(chatStore);
   const canHideChat = showWorkbench || !showChat;
 
@@ -268,62 +277,65 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
 
             <div className="ml-auto" />
             {selectedView === 'code' && (
-              <div className="flex overflow-y-auto">
+              <div className="flex items-center gap-1 overflow-y-auto">
                 {/* Export Chat Button */}
                 <ExportChatButton exportChat={exportChat} />
 
                 {/* Sync Button */}
-                <div className="flex border border-devonz-elements-borderColor rounded-lg overflow-hidden ml-1">
-                  <DropdownMenu.Root>
-                    <DropdownMenu.Trigger
-                      disabled={isSyncing || streaming}
-                      className="rounded-lg items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.5 transition-colors"
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger
+                    disabled={isSyncing || streaming}
+                    title="Sync files"
+                    aria-label="Sync files"
+                    className="p-1.5 rounded-md bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-50 outline-accent-500 transition-colors"
+                  >
+                    <span className={cn('text-lg block', isSyncing ? 'i-ph:spinner animate-spin' : 'i-ph:swap')} />
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      className={cn(
+                        'min-w-[240px] z-[9999]',
+                        'bg-devonz-elements-background-depth-2',
+                        'rounded-lg shadow-lg',
+                        'border border-devonz-elements-borderColor',
+                        'animate-in fade-in-0 zoom-in-95',
+                        'py-1',
+                      )}
+                      sideOffset={5}
+                      align="end"
                     >
-                      {isSyncing ? 'Syncing...' : 'Sync'}
-                      <span className={cn('i-ph:caret-down transition-transform')} />
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Portal>
-                      <DropdownMenu.Content
+                      <DropdownMenu.Item
                         className={cn(
-                          'min-w-[240px] z-[9999]',
-                          'bg-devonz-elements-background-depth-2',
-                          'rounded-lg shadow-lg',
-                          'border border-devonz-elements-borderColor',
-                          'animate-in fade-in-0 zoom-in-95',
-                          'py-1',
+                          'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
                         )}
-                        sideOffset={5}
-                        align="end"
+                        onClick={handleSyncFiles}
+                        disabled={isSyncing}
                       >
-                        <DropdownMenu.Item
-                          className={cn(
-                            'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
-                          )}
-                          onClick={handleSyncFiles}
-                          disabled={isSyncing}
-                        >
-                          <div className="flex items-center gap-2">
-                            {isSyncing ? <div className="i-ph:spinner" /> : <div className="i-ph:cloud-arrow-down" />}
-                            <span>{isSyncing ? 'Syncing...' : 'Sync Files'}</span>
-                          </div>
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu.Portal>
-                  </DropdownMenu.Root>
-                </div>
+                        <div className="flex items-center gap-2">
+                          {isSyncing ? <div className="i-ph:spinner" /> : <div className="i-ph:cloud-arrow-down" />}
+                          <span>{isSyncing ? 'Syncing...' : 'Sync Files'}</span>
+                        </div>
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
 
                 {/* Toggle Terminal Button */}
-                <div className="flex border border-devonz-elements-borderColor rounded-md overflow-hidden ml-1">
-                  <button
-                    onClick={() => {
-                      workbenchStore.toggleTerminal(!workbenchStore.showTerminal.get());
-                    }}
-                    className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7"
-                  >
-                    <div className="i-ph:terminal" />
-                    Toggle Terminal
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    workbenchStore.toggleTerminal(!workbenchStore.showTerminal.get());
+                  }}
+                  title="Toggle terminal"
+                  aria-label="Toggle terminal"
+                  className={cn(
+                    'p-1.5 rounded-md bg-transparent transition-colors outline-accent-500',
+                    showTerminal
+                      ? 'text-accent-500 bg-devonz-elements-background-depth-3'
+                      : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3',
+                  )}
+                >
+                  <span className="i-ph:terminal-window text-lg block" />
+                </button>
               </div>
             )}
 
@@ -369,9 +381,17 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                 onFileReset={onFileReset}
               />
             </View>
-            <View initial={{ x: '100%' }} animate={{ x: selectedView === 'preview' ? '0%' : '100%' }}>
+            <View
+              initial={{ x: '100%' }}
+              animate={{ x: selectedView === 'preview' ? '0%' : selectedView === 'code' ? '100%' : '-100%' }}
+            >
               <Suspense>
                 <Preview setSelectedElement={setSelectedElement} />
+              </Suspense>
+            </View>
+            <View initial={{ x: '100%' }} animate={{ x: selectedView === 'browser' ? '0%' : '100%' }}>
+              <Suspense>
+                <BrowserPanel />
               </Suspense>
             </View>
             <View initial={{ x: '100%' }} animate={{ x: selectedView === 'versions' ? '0%' : '100%' }}>

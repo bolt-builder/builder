@@ -3,10 +3,16 @@ import { memo } from 'react';
 import { cubicEasingFn } from '~/utils/easings';
 import { genericMemo } from '~/utils/react';
 
+export interface SliderOption<T> {
+  value: T;
+  text: string;
+  icon?: string;
+}
+
 export type SliderOptions<T> = {
-  left: { value: T; text: string };
-  middle?: { value: T; text: string };
-  right: { value: T; text: string };
+  left: SliderOption<T>;
+  middle?: SliderOption<T>;
+  right: SliderOption<T>;
 };
 
 interface SliderProps<T> {
@@ -16,28 +22,20 @@ interface SliderProps<T> {
 }
 
 export const Slider = genericMemo(<T,>({ selected, options, setSelected }: SliderProps<T>) => {
-  const hasMiddle = !!options.middle;
-  const isLeftSelected = hasMiddle ? selected === options.left.value : selected === options.left.value;
-  const isMiddleSelected = hasMiddle && options.middle ? selected === options.middle.value : false;
+  const entries: Array<SliderOption<T>> = [options.left, ...(options.middle ? [options.middle] : []), options.right];
 
   return (
-    <div className="flex items-center flex-wrap shrink-0 gap-1 bg-devonz-elements-background-depth-1 overflow-hidden rounded-full p-1">
-      <SliderButton selected={isLeftSelected} setSelected={() => setSelected?.(options.left.value)}>
-        {options.left.text}
-      </SliderButton>
-
-      {options.middle && (
-        <SliderButton selected={isMiddleSelected} setSelected={() => setSelected?.(options.middle!.value)}>
-          {options.middle.text}
+    <div className="flex items-center shrink-0 gap-0.5 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor overflow-hidden rounded-lg p-0.5">
+      {entries.map((option) => (
+        <SliderButton
+          key={option.text}
+          selected={selected === option.value}
+          icon={option.icon}
+          setSelected={() => setSelected?.(option.value)}
+        >
+          {option.text}
         </SliderButton>
-      )}
-
-      <SliderButton
-        selected={!isLeftSelected && !isMiddleSelected}
-        setSelected={() => setSelected?.(options.right.value)}
-      >
-        {options.right.text}
-      </SliderButton>
+      ))}
     </div>
   );
 });
@@ -45,25 +43,28 @@ export const Slider = genericMemo(<T,>({ selected, options, setSelected }: Slide
 interface SliderButtonProps {
   selected: boolean;
   children: string | JSX.Element | Array<JSX.Element | string>;
+  icon?: string;
   setSelected: () => void;
 }
 
-const SliderButton = memo(({ selected, children, setSelected }: SliderButtonProps) => {
+const SliderButton = memo(({ selected, children, icon, setSelected }: SliderButtonProps) => {
   return (
     <button
       onClick={setSelected}
-      className="bg-transparent text-sm px-2.5 py-0.5 rounded-full relative"
-      style={{
-        color: selected ? 'var(--devonz-elements-button-primary-text)' : 'var(--devonz-elements-textTertiary)',
-      }}
+      className={
+        'bg-transparent text-xs font-medium px-2.5 py-1 rounded-md relative flex items-center gap-1.5 transition-colors ' +
+        (selected
+          ? 'text-devonz-elements-textPrimary'
+          : 'text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary')
+      }
     >
+      {icon && <span className={`${icon} text-sm relative z-10 ${selected ? 'text-accent-500' : ''}`} />}
       <span className="relative z-10">{children}</span>
       {selected && (
         <motion.span
-          layoutId="pill-tab"
+          layoutId="workbench-view-tab"
           transition={{ duration: 0.2, ease: cubicEasingFn }}
-          className="absolute inset-0 z-0 rounded-full"
-          style={{ background: 'var(--devonz-elements-button-primary-background)' }}
+          className="absolute inset-0 z-0 rounded-md bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor shadow-sm"
         ></motion.span>
       )}
     </button>
