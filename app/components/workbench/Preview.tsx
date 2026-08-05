@@ -978,8 +978,7 @@ export const Preview = memo(({ setSelectedElement }: PreviewProps) => {
           <IconButton icon="i-ph:arrow-clockwise" aria-label="Reload preview" onClick={reloadPreview} />
         </div>
 
-        <div className="flex-grow flex items-center gap-2 bg-devonz-elements-preview-addressBar-background border border-devonz-elements-borderColor text-devonz-elements-preview-addressBar-text rounded-md px-2.5 py-1 text-sm transition-colors hover:bg-devonz-elements-preview-addressBar-backgroundHover focus-within:bg-devonz-elements-preview-addressBar-backgroundActive focus-within:border-accent-500/60 focus-within:text-devonz-elements-preview-addressBar-textActive">
-          <span className="i-ph:plugs-connected text-devonz-elements-textTertiary shrink-0" title="Local dev server" />
+        <div className="flex-grow flex items-center gap-1 bg-devonz-elements-preview-addressBar-background border border-devonz-elements-borderColor text-devonz-elements-preview-addressBar-text rounded-full px-3 py-1 text-sm hover:bg-devonz-elements-preview-addressBar-backgroundHover hover:focus-within:bg-devonz-elements-preview-addressBar-backgroundActive focus-within:bg-devonz-elements-preview-addressBar-backgroundActive focus-within-border-devonz-elements-borderColorActive focus-within:text-devonz-elements-preview-addressBar-textActive">
           {/* Port dropdown - only visible when multiple ports available */}
           {previews.length > 1 && (
             <PortDropdown

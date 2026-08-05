@@ -116,7 +116,7 @@ export const BrowserPanel = memo(() => {
         <IconButton icon="i-ph:caret-right" aria-label="Go forward" disabled={!canGoForward} onClick={goForward} />
         <IconButton icon="i-ph:arrow-clockwise" aria-label="Reload page" disabled={!currentUrl} onClick={reload} />
 
-        <div className="flex-grow flex items-center gap-2 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-md px-2.5 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
+        <div className="flex-grow flex items-center gap-1 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-full px-3 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
           <span
             className={
               isLoading
