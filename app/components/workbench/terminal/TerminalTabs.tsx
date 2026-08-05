@@ -1,8 +1,10 @@
 import { useStore } from '@nanostores/react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Panel, type ImperativePanelHandle } from 'react-resizable-panels';
 import { IconButton } from '~/components/ui/IconButton';
 import { shortcutEventEmitter } from '~/lib/hooks';
+import { useCliAgents } from '~/lib/hooks/useCliAgents';
 import { themeStore } from '~/lib/stores/theme';
 import { workbenchStore } from '~/lib/stores/workbench';
 import { cn } from '~/utils/cn';
@@ -13,8 +15,11 @@ import { toast } from 'sonner';
 
 const logger = createScopedLogger('Terminal');
 
-const MAX_TERMINALS = 3;
+const MAX_TERMINALS = 5;
 export const DEFAULT_TERMINAL_SIZE = 25;
+
+/** Larger default when launching a full-screen TUI agent (Claude Code, Codex, ...). */
+const AGENT_TERMINAL_SIZE = 50;
 
 export const TerminalTabs = memo(() => {
   const showTerminal = useStore(workbenchStore.showTerminal);
@@ -27,6 +32,11 @@ export const TerminalTabs = memo(() => {
   const [activeTerminal, setActiveTerminal] = useState(0);
   const [terminalCount, setTerminalCount] = useState(0);
   const [isRestarting, setIsRestarting] = useState(false);
+
+  // CLI coding agents (Claude Code, Codex, ...) launchable inside the workspace
+  const { agents: cliAgents } = useCliAgents();
+  const [agentLabels, setAgentLabels] = useState<Record<number, string>>({});
+  const pendingCommandsRef = useRef<Map<number, string>>(new Map());
 
   const handleReinstallAndRestart = useCallback(async () => {
     if (isRestarting) {
@@ -83,7 +93,28 @@ export const TerminalTabs = memo(() => {
   const addTerminal = () => {
     if (terminalCount < MAX_TERMINALS) {
       setTerminalCount(terminalCount + 1);
-      setActiveTerminal(terminalCount);
+      setActiveTerminal(terminalCount + 1);
+    }
+  };
+
+  const launchCliAgent = (agentName: string, command: string) => {
+    if (terminalCount >= MAX_TERMINALS) {
+      toast.error('Close a terminal tab first');
+      return;
+    }
+
+    const newIndex = terminalCount + 1;
+    pendingCommandsRef.current.set(newIndex, command);
+    setAgentLabels((prev) => ({ ...prev, [newIndex]: agentName }));
+    setTerminalCount(newIndex);
+    setActiveTerminal(newIndex);
+    workbenchStore.toggleTerminal(true);
+
+    // Make sure the panel is actually expanded with enough rows for a TUI
+    const panel = terminalPanelRef.current;
+
+    if (panel && panel.getSize() < AGENT_TERMINAL_SIZE) {
+      panel.resize(AGENT_TERMINAL_SIZE);
     }
   };
 
@@ -105,6 +136,23 @@ export const TerminalTabs = memo(() => {
 
       // Remove the terminal from refs
       terminalRefs.current.delete(index);
+
+      // Shift agent labels for tabs above the closed one down by one
+      setAgentLabels((prev) => {
+        const next: Record<number, string> = {};
+
+        for (const [key, label] of Object.entries(prev)) {
+          const i = Number(key);
+
+          if (i < index) {
+            next[i] = label;
+          } else if (i > index) {
+            next[i - 1] = label;
+          }
+        }
+
+        return next;
+      });
 
       // Adjust terminal count and active terminal
       setTerminalCount(terminalCount - 1);
@@ -228,8 +276,10 @@ export const TerminalTabs = memo(() => {
                         style={isActive ? { color: '#22D3EE' } : undefined}
                         onClick={() => setActiveTerminal(index)}
                       >
-                        <div className="i-ph:terminal-window-duotone text-lg" />
-                        Terminal {terminalCount > 1 && index}
+                        <div
+                          className={agentLabels[index] ? 'i-ph:robot text-lg' : 'i-ph:terminal-window-duotone text-lg'}
+                        />
+                        {agentLabels[index] ?? <>Terminal {terminalCount > 1 && index}</>}
                         <button
                           className="bg-transparent text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary hover:bg-transparent rounded"
                           onClick={(e) => {
@@ -248,6 +298,59 @@ export const TerminalTabs = memo(() => {
             {terminalCount < MAX_TERMINALS && (
               <IconButton icon="i-ph:plus" size="md" aria-label="Add terminal" onClick={addTerminal} />
             )}
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger
+                title="Launch a CLI coding agent in this workspace"
+                aria-label="Launch CLI agent"
+                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-terminals-buttonBackground transition-all cursor-pointer"
+              >
+                <div className="i-ph:robot text-sm" />
+                Agent
+                <div className="i-ph:caret-down text-xs" />
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  className={cn(
+                    'min-w-[260px] z-[9999]',
+                    'bg-devonz-elements-background-depth-2',
+                    'rounded-lg shadow-lg',
+                    'border border-devonz-elements-borderColor',
+                    'animate-in fade-in-0 zoom-in-95',
+                    'py-1',
+                  )}
+                  sideOffset={5}
+                  align="start"
+                >
+                  {cliAgents.length === 0 && (
+                    <div className="px-4 py-2 text-xs text-devonz-elements-textTertiary">Detecting installed CLIs…</div>
+                  )}
+                  {cliAgents.map((agent) => (
+                    <DropdownMenu.Item
+                      key={agent.id}
+                      disabled={!agent.installed}
+                      onClick={() => launchCliAgent(agent.name, agent.command)}
+                      className={cn(
+                        'flex flex-col items-start w-full px-4 py-2 gap-0.5 rounded-md',
+                        agent.installed
+                          ? 'cursor-pointer text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive'
+                          : 'cursor-default opacity-60 text-devonz-elements-textSecondary',
+                      )}
+                    >
+                      <div className="flex items-center gap-2 text-sm">
+                        <div className="i-ph:robot" />
+                        {agent.name}
+                        {agent.installed && agent.version && (
+                          <span className="text-xs text-devonz-elements-textTertiary">v{agent.version}</span>
+                        )}
+                      </div>
+                      {!agent.installed && (
+                        <span className="text-xs font-mono text-devonz-elements-textTertiary">{agent.installHint}</span>
+                      )}
+                    </DropdownMenu.Item>
+                  ))}
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
             <IconButton
               icon="i-ph:arrow-clockwise"
               title="Reset Terminal"
@@ -334,7 +437,9 @@ export const TerminalTabs = memo(() => {
                         terminalRefs.current.set(index, ref);
                       }
                     }}
-                    onTerminalReady={(terminal) => workbenchStore.attachTerminal(terminal)}
+                    onTerminalReady={(terminal) =>
+                      workbenchStore.attachTerminal(terminal, pendingCommandsRef.current.get(index))
+                    }
                     onTerminalResize={(cols, rows) => workbenchStore.onTerminalResize(cols, rows)}
                     theme={theme}
                   />

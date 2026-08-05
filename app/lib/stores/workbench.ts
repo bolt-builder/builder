@@ -217,8 +217,8 @@ export class WorkbenchStore {
     this.#terminalStore.toggleTerminal(value);
   }
 
-  attachTerminal(terminal: ITerminal) {
-    this.#terminalStore.attachTerminal(terminal);
+  attachTerminal(terminal: ITerminal, initialCommand?: string) {
+    this.#terminalStore.attachTerminal(terminal, initialCommand);
   }
   attachDevonzTerminal(terminal: ITerminal) {
     this.#terminalStore.attachDevonzTerminal(terminal);

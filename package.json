@@ -198,5 +198,8 @@
     ]
   },
   "pnpm": {},
-  "packageManager": "pnpm@9.15.9"
+  "packageManager": "pnpm@9.15.9",
+  "optionalDependencies": {
+    "node-pty": "1.1.0-beta34"
+  }
 }

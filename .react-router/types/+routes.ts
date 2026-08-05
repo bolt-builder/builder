@@ -103,6 +103,9 @@ type Pages = {
   "/api/bug-report": {
     params: {};
   };
+  "/api/cli-agents": {
+    params: {};
+  };
   "/api/db/migrate": {
     params: {};
   };
@@ -147,6 +150,12 @@ type Pages = {
     params: {};
   };
   "/api/supabase/query": {
+    params: {};
+  };
+  "/api/v1/agent": {
+    params: {};
+  };
+  "/api/browser": {
     params: {};
   };
   "/api/encrypt": {
@@ -199,7 +208,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/api/configured-providers" | "/api/system/diagnostics" | "/api/mcp-update-config" | "/api/runtime/terminal" | "/api/system/disk-info" | "/api/export-api-keys" | "/api/github-branches" | "/api/github-template" | "/api/gitlab-branches" | "/api/gitlab-projects" | "/api/system/git-info" | "/api/check-env-keys" | "/api/netlify-deploy" | "/api/runtime/search" | "/api/vercel-domains" | "/api/check-env-key" | "/api/sentry-tunnel" | "/api/supabase-user" | "/api/vercel-deploy" | "/api/version-check" | "/api/github-stats" | "/api/netlify-user" | "/api/runtime/exec" | "/api/vercel-proxy" | "/api/git-proxy/*" | "/api/github-user" | "/api/runtime/git" | "/api/vercel-user" | "/api/bug-report" | "/api/db/migrate" | "/api/runtime/fs" | "/api/web-search" | "/api/git-clone" | "/api/mcp-check" | "/api/v1/status" | "/preview/:port" | "/api/db/chats" | "/api/db/chats/:id" | "/api/enhancer" | "/api/git-info" | "/api/supabase" | "/api/supabase/variables" | "/api/supabase/query" | "/api/encrypt" | "/api/llmcall" | "/api/v1/chat" | "/api/deploy" | "/api/health" | "/api/models" | "/api/models/:provider" | "/api/update" | "/templates" | "/api/chat" | "/chat/:id" | "/git" | "/*";
+    page: "/" | "/api/configured-providers" | "/api/system/diagnostics" | "/api/mcp-update-config" | "/api/runtime/terminal" | "/api/system/disk-info" | "/api/export-api-keys" | "/api/github-branches" | "/api/github-template" | "/api/gitlab-branches" | "/api/gitlab-projects" | "/api/system/git-info" | "/api/check-env-keys" | "/api/netlify-deploy" | "/api/runtime/search" | "/api/vercel-domains" | "/api/check-env-key" | "/api/sentry-tunnel" | "/api/supabase-user" | "/api/vercel-deploy" | "/api/version-check" | "/api/github-stats" | "/api/netlify-user" | "/api/runtime/exec" | "/api/vercel-proxy" | "/api/git-proxy/*" | "/api/github-user" | "/api/runtime/git" | "/api/vercel-user" | "/api/bug-report" | "/api/cli-agents" | "/api/db/migrate" | "/api/runtime/fs" | "/api/web-search" | "/api/git-clone" | "/api/mcp-check" | "/api/v1/status" | "/preview/:port" | "/api/db/chats" | "/api/db/chats/:id" | "/api/enhancer" | "/api/git-info" | "/api/supabase" | "/api/supabase/variables" | "/api/supabase/query" | "/api/v1/agent" | "/api/browser" | "/api/encrypt" | "/api/llmcall" | "/api/v1/chat" | "/api/deploy" | "/api/health" | "/api/models" | "/api/models/:provider" | "/api/update" | "/templates" | "/api/chat" | "/chat/:id" | "/git" | "/*";
   };
   "routes/api.configured-providers.ts": {
     id: "routes/api.configured-providers";
@@ -317,6 +326,10 @@ type RouteFiles = {
     id: "routes/api.bug-report";
     page: "/api/bug-report";
   };
+  "routes/api.cli-agents.ts": {
+    id: "routes/api.cli-agents";
+    page: "/api/cli-agents";
+  };
   "routes/api.db.migrate.ts": {
     id: "routes/api.db.migrate";
     page: "/api/db/migrate";
@@ -372,6 +385,14 @@ type RouteFiles = {
   "routes/api.supabase.query.ts": {
     id: "routes/api.supabase.query";
     page: "/api/supabase/query";
+  };
+  "routes/api.v1.agent.ts": {
+    id: "routes/api.v1.agent";
+    page: "/api/v1/agent";
+  };
+  "routes/api.browser.ts": {
+    id: "routes/api.browser";
+    page: "/api/browser";
   };
   "routes/api.encrypt.ts": {
     id: "routes/api.encrypt";
@@ -462,6 +483,7 @@ type RouteModules = {
   "routes/api.runtime.git": typeof import("./app/routes/api.runtime.git.ts");
   "routes/api.vercel-user": typeof import("./app/routes/api.vercel-user.ts");
   "routes/api.bug-report": typeof import("./app/routes/api.bug-report.ts");
+  "routes/api.cli-agents": typeof import("./app/routes/api.cli-agents.ts");
   "routes/api.db.migrate": typeof import("./app/routes/api.db.migrate.ts");
   "routes/api.runtime.fs": typeof import("./app/routes/api.runtime.fs.ts");
   "routes/api.web-search": typeof import("./app/routes/api.web-search.ts");
@@ -476,6 +498,8 @@ type RouteModules = {
   "routes/api.supabase": typeof import("./app/routes/api.supabase.ts");
   "routes/api.supabase.variables": typeof import("./app/routes/api.supabase.variables.ts");
   "routes/api.supabase.query": typeof import("./app/routes/api.supabase.query.ts");
+  "routes/api.v1.agent": typeof import("./app/routes/api.v1.agent.ts");
+  "routes/api.browser": typeof import("./app/routes/api.browser.ts");
   "routes/api.encrypt": typeof import("./app/routes/api.encrypt.ts");
   "routes/api.llmcall": typeof import("./app/routes/api.llmcall.ts");
   "routes/api.v1.chat": typeof import("./app/routes/api.v1.chat.ts");

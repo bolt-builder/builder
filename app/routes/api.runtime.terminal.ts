@@ -284,8 +284,23 @@ async function terminalAction({ request }: ActionFunctionArgs) {
     case 'resize': {
       const { sessionId, cols, rows } = body;
 
-      // Resize is a no-op for basic child_process (Phase 2: node-pty)
-      logger.debug(`Resize request for ${sessionId}: ${cols}x${rows} (no-op in Phase 1)`);
+      // Resizes PTY-backed sessions; no-op for pipe-based fallback sessions
+      try {
+        const manager = RuntimeManager.getInstance();
+
+        for (const projectId of manager.listProjects()) {
+          const runtime = await manager.getRuntime(projectId);
+
+          try {
+            runtime.resizeSession(sessionId, cols, rows);
+            return successResponse(null);
+          } catch {
+            // Session not in this runtime, try next
+          }
+        }
+      } catch (error) {
+        logger.debug(`Resize failed for ${sessionId}:`, error);
+      }
 
       return successResponse(null);
     }

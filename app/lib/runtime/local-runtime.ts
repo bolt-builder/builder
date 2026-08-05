@@ -13,6 +13,7 @@
 
 import { spawn, exec, execSync } from 'node:child_process';
 import type { ChildProcess } from 'node:child_process';
+import { createRequire } from 'node:module';
 import * as fs from 'node:fs/promises';
 import * as net from 'node:net';
 import * as nodePath from 'node:path';
@@ -209,7 +210,6 @@ const PORT_PATTERNS = [
 /** Internal representation of a terminal session on the server. */
 interface TerminalSession {
   id: string;
-  process: ChildProcess;
   projectId: string;
 
   /** Callbacks listening for data from this session. */
@@ -217,6 +217,72 @@ interface TerminalSession {
 
   /** Resolves when the process exits. */
   exitPromise: Promise<number>;
+
+  /** True once the underlying process has exited. */
+  exited: boolean;
+
+  /** Write data to the process stdin / PTY. */
+  write(data: string): void;
+
+  /** Resize the terminal (PTY sessions only; no-op for pipes). */
+  resize(cols: number, rows: number): void;
+
+  /** Kill the whole process tree behind this session. */
+  killTree(): void;
+
+  /** Underlying child process when spawned without a PTY (pipes fallback). */
+  process?: ChildProcess;
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Optional node-pty support
+ * ---------------------------------------------------------------------------
+ * `node-pty` is an optionalDependency (native module). When it is present,
+ * interactive terminal sessions get a real PTY, which enables keystroke
+ * echo, line editing, and full-screen TUI programs (Claude Code, Codex,
+ * Aider, vim, htop, ...). When the install failed or the platform is
+ * unsupported we silently fall back to the historical pipe-based spawn.
+ */
+
+interface PtyProcessLike {
+  pid: number;
+  onData(callback: (data: string) => void): { dispose(): void };
+  onExit(callback: (event: { exitCode: number }) => void): { dispose(): void };
+  write(data: string): void;
+  resize(cols: number, rows: number): void;
+  kill(signal?: string): void;
+}
+
+interface PtyModuleLike {
+  spawn(
+    file: string,
+    args: string[],
+    options: { name: string; cols: number; rows: number; cwd: string; env: Record<string, string | undefined> },
+  ): PtyProcessLike;
+}
+
+let ptyModuleCache: PtyModuleLike | null | undefined;
+
+function loadNodePty(): PtyModuleLike | null {
+  if (ptyModuleCache !== undefined) {
+    return ptyModuleCache;
+  }
+
+  try {
+    const require = createRequire(import.meta.url);
+    ptyModuleCache = require('node-pty') as PtyModuleLike;
+    logger.info('node-pty loaded — interactive terminals use a real PTY');
+  } catch (error) {
+    ptyModuleCache = null;
+    logger.warn(
+      `node-pty unavailable — terminals fall back to pipes (no TUI support): ${
+        error instanceof Error ? error.message.split('\n')[0] : error
+      }`,
+    );
+  }
+
+  return ptyModuleCache;
 }
 
 /*
@@ -307,6 +373,95 @@ export class LocalRuntime implements RuntimeProvider {
     };
 
     const isWindows = os.platform() === 'win32';
+    const dataListeners: Array<(data: string) => void> = [];
+
+    /*
+     * Interactive terminal sessions get a real PTY when node-pty is
+     * available (POSIX only for now). This enables keystroke echo, line
+     * editing, and full-screen TUIs like CLI coding agents.
+     */
+    const ptyModule = options.terminal && !isWindows ? loadNodePty() : null;
+
+    if (ptyModule && options.terminal) {
+      const ptyProc = ptyModule.spawn(this.#shell, ['-c', [command, ...args].join(' ')], {
+        name: 'xterm-256color',
+        cols: options.terminal.cols ?? 80,
+        rows: options.terminal.rows ?? 24,
+        cwd,
+        env,
+      });
+
+      const session: TerminalSession = {
+        id: sessionId,
+        projectId: this.#projectId,
+        dataListeners,
+        exited: false,
+        exitPromise: new Promise<number>((resolve) => {
+          ptyProc.onExit(({ exitCode }) => {
+            session.exited = true;
+            this.#sessions.delete(sessionId);
+            resolve(exitCode);
+          });
+        }),
+        write: (data) => ptyProc.write(data),
+        resize: (cols, rows) => {
+          try {
+            ptyProc.resize(cols, rows);
+          } catch {
+            // PTY may have exited
+          }
+        },
+        killTree: () => {
+          try {
+            // The PTY child is a session leader; signal its process group
+            process.kill(-ptyProc.pid, 'SIGTERM');
+          } catch {
+            try {
+              ptyProc.kill();
+            } catch {
+              // Already exited
+            }
+          }
+        },
+      };
+
+      ptyProc.onData((text) => {
+        this.#detectPorts(text);
+
+        for (const listener of dataListeners) {
+          listener(text);
+        }
+      });
+
+      this.#sessions.set(sessionId, session);
+      logger.debug(`Spawned PTY process [${sessionId}]: ${command} ${args.join(' ')}`);
+
+      return {
+        id: sessionId,
+        pid: ptyProc.pid,
+        write: session.write,
+        kill: (signal?: string) => {
+          try {
+            ptyProc.kill(signal);
+          } catch {
+            // Already exited
+          }
+        },
+        resize: (dimensions: { cols: number; rows: number }) => session.resize(dimensions.cols, dimensions.rows),
+        onExit: session.exitPromise,
+        onData(callback: (data: string) => void): Disposer {
+          dataListeners.push(callback);
+
+          return () => {
+            const idx = dataListeners.indexOf(callback);
+
+            if (idx !== -1) {
+              dataListeners.splice(idx, 1);
+            }
+          };
+        },
+      };
+    }
 
     const proc = spawn(command, args, {
       cwd,
@@ -322,20 +477,34 @@ export class LocalRuntime implements RuntimeProvider {
       ...(isWindows ? {} : { detached: true }),
     });
 
-    const dataListeners: Array<(data: string) => void> = [];
+    const session: TerminalSession = {
+      id: sessionId,
+      process: proc,
+      projectId: this.#projectId,
+      dataListeners,
+      exited: false,
+      exitPromise: new Promise<number>((resolve) => {
+        proc.on('exit', (code) => {
+          session.exited = true;
+          this.#sessions.delete(sessionId);
+          resolve(code ?? 1);
+        });
 
-    const exitPromise = new Promise<number>((resolve) => {
-      proc.on('exit', (code) => {
-        this.#sessions.delete(sessionId);
-        resolve(code ?? 1);
-      });
-
-      proc.on('error', (err) => {
-        logger.error(`Process error [${sessionId}]:`, err);
-        this.#sessions.delete(sessionId);
-        resolve(1);
-      });
-    });
+        proc.on('error', (err) => {
+          logger.error(`Process error [${sessionId}]:`, err);
+          session.exited = true;
+          this.#sessions.delete(sessionId);
+          resolve(1);
+        });
+      }),
+      write: (data) => {
+        proc.stdin?.write(data);
+      },
+      resize: () => {
+        // Pipe-based sessions cannot resize
+      },
+      killTree: () => killProcessTree(proc),
+    };
 
     // Pipe stdout
     proc.stdout?.on('data', (chunk: Buffer) => {
@@ -356,14 +525,6 @@ export class LocalRuntime implements RuntimeProvider {
         listener(text);
       }
     });
-
-    const session: TerminalSession = {
-      id: sessionId,
-      process: proc,
-      projectId: this.#projectId,
-      dataListeners,
-      exitPromise,
-    };
 
     this.#sessions.set(sessionId, session);
 
@@ -386,13 +547,10 @@ export class LocalRuntime implements RuntimeProvider {
       },
 
       resize(_dimensions: { cols: number; rows: number }) {
-        /*
-         * Basic child_process doesn't support resize.
-         * Phase 2 can add node-pty for proper PTY support.
-         */
+        // Pipe-based sessions cannot resize
       },
 
-      onExit: exitPromise,
+      onExit: session.exitPromise,
 
       onData(callback: (data: string) => void): Disposer {
         dataListeners.push(callback);
@@ -489,15 +647,13 @@ export class LocalRuntime implements RuntimeProvider {
     const exitPromises: Array<Promise<void>> = [];
 
     for (const [id, session] of this.#sessions) {
-      const proc = session.process;
-
       /*
        * Build a promise that resolves once the process has fully exited
        * (stdio closed, ports released). If exit already happened, resolve
        * immediately. A timeout prevents blocking forever.
        */
       const exitPromise = new Promise<void>((resolve) => {
-        if (proc.exitCode !== null) {
+        if (session.exited) {
           resolve();
 
           return;
@@ -513,7 +669,7 @@ export class LocalRuntime implements RuntimeProvider {
           }
         };
 
-        proc.once('close', finish);
+        void session.exitPromise.then(finish);
 
         const timer = setTimeout(() => {
           logger.warn(`Session ${id} did not exit within ${EXIT_TIMEOUT_MS}ms — proceeding`);
@@ -522,7 +678,7 @@ export class LocalRuntime implements RuntimeProvider {
       });
 
       exitPromises.push(exitPromise);
-      killProcessTree(proc);
+      session.killTree();
       logger.debug(`Killed orphaned session ${id}`);
     }
 
@@ -560,10 +716,8 @@ export class LocalRuntime implements RuntimeProvider {
 
     // Kill all sessions and wait for processes to fully exit so ports are released
     for (const [id, session] of this.#sessions) {
-      const proc = session.process;
-
       const exitPromise = new Promise<void>((resolve) => {
-        if (proc.exitCode !== null) {
+        if (session.exited) {
           resolve();
 
           return;
@@ -579,7 +733,7 @@ export class LocalRuntime implements RuntimeProvider {
           }
         };
 
-        proc.once('close', finish);
+        void session.exitPromise.then(finish);
 
         const timer = setTimeout(() => {
           logger.warn(`Session ${id} did not exit within ${EXIT_TIMEOUT_MS}ms during teardown — proceeding`);
@@ -588,7 +742,7 @@ export class LocalRuntime implements RuntimeProvider {
       });
 
       exitPromises.push(exitPromise);
-      killProcessTree(proc);
+      session.killTree();
       logger.debug(`Killed session ${id}`);
     }
 
@@ -636,7 +790,7 @@ export class LocalRuntime implements RuntimeProvider {
     return Array.from(this.#sessions.keys());
   }
 
-  /** Write data to a terminal session's stdin. */
+  /** Write data to a terminal session's stdin / PTY. */
   writeToSession(sessionId: string, data: string): void {
     const session = this.#sessions.get(sessionId);
 
@@ -644,7 +798,18 @@ export class LocalRuntime implements RuntimeProvider {
       throw new Error(`Terminal session not found: ${sessionId}`);
     }
 
-    session.process.stdin?.write(data);
+    session.write(data);
+  }
+
+  /** Resize a terminal session (PTY sessions only; no-op for pipes). */
+  resizeSession(sessionId: string, cols: number, rows: number): void {
+    const session = this.#sessions.get(sessionId);
+
+    if (!session) {
+      throw new Error(`Terminal session not found: ${sessionId}`);
+    }
+
+    session.resize(cols, rows);
   }
 
   /** Kill a terminal session. */
@@ -655,7 +820,7 @@ export class LocalRuntime implements RuntimeProvider {
       throw new Error(`Terminal session not found: ${sessionId}`);
     }
 
-    killProcessTree(session.process);
+    session.killTree();
   }
 
   /*

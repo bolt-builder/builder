@@ -50,7 +50,7 @@ export class TerminalStore {
     }
   }
 
-  async attachTerminal(terminal: ITerminal) {
+  async attachTerminal(terminal: ITerminal, initialCommand?: string) {
     try {
       const runtime = await this.#runtime;
 
@@ -62,6 +62,39 @@ export class TerminalStore {
 
       const shellProcess = await newShellProcess(runtime, terminal);
       this.#terminals.push({ terminal, process: shellProcess });
+
+      if (initialCommand) {
+        /*
+         * Interactive shells (bash readline) flush queued stdin with
+         * TCSAFLUSH while initializing, so input written too early is
+         * silently discarded. Wait until output that looks like a shell
+         * prompt arrives before sending the command; fall back after a
+         * generous timeout for exotic prompts.
+         */
+        let sent = false;
+        let dispose: (() => void) | null = null;
+
+        const sendOnce = () => {
+          if (sent) {
+            return;
+          }
+
+          sent = true;
+          dispose?.();
+          shellProcess.write(`${initialCommand}\n`);
+        };
+
+        const promptPattern = /[#$%>❯]\s*(\x1b\[[\d;]*[A-Za-z])*\s*$/;
+
+        dispose = shellProcess.onData((data) => {
+          if (promptPattern.test(data)) {
+            // Small grace period so readline finishes its own init
+            setTimeout(sendOnce, 200);
+          }
+        });
+
+        setTimeout(sendOnce, 4_000);
+      }
     } catch (error: unknown) {
       terminal.write(
         coloredText.red('Failed to spawn shell\n\n') + (error instanceof Error ? error.message : String(error)),
