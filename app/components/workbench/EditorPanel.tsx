@@ -22,6 +22,7 @@ import { FileTree } from './FileTree';
 import { DEFAULT_TERMINAL_SIZE, TerminalTabs } from './terminal/TerminalTabs';
 import { workbenchStore } from '~/lib/stores/workbench';
 import { useMonacoEditorStore } from '~/lib/stores/settings';
+import { shouldUseCodeMirrorForFile } from '~/components/editor/monaco/monaco-file-support';
 import { fileGenerationStatus } from '~/lib/stores/files';
 import { Search } from './Search';
 import { cn } from '~/utils/cn';
@@ -214,8 +215,8 @@ export const EditorPanel = memo(
                     Generating…
                   </div>
                 )}
-                {/* .env files stay on CodeMirror for secret-value masking parity */}
-                {useMonaco && !editorDocument?.filePath.includes('.env') ? (
+                {/* env files and CodeMirror-only languages fall back to CodeMirror; everything else uses Monaco when enabled */}
+                {useMonaco && (!editorDocument || !shouldUseCodeMirrorForFile(editorDocument.filePath)) ? (
                   <Suspense fallback={editorLoadingFallback}>
                     <MonacoEditor
                       theme={theme}

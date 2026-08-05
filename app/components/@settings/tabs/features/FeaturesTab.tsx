@@ -345,11 +345,11 @@ export default function FeaturesTab() {
       {
         id: 'useMonacoEditor',
         title: 'Monaco Editor (VS Code)',
-        description: 'Use the Monaco editor from VS Code instead of CodeMirror',
+        description: 'Use the Monaco editor from VS Code (default). Disable to use CodeMirror everywhere',
         icon: 'i-ph:code',
         enabled: useMonacoEditor,
         tooltip:
-          'When enabled, the code editor in the workbench uses Monaco (the editor that powers VS Code) with IntelliSense-style autocomplete and richer language support. .env files always use CodeMirror so secret values stay masked.',
+          'Enabled by default: the workbench editor is Monaco (the editor that powers VS Code) with IntelliSense-style autocomplete. CodeMirror is still used automatically for .env files (so secret values stay masked) and for languages Monaco cannot highlight (.vue, .wat). Disable to use CodeMirror for everything.',
       },
     ],
     beta: [

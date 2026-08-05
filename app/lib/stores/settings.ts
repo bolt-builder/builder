@@ -520,7 +520,7 @@ const getInitialSettings = () => {
     developerMode: getStoredBoolean(SETTINGS_KEYS.DEVELOPER_MODE, false),
     autoSwitchToFile: getStoredBoolean(SETTINGS_KEYS.AUTO_SWITCH_TO_FILE, false),
     enableThinking: getStoredBoolean(SETTINGS_KEYS.ENABLE_THINKING, false),
-    useMonacoEditor: getStoredBoolean(SETTINGS_KEYS.MONACO_EDITOR, false),
+    useMonacoEditor: getStoredBoolean(SETTINGS_KEYS.MONACO_EDITOR, true),
   };
 };
 
