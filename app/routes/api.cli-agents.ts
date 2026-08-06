@@ -42,6 +42,13 @@ export interface CliAgentStatus extends CliAgentDescriptor {
 
 export const CLI_AGENTS: CliAgentDescriptor[] = [
   {
+    id: 'bolt',
+    name: 'Bolt CLI',
+    command: 'bolt',
+    versionArgs: ['--version'],
+    installHint: 'curl -fsSL https://raw.githubusercontent.com/bolt-builder/bolt-cli/dev/install | bash',
+  },
+  {
     id: 'claude-code',
     name: 'Claude Code',
     command: 'claude',
