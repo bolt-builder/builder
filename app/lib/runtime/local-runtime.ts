@@ -365,12 +365,21 @@ export class LocalRuntime implements RuntimeProvider {
     const sessionId = randomUUID();
     const cwd = options.cwd ? nodePath.resolve(this.#workdir, options.cwd) : this.#workdir;
 
-    const env = {
+    const env: Record<string, string | undefined> = {
       ...process.env,
       ...options.env,
       FORCE_COLOR: '1',
       TERM: 'xterm-256color',
     };
+
+    /*
+     * A host NO_COLOR would conflict with FORCE_COLOR and make Node/Bun-based
+     * CLIs (e.g. coding agents) print a warning with a stack trace at startup.
+     * Only an explicit NO_COLOR from the caller survives.
+     */
+    if (!('NO_COLOR' in (options.env ?? {}))) {
+      delete env.NO_COLOR;
+    }
 
     const isWindows = os.platform() === 'win32';
     const dataListeners: Array<(data: string) => void> = [];
@@ -571,10 +580,15 @@ export class LocalRuntime implements RuntimeProvider {
 
     const cwd = options.cwd ? nodePath.resolve(this.#workdir, options.cwd) : this.#workdir;
 
-    const env = {
+    const env: Record<string, string | undefined> = {
       ...process.env,
       ...options.env,
     };
+
+    // See spawn(): avoid the Node/Bun NO_COLOR + FORCE_COLOR conflict warning.
+    if (!('NO_COLOR' in (options.env ?? {}))) {
+      delete env.NO_COLOR;
+    }
 
     return new Promise<ProcessResult>((resolve) => {
       exec(
