@@ -78,15 +78,23 @@ export function checkRateLimit(request: Request, endpoint: string): { allowed: b
 }
 
 /**
- * Get client IP address from request
+ * Get client IP address from request.
+ *
+ * Forwarding headers (`x-forwarded-for`, `x-real-ip`, `cf-connecting-ip`) are
+ * client-controlled and trivially spoofed, so an attacker could bypass rate
+ * limiting by rotating them. Only trust them when the deployment sits behind a
+ * known proxy and opts in via `TRUST_PROXY_HEADERS=true`. Otherwise fall back to
+ * a single shared bucket, which cannot be spoofed apart.
  */
 function getClientIP(request: Request): string {
-  // Try various headers that might contain the real IP
-  const forwardedFor = request.headers.get('x-forwarded-for');
-  const realIP = request.headers.get('x-real-ip');
-  const cfConnectingIP = request.headers.get('cf-connecting-ip');
+  if (process.env.TRUST_PROXY_HEADERS !== 'true') {
+    return 'local';
+  }
 
-  // Return the first available IP or a fallback
+  const cfConnectingIP = request.headers.get('cf-connecting-ip');
+  const realIP = request.headers.get('x-real-ip');
+  const forwardedFor = request.headers.get('x-forwarded-for');
+
   return cfConnectingIP || realIP || forwardedFor?.split(',')[0]?.trim() || 'unknown';
 }
 
