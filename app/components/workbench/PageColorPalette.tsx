@@ -52,7 +52,7 @@ export const PageColorPalette = memo(({ colors, onColorSelect }: PageColorPalett
 
   if (!colors || colors.length === 0) {
     return (
-      <div className="text-center py-4 text-devonz-elements-textTertiary text-xs">
+      <div className="text-center py-4 text-bolt-elements-textTertiary text-xs">
         <div className="i-ph:palette w-6 h-6 mx-auto mb-2 opacity-40" />
         <p>No colors detected</p>
       </div>
@@ -65,7 +65,7 @@ export const PageColorPalette = memo(({ colors, onColorSelect }: PageColorPalett
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-[10px] text-devonz-elements-textTertiary uppercase tracking-wide">
+        <div className="flex items-center gap-1.5 text-[10px] text-bolt-elements-textTertiary uppercase tracking-wide">
           <span className="i-ph:palette w-3 h-3" />
           Page Colors ({uniqueColors.length})
         </div>
@@ -118,7 +118,7 @@ export const PageColorPalette = memo(({ colors, onColorSelect }: PageColorPalett
                   <span className="i-ph:copy w-4 h-4" />
                 </span>
               </button>
-              <span className="text-[9px] text-devonz-elements-textTertiary font-mono truncate max-w-[44px]">
+              <span className="text-[9px] text-bolt-elements-textTertiary font-mono truncate max-w-[44px]">
                 {hex.slice(1).toUpperCase()}
               </span>
             </div>
@@ -126,10 +126,8 @@ export const PageColorPalette = memo(({ colors, onColorSelect }: PageColorPalett
         })}
       </div>
 
-      <div className="pt-2 border-t border-devonz-elements-borderColor">
-        <p className="text-[10px] text-devonz-elements-textTertiary text-center">
-          Click to copy • Double-click to apply
-        </p>
+      <div className="pt-2 border-t border-bolt-elements-borderColor">
+        <p className="text-[10px] text-bolt-elements-textTertiary text-center">Click to copy • Double-click to apply</p>
       </div>
     </div>
   );

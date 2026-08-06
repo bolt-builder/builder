@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/zebbern/Devonz/tree/main/docs
-    about: Read the Devonz documentation before opening an issue
+    url: https://github.com/zebbern/Bolt/tree/main/docs
+    about: Read the Bolt documentation before opening an issue
   - name: Discussions
-    url: https://github.com/zebbern/Devonz/discussions
+    url: https://github.com/zebbern/Bolt/discussions
     about: Ask questions and share ideas in GitHub Discussions
   - name: Contributing Guide
-    url: https://github.com/zebbern/Devonz/blob/main/docs/CONTRIBUTING.md
+    url: https://github.com/zebbern/Bolt/blob/main/docs/CONTRIBUTING.md
     about: Read the contributing guidelines before submitting a PR

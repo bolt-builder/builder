@@ -200,9 +200,9 @@ describe('POST /api/db/chats', () => {
   });
 });
 
-describe('DEVONZ_DB_PATH env var (via resolveDbUrl)', () => {
+describe('BOLT_DB_PATH env var (via resolveDbUrl)', () => {
   /*
-   * resolveDbUrl is a pure function that reads process.env.DEVONZ_DB_PATH
+   * resolveDbUrl is a pure function that reads process.env.BOLT_DB_PATH
    * at call time. It lives in a side-effect-free module so we can import
    * it without triggering libsql client creation.
    */
@@ -213,23 +213,23 @@ describe('DEVONZ_DB_PATH env var (via resolveDbUrl)', () => {
     resolveDbUrl = mod.resolveDbUrl;
   });
 
-  const originalEnv = process.env.DEVONZ_DB_PATH;
+  const originalEnv = process.env.BOLT_DB_PATH;
 
   afterEach(() => {
     if (originalEnv === undefined) {
-      delete process.env.DEVONZ_DB_PATH;
+      delete process.env.BOLT_DB_PATH;
     } else {
-      process.env.DEVONZ_DB_PATH = originalEnv;
+      process.env.BOLT_DB_PATH = originalEnv;
     }
   });
 
-  it('defaults to ./data/devonz.db when DEVONZ_DB_PATH is not set', () => {
-    delete process.env.DEVONZ_DB_PATH;
-    expect(resolveDbUrl()).toBe('file:./data/devonz.db');
+  it('defaults to ./data/bolt.db when BOLT_DB_PATH is not set', () => {
+    delete process.env.BOLT_DB_PATH;
+    expect(resolveDbUrl()).toBe('file:./data/bolt.db');
   });
 
-  it('uses DEVONZ_DB_PATH when set', () => {
-    process.env.DEVONZ_DB_PATH = '/tmp/custom.db';
+  it('uses BOLT_DB_PATH when set', () => {
+    process.env.BOLT_DB_PATH = '/tmp/custom.db';
     expect(resolveDbUrl()).toBe('file:/tmp/custom.db');
   });
 });

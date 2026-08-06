@@ -313,14 +313,14 @@ export default function ProjectMemoryTab() {
         transition={{ duration: 0.3 }}
       >
         {/* Section Switcher */}
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-devonz-elements-background-depth-2 w-fit">
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-bolt-elements-background-depth-2 w-fit">
           <button
             onClick={() => setActiveSection('project')}
             className={cn(
               'px-3 py-1.5 text-xs rounded-md font-medium transition-colors duration-200',
               activeSection === 'project'
-                ? 'bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text'
-                : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
+                ? 'bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text'
+                : 'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary',
             )}
           >
             <span className="flex items-center gap-1.5">
@@ -333,15 +333,15 @@ export default function ProjectMemoryTab() {
             className={cn(
               'px-3 py-1.5 text-xs rounded-md font-medium transition-colors duration-200',
               activeSection === 'knowledge'
-                ? 'bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text'
-                : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
+                ? 'bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text'
+                : 'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary',
             )}
           >
             <span className="flex items-center gap-1.5">
               <div className="i-ph:books w-3.5 h-3.5" />
               Knowledge
               {knowledgeDocuments.length > 0 && (
-                <span className="ml-1 px-1.5 py-0 text-[10px] rounded-full bg-devonz-elements-item-contentAccent/15 text-devonz-elements-item-contentAccent font-semibold">
+                <span className="ml-1 px-1.5 py-0 text-[10px] rounded-full bg-bolt-elements-item-contentAccent/15 text-bolt-elements-item-contentAccent font-semibold">
                   {knowledgeDocuments.length}
                 </span>
               )}
@@ -352,15 +352,15 @@ export default function ProjectMemoryTab() {
             className={cn(
               'px-3 py-1.5 text-xs rounded-md font-medium transition-colors duration-200',
               activeSection === 'agent'
-                ? 'bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text'
-                : 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
+                ? 'bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text'
+                : 'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary',
             )}
           >
             <span className="flex items-center gap-1.5">
               <div className="i-ph:brain w-3.5 h-3.5" />
               Agent Memory
               {totalEntries > 0 && (
-                <span className="ml-1 px-1.5 py-0 text-[10px] rounded-full bg-devonz-elements-item-contentAccent/15 text-devonz-elements-item-contentAccent font-semibold">
+                <span className="ml-1 px-1.5 py-0 text-[10px] rounded-full bg-bolt-elements-item-contentAccent/15 text-bolt-elements-item-contentAccent font-semibold">
                   {totalEntries}
                 </span>
               )}
@@ -375,7 +375,7 @@ export default function ProjectMemoryTab() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium text-devonz-elements-textPrimary">Project Memory</h3>
+                  <h3 className="text-lg font-medium text-bolt-elements-textPrimary">Project Memory</h3>
                   {fileExists ? (
                     <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/10 text-green-500 font-medium">
                       Active
@@ -388,7 +388,7 @@ export default function ProjectMemoryTab() {
                 </div>
                 {hasUnsavedChanges && <span className="text-xs text-orange-500 font-medium">Unsaved changes</span>}
               </div>
-              <p className="text-sm text-devonz-elements-textSecondary">
+              <p className="text-sm text-bolt-elements-textSecondary">
                 Create a PROJECT.md file to give the AI persistent instructions that apply to every conversation in this
                 project. The AI will read this file automatically and follow your rules.
               </p>
@@ -398,15 +398,15 @@ export default function ProjectMemoryTab() {
             <div
               className={cn(
                 'p-4 rounded-lg',
-                'bg-devonz-elements-background-depth-2',
-                'border border-devonz-elements-borderColor',
+                'bg-bolt-elements-background-depth-2',
+                'border border-bolt-elements-borderColor',
               )}
             >
-              <h4 className="text-sm font-medium text-devonz-elements-textPrimary mb-2 flex items-center gap-2">
-                <div className="i-ph:lightbulb w-4 h-4 text-devonz-elements-item-contentAccent" />
+              <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-2 flex items-center gap-2">
+                <div className="i-ph:lightbulb w-4 h-4 text-bolt-elements-item-contentAccent" />
                 What can you put in Project Memory?
               </h4>
-              <ul className="text-sm text-devonz-elements-textSecondary space-y-1 list-disc list-inside">
+              <ul className="text-sm text-bolt-elements-textSecondary space-y-1 list-disc list-inside">
                 <li>Coding standards and conventions (e.g., "Use TypeScript strict mode")</li>
                 <li>Style guidelines (e.g., "All headings must be red")</li>
                 <li>Project-specific rules (e.g., "Never modify the config.ts file")</li>
@@ -418,15 +418,15 @@ export default function ProjectMemoryTab() {
             {/* Editor Section */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-devonz-elements-textPrimary">PROJECT.md Content</label>
+                <label className="text-sm font-medium text-bolt-elements-textPrimary">PROJECT.md Content</label>
                 {!content && !fileExists && (
                   <button
                     onClick={handleCreateTemplate}
                     className={cn(
                       'px-3 py-1.5 text-xs rounded-md',
-                      'bg-devonz-elements-button-primary-background',
-                      'text-devonz-elements-button-primary-text',
-                      'hover:bg-devonz-elements-button-primary-backgroundHover',
+                      'bg-bolt-elements-button-primary-background',
+                      'text-bolt-elements-button-primary-text',
+                      'hover:bg-bolt-elements-button-primary-backgroundHover',
                       'transition-colors duration-200',
                     )}
                   >
@@ -442,11 +442,11 @@ export default function ProjectMemoryTab() {
                 placeholder="Enter your project instructions here... The AI will follow these rules in every conversation."
                 className={cn(
                   'w-full h-64 p-3 rounded-lg resize-y',
-                  'bg-devonz-elements-background-depth-3',
-                  'border border-devonz-elements-borderColor',
-                  'text-devonz-elements-textPrimary',
-                  'placeholder-devonz-elements-textTertiary',
-                  'focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus',
+                  'bg-bolt-elements-background-depth-3',
+                  'border border-bolt-elements-borderColor',
+                  'text-bolt-elements-textPrimary',
+                  'placeholder-bolt-elements-textTertiary',
+                  'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
                   'font-mono text-sm',
                   'transition-colors duration-200',
                 )}
@@ -459,9 +459,9 @@ export default function ProjectMemoryTab() {
                   disabled={isSaving || !hasUnsavedChanges}
                   className={cn(
                     'px-4 py-2 rounded-lg text-sm font-medium',
-                    'bg-devonz-elements-button-primary-background',
-                    'text-devonz-elements-button-primary-text',
-                    'hover:bg-devonz-elements-button-primary-backgroundHover',
+                    'bg-bolt-elements-button-primary-background',
+                    'text-bolt-elements-button-primary-text',
+                    'hover:bg-bolt-elements-button-primary-backgroundHover',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
                     'transition-all duration-200',
                   )}
@@ -474,10 +474,10 @@ export default function ProjectMemoryTab() {
                     onClick={handleReset}
                     className={cn(
                       'px-4 py-2 rounded-lg text-sm font-medium',
-                      'bg-devonz-elements-background-depth-2',
-                      'text-devonz-elements-textSecondary',
-                      'hover:text-devonz-elements-textPrimary',
-                      'border border-devonz-elements-borderColor',
+                      'bg-bolt-elements-background-depth-2',
+                      'text-bolt-elements-textSecondary',
+                      'hover:text-bolt-elements-textPrimary',
+                      'border border-bolt-elements-borderColor',
                       'transition-all duration-200',
                     )}
                   >
@@ -488,9 +488,9 @@ export default function ProjectMemoryTab() {
             </div>
 
             {/* File Path Info */}
-            <div className="text-xs text-devonz-elements-textTertiary">
+            <div className="text-xs text-bolt-elements-textTertiary">
               File location:{' '}
-              <code className="px-1 py-0.5 rounded bg-devonz-elements-background-depth-2">{PROJECT_MEMORY_PATH}</code>
+              <code className="px-1 py-0.5 rounded bg-bolt-elements-background-depth-2">{PROJECT_MEMORY_PATH}</code>
             </div>
           </>
         )}
@@ -502,7 +502,7 @@ export default function ProjectMemoryTab() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium text-devonz-elements-textPrimary">Knowledge Base</h3>
+                  <h3 className="text-lg font-medium text-bolt-elements-textPrimary">Knowledge Base</h3>
                   {knowledgeDocuments.length > 0 ? (
                     <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/10 text-green-500 font-medium">
                       {knowledgeDocuments.length} {knowledgeDocuments.length === 1 ? 'document' : 'documents'}
@@ -518,9 +518,9 @@ export default function ProjectMemoryTab() {
                   disabled={isUploading}
                   className={cn(
                     'px-3 py-1.5 text-xs rounded-md font-medium',
-                    'bg-devonz-elements-button-primary-background',
-                    'text-devonz-elements-button-primary-text',
-                    'hover:bg-devonz-elements-button-primary-backgroundHover',
+                    'bg-bolt-elements-button-primary-background',
+                    'text-bolt-elements-button-primary-text',
+                    'hover:bg-bolt-elements-button-primary-backgroundHover',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
                     'transition-colors duration-200',
                     'flex items-center gap-1.5',
@@ -539,7 +539,7 @@ export default function ProjectMemoryTab() {
                   onChange={(e) => void handleUploadDocuments(e.target.files)}
                 />
               </div>
-              <p className="text-sm text-devonz-elements-textSecondary">
+              <p className="text-sm text-bolt-elements-textSecondary">
                 Upload reference documents — coding style guides, API docs, specs — and the AI will consult them in
                 every conversation for this project. Supported formats: {KNOWLEDGE_ALLOWED_EXTENSIONS.join(', ')} (max{' '}
                 {Math.round(KNOWLEDGE_MAX_FILE_SIZE / 1024)} KB each).
@@ -551,12 +551,12 @@ export default function ProjectMemoryTab() {
               <div
                 className={cn(
                   'p-8 rounded-lg text-center',
-                  'bg-devonz-elements-background-depth-2',
-                  'border border-dashed border-devonz-elements-borderColor',
+                  'bg-bolt-elements-background-depth-2',
+                  'border border-dashed border-bolt-elements-borderColor',
                 )}
               >
-                <div className="i-ph:books w-8 h-8 mx-auto mb-2 text-devonz-elements-textTertiary" />
-                <p className="text-sm text-devonz-elements-textSecondary">
+                <div className="i-ph:books w-8 h-8 mx-auto mb-2 text-bolt-elements-textTertiary" />
+                <p className="text-sm text-bolt-elements-textSecondary">
                   No documents yet. Upload style guides or reference material to give the AI project-specific knowledge.
                 </p>
               </div>
@@ -567,14 +567,14 @@ export default function ProjectMemoryTab() {
                     key={doc.path}
                     className={cn(
                       'flex items-center justify-between gap-3 px-3 py-2 rounded-lg',
-                      'bg-devonz-elements-background-depth-2',
-                      'border border-devonz-elements-borderColor',
+                      'bg-bolt-elements-background-depth-2',
+                      'border border-bolt-elements-borderColor',
                     )}
                   >
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="i-ph:file-text w-4 h-4 shrink-0 text-devonz-elements-item-contentAccent" />
-                      <span className="text-sm text-devonz-elements-textPrimary truncate">{doc.name}</span>
-                      <span className="text-xs text-devonz-elements-textTertiary shrink-0">
+                      <div className="i-ph:file-text w-4 h-4 shrink-0 text-bolt-elements-item-contentAccent" />
+                      <span className="text-sm text-bolt-elements-textPrimary truncate">{doc.name}</span>
+                      <span className="text-xs text-bolt-elements-textTertiary shrink-0">
                         {formatSize(doc.content.length)}
                       </span>
                     </div>
@@ -588,7 +588,7 @@ export default function ProjectMemoryTab() {
                         </button>
                         <button
                           onClick={() => setDeleteDocTarget(null)}
-                          className="px-2 py-1 text-xs rounded-md font-medium text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors duration-200"
+                          className="px-2 py-1 text-xs rounded-md font-medium text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors duration-200"
                         >
                           Cancel
                         </button>
@@ -597,7 +597,7 @@ export default function ProjectMemoryTab() {
                       <button
                         onClick={() => setDeleteDocTarget(doc.name)}
                         aria-label={`Remove ${doc.name}`}
-                        className="p-1.5 rounded-md text-devonz-elements-textTertiary hover:text-red-500 hover:bg-red-500/10 transition-colors duration-200 shrink-0"
+                        className="p-1.5 rounded-md text-bolt-elements-textTertiary hover:text-red-500 hover:bg-red-500/10 transition-colors duration-200 shrink-0"
                       >
                         <div className="i-ph:trash w-4 h-4" />
                       </button>
@@ -608,11 +608,9 @@ export default function ProjectMemoryTab() {
             )}
 
             {/* Storage path info */}
-            <div className="text-xs text-devonz-elements-textTertiary">
+            <div className="text-xs text-bolt-elements-textTertiary">
               Documents are stored in{' '}
-              <code className="px-1 py-0.5 rounded bg-devonz-elements-background-depth-2">
-                {KNOWLEDGE_DIR_ABSOLUTE}
-              </code>{' '}
+              <code className="px-1 py-0.5 rounded bg-bolt-elements-background-depth-2">{KNOWLEDGE_DIR_ABSOLUTE}</code>{' '}
               and travel with the project.
             </div>
           </>
@@ -625,7 +623,7 @@ export default function ProjectMemoryTab() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium text-devonz-elements-textPrimary">Agent Memory</h3>
+                  <h3 className="text-lg font-medium text-bolt-elements-textPrimary">Agent Memory</h3>
                   {totalEntries > 0 ? (
                     <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/10 text-green-500 font-medium">
                       {totalEntries} {totalEntries === 1 ? 'entry' : 'entries'}
@@ -640,9 +638,9 @@ export default function ProjectMemoryTab() {
                   onClick={() => setShowAddForm((prev) => !prev)}
                   className={cn(
                     'px-3 py-1.5 text-xs rounded-md font-medium',
-                    'bg-devonz-elements-button-primary-background',
-                    'text-devonz-elements-button-primary-text',
-                    'hover:bg-devonz-elements-button-primary-backgroundHover',
+                    'bg-bolt-elements-button-primary-background',
+                    'text-bolt-elements-button-primary-text',
+                    'hover:bg-bolt-elements-button-primary-backgroundHover',
                     'transition-colors duration-200',
                     'flex items-center gap-1.5',
                   )}
@@ -651,7 +649,7 @@ export default function ProjectMemoryTab() {
                   {showAddForm ? 'Cancel' : 'Add Entry'}
                 </button>
               </div>
-              <p className="text-sm text-devonz-elements-textSecondary">
+              <p className="text-sm text-bolt-elements-textSecondary">
                 Cross-session memory entries are created by the agent during conversations. They persist across sessions
                 via MEMORY.md and help the agent remember preferences, decisions, and patterns.
               </p>
@@ -662,12 +660,12 @@ export default function ProjectMemoryTab() {
               <div
                 className={cn(
                   'p-4 rounded-lg',
-                  'bg-devonz-elements-background-depth-2',
-                  'border border-devonz-elements-borderColor',
+                  'bg-bolt-elements-background-depth-2',
+                  'border border-bolt-elements-borderColor',
                 )}
               >
-                <h4 className="text-sm font-medium text-devonz-elements-textPrimary mb-3 flex items-center gap-2">
-                  <div className="i-ph:chart-bar w-4 h-4 text-devonz-elements-item-contentAccent" />
+                <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3 flex items-center gap-2">
+                  <div className="i-ph:chart-bar w-4 h-4 text-bolt-elements-item-contentAccent" />
                   Memory Usage
                 </h4>
                 <div className="flex flex-wrap gap-3">
@@ -679,12 +677,12 @@ export default function ProjectMemoryTab() {
                         key={category}
                         className={cn(
                           'flex items-center gap-2 px-3 py-1.5 rounded-md text-xs',
-                          'bg-devonz-elements-background-depth-3',
-                          'border border-devonz-elements-borderColor',
+                          'bg-bolt-elements-background-depth-3',
+                          'border border-bolt-elements-borderColor',
                         )}
                       >
-                        <span className="font-medium text-devonz-elements-textPrimary">{category}</span>
-                        <span className="text-devonz-elements-textTertiary">
+                        <span className="font-medium text-bolt-elements-textPrimary">{category}</span>
+                        <span className="text-bolt-elements-textTertiary">
                           {count}/{20}
                         </span>
                       </div>
@@ -693,12 +691,12 @@ export default function ProjectMemoryTab() {
                   <div
                     className={cn(
                       'flex items-center gap-2 px-3 py-1.5 rounded-md text-xs',
-                      'bg-devonz-elements-item-contentAccent/10',
-                      'border border-devonz-elements-item-contentAccent/20',
+                      'bg-bolt-elements-item-contentAccent/10',
+                      'border border-bolt-elements-item-contentAccent/20',
                     )}
                   >
-                    <span className="font-medium text-devonz-elements-item-contentAccent">Total</span>
-                    <span className="text-devonz-elements-item-contentAccent">{totalEntries}</span>
+                    <span className="font-medium text-bolt-elements-item-contentAccent">Total</span>
+                    <span className="text-bolt-elements-item-contentAccent">{totalEntries}</span>
                   </div>
                 </div>
               </div>
@@ -709,21 +707,21 @@ export default function ProjectMemoryTab() {
               <motion.div
                 className={cn(
                   'p-4 rounded-lg',
-                  'bg-devonz-elements-background-depth-2',
-                  'border border-devonz-elements-borderColor',
+                  'bg-bolt-elements-background-depth-2',
+                  'border border-bolt-elements-borderColor',
                 )}
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 transition={{ duration: 0.2 }}
               >
-                <h4 className="text-sm font-medium text-devonz-elements-textPrimary mb-3 flex items-center gap-2">
-                  <div className="i-ph:plus-circle w-4 h-4 text-devonz-elements-item-contentAccent" />
+                <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3 flex items-center gap-2">
+                  <div className="i-ph:plus-circle w-4 h-4 text-bolt-elements-item-contentAccent" />
                   New Memory Entry
                 </h4>
                 <div className="flex flex-col gap-3">
                   <div className="flex gap-3">
                     <div className="flex flex-col gap-1 flex-1">
-                      <label className="text-xs text-devonz-elements-textSecondary">Category</label>
+                      <label className="text-xs text-bolt-elements-textSecondary">Category</label>
                       <input
                         type="text"
                         value={newCategory}
@@ -731,17 +729,17 @@ export default function ProjectMemoryTab() {
                         placeholder="e.g., preferences, decisions, patterns"
                         className={cn(
                           'w-full px-3 py-2 rounded-md text-sm',
-                          'bg-devonz-elements-background-depth-3',
-                          'border border-devonz-elements-borderColor',
-                          'text-devonz-elements-textPrimary',
-                          'placeholder-devonz-elements-textTertiary',
-                          'focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus',
+                          'bg-bolt-elements-background-depth-3',
+                          'border border-bolt-elements-borderColor',
+                          'text-bolt-elements-textPrimary',
+                          'placeholder-bolt-elements-textTertiary',
+                          'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
                           'transition-colors duration-200',
                         )}
                       />
                     </div>
                     <div className="flex flex-col gap-1 flex-1">
-                      <label className="text-xs text-devonz-elements-textSecondary">Key</label>
+                      <label className="text-xs text-bolt-elements-textSecondary">Key</label>
                       <input
                         type="text"
                         value={newKey}
@@ -749,18 +747,18 @@ export default function ProjectMemoryTab() {
                         placeholder="e.g., preferred-framework"
                         className={cn(
                           'w-full px-3 py-2 rounded-md text-sm',
-                          'bg-devonz-elements-background-depth-3',
-                          'border border-devonz-elements-borderColor',
-                          'text-devonz-elements-textPrimary',
-                          'placeholder-devonz-elements-textTertiary',
-                          'focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus',
+                          'bg-bolt-elements-background-depth-3',
+                          'border border-bolt-elements-borderColor',
+                          'text-bolt-elements-textPrimary',
+                          'placeholder-bolt-elements-textTertiary',
+                          'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
                           'transition-colors duration-200',
                         )}
                       />
                     </div>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs text-devonz-elements-textSecondary">Value</label>
+                    <label className="text-xs text-bolt-elements-textSecondary">Value</label>
                     <textarea
                       value={newValue}
                       onChange={(e) => setNewValue(e.target.value)}
@@ -768,11 +766,11 @@ export default function ProjectMemoryTab() {
                       rows={3}
                       className={cn(
                         'w-full px-3 py-2 rounded-md text-sm resize-y',
-                        'bg-devonz-elements-background-depth-3',
-                        'border border-devonz-elements-borderColor',
-                        'text-devonz-elements-textPrimary',
-                        'placeholder-devonz-elements-textTertiary',
-                        'focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus',
+                        'bg-bolt-elements-background-depth-3',
+                        'border border-bolt-elements-borderColor',
+                        'text-bolt-elements-textPrimary',
+                        'placeholder-bolt-elements-textTertiary',
+                        'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
                         'transition-colors duration-200',
                       )}
                     />
@@ -782,9 +780,9 @@ export default function ProjectMemoryTab() {
                       onClick={handleAddEntry}
                       className={cn(
                         'px-4 py-2 rounded-lg text-sm font-medium',
-                        'bg-devonz-elements-button-primary-background',
-                        'text-devonz-elements-button-primary-text',
-                        'hover:bg-devonz-elements-button-primary-backgroundHover',
+                        'bg-bolt-elements-button-primary-background',
+                        'text-bolt-elements-button-primary-text',
+                        'hover:bg-bolt-elements-button-primary-backgroundHover',
                         'transition-all duration-200',
                       )}
                     >
@@ -799,10 +797,10 @@ export default function ProjectMemoryTab() {
                       }}
                       className={cn(
                         'px-4 py-2 rounded-lg text-sm font-medium',
-                        'bg-devonz-elements-background-depth-2',
-                        'text-devonz-elements-textSecondary',
-                        'hover:text-devonz-elements-textPrimary',
-                        'border border-devonz-elements-borderColor',
+                        'bg-bolt-elements-background-depth-2',
+                        'text-bolt-elements-textSecondary',
+                        'hover:text-bolt-elements-textPrimary',
+                        'border border-bolt-elements-borderColor',
                         'transition-all duration-200',
                       )}
                     >
@@ -825,12 +823,10 @@ export default function ProjectMemoryTab() {
 
                   return (
                     <div key={category} className="flex flex-col gap-2">
-                      <h4 className="text-sm font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                        <div className="i-ph:folder-open w-4 h-4 text-devonz-elements-item-contentAccent" />
+                      <h4 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                        <div className="i-ph:folder-open w-4 h-4 text-bolt-elements-item-contentAccent" />
                         {category}
-                        <span className="text-xs text-devonz-elements-textTertiary font-normal">
-                          ({entries.length})
-                        </span>
+                        <span className="text-xs text-bolt-elements-textTertiary font-normal">({entries.length})</span>
                       </h4>
                       <div className="flex flex-col gap-1.5">
                         {entries.map((entry) => (
@@ -838,28 +834,26 @@ export default function ProjectMemoryTab() {
                             key={`${category}-${entry.key}`}
                             className={cn(
                               'flex items-start justify-between gap-3 p-3 rounded-lg',
-                              'bg-devonz-elements-background-depth-2',
-                              'border border-devonz-elements-borderColor',
+                              'bg-bolt-elements-background-depth-2',
+                              'border border-bolt-elements-borderColor',
                               'group',
                             )}
                           >
                             <div className="flex flex-col gap-1 min-w-0 flex-1">
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-devonz-elements-textPrimary">
-                                  {entry.key}
-                                </span>
-                                <span className="text-[10px] text-devonz-elements-textTertiary whitespace-nowrap">
+                                <span className="text-sm font-medium text-bolt-elements-textPrimary">{entry.key}</span>
+                                <span className="text-[10px] text-bolt-elements-textTertiary whitespace-nowrap">
                                   {formatRelativeTime(entry.updatedAt)}
                                 </span>
                               </div>
-                              <p className="text-xs text-devonz-elements-textSecondary break-words line-clamp-2">
+                              <p className="text-xs text-bolt-elements-textSecondary break-words line-clamp-2">
                                 {entry.summary}
                               </p>
                             </div>
                             <div className="flex-shrink-0 pt-0.5">
                               {deleteTarget?.category === category && deleteTarget?.key === entry.key ? (
                                 <div className="flex items-center gap-1.5">
-                                  <span className="text-[10px] text-devonz-elements-textTertiary whitespace-nowrap">
+                                  <span className="text-[10px] text-bolt-elements-textTertiary whitespace-nowrap">
                                     Are you sure?
                                   </span>
                                   <button
@@ -877,8 +871,8 @@ export default function ProjectMemoryTab() {
                                     onClick={() => setDeleteTarget(null)}
                                     className={cn(
                                       'px-2 py-1 text-[10px] rounded font-medium',
-                                      'text-devonz-elements-textTertiary',
-                                      'hover:text-devonz-elements-textPrimary',
+                                      'text-bolt-elements-textTertiary',
+                                      'hover:text-bolt-elements-textPrimary',
                                       'transition-colors duration-200',
                                     )}
                                   >
@@ -890,7 +884,7 @@ export default function ProjectMemoryTab() {
                                   onClick={() => setDeleteTarget({ category, key: entry.key })}
                                   className={cn(
                                     'p-1 rounded opacity-0 group-hover:opacity-100',
-                                    'text-devonz-elements-textTertiary',
+                                    'text-bolt-elements-textTertiary',
                                     'hover:text-red-500 hover:bg-red-500/10',
                                     'transition-all duration-200',
                                   )}
@@ -911,16 +905,16 @@ export default function ProjectMemoryTab() {
               <div
                 className={cn(
                   'flex flex-col items-center justify-center gap-3 p-8 rounded-lg',
-                  'bg-devonz-elements-background-depth-2',
-                  'border border-devonz-elements-borderColor border-dashed',
+                  'bg-bolt-elements-background-depth-2',
+                  'border border-bolt-elements-borderColor border-dashed',
                 )}
               >
-                <div className="i-ph:brain w-10 h-10 text-devonz-elements-textTertiary" />
+                <div className="i-ph:brain w-10 h-10 text-bolt-elements-textTertiary" />
                 <div className="text-center">
-                  <p className="text-sm font-medium text-devonz-elements-textPrimary mb-1">
+                  <p className="text-sm font-medium text-bolt-elements-textPrimary mb-1">
                     No cross-session memories yet
                   </p>
-                  <p className="text-xs text-devonz-elements-textTertiary max-w-sm">
+                  <p className="text-xs text-bolt-elements-textTertiary max-w-sm">
                     The agent builds memory during conversations — preferences, decisions, and patterns it discovers.
                     These persist across sessions via MEMORY.md so the agent remembers context between chats.
                   </p>
@@ -929,9 +923,9 @@ export default function ProjectMemoryTab() {
                   onClick={() => setShowAddForm(true)}
                   className={cn(
                     'mt-2 px-3 py-1.5 text-xs rounded-md font-medium',
-                    'bg-devonz-elements-button-primary-background',
-                    'text-devonz-elements-button-primary-text',
-                    'hover:bg-devonz-elements-button-primary-backgroundHover',
+                    'bg-bolt-elements-button-primary-background',
+                    'text-bolt-elements-button-primary-text',
+                    'hover:bg-bolt-elements-button-primary-backgroundHover',
                     'transition-colors duration-200',
                     'flex items-center gap-1.5',
                   )}
@@ -943,9 +937,9 @@ export default function ProjectMemoryTab() {
             )}
 
             {/* File Path Info for Agent Memory */}
-            <div className="text-xs text-devonz-elements-textTertiary">
+            <div className="text-xs text-bolt-elements-textTertiary">
               Synced to:{' '}
-              <code className="px-1 py-0.5 rounded bg-devonz-elements-background-depth-2">/home/project/MEMORY.md</code>
+              <code className="px-1 py-0.5 rounded bg-bolt-elements-background-depth-2">/home/project/MEMORY.md</code>
             </div>
           </>
         )}

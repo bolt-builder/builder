@@ -19,7 +19,7 @@ export function useIndexedDB() {
       try {
         setIsLoading(true);
 
-        const request = indexedDB.open('devonzDB', 1);
+        const request = indexedDB.open('boltDB', 1);
 
         request.onupgradeneeded = (event) => {
           const database = (event.target as IDBOpenDBRequest).result;

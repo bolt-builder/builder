@@ -28,7 +28,7 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className={`rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 p-4 mb-2`}
+          className={`rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 p-4 mb-2`}
         >
           <div className="flex items-start">
             {/* Icon */}
@@ -42,10 +42,10 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                 className={cn(
                   'text-xl',
                   type === 'success'
-                    ? 'i-ph:check-circle-duotone text-devonz-elements-icon-success'
+                    ? 'i-ph:check-circle-duotone text-bolt-elements-icon-success'
                     : type === 'error'
-                      ? 'i-ph:warning-duotone text-devonz-elements-button-danger-text'
-                      : 'i-ph:info-duotone text-devonz-elements-loader-progress',
+                      ? 'i-ph:warning-duotone text-bolt-elements-button-danger-text'
+                      : 'i-ph:info-duotone text-bolt-elements-loader-progress',
                 )}
               ></div>
             </motion.div>
@@ -55,7 +55,7 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.1 }}
-                className={`text-sm font-medium text-devonz-elements-textPrimary`}
+                className={`text-sm font-medium text-bolt-elements-textPrimary`}
               >
                 {title}
               </motion.h3>
@@ -63,7 +63,7 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className={`mt-2 text-sm text-devonz-elements-textSecondary`}
+                className={`mt-2 text-sm text-bolt-elements-textSecondary`}
               >
                 <p>{description}</p>
 
@@ -77,12 +77,12 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                           className={cn(
                             'w-6 h-6 rounded-full flex items-center justify-center',
                             buildStatus === 'running'
-                              ? 'bg-devonz-elements-loader-progress'
+                              ? 'bg-bolt-elements-loader-progress'
                               : buildStatus === 'complete'
-                                ? 'bg-devonz-elements-icon-success'
+                                ? 'bg-bolt-elements-icon-success'
                                 : buildStatus === 'failed'
-                                  ? 'bg-devonz-elements-button-danger-background'
-                                  : 'bg-devonz-elements-textTertiary',
+                                  ? 'bg-bolt-elements-button-danger-background'
+                                  : 'bg-bolt-elements-textTertiary',
                           )}
                         >
                           {buildStatus === 'running' ? (
@@ -103,8 +103,8 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                         className={cn(
                           'h-0.5 w-8',
                           buildStatus === 'complete'
-                            ? 'bg-devonz-elements-icon-success'
-                            : 'bg-devonz-elements-textTertiary',
+                            ? 'bg-bolt-elements-icon-success'
+                            : 'bg-bolt-elements-textTertiary',
                         )}
                       ></div>
 
@@ -114,12 +114,12 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                           className={cn(
                             'w-6 h-6 rounded-full flex items-center justify-center',
                             deployStatus === 'running'
-                              ? 'bg-devonz-elements-loader-progress'
+                              ? 'bg-bolt-elements-loader-progress'
                               : deployStatus === 'complete'
-                                ? 'bg-devonz-elements-icon-success'
+                                ? 'bg-bolt-elements-icon-success'
                                 : deployStatus === 'failed'
-                                  ? 'bg-devonz-elements-button-danger-background'
-                                  : 'bg-devonz-elements-textTertiary',
+                                  ? 'bg-bolt-elements-button-danger-background'
+                                  : 'bg-bolt-elements-textTertiary',
                           )}
                         >
                           {deployStatus === 'running' ? (
@@ -139,7 +139,7 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                 )}
 
                 {content && (
-                  <div className="text-xs text-devonz-elements-textSecondary p-2 bg-devonz-elements-background-depth-3 rounded mt-4 mb-4">
+                  <div className="text-xs text-bolt-elements-textSecondary p-2 bg-bolt-elements-background-depth-3 rounded mt-4 mb-4">
                     {content}
                   </div>
                 )}
@@ -149,7 +149,7 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-devonz-elements-item-contentAccent hover:underline flex items-center"
+                      className="text-bolt-elements-item-contentAccent hover:underline flex items-center"
                     >
                       <span className="mr-1">View deployed site</span>
                       <div className="i-ph:arrow-square-out"></div>
@@ -159,9 +159,9 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                         onClick={() => setIsDomainModalOpen(true)}
                         className={cn(
                           'flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-md',
-                          'bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor',
-                          'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
-                          'hover:bg-devonz-elements-background-depth-4 hover:border-accent-500/50',
+                          'bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor',
+                          'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary',
+                          'hover:bg-bolt-elements-background-depth-4 hover:border-accent-500/50',
                           'transition-all',
                         )}
                       >
@@ -188,25 +188,25 @@ export default function DeployChatAlert({ alert, clearAlert, postMessage }: Depl
                       }
                       className={cn(
                         `px-2 py-1.5 rounded-md text-sm font-medium`,
-                        'bg-devonz-elements-button-primary-background',
-                        'hover:bg-devonz-elements-button-primary-backgroundHover',
-                        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-devonz-elements-button-danger-background',
-                        'text-devonz-elements-button-primary-text',
+                        'bg-bolt-elements-button-primary-background',
+                        'hover:bg-bolt-elements-button-primary-backgroundHover',
+                        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bolt-elements-button-danger-background',
+                        'text-bolt-elements-button-primary-text',
                         'flex items-center gap-1.5',
                       )}
                     >
                       <div className="i-ph:chat-circle-duotone"></div>
-                      Ask Devonz
+                      Ask Bolt
                     </button>
                   )}
                   <button
                     onClick={clearAlert}
                     className={cn(
                       `px-2 py-1.5 rounded-md text-sm font-medium`,
-                      'bg-devonz-elements-button-secondary-background',
-                      'hover:bg-devonz-elements-button-secondary-backgroundHover',
-                      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-devonz-elements-button-secondary-background',
-                      'text-devonz-elements-button-secondary-text',
+                      'bg-bolt-elements-button-secondary-background',
+                      'hover:bg-bolt-elements-button-secondary-backgroundHover',
+                      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bolt-elements-button-secondary-background',
+                      'text-bolt-elements-button-secondary-text',
                     )}
                   >
                     Dismiss

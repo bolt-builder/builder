@@ -189,7 +189,7 @@ function isEssentialFile(filePath: string): boolean {
 }
 
 /**
- * Simplify non-essential devonzAction file contents to reduce token usage.
+ * Simplify non-essential boltAction file contents to reduce token usage.
  * Essential config/entry files keep their full content so the LLM understands the project structure.
  * Lock files are stripped entirely (they're huge and the LLM never needs them).
  * Non-essential files are collapsed into a compact summary line listing their paths.
@@ -197,7 +197,7 @@ function isEssentialFile(filePath: string): boolean {
 function simplifyTemplateActions(text: string): string {
   /* Strip lock files entirely — they can be 6000+ lines (~25K tokens) */
   let result = text.replace(
-    /<devonzAction type="file" filePath="(?:package-lock\.json|yarn\.lock|pnpm-lock\.yaml)">[\s\S]*?<\/devonzAction>/g,
+    /<boltAction type="file" filePath="(?:package-lock\.json|yarn\.lock|pnpm-lock\.yaml)">[\s\S]*?<\/boltAction>/g,
     '',
   );
 
@@ -205,7 +205,7 @@ function simplifyTemplateActions(text: string): string {
   const nonEssentialPaths: string[] = [];
 
   result = result.replace(
-    /(<devonzAction[^>]*type="file"[^>]*filePath="([^"]+)"[^>]*>)([\s\S]*?)(<\/devonzAction>)/g,
+    /(<boltAction[^>]*type="file"[^>]*filePath="([^"]+)"[^>]*>)([\s\S]*?)(<\/boltAction>)/g,
     (match, _openTag: string, filePath: string, _content: string, _closeTag: string) => {
       if (isEssentialFile(filePath)) {
         return match;
@@ -220,7 +220,7 @@ function simplifyTemplateActions(text: string): string {
   /* Append compact summary of non-essential files before closing artifact tag */
   if (nonEssentialPaths.length > 0) {
     const summary = `\n[Template includes ${nonEssentialPaths.length} additional pre-created files: ${nonEssentialPaths.join(', ')}]\n`;
-    const closingTag = '</devonzArtifact>';
+    const closingTag = '</boltArtifact>';
     const closingIdx = result.lastIndexOf(closingTag);
 
     if (closingIdx !== -1) {
@@ -234,7 +234,7 @@ function simplifyTemplateActions(text: string): string {
 }
 
 function sanitizeText(text: string): string {
-  let sanitized = text.replace(/<div class=\\"__devonzThought__\\">.*?<\/div>/s, '');
+  let sanitized = text.replace(/<div class=\\"__boltThought__\\">.*?<\/div>/s, '');
   sanitized = sanitized.replace(/<think>.*?<\/think>/s, '');
   sanitized = simplifyTemplateActions(sanitized);
 
@@ -474,7 +474,7 @@ When the user sends a message like "execute the plan", "approved", or "go ahead"
   }
 
   // PROJECT.md: Persistent project memory - read from project root if exists
-  const projectMemoryPaths = ['/home/project/PROJECT.md', '/home/project/DEVONZ.md', '/home/project/AGENTS.md'];
+  const projectMemoryPaths = ['/home/project/PROJECT.md', '/home/project/BOLT.md', '/home/project/AGENTS.md'];
   let projectMemoryContent: string | undefined;
 
   for (const memoryPath of projectMemoryPaths) {
@@ -491,14 +491,14 @@ When the user sends a message like "execute the plan", "approved", or "go ahead"
     systemPrompt = `${systemPrompt}
 
 <project_memory>
-The following are project-specific instructions from the user's PROJECT.md (or DEVONZ.md/AGENTS.md) file. You MUST follow these instructions for this project:
+The following are project-specific instructions from the user's PROJECT.md (or BOLT.md/AGENTS.md) file. You MUST follow these instructions for this project:
 
 ${projectMemoryContent}
 </project_memory>
 `;
   }
 
-  // Knowledge base: user-uploaded reference documents from .devonz/knowledge/
+  // Knowledge base: user-uploaded reference documents from .bolt/knowledge/
   const knowledgeBaseSection = buildKnowledgeBaseSection(files);
 
   if (knowledgeBaseSection) {
@@ -588,7 +588,7 @@ ${projectMemoryContent}
     if (chatMode === 'build' && contextFiles && contextOptimization) {
       /*
        * In agent mode, provide file paths as references instead of full content.
-       * The agent can use devonz_read_file to read specific files when needed.
+       * The agent can use bolt_read_file to read specific files when needed.
        */
       const fileList = Object.keys(contextFiles);
 
@@ -609,7 +609,7 @@ ${codeContext}
         systemPrompt = `${systemPrompt}
 
 <context_buffer>
-The following ${fileList.length} project files are available. Use devonz_read_file to read specific files as needed:
+The following ${fileList.length} project files are available. Use bolt_read_file to read specific files as needed:
 ${fileList.map((f) => `- ${f}`).join('\n')}
 </context_buffer>
 `;

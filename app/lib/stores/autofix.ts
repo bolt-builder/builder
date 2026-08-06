@@ -132,7 +132,7 @@ function loadSettings(): AutoFixSettings {
   }
 
   try {
-    const stored = localStorage.getItem('devonz_autofix_settings');
+    const stored = localStorage.getItem('bolt_autofix_settings');
 
     if (stored) {
       const parsed = JSON.parse(stored);
@@ -153,7 +153,7 @@ function saveSettings(settings: AutoFixSettings): void {
   }
 
   try {
-    localStorage.setItem('devonz_autofix_settings', JSON.stringify(settings));
+    localStorage.setItem('bolt_autofix_settings', JSON.stringify(settings));
   } catch (error) {
     logger.error('Failed to save auto-fix settings:', error);
   }

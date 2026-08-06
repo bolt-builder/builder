@@ -134,7 +134,7 @@ export const DeployButton = ({
 
   return (
     <>
-      <div className="relative flex border border-devonz-elements-borderColor rounded-md overflow-hidden text-sm">
+      <div className="relative flex border border-bolt-elements-borderColor rounded-md overflow-hidden text-sm">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger
             disabled={
@@ -144,7 +144,7 @@ export const DeployButton = ({
               currentDeployment.state === 'uploading' ||
               currentDeployment.state === 'building'
             }
-            className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7"
+            className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7"
           >
             {(currentDeployment.state === 'uploading' || currentDeployment.state === 'building') && (
               <span className="i-svg-spinners:90-ring-with-bg shrink-0" />
@@ -162,9 +162,9 @@ export const DeployButton = ({
             <DropdownMenu.Content
               className={cn(
                 'z-[9999]',
-                'bg-devonz-elements-background-depth-2',
+                'bg-bolt-elements-background-depth-2',
                 'rounded-lg shadow-lg',
-                'border border-devonz-elements-borderColor',
+                'border border-bolt-elements-borderColor',
                 'animate-in fade-in-0 zoom-in-95',
                 'py-1',
               )}
@@ -173,7 +173,7 @@ export const DeployButton = ({
             >
               <DropdownMenu.Item
                 className={cn(
-                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
                   {
                     'opacity-60 cursor-not-allowed': isDeploying || !activePreview || !netlifyConn.user,
                   },
@@ -197,7 +197,7 @@ export const DeployButton = ({
 
               <DropdownMenu.Item
                 className={cn(
-                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
                   {
                     'opacity-60 cursor-not-allowed': isDeploying || !activePreview || !vercelConn.user,
                   },
@@ -219,7 +219,7 @@ export const DeployButton = ({
 
               <DropdownMenu.Item
                 className={cn(
-                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
                   {
                     'opacity-60 cursor-not-allowed': isDeploying || !activePreview,
                   },
@@ -240,7 +240,7 @@ export const DeployButton = ({
 
               <DropdownMenu.Item
                 className={cn(
-                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                  'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
                   {
                     'opacity-60 cursor-not-allowed': isDeploying || !activePreview || !gitlabIsConnected,
                   },
@@ -263,7 +263,7 @@ export const DeployButton = ({
 
               <DropdownMenu.Item
                 disabled
-                className="flex items-center w-full rounded-md px-4 py-2 text-sm text-devonz-elements-textTertiary gap-2 opacity-60 cursor-not-allowed"
+                className="flex items-center w-full rounded-md px-4 py-2 text-sm text-bolt-elements-textTertiary gap-2 opacity-60 cursor-not-allowed"
               >
                 <img
                   className="w-5 h-5"

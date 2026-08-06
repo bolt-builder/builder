@@ -70,7 +70,7 @@ export default function TemplatesGallery() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="i-svg-spinners:90-ring-with-bg text-3xl text-devonz-elements-loader-progress" />
+        <div className="i-svg-spinners:90-ring-with-bg text-3xl text-bolt-elements-loader-progress" />
       </div>
     );
   }

@@ -88,13 +88,13 @@ jobs:
           echo "### Docker" >> release-notes.md
           echo "" >> release-notes.md
           echo '```bash' >> release-notes.md
-          echo "docker pull ghcr.io/zebbern/devonz:${{ steps.version.outputs.version }}" >> release-notes.md
+          echo "docker pull ghcr.io/zebbern/bolt:${{ steps.version.outputs.version }}" >> release-notes.md
           echo '```' >> release-notes.md
           echo "" >> release-notes.md
           echo "### From Source" >> release-notes.md
           echo "" >> release-notes.md
           echo '```bash' >> release-notes.md
-          echo "git clone https://github.com/zebbern/Devonz.git && cd Devonz" >> release-notes.md
+          echo "git clone https://github.com/zebbern/Bolt.git && cd Bolt" >> release-notes.md
           echo "git checkout v${{ steps.version.outputs.version }}" >> release-notes.md
           echo "pnpm install && pnpm build && pnpm start" >> release-notes.md
           echo '```' >> release-notes.md

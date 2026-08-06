@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-# Devonz (devonz.diy) — Multi-stage Docker build
+# Bolt (bolt.diy) — Multi-stage Docker build
 # Optimised for pnpm + React Router v7 on Node 20 LTS
 # ─────────────────────────────────────────────────────────────
 

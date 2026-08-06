@@ -1,7 +1,7 @@
 /**
  * Agent Tools Service
  *
- * This service provides the core tool implementations for Devonz AI Agent Mode.
+ * This service provides the core tool implementations for Bolt AI Agent Mode.
  * Tools enable the AI to interact with the runtime filesystem and understand
  * the codebase context for autonomous coding capabilities.
  *
@@ -256,7 +256,7 @@ async function listDirectory(params: ListDirectoryParams): Promise<ToolExecution
 
 /**
  * Run Command Tool
- * Executes a shell command using the DevonzShell.
+ * Executes a shell command using the BoltShell.
  * Requires the terminal to be initialized and ready.
  */
 async function runCommand(params: RunCommandParams): Promise<ToolExecutionResult<RunCommandResult>> {
@@ -264,7 +264,7 @@ async function runCommand(params: RunCommandParams): Promise<ToolExecutionResult
 
   try {
     const workbench = await getWorkbenchStore();
-    const shell = workbench.devonzTerminal;
+    const shell = workbench.boltTerminal;
 
     // Check if shell is ready
     await shell.ready();
@@ -727,7 +727,7 @@ async function renameFile(params: {
 /**
  * Patch File Tool
  * Makes targeted text replacements in a file without rewriting the entire content.
- * More efficient than devonz_write_file for small changes.
+ * More efficient than bolt_write_file for small changes.
  */
 async function patchFile(params: {
   path: string;
@@ -790,7 +790,7 @@ async function patchFile(params: {
  * ============================================================================
  */
 
-/** Zod schema for devonz_update_plan parameters (discriminated union on action) */
+/** Zod schema for bolt_update_plan parameters (discriminated union on action) */
 const updatePlanSchema = z.discriminatedUnion('action', [
   z.object({
     taskId: z.string(),
@@ -814,7 +814,7 @@ const updatePlanSchema = z.discriminatedUnion('action', [
   }),
 ]);
 
-/** Zod schema for devonz_save_memory parameters (discriminated union on action) */
+/** Zod schema for bolt_save_memory parameters (discriminated union on action) */
 const saveMemorySchema = z.discriminatedUnion('action', [
   z.object({
     category: z.string(),
@@ -1013,8 +1013,8 @@ async function saveMemory(
  * Each tool has a name, description, parameters schema, and execute function.
  */
 export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
-  devonz_read_file: {
-    name: 'devonz_read_file',
+  bolt_read_file: {
+    name: 'bolt_read_file',
     description:
       'Read the contents of a file from the project. Use this to examine existing code, configuration files, or any text file. Supports reading specific line ranges for large files.',
     parameters: {
@@ -1038,8 +1038,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: readFile as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_write_file: {
-    name: 'devonz_write_file',
+  bolt_write_file: {
+    name: 'bolt_write_file',
     description:
       'Write content to a file in the project. Creates the file if it does not exist, or overwrites if it does. Parent directories are created automatically. Use this to create new files or update existing ones.',
     parameters: {
@@ -1059,8 +1059,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: writeFile as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_list_directory: {
-    name: 'devonz_list_directory',
+  bolt_list_directory: {
+    name: 'bolt_list_directory',
     description:
       'List all files and subdirectories in a directory. Use this to explore the project structure and find files. Supports recursive listing with configurable depth.',
     parameters: {
@@ -1084,8 +1084,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: listDirectory,
   },
 
-  devonz_run_command: {
-    name: 'devonz_run_command',
+  bolt_run_command: {
+    name: 'bolt_run_command',
     description:
       'Execute a shell command in the project environment. Use this to run build commands, install dependencies, run tests, or execute scripts.',
     parameters: {
@@ -1109,8 +1109,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: runCommand as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_get_errors: {
-    name: 'devonz_get_errors',
+  bolt_get_errors: {
+    name: 'bolt_get_errors',
     description:
       'Get current errors from the development environment. This includes terminal errors, build errors, and runtime errors from the preview. Use this to understand what needs to be fixed.',
     parameters: {
@@ -1127,8 +1127,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: getErrors,
   },
 
-  devonz_search_code: {
-    name: 'devonz_search_code',
+  bolt_search_code: {
+    name: 'bolt_search_code',
     description:
       'Search for a text pattern across files in the project. Use this to find where specific functions, variables, imports, or patterns are used. Searches common code file types by default.',
     parameters: {
@@ -1169,8 +1169,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: searchCode as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_delete_file: {
-    name: 'devonz_delete_file',
+  bolt_delete_file: {
+    name: 'bolt_delete_file',
     description:
       'Delete a file or directory from the project. Use this to remove files that are no longer needed. For non-empty directories, set recursive to true.',
     parameters: {
@@ -1190,8 +1190,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: deleteFile as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_rename_file: {
-    name: 'devonz_rename_file',
+  bolt_rename_file: {
+    name: 'bolt_rename_file',
     description:
       'Rename or move a file to a new location. Creates parent directories automatically. Use this instead of shell mv commands.',
     parameters: {
@@ -1211,10 +1211,10 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: renameFile as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_patch_file: {
-    name: 'devonz_patch_file',
+  bolt_patch_file: {
+    name: 'bolt_patch_file',
     description:
-      'Make targeted text replacements in a file without rewriting the entire content. More efficient than devonz_write_file for small changes. Each replacement finds the exact oldText and replaces it with newText.',
+      'Make targeted text replacements in a file without rewriting the entire content. More efficient than bolt_write_file for small changes. Each replacement finds the exact oldText and replaces it with newText.',
     parameters: {
       type: 'object',
       properties: {
@@ -1246,8 +1246,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: patchFile as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_update_plan: {
-    name: 'devonz_update_plan',
+  bolt_update_plan: {
+    name: 'bolt_update_plan',
     description:
       "Update the project plan (PLAN.md). Supports adding sub-tasks to a task, updating a task's status, or setting task dependencies. Always reads the current plan, applies the change, and writes it back atomically.",
     parameters: {
@@ -1300,8 +1300,8 @@ export const agentToolDefinitions: Record<string, AgentToolDefinition> = {
     execute: updatePlan as unknown as (args: Record<string, unknown>) => Promise<ToolExecutionResult<unknown>>,
   },
 
-  devonz_save_memory: {
-    name: 'devonz_save_memory',
+  bolt_save_memory: {
+    name: 'bolt_save_memory',
     description:
       'Save or delete a memory entry in MEMORY.md. Use "save" to store a key-value pair under a category, or "delete" to remove an entry. Memory persists across conversations for long-term context.',
     parameters: {
@@ -1459,10 +1459,10 @@ export function isAgentTool(toolName: string): boolean {
  * Tools that are safe to execute concurrently (read-only, no side effects).
  */
 export const READ_ONLY_TOOLS: ReadonlySet<string> = new Set([
-  'devonz_read_file',
-  'devonz_list_directory',
-  'devonz_search_code',
-  'devonz_get_errors',
+  'bolt_read_file',
+  'bolt_list_directory',
+  'bolt_search_code',
+  'bolt_get_errors',
 ]);
 
 /**

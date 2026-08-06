@@ -1,6 +1,6 @@
 # Components
 
-> Component hierarchy, patterns, and conventions in Devonz.
+> Component hierarchy, patterns, and conventions in Bolt.
 
 ---
 
@@ -70,7 +70,7 @@ Only **new** messages receive entrance animations — messages already present w
 
 | Component / Module | Purpose |
 | ------------------ | ------- |
-| `ChatAlert.tsx` | Full dialog shown for **fatal/error** severity issues — includes an "Ask Devonz" button so the user can request a fix |
+| `ChatAlert.tsx` | Full dialog shown for **fatal/error** severity issues — includes an "Ask Bolt" button so the user can request a fix |
 | Sonner toast notifications | Lightweight, auto-dismissing toasts for **warning/info** severity issues |
 | `app/lib/errors/error-classifier.ts` | Classifies errors into 6 categories × 4 severity levels to determine which UI treatment to use |
 | `app/lib/errors/error-toast.ts` | Utility that routes classified errors to the appropriate toast notification |
@@ -135,7 +135,7 @@ Modular settings UI organized by concern.
 
 | Component | Purpose |
 | --------- | ------- |
-| `Header.tsx` | Main header bar — shows "Devonz" branding text when the sidebar is collapsed; mode selector displays "Standard" or "Agent" (never just "Mode") |
+| `Header.tsx` | Main header bar — shows "Bolt" branding text when the sidebar is collapsed; mode selector displays "Standard" or "Agent" (never just "Mode") |
 | `HeaderActionButtons.client.tsx` | Action buttons (deploy, git, etc.) |
 | `HeaderAvatar.client.tsx` | User avatar/account |
 
@@ -264,7 +264,7 @@ const showWorkbench = useStore(workbenchStore.showWorkbench);
 Two icon systems:
 
 - **Phosphor Icons**: `@phosphor-icons/react` — general UI icons
-- **Custom Icons**: UnoCSS `i-devonz:*` classes — project-specific SVG icons from `icons/` directory
+- **Custom Icons**: UnoCSS `i-bolt:*` classes — project-specific SVG icons from `icons/` directory
 - **UnoCSS Icon Classes**: `i-ph:*` — Phosphor icons via UnoCSS
 
 ```tsx
@@ -274,7 +274,7 @@ import { Gear } from '@phosphor-icons/react';
 
 // UnoCSS class (div with icon)
 <div className="i-ph:gear text-xl" />
-<div className="i-devonz:custom-icon text-xl" />
+<div className="i-bolt:custom-icon text-xl" />
 ```
 
 ### 5. Memoization

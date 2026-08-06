@@ -171,7 +171,7 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
   if (!isConnected || !connection) {
     return (
       <div className="text-center p-8">
-        <p className="text-devonz-elements-textSecondary mb-4">Please connect to GitLab first to browse repositories</p>
+        <p className="text-bolt-elements-textSecondary mb-4">Please connect to GitLab first to browse repositories</p>
         <Button variant="outline" onClick={() => window.location.reload()}>
           Refresh Connection
         </Button>
@@ -185,7 +185,7 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
         <div className="text-red-500 mb-4">
           <div className="i-ph:git-branch w-12 h-12 mx-auto mb-2" />
           <p className="font-medium">Failed to load repositories</p>
-          <p className="text-sm text-devonz-elements-textSecondary mt-1">{error}</p>
+          <p className="text-sm text-bolt-elements-textSecondary mt-1">{error}</p>
         </div>
         <Button variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
           <div className={cn('i-ph:arrows-clockwise w-4 h-4 mr-2', { 'animate-spin': isRefreshing })} />
@@ -198,8 +198,8 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
   if (isLoading && !repositories.length) {
     return (
       <div className="flex flex-col items-center justify-center p-8 space-y-4">
-        <div className="animate-spin w-8 h-8 border-2 border-devonz-elements-borderColorActive border-t-transparent rounded-full" />
-        <p className="text-sm text-devonz-elements-textSecondary">Loading repositories...</p>
+        <div className="animate-spin w-8 h-8 border-2 border-bolt-elements-borderColorActive border-t-transparent rounded-full" />
+        <p className="text-sm text-bolt-elements-textSecondary">Loading repositories...</p>
       </div>
     );
   }
@@ -207,8 +207,8 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
   if (!repositories.length && !isLoading) {
     return (
       <div className="text-center p-8">
-        <div className="i-ph:git-branch w-12 h-12 text-devonz-elements-textTertiary mx-auto mb-4" />
-        <p className="text-devonz-elements-textSecondary mb-4">No repositories found</p>
+        <div className="i-ph:git-branch w-12 h-12 text-bolt-elements-textTertiary mx-auto mb-4" />
+        <p className="text-bolt-elements-textSecondary mb-4">No repositories found</p>
         <Button variant="outline" onClick={handleRefresh} disabled={isRefreshing}>
           <div className={cn('i-ph:arrows-clockwise w-4 h-4 mr-2', { 'animate-spin': isRefreshing })} />
           Refresh
@@ -227,8 +227,8 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
       {/* Header with stats */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-devonz-elements-textPrimary">Select Repository to Clone</h3>
-          <p className="text-sm text-devonz-elements-textSecondary">
+          <h3 className="text-lg font-semibold text-bolt-elements-textPrimary">Select Repository to Clone</h3>
+          <p className="text-sm text-bolt-elements-textSecondary">
             {filteredRepositories.length} of {repositories.length} repositories
           </p>
         </div>
@@ -254,24 +254,24 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Search */}
         <div className="relative flex-1">
-          <div className="i-ph:magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-devonz-elements-textTertiary" />
+          <div className="i-ph:magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-bolt-elements-textTertiary" />
           <input
             type="text"
             placeholder="Search repositories..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive"
+            className="w-full pl-10 pr-4 py-2 rounded-lg bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive"
           />
         </div>
 
         {/* Sort */}
         <div className="flex items-center gap-2">
-          <div className="i-ph:calendar w-4 h-4 text-devonz-elements-textTertiary" />
+          <div className="i-ph:calendar w-4 h-4 text-bolt-elements-textTertiary" />
           <select
             aria-label="Sort repositories"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="px-3 py-2 rounded-lg bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor text-devonz-elements-textPrimary text-sm focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive"
+            className="px-3 py-2 rounded-lg bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor text-bolt-elements-textPrimary text-sm focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive"
           >
             <option value="updated">Recently updated</option>
             <option value="stars">Most starred</option>
@@ -282,12 +282,12 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
 
         {/* Filter */}
         <div className="flex items-center gap-2">
-          <div className="i-ph:funnel w-4 h-4 text-devonz-elements-textTertiary" />
+          <div className="i-ph:funnel w-4 h-4 text-bolt-elements-textTertiary" />
           <select
             aria-label="Filter repositories"
             value={filterBy}
             onChange={(e) => setFilterBy(e.target.value as FilterOption)}
-            className="px-3 py-2 rounded-lg bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor text-devonz-elements-textPrimary text-sm focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive"
+            className="px-3 py-2 rounded-lg bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor text-bolt-elements-textPrimary text-sm focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive"
           >
             <option value="all">All repositories</option>
             <option value="owned">Owned repositories</option>
@@ -309,8 +309,8 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between pt-4 border-t border-devonz-elements-borderColor">
-              <div className="text-sm text-devonz-elements-textSecondary">
+            <div className="flex items-center justify-between pt-4 border-t border-bolt-elements-borderColor">
+              <div className="text-sm text-bolt-elements-textSecondary">
                 Showing {Math.min(startIndex + 1, filteredRepositories.length)} to{' '}
                 {Math.min(startIndex + REPOS_PER_PAGE, filteredRepositories.length)} of {filteredRepositories.length}{' '}
                 repositories
@@ -324,7 +324,7 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
                 >
                   Previous
                 </Button>
-                <span className="text-sm text-devonz-elements-textSecondary px-3">
+                <span className="text-sm text-bolt-elements-textSecondary px-3">
                   {currentPage} of {totalPages}
                 </span>
                 <Button
@@ -341,7 +341,7 @@ export function GitLabRepositorySelector({ onClone, className }: GitLabRepositor
         </>
       ) : (
         <div className="text-center py-8">
-          <p className="text-devonz-elements-textSecondary">No repositories found matching your search criteria.</p>
+          <p className="text-bolt-elements-textSecondary">No repositories found matching your search criteria.</p>
         </div>
       )}
 

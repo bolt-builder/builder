@@ -4,9 +4,9 @@ import { cn } from '~/utils/cn';
 
 export const ExportChatButton = ({ exportChat }: { exportChat?: () => void }) => {
   return (
-    <div className="flex border border-devonz-elements-borderColor rounded-md overflow-hidden">
+    <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden">
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7">
+        <DropdownMenu.Trigger className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7">
           Export
           <span className={cn('i-ph:caret-down transition-transform')} />
         </DropdownMenu.Trigger>
@@ -14,9 +14,9 @@ export const ExportChatButton = ({ exportChat }: { exportChat?: () => void }) =>
           <DropdownMenu.Content
             className={cn(
               'z-[9999]',
-              'bg-devonz-elements-background-depth-2',
+              'bg-bolt-elements-background-depth-2',
               'rounded-lg shadow-lg',
-              'border border-devonz-elements-borderColor',
+              'border border-bolt-elements-borderColor',
               'animate-in fade-in-0 zoom-in-95',
               'py-1',
             )}
@@ -25,7 +25,7 @@ export const ExportChatButton = ({ exportChat }: { exportChat?: () => void }) =>
           >
             <DropdownMenu.Item
               className={cn(
-                'cursor-pointer flex items-center w-auto px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                'cursor-pointer flex items-center w-auto px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
               )}
               onClick={() => {
                 workbenchStore.downloadZip();
@@ -36,7 +36,7 @@ export const ExportChatButton = ({ exportChat }: { exportChat?: () => void }) =>
             </DropdownMenu.Item>
             <DropdownMenu.Item
               className={cn(
-                'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
               )}
               onClick={() => exportChat?.()}
             >

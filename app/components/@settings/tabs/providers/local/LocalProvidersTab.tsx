@@ -326,7 +326,7 @@ export default function LocalProvidersTab() {
                   boxShadow: '0 0 0 1px rgba(6, 182, 212, 0.3)',
                 }}
               >
-                <div className="i-ph:cpu w-6 h-6 text-devonz-elements-item-contentAccent" />
+                <div className="i-ph:cpu w-6 h-6 text-bolt-elements-item-contentAccent" />
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-white">Local AI Providers</h2>
@@ -370,19 +370,19 @@ export default function LocalProvidersTab() {
 
                 {/* Ollama Models Section */}
                 {provider.name === 'Ollama' && provider.settings.enabled && (
-                  <Card className="mt-4 bg-devonz-elements-background-depth-2">
+                  <Card className="mt-4 bg-bolt-elements-background-depth-2">
                     <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="i-ph:package w-5 h-5 text-devonz-elements-item-contentAccent" />
-                          <h3 className="text-lg font-semibold text-devonz-elements-textPrimary">Installed Models</h3>
+                          <div className="i-ph:package w-5 h-5 text-bolt-elements-item-contentAccent" />
+                          <h3 className="text-lg font-semibold text-bolt-elements-textPrimary">Installed Models</h3>
                         </div>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={fetchOllamaModels}
                           disabled={isLoadingModels}
-                          className="bg-transparent hover:bg-devonz-elements-background-depth-2"
+                          className="bg-transparent hover:bg-bolt-elements-background-depth-2"
                         >
                           {isLoadingModels ? (
                             <div className="i-ph:spinner w-4 h-4 animate-spin mr-2" />
@@ -402,17 +402,17 @@ export default function LocalProvidersTab() {
                         </div>
                       ) : ollamaModels.length === 0 ? (
                         <div className="text-center py-8">
-                          <div className="i-ph:package w-16 h-16 mx-auto text-devonz-elements-textTertiary mb-4" />
-                          <h3 className="text-lg font-medium text-devonz-elements-textPrimary mb-2">
+                          <div className="i-ph:package w-16 h-16 mx-auto text-bolt-elements-textTertiary mb-4" />
+                          <h3 className="text-lg font-medium text-bolt-elements-textPrimary mb-2">
                             No Models Installed
                           </h3>
-                          <p className="text-sm text-devonz-elements-textSecondary mb-4">
+                          <p className="text-sm text-bolt-elements-textSecondary mb-4">
                             Visit{' '}
                             <a
                               href="https://ollama.com/library"
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-devonz-elements-item-contentAccent hover:underline inline-flex items-center gap-1"
+                              className="text-bolt-elements-item-contentAccent hover:underline inline-flex items-center gap-1"
                             >
                               ollama.com/library
                               <div className="i-ph:arrow-square-out w-3 h-3" />
@@ -422,7 +422,7 @@ export default function LocalProvidersTab() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-gradient-to-r from-[#06B6D4]/8 to-[#06B6D4]/8 hover:from-[#06B6D4]/15 hover:to-[#06B6D4]/15 border-devonz-elements-borderColorActive/25 hover:border-devonz-elements-borderColorActive/40 transition-all duration-300 gap-2 group shadow-sm hover:shadow-md font-medium"
+                            className="bg-gradient-to-r from-[#06B6D4]/8 to-[#06B6D4]/8 hover:from-[#06B6D4]/15 hover:to-[#06B6D4]/15 border-bolt-elements-borderColorActive/25 hover:border-bolt-elements-borderColorActive/40 transition-all duration-300 gap-2 group shadow-sm hover:shadow-md font-medium"
                             _asChild
                           >
                             <a
@@ -454,19 +454,19 @@ export default function LocalProvidersTab() {
 
                 {/* LM Studio Models Section */}
                 {provider.name === 'LMStudio' && provider.settings.enabled && (
-                  <Card className="mt-4 bg-devonz-elements-background-depth-2">
+                  <Card className="mt-4 bg-bolt-elements-background-depth-2">
                     <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <div className="i-ph:monitor w-5 h-5 text-blue-500" />
-                          <h3 className="text-lg font-semibold text-devonz-elements-textPrimary">Available Models</h3>
+                          <h3 className="text-lg font-semibold text-bolt-elements-textPrimary">Available Models</h3>
                         </div>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => fetchLMStudioModels(provider.settings.baseUrl!)}
                           disabled={isLoadingLMStudioModels}
-                          className="bg-transparent hover:bg-devonz-elements-background-depth-2"
+                          className="bg-transparent hover:bg-bolt-elements-background-depth-2"
                         >
                           {isLoadingLMStudioModels ? (
                             <div className="i-ph:spinner w-4 h-4 animate-spin mr-2" />
@@ -486,11 +486,11 @@ export default function LocalProvidersTab() {
                         </div>
                       ) : lmStudioModels.length === 0 ? (
                         <div className="text-center py-8">
-                          <div className="i-ph:monitor w-16 h-16 mx-auto text-devonz-elements-textTertiary mb-4" />
-                          <h3 className="text-lg font-medium text-devonz-elements-textPrimary mb-2">
+                          <div className="i-ph:monitor w-16 h-16 mx-auto text-bolt-elements-textTertiary mb-4" />
+                          <h3 className="text-lg font-medium text-bolt-elements-textPrimary mb-2">
                             No Models Available
                           </h3>
-                          <p className="text-sm text-devonz-elements-textSecondary mb-4">
+                          <p className="text-sm text-bolt-elements-textSecondary mb-4">
                             Make sure LM Studio is running with the local server started and CORS enabled.
                           </p>
                           <Button
@@ -513,18 +513,18 @@ export default function LocalProvidersTab() {
                       ) : (
                         <div className="grid gap-4">
                           {lmStudioModels.map((model) => (
-                            <Card key={model.id} className="bg-devonz-elements-background-depth-3">
+                            <Card key={model.id} className="bg-bolt-elements-background-depth-3">
                               <CardContent className="p-4">
                                 <div className="space-y-2">
                                   <div className="flex items-center gap-2">
-                                    <h4 className="text-sm font-medium text-devonz-elements-textPrimary font-mono">
+                                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary font-mono">
                                       {model.id}
                                     </h4>
                                     <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500">
                                       Available
                                     </span>
                                   </div>
-                                  <div className="flex items-center gap-4 text-xs text-devonz-elements-textSecondary">
+                                  <div className="flex items-center gap-4 text-xs text-bolt-elements-textSecondary">
                                     <div className="flex items-center gap-1">
                                       <div className="i-ph:hard-drive w-3 h-3" />
                                       <span>{model.object}</span>
@@ -554,13 +554,13 @@ export default function LocalProvidersTab() {
           </div>
 
           {filteredProviders.length === 0 && (
-            <Card className="bg-devonz-elements-background-depth-2">
+            <Card className="bg-bolt-elements-background-depth-2">
               <CardContent className="p-8 text-center">
-                <div className="i-ph:hard-drive w-16 h-16 mx-auto text-devonz-elements-textTertiary mb-4" />
-                <h3 className="text-lg font-medium text-devonz-elements-textPrimary mb-2">
+                <div className="i-ph:hard-drive w-16 h-16 mx-auto text-bolt-elements-textTertiary mb-4" />
+                <h3 className="text-lg font-medium text-bolt-elements-textPrimary mb-2">
                   No Local Providers Available
                 </h3>
-                <p className="text-sm text-devonz-elements-textSecondary">
+                <p className="text-sm text-bolt-elements-textSecondary">
                   Local providers will appear here when they're configured in the system.
                 </p>
               </CardContent>

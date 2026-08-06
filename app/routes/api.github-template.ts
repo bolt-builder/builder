@@ -26,7 +26,7 @@ async function fetchRepoContentsCloudflare(repo: string, githubToken?: string) {
     signal: AbortSignal.timeout(30_000),
     headers: {
       Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'devonz-app',
+      'User-Agent': 'bolt-app',
       ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
     },
   });
@@ -42,7 +42,7 @@ async function fetchRepoContentsCloudflare(repo: string, githubToken?: string) {
     signal: AbortSignal.timeout(30_000),
     headers: {
       Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'devonz-app',
+      'User-Agent': 'bolt-app',
       ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
     },
   });
@@ -87,7 +87,7 @@ async function fetchRepoContentsCloudflare(repo: string, githubToken?: string) {
           signal: AbortSignal.timeout(15_000),
           headers: {
             Accept: 'application/vnd.github.v3+json',
-            'User-Agent': 'devonz-app',
+            'User-Agent': 'bolt-app',
             ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
           },
         });
@@ -129,7 +129,7 @@ async function fetchRepoContentsZip(repo: string, githubToken?: string) {
     signal: AbortSignal.timeout(15_000),
     headers: {
       Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'devonz-app',
+      'User-Agent': 'bolt-app',
       ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
     },
   });

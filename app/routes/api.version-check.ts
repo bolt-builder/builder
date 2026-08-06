@@ -15,7 +15,7 @@ export function clearVersionCheckCache() {
 
 const GITHUB_HEADERS = {
   Accept: 'application/vnd.github.v3+json',
-  'User-Agent': 'Devonz-UpdateCheck',
+  'User-Agent': 'Bolt-UpdateCheck',
 } as const;
 
 /**
@@ -33,7 +33,7 @@ async function versionCheckLoader(_args: LoaderFunctionArgs) {
   }
 
   const owner = 'zebbern';
-  const repo = 'Devonz';
+  const repo = 'Bolt';
   const branch = 'main';
   const isDocker = process.env.RUNNING_IN_DOCKER === 'true';
 

@@ -4,14 +4,14 @@
 // Concatenated into a single IIFE by the build script.
 //
 // html2canvas is loaded at runtime via <script> tag — tries a local bundle
-// served from /_devonz-html2canvas.min.js first, falls back to CDN.
+// served from /_bolt-html2canvas.min.js first, falls back to CDN.
 // ===========================================================================
 
 /**
  * Local path for html2canvas — written to the user's public/ by the server.
  * Falls back to CDN if the local file fails to load.
  */
-const HTML2CANVAS_LOCAL_URL = '/_devonz-html2canvas.min.js';
+const HTML2CANVAS_LOCAL_URL = '/_bolt-html2canvas.min.js';
 const HTML2CANVAS_CDN_FALLBACK =
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 

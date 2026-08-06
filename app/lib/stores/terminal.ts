@@ -1,7 +1,7 @@
 import type { RuntimeProvider, SpawnedProcess } from '~/lib/runtime/runtime-provider';
 import { atom, type WritableAtom } from 'nanostores';
 import type { ITerminal } from '~/types/terminal';
-import { newDevonzShellProcess, newShellProcess } from '~/utils/shell';
+import { newBoltShellProcess, newShellProcess } from '~/utils/shell';
 import { coloredText } from '~/utils/terminal';
 import { createScopedLogger } from '~/utils/logger';
 
@@ -10,7 +10,7 @@ const logger = createScopedLogger('TerminalStore');
 export class TerminalStore {
   #runtime: Promise<RuntimeProvider>;
   #terminals: Array<{ terminal: ITerminal; process: SpawnedProcess }> = [];
-  #devonzTerminal = newDevonzShellProcess();
+  #boltTerminal = newBoltShellProcess();
 
   showTerminal: WritableAtom<boolean> = import.meta.hot?.data.showTerminal ?? atom(true);
 
@@ -22,15 +22,15 @@ export class TerminalStore {
     }
   }
 
-  get devonzTerminal() {
-    return this.#devonzTerminal;
+  get boltTerminal() {
+    return this.#boltTerminal;
   }
 
   toggleTerminal(value?: boolean) {
     this.showTerminal.set(value !== undefined ? value : !this.showTerminal.get());
   }
 
-  async attachDevonzTerminal(terminal: ITerminal) {
+  async attachBoltTerminal(terminal: ITerminal) {
     try {
       const runtime = await this.#runtime;
 
@@ -40,10 +40,10 @@ export class TerminalStore {
         return;
       }
 
-      await this.#devonzTerminal.init(runtime, terminal);
+      await this.#boltTerminal.init(runtime, terminal);
     } catch (error: unknown) {
       terminal.write(
-        coloredText.red('Failed to spawn devonz shell\n\n') + (error instanceof Error ? error.message : String(error)),
+        coloredText.red('Failed to spawn bolt shell\n\n') + (error instanceof Error ? error.message : String(error)),
       );
 
       return;

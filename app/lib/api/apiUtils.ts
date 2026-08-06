@@ -90,7 +90,7 @@ export async function externalFetch({
     signal: AbortSignal.timeout(timeoutMs),
     headers: {
       Authorization: `Bearer ${token}`,
-      'User-Agent': 'devonz-app',
+      'User-Agent': 'bolt-app',
       ...(body ? { 'Content-Type': 'application/json' } : {}),
       ...headers,
     },

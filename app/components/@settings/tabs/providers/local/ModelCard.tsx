@@ -12,12 +12,12 @@ interface ModelCardProps {
 
 function ModelCard({ model, onUpdate, onDelete }: ModelCardProps) {
   return (
-    <Card className="bg-devonz-elements-background-depth-3 hover:bg-devonz-elements-background-depth-4 transition-all duration-200 shadow-sm hover:shadow-md border border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive/30">
+    <Card className="bg-bolt-elements-background-depth-3 hover:bg-bolt-elements-background-depth-4 transition-all duration-200 shadow-sm hover:shadow-md border border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive/30">
       <CardContent className="p-5">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <h4 className="text-sm font-medium text-devonz-elements-textPrimary font-mono">{model.name}</h4>
+              <h4 className="text-sm font-medium text-bolt-elements-textPrimary font-mono">{model.name}</h4>
               {model.status && model.status !== 'idle' && (
                 <span
                   className={cn('px-2 py-0.5 rounded-full text-xs font-medium', {
@@ -32,7 +32,7 @@ function ModelCard({ model, onUpdate, onDelete }: ModelCardProps) {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-4 text-xs text-devonz-elements-textSecondary">
+            <div className="flex items-center gap-4 text-xs text-bolt-elements-textSecondary">
               <div className="flex items-center gap-1">
                 <div className="i-ph:code size-3" />
                 <span>{model.digest.substring(0, 8)}</span>
@@ -57,8 +57,8 @@ function ModelCard({ model, onUpdate, onDelete }: ModelCardProps) {
               disabled={model.status === 'updating'}
               className={cn(
                 'flex items-center gap-2 px-3 py-2 text-xs rounded-lg transition-all duration-200',
-                'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent hover:bg-devonz-elements-item-backgroundAccent hover:shadow-sm',
-                'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-devonz-elements-item-backgroundAccent',
+                'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent hover:bg-bolt-elements-item-backgroundAccent hover:shadow-sm',
+                'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-bolt-elements-item-backgroundAccent',
               )}
             >
               {model.status === 'updating' ? (
@@ -89,7 +89,7 @@ function ModelCard({ model, onUpdate, onDelete }: ModelCardProps) {
         </div>
         {model.progress && (
           <div className="mt-3 space-y-2">
-            <div className="flex justify-between text-xs text-devonz-elements-textSecondary">
+            <div className="flex justify-between text-xs text-bolt-elements-textSecondary">
               <span>{model.progress.status}</span>
               <span>{Math.round((model.progress.current / model.progress.total) * 100)}%</span>
             </div>

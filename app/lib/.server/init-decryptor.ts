@@ -9,7 +9,7 @@ const logger = createScopedLogger('InitDecryptor');
  * Imported as a side-effect from entry.server.tsx so the decryptor is
  * available before any route handler reads encrypted cookie values.
  *
- * If DEVONZ_ENCRYPTION_KEY is not configured, the import of encryption.ts
+ * If BOLT_ENCRYPTION_KEY is not configured, the import of encryption.ts
  * throws — we catch that and log a warning.  Encrypted cookie values will
  * fall back to their raw ciphertext in that case.
  */

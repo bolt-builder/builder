@@ -1,4 +1,4 @@
-# Devonz Documentation
+# Bolt Documentation
 
 > AI-powered local vibe coding platform for full-stack development — built with React Router v7 (Remix), React 19, and WebContainer API.
 
@@ -23,7 +23,7 @@
 
 ## What's New
 
-- **Error Classifier** — Categorizes errors into 6 types (network, auth, validation, build, runtime, unknown) with 4 severity levels (fatal, error, warning, info); warning/info → toast, fatal/error → ChatAlert dialog where users click "Ask Devonz" to request a fix
+- **Error Classifier** — Categorizes errors into 6 types (network, auth, validation, build, runtime, unknown) with 4 severity levels (fatal, error, warning, info); warning/info → toast, fatal/error → ChatAlert dialog where users click "Ask Bolt" to request a fix
 - **Framer Motion Chat Animations** — User messages slide in from the right, assistant messages from the left
 - **Chat Naming via Artifact Titles** — Chat names derived from artifact titles instead of raw user messages
 - **Streaming Code Leak Prevention** — Prevents raw code from leaking into chat during LLM streaming
@@ -86,4 +86,4 @@
 - **Client-only files**: `.client.tsx` suffix for browser-only components
 - **Scoped logging**: `createScopedLogger('Name')` used throughout
 - **Validation**: Zod schemas for all API request bodies
-- **Theming**: CSS custom properties (`--devonz-elements-*`) + `data-theme` attribute
+- **Theming**: CSS custom properties (`--bolt-elements-*`) + `data-theme` attribute

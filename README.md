@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="236" height="79" alt="devonz" src="https://github.com/user-attachments/assets/30c464d9-39a9-4c0d-85f8-64473cfa774c" />
+<img width="236" height="79" alt="bolt" src="https://github.com/user-attachments/assets/30c464d9-39a9-4c0d-85f8-64473cfa774c" />
 
 **AI-powered vibe coding platform — describe what you want, watch it build.**
 
@@ -10,15 +10,15 @@
 
 [Features](#features) · [Quick Start](#quick-start) · [Environment Variables](#environment-variables) · [Docker](#docker) · [Tech Stack](#tech-stack) · [Contributing](#contributing)
 
-![Devonz Screenshot](https://github.com/user-attachments/assets/e4c3067d-2539-4b5e-abab-d129d90b51dc)
+![Bolt Screenshot](https://github.com/user-attachments/assets/e4c3067d-2539-4b5e-abab-d129d90b51dc)
 
 </div>
 
 ---
 
-## What is Devonz?
+## What is Bolt?
 
-Devonz is a **local AI-powered vibe coding platform** forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy). Describe what you want to build in natural language, and an AI agent generates full-stack applications in a browser-based IDE with an integrated editor, terminal, and live preview.
+Bolt is a **local AI-powered vibe coding platform** forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy). Describe what you want to build in natural language, and an AI agent generates full-stack applications in a browser-based IDE with an integrated editor, terminal, and live preview.
 
 This is a **local development tool**, not a hosted web service. You run it on your own machine, bring your own API keys, and keep full control of your code.
 
@@ -61,8 +61,8 @@ corepack prepare pnpm@9.14.4 --activate
 ### Setup
 
 ```bash
-git clone https://github.com/zebbern/Devonz.git
-cd Devonz
+git clone https://github.com/bolt-builder/builder.git
+cd Bolt
 cp .env.example .env.local      # add at least one API key
 pnpm install
 pnpm run dev
@@ -131,7 +131,7 @@ See [docs/LLM-PROVIDERS.md](docs/LLM-PROVIDERS.md) for details on configuring ea
 
 ### Encryption
 
-Set `DEVONZ_ENCRYPTION_KEY` to persist encrypted API-key cookies across server restarts. Generate a key with:
+Set `BOLT_ENCRYPTION_KEY` to persist encrypted API-key cookies across server restarts. Generate a key with:
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
@@ -146,8 +146,8 @@ If omitted, a random key is generated on each startup and cookies will not survi
 No local Node.js required — just Docker.
 
 ```bash
-git clone https://github.com/zebbern/Devonz.git
-cd Devonz
+git clone https://github.com/bolt-builder/builder.git
+cd Bolt
 cp .env.example .env.local      # add at least one API key
 docker compose up -d
 ```
@@ -173,7 +173,7 @@ pnpm docker:update         # Pull latest image + restart
 | `dev` | `docker compose --profile dev up` | Development — bind-mount with hot reload |
 | `auto-update` | `docker compose --profile auto-update up -d` | Adds Watchtower for automatic image updates |
 
-> Set `DEVONZ_ENCRYPTION_KEY` in your environment or `.env.local` to persist encrypted cookies across container restarts.
+> Set `BOLT_ENCRYPTION_KEY` in your environment or `.env.local` to persist encrypted cookies across container restarts.
 
 ---
 
@@ -234,7 +234,7 @@ pnpm docker:update                 # pull latest image, restart
 <summary>Expand file tree</summary>
 
 ```
-devonz/
+bolt/
 ├── app/
 │   ├── components/         # React components
 │   │   ├── @settings/      # Settings panel
@@ -284,7 +284,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines includi
 
 ## Acknowledgements
 
-Devonz is forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy) (originally StackBlitz bolt.new). Built with the [Vercel AI SDK](https://sdk.vercel.ai/).
+Bolt is forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy) (originally StackBlitz bolt.new). Built with the [Vercel AI SDK](https://sdk.vercel.ai/).
 
 ---
 
@@ -297,7 +297,7 @@ Devonz is forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy) (o
 <div align="center">
   <strong>Build anything with AI. Just describe what you want.</strong>
   <br><br>
-  <a href="https://github.com/zebbern/Devonz">GitHub</a> ·
-  <a href="https://github.com/zebbern/Devonz/issues">Issues</a> ·
+  <a href="https://github.com/bolt-builder/builder">GitHub</a> ·
+  <a href="https://github.com/bolt-builder/builder/issues">Issues</a> ·
   <a href="docs/">Documentation</a>
 </div>

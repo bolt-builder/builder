@@ -1,12 +1,12 @@
 # Agent Mode
 
-> Autonomous agent orchestration, tools, and execution flows in Devonz.
+> Autonomous agent orchestration, tools, and execution flows in Bolt.
 
 ---
 
 ## Overview
 
-Agent Mode enables Devonz to act as an **autonomous coding agent**. Instead of generating code artifacts in the chat, the LLM uses structured **tool calls** to directly read, write, and execute code via the LocalRuntime on the host machine. This enables multi-step, iterative development with error detection and self-correction.
+Agent Mode enables Bolt to act as an **autonomous coding agent**. Instead of generating code artifacts in the chat, the LLM uses structured **tool calls** to directly read, write, and execute code via the LocalRuntime on the host machine. This enables multi-step, iterative development with error detection and self-correction.
 
 ---
 
@@ -69,25 +69,25 @@ Agent Mode enables Devonz to act as an **autonomous coding agent**. Instead of g
 
 The LLM can call these tools during agent mode execution.
 
-> **MCP Tools**: In addition to the built-in `devonz_*` tools listed below, any MCP tools registered through `mcpService` are also available to the LLM during agent mode. MCP tools are registered alongside agent tools and appear in the same tool set passed to the model.
+> **MCP Tools**: In addition to the built-in `bolt_*` tools listed below, any MCP tools registered through `mcpService` are also available to the LLM during agent mode. MCP tools are registered alongside agent tools and appear in the same tool set passed to the model.
 
 > **Extended Thinking**: Extended thinking is fully compatible with agent mode. When enabled, the model's reasoning steps are shown before each tool call decision.
 
 | Tool | Purpose | Approval Required |
 | ---- | ------- | ----------------- |
-| `devonz_read_file` | Read file contents (with optional line range) | No |
-| `devonz_write_file` | Create or modify files | Configurable |
-| `devonz_delete_file` | Delete files or directories | Configurable |
-| `devonz_rename_file` | Rename or move files | Configurable |
-| `devonz_list_directory` | Explore project structure | No |
-| `devonz_run_command` | Execute shell commands (npm, node, etc.) | Configurable |
-| `devonz_get_errors` | Check for build/runtime/preview errors | No |
-| `devonz_search_code` | Search for code patterns across files (supports regex) | No |
-| `devonz_patch_file` | Make targeted text replacements without rewriting entire files | Configurable |
+| `bolt_read_file` | Read file contents (with optional line range) | No |
+| `bolt_write_file` | Create or modify files | Configurable |
+| `bolt_delete_file` | Delete files or directories | Configurable |
+| `bolt_rename_file` | Rename or move files | Configurable |
+| `bolt_list_directory` | Explore project structure | No |
+| `bolt_run_command` | Execute shell commands (npm, node, etc.) | Configurable |
+| `bolt_get_errors` | Check for build/runtime/preview errors | No |
+| `bolt_search_code` | Search for code patterns across files (supports regex) | No |
+| `bolt_patch_file` | Make targeted text replacements without rewriting entire files | Configurable |
 
 ### Tool Parameters
 
-#### `devonz_read_file`
+#### `bolt_read_file`
 
 ```typescript
 {
@@ -97,7 +97,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_write_file`
+#### `bolt_write_file`
 
 ```typescript
 {
@@ -106,7 +106,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_delete_file`
+#### `bolt_delete_file`
 
 ```typescript
 {
@@ -115,7 +115,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_rename_file`
+#### `bolt_rename_file`
 
 ```typescript
 {
@@ -124,7 +124,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_list_directory`
+#### `bolt_list_directory`
 
 ```typescript
 {
@@ -134,7 +134,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_run_command`
+#### `bolt_run_command`
 
 ```typescript
 {
@@ -144,7 +144,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_get_errors`
+#### `bolt_get_errors`
 
 ```typescript
 {
@@ -152,7 +152,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_search_code`
+#### `bolt_search_code`
 
 ```typescript
 {
@@ -164,7 +164,7 @@ The LLM can call these tools during agent mode execution.
 }
 ```
 
-#### `devonz_patch_file`
+#### `bolt_patch_file`
 
 ```typescript
 {
@@ -267,8 +267,8 @@ The system prompt has been significantly trimmed and improved:
 
 The prompt covers:
 
-1. Instructs the LLM to use `devonz_*` tools instead of artifact XML tags
-2. Defines LocalRuntime capabilities and constraints (native binaries ARE supported, git IS available; projects are sandboxed to `~/.devonz/projects/{projectId}/`)
+1. Instructs the LLM to use `bolt_*` tools instead of artifact XML tags
+2. Defines LocalRuntime capabilities and constraints (native binaries ARE supported, git IS available; projects are sandboxed to `~/.bolt/projects/{projectId}/`)
 3. Establishes a tool selection hierarchy (prefer `write_file` over shell commands)
 4. Forbids outputting file content in plain text (must use tools)
 5. **Mobile-first design mandate** — all UI must be responsive and mobile-first
@@ -310,16 +310,16 @@ The `agentChatIntegration.ts` module bridges agent mode with the standard chat A
 
 ## Error Handling
 
-Auto-fix has been **completely removed** from Devonz. There is no automatic error correction or auto-triggering of fixes.
+Auto-fix has been **completely removed** from Bolt. There is no automatic error correction or auto-triggering of fixes.
 
 Error handling in agent mode follows this pipeline:
 
 1. **Tool execution errors** are captured and returned to the LLM as error results
-2. **Build errors** can be detected via `devonz_get_errors` tool
+2. **Build errors** can be detected via `bolt_get_errors` tool
 3. **Error classifier** (`app/lib/errors/error-classifier.ts`) categorizes errors into 6 categories × 4 severity levels
 4. **Minor errors** (warning/info severity) → Sonner toast notification (lightweight, auto-dismiss)
-5. **Serious errors** (error/fatal severity) → `ChatAlert` dialog with an **"Ask Devonz"** button
-6. **User-initiated fixes only** — The user must manually click "Ask Devonz" in the ChatAlert dialog to request the LLM to fix an error. There is no auto-triggering.
+5. **Serious errors** (error/fatal severity) → `ChatAlert` dialog with an **"Ask Bolt"** button
+6. **User-initiated fixes only** — The user must manually click "Ask Bolt" in the ChatAlert dialog to request the LLM to fix an error. There is no auto-triggering.
 7. **Iteration warnings** prompt the user when approaching the iteration limit
 8. **Session errors** set status to `error` with an error message
 

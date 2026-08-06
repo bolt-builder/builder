@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
 import { applyActions, toProjectRelativePath, type AgentRuntime } from './action-applier';
-import type { DevonzAction } from '~/types/actions';
+import type { BoltAction } from '~/types/actions';
 
 function makeFakeRuntime(files: Record<string, string> = {}): AgentRuntime & {
   files: Record<string, string>;
@@ -50,7 +50,7 @@ describe('applyActions', () => {
     const runtime = makeFakeRuntime();
 
     const results = await applyActions(runtime, 'proj-1', [
-      { type: 'file', filePath: '/home/project/src/app.ts', content: 'console.log(1);' } as DevonzAction,
+      { type: 'file', filePath: '/home/project/src/app.ts', content: 'console.log(1);' } as BoltAction,
     ]);
 
     expect(results).toEqual([{ type: 'file', target: 'src/app.ts', status: 'applied' }]);
@@ -66,13 +66,13 @@ describe('applyActions', () => {
         filePath: '/home/project/a.txt',
         content: '',
         diffBlocks: [{ search: 'hello', replace: 'goodbye' }],
-      } as DevonzAction,
+      } as BoltAction,
       {
         type: 'diff',
         filePath: '/home/project/a.txt',
         content: '',
         diffBlocks: [{ search: 'no-such-text-anywhere', replace: 'x' }],
-      } as DevonzAction,
+      } as BoltAction,
     ]);
 
     expect(results[0].status).toBe('applied');
@@ -84,8 +84,8 @@ describe('applyActions', () => {
     const runtime = makeFakeRuntime();
 
     const results = await applyActions(runtime, 'proj-1', [
-      { type: 'shell', content: 'npm install' } as DevonzAction,
-      { type: 'shell', content: 'failme now' } as DevonzAction,
+      { type: 'shell', content: 'npm install' } as BoltAction,
+      { type: 'shell', content: 'failme now' } as BoltAction,
     ]);
 
     expect(results[0].status).toBe('applied');
@@ -96,7 +96,7 @@ describe('applyActions', () => {
   it('skips blocked commands without executing them', async () => {
     const runtime = makeFakeRuntime();
 
-    const results = await applyActions(runtime, 'proj-1', [{ type: 'shell', content: 'rm -rf /' } as DevonzAction]);
+    const results = await applyActions(runtime, 'proj-1', [{ type: 'shell', content: 'rm -rf /' } as BoltAction]);
 
     expect(results[0].status).toBe('skipped');
     expect(runtime.execCalls).toEqual([]);
@@ -106,8 +106,8 @@ describe('applyActions', () => {
     const runtime = makeFakeRuntime();
 
     const results = await applyActions(runtime, 'proj-1', [
-      { type: 'start', content: 'npm run dev' } as DevonzAction,
-      { type: 'supabase', operation: 'query', content: 'select 1' } as DevonzAction,
+      { type: 'start', content: 'npm run dev' } as BoltAction,
+      { type: 'supabase', operation: 'query', content: 'select 1' } as BoltAction,
     ]);
 
     expect(results.map((r) => r.status)).toEqual(['skipped', 'skipped']);
@@ -117,8 +117,8 @@ describe('applyActions', () => {
     const runtime = makeFakeRuntime();
 
     const results = await applyActions(runtime, 'proj-1', [
-      { type: 'diff', filePath: '/home/project/missing.txt', content: '', diffBlocks: [] } as DevonzAction,
-      { type: 'file', filePath: '/home/project/ok.txt', content: 'fine' } as DevonzAction,
+      { type: 'diff', filePath: '/home/project/missing.txt', content: '', diffBlocks: [] } as BoltAction,
+      { type: 'file', filePath: '/home/project/ok.txt', content: 'fine' } as BoltAction,
     ]);
 
     expect(results[0].status).toBe('failed');

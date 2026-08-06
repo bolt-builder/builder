@@ -2,7 +2,7 @@
  * Terminal Error Detector
  *
  * Detects actionable errors in terminal output and triggers alerts
- * so users can easily send errors to Devonz for fixing.
+ * so users can easily send errors to Bolt for fixing.
  */
 
 import { workbenchStore } from '~/lib/stores/workbench';
@@ -470,7 +470,7 @@ const ERROR_PATTERNS: ErrorPattern[] = [
  */
 const IGNORE_PATTERNS: RegExp[] = [
   // Ignore internal shell markers used for command completion detection
-  /__DEVONZ_CMD_DONE__/i,
+  /__BOLT_CMD_DONE__/i,
 
   // Ignore deprecation warnings
   /deprecat(?:ed|ion)/i,
@@ -671,7 +671,7 @@ export class TerminalErrorDetector {
     const classified = classifyError(primaryError.message);
 
     if (shouldShowFullAlert(classified)) {
-      // Fatal / error severity → full ChatAlert dialog so user can ask Devonz for help
+      // Fatal / error severity → full ChatAlert dialog so user can ask Bolt for help
       const content = this.#formatErrorContent();
 
       workbenchStore.actionAlert.set({

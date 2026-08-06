@@ -2,7 +2,7 @@
 import '@testing-library/jest-dom/vitest';
 
 /*
- * Global test setup for Devonz.
+ * Global test setup for Bolt.
  * This file runs before each test suite via vitest setupFiles.
  */
 

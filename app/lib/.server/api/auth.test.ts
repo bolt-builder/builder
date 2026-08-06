@@ -22,8 +22,8 @@ describe('validateBearerToken', () => {
     process.env = ORIGINAL_ENV;
   });
 
-  it('rejects when DEVONZ_API_KEY is not configured', () => {
-    delete process.env.DEVONZ_API_KEY;
+  it('rejects when BOLT_API_KEY is not configured', () => {
+    delete process.env.BOLT_API_KEY;
 
     const req = new Request('http://localhost/api/v1/status', {
       headers: { Authorization: 'Bearer some-token' },
@@ -35,7 +35,7 @@ describe('validateBearerToken', () => {
   });
 
   it('rejects when Authorization header is missing', () => {
-    process.env.DEVONZ_API_KEY = 'test-secret-key-123';
+    process.env.BOLT_API_KEY = 'test-secret-key-123';
 
     const req = new Request('http://localhost/api/v1/status');
     const result = validateBearerToken(req);
@@ -45,7 +45,7 @@ describe('validateBearerToken', () => {
   });
 
   it('rejects malformed Authorization header (no Bearer prefix)', () => {
-    process.env.DEVONZ_API_KEY = 'test-secret-key-123';
+    process.env.BOLT_API_KEY = 'test-secret-key-123';
 
     const req = new Request('http://localhost/api/v1/status', {
       headers: { Authorization: 'Basic dXNlcjpwYXNz' },
@@ -57,7 +57,7 @@ describe('validateBearerToken', () => {
   });
 
   it('rejects malformed Authorization header (Bearer with empty token)', () => {
-    process.env.DEVONZ_API_KEY = 'test-secret-key-123';
+    process.env.BOLT_API_KEY = 'test-secret-key-123';
 
     const req = new Request('http://localhost/api/v1/status', {
       headers: { Authorization: 'Bearer ' },
@@ -69,7 +69,7 @@ describe('validateBearerToken', () => {
   });
 
   it('rejects invalid token (wrong value)', () => {
-    process.env.DEVONZ_API_KEY = 'test-secret-key-123';
+    process.env.BOLT_API_KEY = 'test-secret-key-123';
 
     const req = new Request('http://localhost/api/v1/status', {
       headers: { Authorization: 'Bearer wrong-key' },
@@ -81,7 +81,7 @@ describe('validateBearerToken', () => {
   });
 
   it('accepts valid Bearer token', () => {
-    process.env.DEVONZ_API_KEY = 'test-secret-key-123';
+    process.env.BOLT_API_KEY = 'test-secret-key-123';
 
     const req = new Request('http://localhost/api/v1/status', {
       headers: { Authorization: 'Bearer test-secret-key-123' },
@@ -142,7 +142,7 @@ describe('requireApiAuth', () => {
 
   beforeEach(() => {
     process.env = { ...ORIGINAL_ENV };
-    process.env.DEVONZ_API_KEY = 'integration-test-key';
+    process.env.BOLT_API_KEY = 'integration-test-key';
     _resetApiRateLimitStore();
   });
 

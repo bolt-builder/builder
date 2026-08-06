@@ -75,12 +75,12 @@ export default function GitLabTab() {
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <GitLabLogo />
-          <h2 className="text-lg font-medium text-devonz-elements-textPrimary">GitLab Integration</h2>
+          <h2 className="text-lg font-medium text-bolt-elements-textPrimary">GitLab Integration</h2>
         </div>
         <div className="flex items-center justify-center p-4">
           <div className="flex items-center gap-2">
             <div className="i-ph:spinner-gap-bold animate-spin w-4 h-4" />
-            <span className="text-devonz-elements-textSecondary">Loading...</span>
+            <span className="text-bolt-elements-textSecondary">Loading...</span>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default function GitLabTab() {
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <GitLabLogo />
-          <h2 className="text-lg font-medium text-devonz-elements-textPrimary">GitLab Integration</h2>
+          <h2 className="text-lg font-medium text-bolt-elements-textPrimary">GitLab Integration</h2>
         </div>
         <div className="text-sm text-red-600 dark:text-red-400 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
           {error}
@@ -108,9 +108,9 @@ export default function GitLabTab() {
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <GitLabLogo />
-          <h2 className="text-lg font-medium text-devonz-elements-textPrimary">GitLab Integration</h2>
+          <h2 className="text-lg font-medium text-bolt-elements-textPrimary">GitLab Integration</h2>
         </div>
-        <p className="text-sm text-devonz-elements-textSecondary">
+        <p className="text-sm text-bolt-elements-textSecondary">
           Connect your GitLab account to enable advanced repository management features, statistics, and seamless
           integration.
         </p>
@@ -130,15 +130,15 @@ export default function GitLabTab() {
       >
         <div className="flex items-center gap-2">
           <GitLabLogo />
-          <h2 className="text-lg font-medium text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary">
+          <h2 className="text-lg font-medium text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary">
             GitLab Integration
           </h2>
         </div>
         <div className="flex items-center gap-2">
           {connection?.rateLimit && (
-            <div className="flex items-center gap-2 px-3 py-1 bg-devonz-elements-background-depth-1 rounded-lg text-xs">
-              <div className="i-ph:cloud w-4 h-4 text-devonz-elements-textSecondary" />
-              <span className="text-devonz-elements-textSecondary">
+            <div className="flex items-center gap-2 px-3 py-1 bg-bolt-elements-background-depth-1 rounded-lg text-xs">
+              <div className="i-ph:cloud w-4 h-4 text-bolt-elements-textSecondary" />
+              <span className="text-bolt-elements-textSecondary">
                 API: {connection.rateLimit.remaining}/{connection.rateLimit.limit}
               </span>
             </div>
@@ -146,7 +146,7 @@ export default function GitLabTab() {
         </div>
       </motion.div>
 
-      <p className="text-sm text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary">
+      <p className="text-sm text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary">
         Manage your GitLab integration with advanced repository features and comprehensive statistics
       </p>
 
@@ -203,10 +203,10 @@ export default function GitLabTab() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="border-t border-devonz-elements-borderColor pt-6"
+          className="border-t border-bolt-elements-borderColor pt-6"
         >
-          <div className="flex items-center gap-4 p-4 bg-devonz-elements-background-depth-1 rounded-lg">
-            <div className="w-12 h-12 rounded-full border-2 border-devonz-elements-item-contentAccent flex items-center justify-center bg-devonz-elements-background-depth-2 overflow-hidden">
+          <div className="flex items-center gap-4 p-4 bg-bolt-elements-background-depth-1 rounded-lg">
+            <div className="w-12 h-12 rounded-full border-2 border-bolt-elements-item-contentAccent flex items-center justify-center bg-bolt-elements-background-depth-2 overflow-hidden">
               {connection.user.avatar_url &&
               connection.user.avatar_url !== 'null' &&
               connection.user.avatar_url !== '' ? (
@@ -237,16 +237,16 @@ export default function GitLabTab() {
                   }}
                 />
               ) : (
-                <div className="w-full h-full rounded-full bg-devonz-elements-item-contentAccent flex items-center justify-center text-white font-semibold text-sm">
+                <div className="w-full h-full rounded-full bg-bolt-elements-item-contentAccent flex items-center justify-center text-white font-semibold text-sm">
                   {(connection.user?.name || connection.user?.username || 'U').charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
             <div>
-              <h4 className="text-sm font-medium text-devonz-elements-textPrimary">
+              <h4 className="text-sm font-medium text-bolt-elements-textPrimary">
                 {connection.user?.name || connection.user?.username}
               </h4>
-              <p className="text-sm text-devonz-elements-textSecondary">{connection.user?.username}</p>
+              <p className="text-sm text-bolt-elements-textSecondary">{connection.user?.username}</p>
             </div>
           </div>
         </motion.div>
@@ -258,9 +258,9 @@ export default function GitLabTab() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="border-t border-devonz-elements-borderColor pt-6"
+          className="border-t border-bolt-elements-borderColor pt-6"
         >
-          <h3 className="text-base font-medium text-devonz-elements-textPrimary mb-4">Statistics</h3>
+          <h3 className="text-base font-medium text-bolt-elements-textPrimary mb-4">Statistics</h3>
           <StatsDisplay
             stats={connection.stats}
             onRefresh={async () => {
@@ -285,7 +285,7 @@ export default function GitLabTab() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="border-t border-devonz-elements-borderColor pt-6"
+          className="border-t border-bolt-elements-borderColor pt-6"
         >
           <RepositoryList
             repositories={connection.stats.projects}

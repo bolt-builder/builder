@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/react';
 import { useEffect } from 'react';
 import { profileStore } from '~/lib/stores/profile';
 
-const SESSION_ID_KEY = 'devonz_session_id';
+const SESSION_ID_KEY = 'bolt_session_id';
 
 /**
  * Generate a cryptographically random session ID.
@@ -54,7 +54,7 @@ function getOrCreateSessionId(): string {
 /**
  * Hook to sync user/session context with Sentry for error correlation.
  *
- * devonz is a self-hosted local app without traditional authentication.
+ * bolt is a self-hosted local app without traditional authentication.
  * This hook provides a stable anonymous session ID so errors from the same
  * browser session can be correlated in Sentry. If the user has set a profile
  * username (via settings), it is included as additional context.

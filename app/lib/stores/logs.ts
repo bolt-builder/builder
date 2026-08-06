@@ -2,7 +2,7 @@ import { atom, map, type MapStore, type WritableAtom } from 'nanostores';
 import Cookies from 'js-cookie';
 import { createScopedLogger } from '~/utils/logger';
 
-const EVENT_LOGS_KEY = 'devonz_eventLogs';
+const EVENT_LOGS_KEY = 'bolt_eventLogs';
 
 const logger = createScopedLogger('LogStore');
 
@@ -113,7 +113,7 @@ class LogStore {
       return;
     }
 
-    const savedReadLogs = localStorage.getItem('devonz_read_logs');
+    const savedReadLogs = localStorage.getItem('bolt_read_logs');
 
     if (savedReadLogs) {
       try {
@@ -145,7 +145,7 @@ class LogStore {
     }
 
     try {
-      localStorage.setItem('devonz_read_logs', JSON.stringify(Array.from(this._readLogs)));
+      localStorage.setItem('bolt_read_logs', JSON.stringify(Array.from(this._readLogs)));
     } catch {
       /* localStorage full or unavailable — skip */
     }

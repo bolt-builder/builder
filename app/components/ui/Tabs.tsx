@@ -11,7 +11,7 @@ function TabsList({ className, ref, ...props }: TabsListProps) {
     <TabsPrimitive.List
       ref={ref}
       className={cn(
-        'inline-flex h-10 items-center justify-center rounded-md bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-3-dark p-1 text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary-dark border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor-dark',
+        'inline-flex h-10 items-center justify-center rounded-md bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-3-dark p-1 text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor-dark',
         className,
       )}
       {...props}
@@ -28,7 +28,7 @@ function TabsTrigger({ className, ref, ...props }: TabsTriggerProps) {
     <TabsPrimitive.Trigger
       ref={ref}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-devonz-elements-background dark:ring-offset-devonz-elements-background-dark transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-devonz-elements-background-depth-0 dark:data-[state=active]:bg-devonz-elements-background-depth-2-dark data-[state=active]:text-devonz-elements-textPrimary dark:data-[state=active]:text-devonz-elements-textPrimary-dark data-[state=active]:shadow-sm',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-bolt-elements-background dark:ring-offset-bolt-elements-background-dark transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-bolt-elements-background-depth-0 dark:data-[state=active]:bg-bolt-elements-background-depth-2-dark data-[state=active]:text-bolt-elements-textPrimary dark:data-[state=active]:text-bolt-elements-textPrimary-dark data-[state=active]:shadow-sm',
         className,
       )}
       {...props}
@@ -45,7 +45,7 @@ function TabsContent({ className, ref, ...props }: TabsContentProps) {
     <TabsPrimitive.Content
       ref={ref}
       className={cn(
-        'mt-2 ring-offset-devonz-elements-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-ring focus-visible:ring-offset-2',
+        'mt-2 ring-offset-bolt-elements-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-ring focus-visible:ring-offset-2',
         className,
       )}
       {...props}

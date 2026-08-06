@@ -5,7 +5,7 @@
  * or bulk) and forwards them to the consumer's `onAIAction` callback.
  *
  * When agent mode is active and the orchestrator has an active session,
- * routes edits through the agent tool pipeline (`devonz_write_file`)
+ * routes edits through the agent tool pipeline (`bolt_write_file`)
  * instead of dispatching as plain chat messages. This ensures inspector
  * edits appear in the agent's tool call history and go through the
  * approval flow.
@@ -77,7 +77,7 @@ function isAgentPipelineAvailable(): boolean {
 async function routeThroughAgentPipeline(filePath: string, content: string): Promise<boolean> {
   try {
     const orchestrator = getAgentOrchestrator();
-    const result = await orchestrator.executeTool('devonz_write_file', {
+    const result = await orchestrator.executeTool('bolt_write_file', {
       path: filePath,
       content,
     });
@@ -103,7 +103,7 @@ async function routeThroughAgentPipeline(filePath: string, content: string): Pro
  *
  * When agent mode is active and the orchestrator session is running,
  * edits are routed through the agent tool pipeline via
- * `devonz_write_file`. The orchestrator handles approval flow and
+ * `bolt_write_file`. The orchestrator handles approval flow and
  * records each edit in the tool call history. If the pipeline is
  * unavailable or the write fails, the hook falls back to the plain
  * `onAIAction` dispatch.

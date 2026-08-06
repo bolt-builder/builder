@@ -29,7 +29,7 @@ const MAX_REVIEW_CYCLES = 3;
 const MAX_IDENTICAL_STATES = 2;
 
 /** Tools that modify files and may introduce errors requiring review */
-const FILE_WRITE_TOOLS = new Set(['devonz_write_file', 'devonz_update_plan']);
+const FILE_WRITE_TOOLS = new Set(['bolt_write_file', 'bolt_update_plan']);
 
 /**
  * FNV-1a 32-bit hash — produces a stable hex fingerprint.
@@ -273,11 +273,11 @@ export class AgentOrchestrator {
           this._state.filesCreated.push(data.path as string);
         } else if (data.modified && data.path) {
           this._state.filesModified.push(data.path as string);
-        } else if (toolName === 'devonz_write_file' && data.path) {
+        } else if (toolName === 'bolt_write_file' && data.path) {
           this._state.filesCreated.push(data.path as string);
         }
 
-        if (toolName === 'devonz_run_command' && params.command) {
+        if (toolName === 'bolt_run_command' && params.command) {
           this._state.commandsExecuted.push(params.command as string);
         }
       }
@@ -297,11 +297,11 @@ export class AgentOrchestrator {
   }
 
   private _checkNeedsApproval(toolName: string, params: Record<string, unknown>): boolean {
-    if (toolName === 'devonz_run_command' && !this._settings.autoApproveCommands) {
+    if (toolName === 'bolt_run_command' && !this._settings.autoApproveCommands) {
       return true;
     }
 
-    if (toolName === 'devonz_write_file') {
+    if (toolName === 'bolt_write_file') {
       const path = params.path as string | undefined;
 
       if (path && !this._settings.autoApproveFileCreation) {
@@ -394,7 +394,7 @@ export class AgentOrchestrator {
    *
    * Call this with the tool calls from a completed step. If file-write
    * tools are detected, the orchestrator programmatically runs
-   * devonz_get_errors, classifies the results, tracks the cycle with
+   * bolt_get_errors, classifies the results, tracks the cycle with
    * FNV-1a fingerprinting, and returns a structured result indicating
    * whether a fix continuation message should be injected.
    */
@@ -416,7 +416,7 @@ export class AgentOrchestrator {
       };
     }
 
-    // Programmatically invoke devonz_get_errors
+    // Programmatically invoke bolt_get_errors
     const errorsResult = await this._fetchErrors();
 
     if (!errorsResult || !errorsResult.hasErrors || errorsResult.count === 0) {
@@ -504,16 +504,16 @@ export class AgentOrchestrator {
   }
 
   /**
-   * Programmatically call devonz_get_errors to check the current error state.
+   * Programmatically call bolt_get_errors to check the current error state.
    * Returns null if the tool call fails (non-fatal — we just skip the review).
    */
   private async _fetchErrors(): Promise<GetErrorsResult | null> {
     try {
       const { executeAgentTool } = await import('./agentToolsService');
-      const result = await executeAgentTool('devonz_get_errors', { source: 'all' });
+      const result = await executeAgentTool('bolt_get_errors', { source: 'all' });
 
       if (!result.success || !result.data) {
-        logger.debug('Self-review: devonz_get_errors returned no data', { result });
+        logger.debug('Self-review: bolt_get_errors returned no data', { result });
         return null;
       }
 
@@ -570,8 +570,8 @@ export class AgentOrchestrator {
       '',
       '**Instructions:**',
       '1. Carefully analyze each error above',
-      '2. Fix the root cause in the relevant files using the appropriate tool (devonz_write_file or devonz_patch_file)',
-      '3. After fixing, call `devonz_get_errors` to verify the errors are resolved',
+      '2. Fix the root cause in the relevant files using the appropriate tool (bolt_write_file or bolt_patch_file)',
+      '3. After fixing, call `bolt_get_errors` to verify the errors are resolved',
       '',
       remaining > 0
         ? `You have **${remaining}** review cycle(s) remaining. Focus on fixing all errors in this cycle.`

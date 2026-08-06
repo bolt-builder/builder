@@ -1,7 +1,7 @@
 /**
  * Server-side LLM Output Parser — Chunk-by-chunk State Machine
  *
- * Consumes raw LLM text output containing devonzArtifact/devonzAction XML tags
+ * Consumes raw LLM text output containing boltArtifact/boltAction XML tags
  * and emits typed StreamingEvent objects. Runs server-side only.
  *
  * Architecture inspired by vibesdk's SCOF streaming format parser with
@@ -24,10 +24,10 @@ const logger = createScopedLogger('ServerOutputParser');
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
-const ARTIFACT_TAG_OPEN = '<devonzArtifact';
-const ARTIFACT_TAG_CLOSE = '</devonzArtifact>';
-const ACTION_TAG_OPEN = '<devonzAction';
-const ACTION_TAG_CLOSE = '</devonzAction>';
+const ARTIFACT_TAG_OPEN = '<boltArtifact';
+const ARTIFACT_TAG_CLOSE = '</boltArtifact>';
+const ACTION_TAG_OPEN = '<boltAction';
+const ACTION_TAG_CLOSE = '</boltAction>';
 
 /** Special token prefix emitted by the phase pipeline. */
 const PHASE_TOKEN_PREFIX = '__phase:';
@@ -48,10 +48,10 @@ export enum ParserState {
   /** Not inside any artifact or action tag. */
   Idle = 'idle',
 
-  /** Inside a <devonzArtifact> but not inside any <devonzAction>. */
+  /** Inside a <boltArtifact> but not inside any <boltAction>. */
   InsideArtifact = 'inside_artifact',
 
-  /** Inside a <devonzAction> within an artifact — content is being streamed. */
+  /** Inside a <boltAction> within an artifact — content is being streamed. */
   InsideAction = 'inside_action',
 }
 
@@ -202,7 +202,7 @@ export class ServerOutputParser {
   // ─── Idle State Parsing ─────────────────────────────────────────────────
 
   /**
-   * In idle state, scan for `<devonzArtifact` tag.
+   * In idle state, scan for `<boltArtifact` tag.
    * Returns new position or -1 if partial tag saved.
    */
   #parseIdle(input: string, pos: number, events: StreamingEvent[]): number {
@@ -265,7 +265,7 @@ export class ServerOutputParser {
       return -1;
     }
 
-    // Not a devonz tag — skip this `<` and continue
+    // Not a bolt tag — skip this `<` and continue
     s.bytesSinceLastEvent += tagIndex - pos + 1;
 
     return tagIndex + 1;
@@ -274,7 +274,7 @@ export class ServerOutputParser {
   // ─── Inside Artifact Parsing ────────────────────────────────────────────
 
   /**
-   * Inside an artifact, scan for `<devonzAction ...>` or `</devonzArtifact>`.
+   * Inside an artifact, scan for `<boltAction ...>` or `</boltArtifact>`.
    * Returns new position or -1 if partial tag saved.
    */
   #parseInsideArtifact(input: string, pos: number, events: StreamingEvent[]): number {
@@ -322,7 +322,7 @@ export class ServerOutputParser {
 
     // Check for artifact close tag
     if (remaining.startsWith(ARTIFACT_TAG_CLOSE)) {
-      // If we're somehow still tracking a file path (missed </devonzAction>), close it first
+      // If we're somehow still tracking a file path (missed </boltAction>), close it first
       if (s.currentFilePath) {
         logger.warn('Artifact closing with unclosed action — emitting implicit file_close');
         this.#flushAccumulator(s, events);
@@ -358,8 +358,8 @@ export class ServerOutputParser {
   // ─── Inside Action Parsing ──────────────────────────────────────────────
 
   /**
-   * Inside a file action, accumulate content and watch for `</devonzAction>` or
-   * `</devonzArtifact>` (implicit close). Emits file_chunk events incrementally.
+   * Inside a file action, accumulate content and watch for `</boltAction>` or
+   * `</boltArtifact>` (implicit close). Emits file_chunk events incrementally.
    * Returns new position or -1 if partial tag saved.
    */
   #parseInsideAction(input: string, pos: number, events: StreamingEvent[]): number {
@@ -407,7 +407,7 @@ export class ServerOutputParser {
       return tagIndex + ACTION_TAG_CLOSE.length;
     }
 
-    // Check for artifact close tag (implicit action close — LLM omitted </devonzAction>)
+    // Check for artifact close tag (implicit action close — LLM omitted </boltAction>)
     if (remaining.startsWith(ARTIFACT_TAG_CLOSE)) {
       logger.warn('Artifact closing tag found inside action — implicit action close');
 
@@ -467,7 +467,7 @@ export class ServerOutputParser {
     // Check for a new artifact open (nested artifact — malformed)
     if (remaining.startsWith(ARTIFACT_TAG_OPEN)) {
       logger.warn('Nested artifact tag detected — emitting error and resetting');
-      events.push(this.#makeError('NESTED_ARTIFACT', 'Nested <devonzArtifact> detected — resetting parser', true));
+      events.push(this.#makeError('NESTED_ARTIFACT', 'Nested <boltArtifact> detected — resetting parser', true));
 
       if (s.currentFilePath) {
         this.#flushAccumulator(s, events);

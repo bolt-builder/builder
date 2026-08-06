@@ -5,25 +5,20 @@
 
 /** Read-only agent tools that never require approval */
 export const AGENT_READ_ONLY_TOOLS = new Set([
-  'devonz_read_file',
-  'devonz_list_directory',
-  'devonz_get_errors',
-  'devonz_search_code',
+  'bolt_read_file',
+  'bolt_list_directory',
+  'bolt_get_errors',
+  'bolt_search_code',
 ]);
 
 /** Agent tools that perform file operations */
-export const AGENT_FILE_TOOLS = new Set([
-  'devonz_write_file',
-  'devonz_delete_file',
-  'devonz_rename_file',
-  'devonz_patch_file',
-]);
+export const AGENT_FILE_TOOLS = new Set(['bolt_write_file', 'bolt_delete_file', 'bolt_rename_file', 'bolt_patch_file']);
 
 /** Agent tools that manage agent state (plan, memory) */
-export const AGENT_STATE_TOOLS = new Set(['devonz_update_plan', 'devonz_save_memory']);
+export const AGENT_STATE_TOOLS = new Set(['bolt_update_plan', 'bolt_save_memory']);
 
 /** Agent tools that run commands */
-export const AGENT_COMMAND_TOOLS = new Set(['devonz_run_command']);
+export const AGENT_COMMAND_TOOLS = new Set(['bolt_run_command']);
 
 export interface AgentApprovalSettings {
   autoApproveFileCreation: boolean;

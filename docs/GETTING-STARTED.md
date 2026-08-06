@@ -1,6 +1,6 @@
 # Getting Started
 
-> Setup, environment variables, and run commands for Devonz.
+> Setup, environment variables, and run commands for Bolt.
 
 ---
 
@@ -18,8 +18,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/zebbern/Devonz.git
-cd Devonz
+git clone https://github.com/zebbern/Bolt.git
+cd Bolt
 
 # Install dependencies
 pnpm install
@@ -137,7 +137,7 @@ OPENAI_LIKE_API_MODELS=model-name-1,model-name-2
 # If omitted or invalid, the app auto-generates a random key at startup.
 # For persistent encryption across restarts, generate a 32-byte hex key:
 #   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-DEVONZ_ENCRYPTION_KEY=
+BOLT_ENCRYPTION_KEY=
 ```
 
 > **Note**: API keys can also be set through the UI settings panel at runtime. They are stored in browser cookies, not on the server.
@@ -229,11 +229,11 @@ The `RUNNING_IN_DOCKER=true` environment variable is set automatically in the Do
 ### Docker Notes
 
 - **`fast-glob`** is a production dependency (not devDependency), so it is available in the Docker production image. If you see `Cannot find module 'fast-glob'` after building, ensure you are on the latest code — this was fixed by moving it from `devDependencies` to `dependencies`.
-- **`DEVONZ_ENCRYPTION_KEY`** gracefully falls back to an auto-generated random key if the variable is missing or invalid. You do not need to set it for Docker to work, but for persistent cookie encryption across container restarts, set a stable 32-byte hex key in your `.env.local` or Docker Compose environment.
+- **`BOLT_ENCRYPTION_KEY`** gracefully falls back to an auto-generated random key if the variable is missing or invalid. You do not need to set it for Docker to work, but for persistent cookie encryption across container restarts, set a stable 32-byte hex key in your `.env.local` or Docker Compose environment.
 
 ---
 
-## Updating Devonz
+## Updating Bolt
 
 ### Git Clone Users
 
@@ -284,11 +284,11 @@ Chrome version 129 has a known issue with Vite's JavaScript modules in dev mode.
 
 ### Local Runtime
 
-Devonz uses a Local Runtime that executes code on the host machine (not in the browser). If the preview or terminal doesn't load:
+Bolt uses a Local Runtime that executes code on the host machine (not in the browser). If the preview or terminal doesn't load:
 
 - Ensure **Node.js 18+** is installed on the host
 - On Windows, **Git Bash** must be available (installed with Git for Windows) — it is the preferred shell
-- The projects directory (`~/.devonz/projects/`) must be writable
+- The projects directory (`~/.bolt/projects/`) must be writable
 - **Port conflicts**: the dev server may bind to ports 5173+. Kill orphan Node processes if a port is already in use
 - No SharedArrayBuffer, COOP/COEP, or Service Worker requirements — those were WebContainer-only constraints
 

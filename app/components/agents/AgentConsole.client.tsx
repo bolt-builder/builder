@@ -209,33 +209,31 @@ export function AgentConsole({ agentId }: { agentId: string }) {
     status === 'running' ? 'bg-green-500' : status === 'connecting' ? 'bg-yellow-500 animate-pulse' : 'bg-red-500';
 
   return (
-    <div className="flex flex-col h-full w-full bg-devonz-elements-background-depth-1">
-      <header className="flex items-center gap-3 px-4 min-h-[52px] border-b border-devonz-elements-borderColor">
+    <div className="flex flex-col h-full w-full bg-bolt-elements-background-depth-1">
+      <header className="flex items-center gap-3 px-4 min-h-[52px] border-b border-bolt-elements-borderColor">
         <button
           type="button"
-          className="flex items-center gap-1.5 text-sm text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary bg-transparent"
+          className="flex items-center gap-1.5 text-sm text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary bg-transparent"
           onClick={() => navigate('/')}
           aria-label="Back to home"
         >
           <span className="i-ph:arrow-left" />
           <span>Home</span>
         </button>
-        <div className="w-px h-5 bg-devonz-elements-borderColor" />
-        <div className="i-ph:robot text-lg text-devonz-elements-textPrimary" />
+        <div className="w-px h-5 bg-bolt-elements-borderColor" />
+        <div className="i-ph:robot text-lg text-bolt-elements-textPrimary" />
         <div className="flex items-baseline gap-2 min-w-0">
-          <span className="text-sm font-medium text-devonz-elements-textPrimary truncate">
-            {agent?.name ?? agentId}
-          </span>
-          {agent?.version && <span className="text-xs text-devonz-elements-textTertiary">v{agent.version}</span>}
+          <span className="text-sm font-medium text-bolt-elements-textPrimary truncate">{agent?.name ?? agentId}</span>
+          {agent?.version && <span className="text-xs text-bolt-elements-textTertiary">v{agent.version}</span>}
         </div>
         {agent?.installed && (
           <div className="flex items-center gap-1.5 ml-auto">
             <span className={`inline-block w-2 h-2 rounded-full ${statusColor}`} aria-hidden />
-            <span className="text-xs text-devonz-elements-textSecondary">{statusLabel}</span>
+            <span className="text-xs text-bolt-elements-textSecondary">{statusLabel}</span>
             {(status === 'exited' || status === 'error') && (
               <button
                 type="button"
-                className="ml-2 flex items-center gap-1 text-xs px-2.5 py-1 rounded-md bg-devonz-elements-background-depth-2 text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary border border-devonz-elements-borderColor"
+                className="ml-2 flex items-center gap-1 text-xs px-2.5 py-1 rounded-md bg-bolt-elements-background-depth-2 text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary border border-bolt-elements-borderColor"
                 onClick={restart}
               >
                 <span className="i-ph:arrow-clockwise" />
@@ -248,17 +246,17 @@ export function AgentConsole({ agentId }: { agentId: string }) {
 
       <div className="flex-1 min-h-0 relative">
         {agentsLoaded && !agent && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-devonz-elements-textSecondary">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-bolt-elements-textSecondary">
             <div className="i-ph:robot text-3xl" />
             <p className="text-sm">Unknown agent “{agentId}”.</p>
           </div>
         )}
 
         {agent && !agent.installed && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-devonz-elements-textSecondary px-6 text-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-bolt-elements-textSecondary px-6 text-center">
             <div className="i-ph:robot text-3xl" />
             <p className="text-sm">{agent.name} is not installed on this machine.</p>
-            <code className="text-xs px-3 py-2 rounded-md bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor select-all">
+            <code className="text-xs px-3 py-2 rounded-md bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor select-all">
               {agent.installHint}
             </code>
           </div>

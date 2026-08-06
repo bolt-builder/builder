@@ -302,7 +302,7 @@ export default function SupabaseTab() {
   const renderProjects = () => {
     if (fetchingStats) {
       return (
-        <div className="flex items-center gap-2 text-sm text-devonz-elements-textSecondary">
+        <div className="flex items-center gap-2 text-sm text-bolt-elements-textSecondary">
           <div className="i-ph:spinner-gap w-4 h-4 animate-spin" />
           Fetching Supabase projects...
         </div>
@@ -312,16 +312,16 @@ export default function SupabaseTab() {
     return (
       <Collapsible open={isProjectsExpanded} onOpenChange={setIsProjectsExpanded}>
         <CollapsibleTrigger asChild>
-          <div className="flex items-center justify-between p-4 rounded-lg bg-devonz-elements-background dark:bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive/70 dark:hover:border-devonz-elements-borderColorActive/70 transition-all duration-200 cursor-pointer">
+          <div className="flex items-center justify-between p-4 rounded-lg bg-bolt-elements-background dark:bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive/70 dark:hover:border-bolt-elements-borderColorActive/70 transition-all duration-200 cursor-pointer">
             <div className="flex items-center gap-2">
-              <div className="i-ph:database w-4 h-4 text-devonz-elements-item-contentAccent" />
-              <span className="text-sm font-medium text-devonz-elements-textPrimary">
+              <div className="i-ph:database w-4 h-4 text-bolt-elements-item-contentAccent" />
+              <span className="text-sm font-medium text-bolt-elements-textPrimary">
                 Your Projects ({connection.stats?.totalProjects || 0})
               </span>
             </div>
             <div
               className={cn(
-                'i-ph:caret-down w-4 h-4 transform transition-transform duration-200 text-devonz-elements-textSecondary',
+                'i-ph:caret-down w-4 h-4 transform transition-transform duration-200 text-bolt-elements-textSecondary',
                 isProjectsExpanded ? 'rotate-180' : '',
               )}
             />
@@ -331,32 +331,32 @@ export default function SupabaseTab() {
           <div className="space-y-4 mt-4">
             {/* Supabase Overview Dashboard */}
             {connection.stats?.projects?.length ? (
-              <div className="mb-6 p-4 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
-                <h4 className="text-sm font-medium text-devonz-elements-textPrimary mb-3">Supabase Overview</h4>
+              <div className="mb-6 p-4 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
+                <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-3">Supabase Overview</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-devonz-elements-textPrimary">
+                    <div className="text-2xl font-bold text-bolt-elements-textPrimary">
                       {connection.stats.totalProjects}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Total Projects</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Total Projects</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-devonz-elements-textPrimary">
+                    <div className="text-2xl font-bold text-bolt-elements-textPrimary">
                       {connection.stats.projects.filter((p: SupabaseProject) => p.status === 'ACTIVE_HEALTHY').length}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Active Projects</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Active Projects</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-devonz-elements-textPrimary">
+                    <div className="text-2xl font-bold text-bolt-elements-textPrimary">
                       {new Set(connection.stats.projects.map((p: SupabaseProject) => p.region)).size}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Regions Used</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Regions Used</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-devonz-elements-textPrimary">
+                    <div className="text-2xl font-bold text-bolt-elements-textPrimary">
                       {connection.stats.projects.filter((p: SupabaseProject) => p.status !== 'ACTIVE_HEALTHY').length}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Inactive Projects</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Inactive Projects</div>
                   </div>
                 </div>
               </div>
@@ -368,20 +368,20 @@ export default function SupabaseTab() {
                   <div
                     key={project.id}
                     className={cn(
-                      'p-4 rounded-lg border transition-colors bg-devonz-elements-background-depth-1 cursor-pointer',
+                      'p-4 rounded-lg border transition-colors bg-bolt-elements-background-depth-1 cursor-pointer',
                       selectedProjectId === project.id
-                        ? 'border-devonz-elements-item-contentAccent bg-devonz-elements-item-backgroundActive/10'
-                        : 'border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive/70',
+                        ? 'border-bolt-elements-item-contentAccent bg-bolt-elements-item-backgroundActive/10'
+                        : 'border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive/70',
                     )}
                     onClick={() => handleProjectSelect(project.id)}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h5 className="text-sm font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                          <div className="i-ph:database w-4 h-4 text-devonz-elements-borderColorActive" />
+                        <h5 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                          <div className="i-ph:database w-4 h-4 text-bolt-elements-borderColorActive" />
                           {project.name}
                         </h5>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-devonz-elements-textSecondary">
+                        <div className="flex items-center gap-2 mt-2 text-xs text-bolt-elements-textSecondary">
                           <span className="flex items-center gap-1">
                             <div className="i-ph:globe w-3 h-3" />
                             {project.region}
@@ -421,39 +421,39 @@ export default function SupabaseTab() {
                         </div>
 
                         {/* Project Details Grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-devonz-elements-borderColor">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-bolt-elements-borderColor">
                           <div className="text-center">
-                            <div className="text-sm font-semibold text-devonz-elements-textPrimary">
+                            <div className="text-sm font-semibold text-bolt-elements-textPrimary">
                               {project.stats?.database?.tables ?? '--'}
                             </div>
-                            <div className="text-xs text-devonz-elements-textSecondary flex items-center justify-center gap-1">
+                            <div className="text-xs text-bolt-elements-textSecondary flex items-center justify-center gap-1">
                               <div className="i-ph:table w-3 h-3" />
                               Tables
                             </div>
                           </div>
                           <div className="text-center">
-                            <div className="text-sm font-semibold text-devonz-elements-textPrimary">
+                            <div className="text-sm font-semibold text-bolt-elements-textPrimary">
                               {project.stats?.storage?.buckets ?? '--'}
                             </div>
-                            <div className="text-xs text-devonz-elements-textSecondary flex items-center justify-center gap-1">
+                            <div className="text-xs text-bolt-elements-textSecondary flex items-center justify-center gap-1">
                               <div className="i-ph:folder w-3 h-3" />
                               Buckets
                             </div>
                           </div>
                           <div className="text-center">
-                            <div className="text-sm font-semibold text-devonz-elements-textPrimary">
+                            <div className="text-sm font-semibold text-bolt-elements-textPrimary">
                               {project.stats?.functions?.deployed ?? '--'}
                             </div>
-                            <div className="text-xs text-devonz-elements-textSecondary flex items-center justify-center gap-1">
+                            <div className="text-xs text-bolt-elements-textSecondary flex items-center justify-center gap-1">
                               <div className="i-ph:code w-3 h-3" />
                               Functions
                             </div>
                           </div>
                           <div className="text-center">
-                            <div className="text-sm font-semibold text-devonz-elements-textPrimary">
+                            <div className="text-sm font-semibold text-bolt-elements-textPrimary">
                               {project.stats?.database?.size_mb ? `${project.stats.database.size_mb} MB` : '--'}
                             </div>
-                            <div className="text-xs text-devonz-elements-textSecondary flex items-center justify-center gap-1">
+                            <div className="text-xs text-bolt-elements-textSecondary flex items-center justify-center gap-1">
                               <div className="i-ph:database w-3 h-3" />
                               DB Size
                             </div>
@@ -463,7 +463,7 @@ export default function SupabaseTab() {
                     </div>
 
                     {selectedProjectId === project.id && (
-                      <div className="space-y-4 mt-4 pt-4 border-t border-devonz-elements-borderColor">
+                      <div className="space-y-4 mt-4 pt-4 border-t border-bolt-elements-borderColor">
                         <div className="flex flex-wrap items-center gap-1">
                           {projectActions.map((action) => (
                             <Button
@@ -475,7 +475,7 @@ export default function SupabaseTab() {
                                 handleProjectAction(project.id, action);
                               }}
                               disabled={isProjectActionLoading || (action.name === 'Get API Keys' && fetchingApiKeys)}
-                              className="flex items-center gap-1 text-xs px-2 py-1 text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary"
+                              className="flex items-center gap-1 text-xs px-2 py-1 text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary"
                             >
                               <div className={`${action.icon} w-2.5 h-2.5`} />
                               {action.name === 'Get API Keys' && fetchingApiKeys ? 'Fetching...' : action.name}
@@ -485,12 +485,12 @@ export default function SupabaseTab() {
 
                         {/* Project Details */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg space-y-2">
-                            <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                              <div className="i-ph:database w-4 h-4 text-devonz-elements-item-contentAccent" />
+                          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg space-y-2">
+                            <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                              <div className="i-ph:database w-4 h-4 text-bolt-elements-item-contentAccent" />
                               Database Schema
                             </h6>
-                            <div className="space-y-1 text-xs text-devonz-elements-textSecondary">
+                            <div className="space-y-1 text-xs text-bolt-elements-textSecondary">
                               <div className="flex justify-between">
                                 <span>Tables:</span>
                                 <span>{project.stats?.database?.tables ?? '--'}</span>
@@ -512,12 +512,12 @@ export default function SupabaseTab() {
                             </div>
                           </div>
 
-                          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg space-y-2">
-                            <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                              <div className="i-ph:folder w-4 h-4 text-devonz-elements-item-contentAccent" />
+                          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg space-y-2">
+                            <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                              <div className="i-ph:folder w-4 h-4 text-bolt-elements-item-contentAccent" />
                               Storage
                             </h6>
-                            <div className="space-y-1 text-xs text-devonz-elements-textSecondary">
+                            <div className="space-y-1 text-xs text-bolt-elements-textSecondary">
                               <div className="flex justify-between">
                                 <span>Buckets:</span>
                                 <span>{project.stats?.storage?.buckets ?? '--'}</span>
@@ -545,14 +545,14 @@ export default function SupabaseTab() {
                         </div>
 
                         {connection.credentials && (
-                          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg space-y-2">
-                            <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                              <div className="i-ph:key w-4 h-4 text-devonz-elements-item-contentAccent" />
+                          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg space-y-2">
+                            <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                              <div className="i-ph:key w-4 h-4 text-bolt-elements-item-contentAccent" />
                               Project Credentials
                             </h6>
                             <div className="space-y-2">
                               <div>
-                                <label className="text-xs text-devonz-elements-textSecondary">Supabase URL:</label>
+                                <label className="text-xs text-bolt-elements-textSecondary">Supabase URL:</label>
                                 <div className="flex items-center gap-2 mt-1">
                                   <input
                                     type="text"
@@ -560,7 +560,7 @@ export default function SupabaseTab() {
                                     spellCheck={false}
                                     value={connection.credentials.supabaseUrl || ''}
                                     readOnly
-                                    className="flex-1 px-2 py-1 text-xs bg-devonz-elements-background border border-devonz-elements-borderColor rounded"
+                                    className="flex-1 px-2 py-1 text-xs bg-bolt-elements-background border border-bolt-elements-borderColor rounded"
                                   />
                                   <Button
                                     size="icon"
@@ -582,7 +582,7 @@ export default function SupabaseTab() {
                                 </div>
                               </div>
                               <div>
-                                <label className="text-xs text-devonz-elements-textSecondary">Anon Key:</label>
+                                <label className="text-xs text-bolt-elements-textSecondary">Anon Key:</label>
                                 <div className="flex items-center gap-2 mt-1">
                                   <input
                                     type="password"
@@ -590,7 +590,7 @@ export default function SupabaseTab() {
                                     spellCheck={false}
                                     value={connection.credentials.anonKey || ''}
                                     readOnly
-                                    className="flex-1 px-2 py-1 text-xs bg-devonz-elements-background border border-devonz-elements-borderColor rounded"
+                                    className="flex-1 px-2 py-1 text-xs bg-bolt-elements-background border border-bolt-elements-borderColor rounded"
                                   />
                                   <Button
                                     size="icon"
@@ -620,7 +620,7 @@ export default function SupabaseTab() {
                 ))}
               </div>
             ) : (
-              <div className="text-sm text-devonz-elements-textSecondary flex items-center gap-2 p-4">
+              <div className="text-sm text-bolt-elements-textSecondary flex items-center gap-2 p-4">
                 <div className="i-ph:info w-4 h-4" />
                 No projects found in your Supabase account
               </div>
@@ -644,7 +644,7 @@ export default function SupabaseTab() {
           <div className="text-[#3ECF8E]">
             <SupabaseLogo />
           </div>
-          <h2 className="text-lg font-medium text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary">
+          <h2 className="text-lg font-medium text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary">
             Supabase Integration
           </h2>
         </div>
@@ -655,7 +655,7 @@ export default function SupabaseTab() {
               disabled={connectionTest?.status === 'testing'}
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 hover:bg-devonz-elements-item-backgroundActive/10 hover:text-devonz-elements-textPrimary dark:hover:bg-devonz-elements-item-backgroundActive/10 dark:hover:text-devonz-elements-textPrimary transition-colors"
+              className="flex items-center gap-2 hover:bg-bolt-elements-item-backgroundActive/10 hover:text-bolt-elements-textPrimary dark:hover:bg-bolt-elements-item-backgroundActive/10 dark:hover:text-bolt-elements-textPrimary transition-colors"
             >
               {connectionTest?.status === 'testing' ? (
                 <>
@@ -673,7 +673,7 @@ export default function SupabaseTab() {
         </div>
       </motion.div>
 
-      <p className="text-sm text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary">
+      <p className="text-sm text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary">
         Connect and manage your Supabase projects with database access, authentication, and storage controls
       </p>
 
@@ -717,7 +717,7 @@ export default function SupabaseTab() {
 
       {/* Main Connection Component */}
       <motion.div
-        className="bg-devonz-elements-background dark:bg-devonz-elements-background border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor rounded-lg"
+        className="bg-bolt-elements-background dark:bg-bolt-elements-background border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor rounded-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -725,11 +725,11 @@ export default function SupabaseTab() {
         <div className="p-6 space-y-6">
           {!connection.user ? (
             <div className="space-y-4">
-              <div className="text-xs text-devonz-elements-textSecondary bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-1 p-3 rounded-lg mb-4">
+              <div className="text-xs text-bolt-elements-textSecondary bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-1 p-3 rounded-lg mb-4">
                 <p className="flex items-center gap-1 mb-1">
-                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-devonz-elements-icon-success dark:text-devonz-elements-icon-success" />
+                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-bolt-elements-icon-success dark:text-bolt-elements-icon-success" />
                   <span className="font-medium">Tip:</span> You can also set the{' '}
-                  <code className="px-1 py-0.5 bg-devonz-elements-background-depth-2 dark:bg-devonz-elements-background-depth-2 rounded">
+                  <code className="px-1 py-0.5 bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-2 rounded">
                     VITE_SUPABASE_ACCESS_TOKEN
                   </code>{' '}
                   environment variable to connect automatically.
@@ -737,7 +737,7 @@ export default function SupabaseTab() {
               </div>
 
               <div>
-                <label className="block text-sm text-devonz-elements-textSecondary mb-2">Access Token</label>
+                <label className="block text-sm text-bolt-elements-textSecondary mb-2">Access Token</label>
                 <input
                   type="password"
                   autoComplete="off"
@@ -748,19 +748,19 @@ export default function SupabaseTab() {
                   placeholder="Enter your Supabase access token"
                   className={cn(
                     'w-full px-3 py-2 rounded-lg text-sm',
-                    'bg-devonz-elements-background-depth-1',
-                    'border border-devonz-elements-borderColor',
-                    'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
-                    'focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive',
+                    'bg-bolt-elements-background-depth-1',
+                    'border border-bolt-elements-borderColor',
+                    'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                    'focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive',
                     'disabled:opacity-50',
                   )}
                 />
-                <div className="mt-2 text-sm text-devonz-elements-textSecondary">
+                <div className="mt-2 text-sm text-bolt-elements-textSecondary">
                   <a
                     href="https://supabase.com/dashboard/account/tokens"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-devonz-elements-borderColorActive hover:underline inline-flex items-center gap-1"
+                    className="text-bolt-elements-borderColorActive hover:underline inline-flex items-center gap-1"
                   >
                     Get your token
                     <div className="i-ph:arrow-square-out w-4 h-4" />
@@ -773,7 +773,7 @@ export default function SupabaseTab() {
                 disabled={connecting || !tokenInput}
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm flex items-center gap-2',
-                  'bg-devonz-elements-bg-depth-3 text-devonz-elements-textPrimary',
+                  'bg-bolt-elements-bg-depth-3 text-bolt-elements-textPrimary',
                   'hover:bg-[#5E41D0] hover:text-white',
                   'disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200',
                   'transform active:scale-95',
@@ -807,7 +807,7 @@ export default function SupabaseTab() {
                     <div className="i-ph:plug w-4 h-4" />
                     Disconnect
                   </button>
-                  <span className="text-sm text-devonz-elements-textSecondary flex items-center gap-1">
+                  <span className="text-sm text-bolt-elements-textSecondary flex items-center gap-1">
                     <div className="i-ph:check-circle w-4 h-4 text-green-500" />
                     Connected to Supabase
                   </span>
@@ -816,17 +816,17 @@ export default function SupabaseTab() {
 
               {connection.user && (
                 <div className="space-y-4">
-                  <div className="flex items-center gap-4 p-4 bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-1 rounded-lg">
+                  <div className="flex items-center gap-4 p-4 bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-1 rounded-lg">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
                       <div className="i-ph:user w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium text-devonz-elements-textPrimary">{connection.user.email}</h4>
-                      <p className="text-sm text-devonz-elements-textSecondary">
+                      <h4 className="text-sm font-medium text-bolt-elements-textPrimary">{connection.user.email}</h4>
+                      <p className="text-sm text-bolt-elements-textSecondary">
                         {connection.user.role} • Member since{' '}
                         {new Date(connection.user.created_at).toLocaleDateString()}
                       </p>
-                      <div className="flex items-center gap-4 mt-2 text-xs text-devonz-elements-textSecondary">
+                      <div className="flex items-center gap-4 mt-2 text-xs text-bolt-elements-textSecondary">
                         <span className="flex items-center gap-1">
                           <div className="i-ph:buildings w-3 h-3" />
                           {connection.stats?.totalProjects || 0} Projects
@@ -848,11 +848,11 @@ export default function SupabaseTab() {
 
                   {/* Advanced Analytics */}
                   <div className="mb-6 space-y-4">
-                    <h4 className="text-sm font-medium text-devonz-elements-textPrimary">Performance Analytics</h4>
+                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary">Performance Analytics</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg border border-devonz-elements-borderColor">
-                        <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2 mb-2">
-                          <div className="i-ph:chart-line w-4 h-4 text-devonz-elements-item-contentAccent" />
+                      <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg border border-bolt-elements-borderColor">
+                        <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2 mb-2">
+                          <div className="i-ph:chart-line w-4 h-4 text-bolt-elements-item-contentAccent" />
                           Database Health
                         </h6>
                         <div className="space-y-1">
@@ -880,16 +880,16 @@ export default function SupabaseTab() {
                             ];
                           })().map((item, idx) => (
                             <div key={idx} className="flex justify-between text-xs">
-                              <span className="text-devonz-elements-textSecondary">{item.label}:</span>
-                              <span className="text-devonz-elements-textPrimary font-medium">{item.value}</span>
+                              <span className="text-bolt-elements-textSecondary">{item.label}:</span>
+                              <span className="text-bolt-elements-textPrimary font-medium">{item.value}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg border border-devonz-elements-borderColor">
-                        <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2 mb-2">
-                          <div className="i-ph:shield-check w-4 h-4 text-devonz-elements-item-contentAccent" />
+                      <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg border border-bolt-elements-borderColor">
+                        <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2 mb-2">
+                          <div className="i-ph:shield-check w-4 h-4 text-bolt-elements-item-contentAccent" />
                           Auth & Security
                         </h6>
                         <div className="space-y-1">
@@ -912,16 +912,16 @@ export default function SupabaseTab() {
                             ];
                           })().map((item, idx) => (
                             <div key={idx} className="flex justify-between text-xs">
-                              <span className="text-devonz-elements-textSecondary">{item.label}:</span>
-                              <span className="text-devonz-elements-textPrimary font-medium">{item.value}</span>
+                              <span className="text-bolt-elements-textSecondary">{item.label}:</span>
+                              <span className="text-bolt-elements-textPrimary font-medium">{item.value}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg border border-devonz-elements-borderColor">
-                        <h6 className="text-xs font-medium text-devonz-elements-textPrimary flex items-center gap-2 mb-2">
-                          <div className="i-ph:globe w-4 h-4 text-devonz-elements-item-contentAccent" />
+                      <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg border border-bolt-elements-borderColor">
+                        <h6 className="text-xs font-medium text-bolt-elements-textPrimary flex items-center gap-2 mb-2">
+                          <div className="i-ph:globe w-4 h-4 text-bolt-elements-item-contentAccent" />
                           Regional Distribution
                         </h6>
                         <div className="space-y-1">
@@ -941,8 +941,8 @@ export default function SupabaseTab() {
                               .map(([region, count]) => ({ label: region.toUpperCase(), value: count }));
                           })().map((item, idx) => (
                             <div key={idx} className="flex justify-between text-xs">
-                              <span className="text-devonz-elements-textSecondary">{item.label}:</span>
-                              <span className="text-devonz-elements-textPrimary font-medium">{item.value}</span>
+                              <span className="text-bolt-elements-textSecondary">{item.label}:</span>
+                              <span className="text-bolt-elements-textPrimary font-medium">{item.value}</span>
                             </div>
                           ))}
                         </div>
@@ -952,7 +952,7 @@ export default function SupabaseTab() {
 
                   {/* Resource Utilization */}
                   <div className="mb-6">
-                    <h4 className="text-sm font-medium text-devonz-elements-textPrimary mb-2">Resource Overview</h4>
+                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary mb-2">Resource Overview</h4>
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                       {(() => {
                         const totalDatabase =
@@ -994,9 +994,9 @@ export default function SupabaseTab() {
                             label: 'Functions',
                             value: totalFunctions,
                             icon: 'i-ph:code',
-                            color: 'text-devonz-elements-item-contentAccent',
-                            bgColor: 'bg-devonz-elements-item-backgroundAccent',
-                            textColor: 'text-devonz-elements-item-contentAccent',
+                            color: 'text-bolt-elements-item-contentAccent',
+                            bgColor: 'bg-bolt-elements-item-backgroundAccent',
+                            textColor: 'text-bolt-elements-item-contentAccent',
                           },
                           {
                             label: 'Tables',
@@ -1018,11 +1018,11 @@ export default function SupabaseTab() {
                       })().map((metric, index) => (
                         <div
                           key={index}
-                          className={`flex flex-col p-3 rounded-lg border border-devonz-elements-borderColor ${metric.bgColor}`}
+                          className={`flex flex-col p-3 rounded-lg border border-bolt-elements-borderColor ${metric.bgColor}`}
                         >
                           <div className="flex items-center gap-2 mb-1">
                             <div className={`${metric.icon} w-4 h-4 ${metric.color}`} />
-                            <span className="text-xs text-devonz-elements-textSecondary">{metric.label}</span>
+                            <span className="text-xs text-bolt-elements-textSecondary">{metric.label}</span>
                           </div>
                           <span className={`text-lg font-medium ${metric.textColor}`}>{metric.value}</span>
                         </div>
@@ -1032,12 +1032,12 @@ export default function SupabaseTab() {
 
                   {/* Usage Metrics */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                    <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="i-ph:database w-4 h-4 text-devonz-elements-item-contentAccent" />
-                        <span className="text-xs font-medium text-devonz-elements-textPrimary">Database</span>
+                        <div className="i-ph:database w-4 h-4 text-bolt-elements-item-contentAccent" />
+                        <span className="text-xs font-medium text-bolt-elements-textPrimary">Database</span>
                       </div>
-                      <div className="text-sm text-devonz-elements-textSecondary">
+                      <div className="text-sm text-bolt-elements-textSecondary">
                         <div>
                           Tables:{' '}
                           {connection.stats?.projects?.reduce((sum, p) => sum + (p.stats?.database?.tables || 0), 0) ||
@@ -1056,12 +1056,12 @@ export default function SupabaseTab() {
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                    <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="i-ph:folder w-4 h-4 text-devonz-elements-item-contentAccent" />
-                        <span className="text-xs font-medium text-devonz-elements-textPrimary">Storage</span>
+                        <div className="i-ph:folder w-4 h-4 text-bolt-elements-item-contentAccent" />
+                        <span className="text-xs font-medium text-bolt-elements-textPrimary">Storage</span>
                       </div>
-                      <div className="text-sm text-devonz-elements-textSecondary">
+                      <div className="text-sm text-bolt-elements-textSecondary">
                         <div>
                           Buckets:{' '}
                           {connection.stats?.projects?.reduce((sum, p) => sum + (p.stats?.storage?.buckets || 0), 0) ||
@@ -1080,12 +1080,12 @@ export default function SupabaseTab() {
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                    <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="i-ph:code w-4 h-4 text-devonz-elements-item-contentAccent" />
-                        <span className="text-xs font-medium text-devonz-elements-textPrimary">Functions</span>
+                        <div className="i-ph:code w-4 h-4 text-bolt-elements-item-contentAccent" />
+                        <span className="text-xs font-medium text-bolt-elements-textPrimary">Functions</span>
                       </div>
-                      <div className="text-sm text-devonz-elements-textSecondary">
+                      <div className="text-sm text-bolt-elements-textSecondary">
                         <div>
                           Deployed:{' '}
                           {connection.stats?.projects?.reduce(

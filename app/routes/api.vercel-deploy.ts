@@ -243,7 +243,7 @@ async function vercelDeployAction({ request }: ActionFunctionArgs) {
     }
 
     if (!targetProjectId) {
-      const projectName = `devonz-${chatId}-${Date.now()}`;
+      const projectName = `bolt-${chatId}-${Date.now()}`;
       const createProjectResponse = await externalFetch({
         url: 'https://api.vercel.com/v9/projects',
         token,
@@ -289,7 +289,7 @@ async function vercelDeployAction({ request }: ActionFunctionArgs) {
           chatId,
         };
       } else {
-        const projectName = `devonz-${chatId}-${Date.now()}`;
+        const projectName = `bolt-${chatId}-${Date.now()}`;
         const createProjectResponse = await externalFetch({
           url: 'https://api.vercel.com/v9/projects',
           token,

@@ -1,5 +1,5 @@
 {
-  "name": "devonz",
+  "name": "bolt",
   "description": "AI-powered local vibe coding platform for full-stack development",
   "private": true,
   "license": "MIT",
@@ -7,7 +7,7 @@
   "type": "module",
   "version": "1.0.0",
   "author": {
-    "name": "Devonz team"
+    "name": "Bolt team"
   },
   "scripts": {
     "deploy": "npm run build",
@@ -27,11 +27,11 @@
     "prepare": "husky",
     "clean": "node scripts/clean.js",
     "screenshots": "node scripts/generate-screenshots.mjs",
-    "docker:build": "docker build -t devonz .",
-    "docker:run": "docker run --rm -p 5173:5173 --env-file .env.local devonz",
+    "docker:build": "docker build -t bolt .",
+    "docker:run": "docker run --rm -p 5173:5173 --env-file .env.local bolt",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
-    "docker:dev": "docker compose --profile dev up devonz-dev",
+    "docker:dev": "docker compose --profile dev up bolt-dev",
     "docker:update": "docker compose pull && docker compose up -d",
     "update": "node scripts/update.cjs",
     "knip": "knip"

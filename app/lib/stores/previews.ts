@@ -330,7 +330,7 @@ export class PreviewsStore {
 
     // BroadcastChannel only delivers to OTHER tabs; use a CustomEvent for same-tab refresh
     if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('devonz:refresh-preview'));
+      window.dispatchEvent(new CustomEvent('bolt:refresh-preview'));
     }
   }
 

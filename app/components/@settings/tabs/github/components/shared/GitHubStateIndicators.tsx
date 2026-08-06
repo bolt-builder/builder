@@ -20,9 +20,9 @@ export function LoadingState({ message = 'Loading...', size = 'md', className = 
   };
 
   return (
-    <div className={cn('flex flex-col items-center justify-center py-8 text-devonz-elements-textSecondary', className)}>
+    <div className={cn('flex flex-col items-center justify-center py-8 text-bolt-elements-textSecondary', className)}>
       <div className={cn('i-ph:spinner animate-spin mb-2', sizeClasses[size])} />
-      <p className={cn('text-devonz-elements-textSecondary', textSizeClasses[size])}>{message}</p>
+      <p className={cn('text-bolt-elements-textSecondary', textSizeClasses[size])}>{message}</p>
     </div>
   );
 }
@@ -59,12 +59,12 @@ export function ErrorState({
   return (
     <div className={cn('flex flex-col items-center justify-center py-8 text-center', className)}>
       <div className={cn('i-ph:warning-circle text-red-500 mb-2', sizeClasses[size])} />
-      <h3 className={cn('font-medium text-devonz-elements-textPrimary mb-1', textSizeClasses[size])}>{title}</h3>
-      <p className={cn('text-devonz-elements-textSecondary mb-4', textSizeClasses[size])}>{message}</p>
+      <h3 className={cn('font-medium text-bolt-elements-textPrimary mb-1', textSizeClasses[size])}>{title}</h3>
+      <p className={cn('text-bolt-elements-textSecondary mb-4', textSizeClasses[size])}>{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}
-          className="px-4 py-2 bg-devonz-elements-item-contentAccent text-white rounded-lg hover:bg-devonz-elements-item-contentAccent/90 transition-colors"
+          className="px-4 py-2 bg-bolt-elements-item-contentAccent text-white rounded-lg hover:bg-bolt-elements-item-contentAccent/90 transition-colors"
         >
           {retryLabel}
         </button>

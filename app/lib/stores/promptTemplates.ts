@@ -10,7 +10,7 @@ export interface PromptTemplate {
   builtIn?: boolean;
 }
 
-const STORAGE_KEY = 'devonz_prompt_templates';
+const STORAGE_KEY = 'bolt_prompt_templates';
 
 /**
  * Curated starter templates. Users can add their own on top; built-ins are

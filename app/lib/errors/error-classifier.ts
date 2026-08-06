@@ -309,7 +309,7 @@ export function classifyError(error: unknown): ClassifiedError {
  * (ChatAlert) or a lightweight toast notification.
  *
  * Fatal and error-severity errors get the full dialog so the user can
- * ask Devonz for help. Warnings and info-level issues get a toast.
+ * ask Bolt for help. Warnings and info-level issues get a toast.
  */
 export function shouldShowFullAlert(classified: ClassifiedError): boolean {
   return classified.severity === 'fatal' || classified.severity === 'error';

@@ -4,12 +4,7 @@ import ignore from 'ignore';
 import type { IProviderSetting } from '~/types/model';
 import { IGNORE_PATTERNS, OPERATION_TOKEN_BUDGETS, type FileMap } from './constants';
 import { DEFAULT_MODEL, DEFAULT_PROVIDER, PROVIDER_LIST } from '~/utils/constants';
-import {
-  createFilesContext,
-  extractCurrentContext,
-  extractPropertiesFromMessage,
-  simplifyDevonzActions,
-} from './utils';
+import { createFilesContext, extractCurrentContext, extractPropertiesFromMessage, simplifyBoltActions } from './utils';
 import { createScopedLogger } from '~/utils/logger';
 import { resolveModel } from './resolve-model';
 import type { OperationType } from './model-router';
@@ -169,9 +164,9 @@ export async function selectContext(props: {
     } else if (message.role === 'assistant') {
       let content = message.content;
 
-      content = simplifyDevonzActions(content);
+      content = simplifyBoltActions(content);
 
-      content = content.replace(/<div class=\\"__devonzThought__\\">.*?<\/div>/s, '');
+      content = content.replace(/<div class=\\"__boltThought__\\">.*?<\/div>/s, '');
       content = content.replace(/<think>.*?<\/think>/s, '');
 
       return { ...message, content };

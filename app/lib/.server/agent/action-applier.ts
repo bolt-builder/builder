@@ -1,4 +1,4 @@
-import type { DevonzAction } from '~/types/actions';
+import type { BoltAction } from '~/types/actions';
 import { WORK_DIR } from '~/utils/constants';
 import { validateCommand, auditCommand, DEFAULT_EXEC_TIMEOUT_MS } from '~/lib/runtime/command-safety';
 import { applySearchReplaceDiff } from '~/lib/runtime/diff/apply-diff';
@@ -7,7 +7,7 @@ import { createScopedLogger } from '~/utils/logger';
 const logger = createScopedLogger('ActionApplier');
 
 /**
- * Server-side applier for parsed devonzArtifact actions.
+ * Server-side applier for parsed boltArtifact actions.
  *
  * This is the headless counterpart of the browser's ActionRunner: it executes
  * `file`, `diff`, `shell`, and `build` actions directly against a server-side
@@ -17,7 +17,7 @@ const logger = createScopedLogger('ActionApplier');
  */
 
 export interface AppliedActionResult {
-  type: DevonzAction['type'];
+  type: BoltAction['type'];
 
   /** File path for file/diff actions; the command for shell-like actions. */
   target?: string;
@@ -71,7 +71,7 @@ function tail(output: string): string {
 async function runShellCommand(
   runtime: AgentRuntime,
   projectId: string,
-  action: { type: DevonzAction['type']; content: string },
+  action: { type: BoltAction['type']; content: string },
   execTimeoutMs: number,
 ): Promise<AppliedActionResult> {
   const command = action.content.trim();
@@ -105,7 +105,7 @@ async function runShellCommand(
 export async function applyActions(
   runtime: AgentRuntime,
   projectId: string,
-  actions: DevonzAction[],
+  actions: BoltAction[],
   options?: { execTimeoutMs?: number },
 ): Promise<AppliedActionResult[]> {
   const execTimeoutMs = options?.execTimeoutMs ?? DEFAULT_EXEC_TIMEOUT_MS;

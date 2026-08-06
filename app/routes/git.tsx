@@ -11,15 +11,15 @@ const GitUrlImport = clientLazy(() =>
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Devonz' },
-    { name: 'description', content: 'Talk with Devonz, an AI-powered development assistant' },
-    { property: 'og:title', content: 'Devonz' },
-    { property: 'og:description', content: 'Talk with Devonz, an AI-powered development assistant' },
+    { title: 'Bolt' },
+    { name: 'description', content: 'Talk with Bolt, an AI-powered development assistant' },
+    { property: 'og:title', content: 'Bolt' },
+    { property: 'og:description', content: 'Talk with Bolt, an AI-powered development assistant' },
     { property: 'og:type', content: 'website' },
     { property: 'og:image', content: '/logo-dark-styled.png' },
     { name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:title', content: 'Devonz' },
-    { name: 'twitter:description', content: 'Talk with Devonz, an AI-powered development assistant' },
+    { name: 'twitter:title', content: 'Bolt' },
+    { name: 'twitter:description', content: 'Talk with Bolt, an AI-powered development assistant' },
   ];
 };
 
@@ -29,7 +29,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export default function Index() {
   return (
-    <main className="flex flex-col h-full w-full bg-devonz-elements-background-depth-1">
+    <main className="flex flex-col h-full w-full bg-bolt-elements-background-depth-1">
       <BackgroundRays />
       <Header />
       <Suspense fallback={<BaseChat />}>
@@ -43,7 +43,7 @@ export function ErrorBoundary() {
   const error = useRouteError();
 
   useEffect(() => {
-    console.error('[Devonz:GitRouteError]', {
+    console.error('[Bolt:GitRouteError]', {
       timestamp: new Date().toISOString(),
       route: 'git',
       ...(isRouteErrorResponse(error)
@@ -61,37 +61,37 @@ export function ErrorBoundary() {
       : 'An unexpected error occurred while loading the Git import.';
 
   return (
-    <main className="flex flex-col items-center justify-center h-full w-full bg-devonz-elements-background-depth-1 text-devonz-elements-textPrimary px-6">
+    <main className="flex flex-col items-center justify-center h-full w-full bg-bolt-elements-background-depth-1 text-bolt-elements-textPrimary px-6">
       <div className="max-w-lg w-full text-center">
         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
           <div className="i-ph:git-branch text-3xl text-red-400" />
         </div>
         <h1 className="text-2xl font-bold mb-2">Git Import Error</h1>
-        <p className="text-sm text-devonz-elements-textSecondary mb-8">{message}</p>
+        <p className="text-sm text-bolt-elements-textSecondary mb-8">{message}</p>
         <div className="flex gap-3 justify-center">
           <a
             href="/"
-            className="px-5 py-2.5 rounded-lg text-sm font-medium border border-devonz-elements-borderColor bg-transparent text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-2 transition-colors duration-200"
+            className="px-5 py-2.5 rounded-lg text-sm font-medium border border-bolt-elements-borderColor bg-transparent text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-2 transition-colors duration-200"
           >
             Go Home
           </a>
           <button
             onClick={() => window.location.reload()}
-            className="px-5 py-2.5 rounded-lg text-sm font-medium bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text hover:bg-devonz-elements-button-primary-backgroundHover transition-colors duration-200"
+            className="px-5 py-2.5 rounded-lg text-sm font-medium bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text hover:bg-bolt-elements-button-primary-backgroundHover transition-colors duration-200"
           >
             Reload
           </button>
         </div>
         {error instanceof Error && error.stack && (
           <details className="mt-8 text-left w-full">
-            <summary className="cursor-pointer text-xs text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary transition-colors">
+            <summary className="cursor-pointer text-xs text-bolt-elements-textTertiary hover:text-bolt-elements-textSecondary transition-colors">
               Error Details
             </summary>
-            <div className="mt-3 p-4 bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg overflow-auto max-h-64">
+            <div className="mt-3 p-4 bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg overflow-auto max-h-64">
               <p className="text-xs text-red-400 font-mono font-semibold mb-2">
                 {error.name}: {error.message}
               </p>
-              <pre className="text-xs text-devonz-elements-textTertiary font-mono whitespace-pre-wrap break-words">
+              <pre className="text-xs text-bolt-elements-textTertiary font-mono whitespace-pre-wrap break-words">
                 {error.stack}
               </pre>
             </div>

@@ -59,7 +59,7 @@ const logLevelOptions: SelectOption[] = [
     value: 'debug',
     label: 'Debug',
     icon: 'i-ph:bug',
-    color: 'var(--devonz-elements-textTertiary)',
+    color: 'var(--bolt-elements-textTertiary)',
   },
 ];
 
@@ -119,9 +119,9 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
       case 'debug':
         return {
           icon: 'i-ph:bug',
-          color: 'text-devonz-elements-textTertiary',
+          color: 'text-bolt-elements-textTertiary',
           bg: 'hover:bg-gray-500/10 dark:hover:bg-gray-500/20',
-          badge: 'text-devonz-elements-textTertiary bg-devonz-elements-bg-depth-2',
+          badge: 'text-bolt-elements-textTertiary bg-bolt-elements-bg-depth-2',
         };
       default:
         return {
@@ -137,7 +137,7 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
     if (log.category === 'provider') {
       return (
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-xs text-devonz-elements-textTertiary">
+          <div className="flex items-center gap-2 text-xs text-bolt-elements-textTertiary">
             <span>Model: {details.model}</span>
             <span>-</span>
             <span>Tokens: {details.totalTokens}</span>
@@ -146,9 +146,9 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
           </div>
           {details.prompt && (
             <div className="flex flex-col gap-1">
-              <div className="text-xs font-medium text-devonz-elements-textPrimary">Prompt:</div>
+              <div className="text-xs font-medium text-bolt-elements-textPrimary">Prompt:</div>
               <pre
-                className="text-xs text-devonz-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-devonz-elements-borderColor"
+                className="text-xs text-bolt-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-bolt-elements-borderColor"
                 style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
               >
                 {details.prompt}
@@ -157,9 +157,9 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
           )}
           {details.response && (
             <div className="flex flex-col gap-1">
-              <div className="text-xs font-medium text-devonz-elements-textPrimary">Response:</div>
+              <div className="text-xs font-medium text-bolt-elements-textPrimary">Response:</div>
               <pre
-                className="text-xs text-devonz-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-devonz-elements-borderColor"
+                className="text-xs text-bolt-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-bolt-elements-borderColor"
                 style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
               >
                 {details.response}
@@ -173,19 +173,19 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
     if (log.category === 'api') {
       return (
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-xs text-devonz-elements-textTertiary">
+          <div className="flex items-center gap-2 text-xs text-bolt-elements-textTertiary">
             <span className={details.method === 'GET' ? 'text-green-500' : 'text-blue-500'}>{details.method}</span>
             <span>-</span>
             <span>Status: {details.statusCode}</span>
             <span>-</span>
             <span>Duration: {details.duration}ms</span>
           </div>
-          <div className="text-xs text-devonz-elements-textSecondary break-all">{details.url}</div>
+          <div className="text-xs text-bolt-elements-textSecondary break-all">{details.url}</div>
           {details.request && (
             <div className="flex flex-col gap-1">
-              <div className="text-xs font-medium text-devonz-elements-textPrimary">Request:</div>
+              <div className="text-xs font-medium text-bolt-elements-textPrimary">Request:</div>
               <pre
-                className="text-xs text-devonz-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-devonz-elements-borderColor"
+                className="text-xs text-bolt-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-bolt-elements-borderColor"
                 style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
               >
                 {JSON.stringify(details.request, null, 2)}
@@ -194,9 +194,9 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
           )}
           {details.response && (
             <div className="flex flex-col gap-1">
-              <div className="text-xs font-medium text-devonz-elements-textPrimary">Response:</div>
+              <div className="text-xs font-medium text-bolt-elements-textPrimary">Response:</div>
               <pre
-                className="text-xs text-devonz-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-devonz-elements-borderColor"
+                className="text-xs text-bolt-elements-textSecondary rounded p-2 whitespace-pre-wrap border-l-2 border-bolt-elements-borderColor"
                 style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
               >
                 {JSON.stringify(details.response, null, 2)}
@@ -220,7 +220,7 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
 
     return (
       <div
-        className="rounded-lg p-3 border-l-2 border-devonz-elements-borderColorActive"
+        className="rounded-lg p-3 border-l-2 border-bolt-elements-borderColorActive"
         style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
       >
         <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
@@ -229,13 +229,13 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
 
             return (
               <React.Fragment key={key}>
-                <span className="text-xs text-devonz-elements-textTertiary font-medium whitespace-nowrap">{key}</span>
+                <span className="text-xs text-bolt-elements-textTertiary font-medium whitespace-nowrap">{key}</span>
                 {isObject ? (
-                  <pre className="text-xs text-devonz-elements-textSecondary whitespace-pre-wrap break-all">
+                  <pre className="text-xs text-bolt-elements-textSecondary whitespace-pre-wrap break-all">
                     {JSON.stringify(value, null, 2)}
                   </pre>
                 ) : (
-                  <span className="text-xs text-devonz-elements-textSecondary break-all">{String(value)}</span>
+                  <span className="text-xs text-bolt-elements-textSecondary break-all">{String(value)}</span>
                 )}
               </React.Fragment>
             );
@@ -252,8 +252,8 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
       className={cn(
         'flex flex-col gap-2',
         'rounded-lg p-4',
-        'bg-devonz-elements-bg-depth-1',
-        'border border-devonz-elements-borderColor',
+        'bg-bolt-elements-bg-depth-1',
+        'border border-bolt-elements-borderColor',
         style.bg,
         'transition-all duration-200',
       )}
@@ -262,12 +262,12 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
         <div className="flex items-start gap-3">
           <span className={cn('text-lg', style.icon, style.color)} />
           <div className="flex flex-col gap-1">
-            <div className="text-sm font-medium text-devonz-elements-textPrimary">{log.message}</div>
+            <div className="text-sm font-medium text-bolt-elements-textPrimary">{log.message}</div>
             {log.details && (
               <>
                 <button
                   onClick={() => setLocalExpanded(!localExpanded)}
-                  className="inline-flex items-center gap-1 text-xs text-devonz-elements-item-contentAccent hover:underline transition-colors w-fit bg-transparent border-none p-0 cursor-pointer"
+                  className="inline-flex items-center gap-1 text-xs text-bolt-elements-item-contentAccent hover:underline transition-colors w-fit bg-transparent border-none p-0 cursor-pointer"
                 >
                   <span
                     className={cn(
@@ -283,14 +283,14 @@ const LogEntryItem = ({ log, isExpanded: forceExpanded, use24Hour, showTimestamp
             <div className="flex items-center gap-2">
               <div className={cn('px-2 py-0.5 rounded text-xs font-medium uppercase', style.badge)}>{log.level}</div>
               {log.category && (
-                <div className="px-2 py-0.5 rounded-full text-xs text-devonz-elements-textTertiary border border-devonz-elements-borderColor">
+                <div className="px-2 py-0.5 rounded-full text-xs text-bolt-elements-textTertiary border border-bolt-elements-borderColor">
                   {log.category}
                 </div>
               )}
             </div>
           </div>
         </div>
-        {showTimestamp && <time className="shrink-0 text-xs text-devonz-elements-textTertiary">{timestamp}</time>}
+        {showTimestamp && <time className="shrink-0 text-xs text-bolt-elements-textTertiary">{timestamp}</time>}
       </div>
     </motion.div>
   );
@@ -469,7 +469,7 @@ export function EventLogsTab() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `devonz-event-logs-${new Date().toISOString()}.json`;
+      a.download = `bolt-event-logs-${new Date().toISOString()}.json`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -503,7 +503,7 @@ export function EventLogsTab() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `devonz-event-logs-${new Date().toISOString()}.csv`;
+      a.download = `bolt-event-logs-${new Date().toISOString()}.csv`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -553,10 +553,10 @@ export function EventLogsTab() {
       doc.setFont('helvetica', 'bold');
       doc.text('Event Logs Report', margin, 35);
 
-      // Add subtitle with devonz.diy
+      // Add subtitle with bolt.diy
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text('devonz.diy - AI Development Platform', margin, 45);
+      doc.text('bolt.diy - AI Development Platform', margin, 45);
       yPos = 70;
 
       // Add report summary section
@@ -753,14 +753,14 @@ export function EventLogsTab() {
         });
 
         // Add footer text
-        doc.text('Generated by devonz.diy', margin, doc.internal.pageSize.getHeight() - 10);
+        doc.text('Generated by bolt.diy', margin, doc.internal.pageSize.getHeight() - 10);
 
         const dateStr = new Date().toLocaleDateString();
         doc.text(dateStr, pageWidth - margin, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
       }
 
       // Save the PDF
-      doc.save(`devonz-event-logs-${new Date().toISOString()}.pdf`);
+      doc.save(`bolt-event-logs-${new Date().toISOString()}.pdf`);
       toast.success('Event logs exported successfully as PDF');
     } catch (error) {
       logger.error('Failed to export PDF:', error);
@@ -791,7 +791,7 @@ export function EventLogsTab() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `devonz-event-logs-${new Date().toISOString()}.txt`;
+      a.download = `bolt-event-logs-${new Date().toISOString()}.txt`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -849,14 +849,14 @@ export function EventLogsTab() {
           className={cn(
             'group flex items-center gap-2',
             'rounded-lg px-3 py-1.5',
-            'text-sm text-devonz-elements-textPrimary',
+            'text-sm text-bolt-elements-textPrimary',
             'bg-transparent',
-            'border border-devonz-elements-borderColor',
-            'hover:bg-devonz-elements-item-backgroundAccent',
+            'border border-bolt-elements-borderColor',
+            'hover:bg-bolt-elements-item-backgroundAccent',
             'transition-all duration-200',
           )}
         >
-          <span className="i-ph:download text-lg text-devonz-elements-textTertiary group-hover:text-devonz-elements-item-contentAccent transition-colors" />
+          <span className="i-ph:download text-lg text-bolt-elements-textTertiary group-hover:text-bolt-elements-item-contentAccent transition-colors" />
           Export
         </button>
 
@@ -874,17 +874,17 @@ export function EventLogsTab() {
                   onClick={() => handleFormatClick(format.handler)}
                   className={cn(
                     'flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-colors w-full text-left',
-                    'bg-devonz-elements-bg-depth-1',
-                    'border border-devonz-elements-borderColor',
-                    'hover:bg-devonz-elements-bg-depth-2',
-                    'hover:border-devonz-elements-borderColorActive',
-                    'text-devonz-elements-textPrimary',
+                    'bg-bolt-elements-bg-depth-1',
+                    'border border-bolt-elements-borderColor',
+                    'hover:bg-bolt-elements-bg-depth-2',
+                    'hover:border-bolt-elements-borderColorActive',
+                    'text-bolt-elements-textPrimary',
                   )}
                 >
                   <div className={cn(format.icon, 'w-5 h-5')} />
                   <div>
                     <div className="font-medium">{format.label}</div>
-                    <div className="text-xs text-devonz-elements-textSecondary mt-0.5">
+                    <div className="text-xs text-bolt-elements-textSecondary mt-0.5">
                       {format.id === 'json' && 'Export as a structured JSON file'}
                       {format.id === 'csv' && 'Export as a CSV spreadsheet'}
                       {format.id === 'pdf' && 'Export as a formatted PDF document'}
@@ -911,10 +911,10 @@ export function EventLogsTab() {
                 className={cn(
                   'flex items-center gap-2',
                   'rounded-lg px-3 py-1.5',
-                  'text-sm text-devonz-elements-textPrimary',
+                  'text-sm text-bolt-elements-textPrimary',
                   'bg-transparent',
-                  'border border-devonz-elements-borderColor',
-                  'hover:bg-devonz-elements-item-backgroundAccent',
+                  'border border-bolt-elements-borderColor',
+                  'hover:bg-bolt-elements-item-backgroundAccent',
                   'transition-all duration-200',
                 )}
               >
@@ -923,14 +923,14 @@ export function EventLogsTab() {
                   style={{ color: selectedLevelOption?.color }}
                 />
                 {selectedLevelOption?.label || 'All Types'}
-                <span className="i-ph:caret-down text-lg text-devonz-elements-textTertiary" />
+                <span className="i-ph:caret-down text-lg text-bolt-elements-textTertiary" />
               </button>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Portal>
               <DropdownMenu.Content
-                className="min-w-[200px] rounded-lg shadow-lg py-1 z-[250] animate-in fade-in-0 zoom-in-95 border border-devonz-elements-borderColor"
-                style={{ backgroundColor: 'var(--devonz-elements-bg-depth-1)' }}
+                className="min-w-[200px] rounded-lg shadow-lg py-1 z-[250] animate-in fade-in-0 zoom-in-95 border border-bolt-elements-borderColor"
+                style={{ backgroundColor: 'var(--bolt-elements-bg-depth-1)' }}
                 sideOffset={5}
                 align="start"
                 side="bottom"
@@ -938,19 +938,19 @@ export function EventLogsTab() {
                 {logLevelOptions.map((option) => (
                   <DropdownMenu.Item
                     key={option.value}
-                    className="group flex items-center px-4 py-2.5 text-sm text-devonz-elements-textSecondary hover:bg-devonz-elements-item-backgroundAccent cursor-pointer transition-colors"
+                    className="group flex items-center px-4 py-2.5 text-sm text-bolt-elements-textSecondary hover:bg-bolt-elements-item-backgroundAccent cursor-pointer transition-colors"
                     onClick={() => handleLevelFilterChange(option.value)}
                   >
                     <div className="mr-3 flex h-5 w-5 items-center justify-center">
                       <div
                         className={cn(
                           option.icon,
-                          'text-lg group-hover:text-devonz-elements-item-contentAccent transition-colors',
+                          'text-lg group-hover:text-bolt-elements-item-contentAccent transition-colors',
                         )}
                         style={{ color: option.color }}
                       />
                     </div>
-                    <span className="group-hover:text-devonz-elements-item-contentAccent transition-colors">
+                    <span className="group-hover:text-bolt-elements-item-contentAccent transition-colors">
                       {option.label}
                     </span>
                   </DropdownMenu.Item>
@@ -967,16 +967,16 @@ export function EventLogsTab() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className={cn(
                 'w-full px-4 py-1.5 pl-10 rounded-lg',
-                'bg-devonz-elements-background-depth-1',
-                'border border-devonz-elements-borderColor',
-                'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
-                'focus:outline-none focus:ring-2 focus:ring-devonz-elements-borderColorActive',
+                'bg-bolt-elements-background-depth-1',
+                'border border-bolt-elements-borderColor',
+                'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                'focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColorActive',
                 'transition-all duration-200',
                 'text-sm',
               )}
             />
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
-              <div className="i-ph:magnifying-glass text-lg text-devonz-elements-textTertiary" />
+              <div className="i-ph:magnifying-glass text-lg text-bolt-elements-textTertiary" />
             </div>
           </div>
         </div>
@@ -988,27 +988,27 @@ export function EventLogsTab() {
               <Switch
                 checked={showTimestamps}
                 onCheckedChange={(value) => handlePreferenceChange('timestamps', value)}
-                className="data-[state=checked]:bg-devonz-elements-item-contentAccent"
+                className="data-[state=checked]:bg-bolt-elements-item-contentAccent"
               />
-              <span className="text-sm text-devonz-elements-textTertiary">Timestamps</span>
+              <span className="text-sm text-bolt-elements-textTertiary">Timestamps</span>
             </div>
 
             <div className="flex items-center gap-2">
               <Switch
                 checked={use24Hour}
                 onCheckedChange={(value) => handlePreferenceChange('24hour', value)}
-                className="data-[state=checked]:bg-devonz-elements-item-contentAccent"
+                className="data-[state=checked]:bg-bolt-elements-item-contentAccent"
               />
-              <span className="text-sm text-devonz-elements-textTertiary">24h</span>
+              <span className="text-sm text-bolt-elements-textTertiary">24h</span>
             </div>
 
             <div className="flex items-center gap-2">
               <Switch
                 checked={autoExpand}
                 onCheckedChange={(value) => handlePreferenceChange('autoExpand', value)}
-                className="data-[state=checked]:bg-devonz-elements-item-contentAccent"
+                className="data-[state=checked]:bg-bolt-elements-item-contentAccent"
               />
-              <span className="text-sm text-devonz-elements-textTertiary">Auto Expand</span>
+              <span className="text-sm text-bolt-elements-textTertiary">Auto Expand</span>
             </div>
           </div>
 
@@ -1018,15 +1018,15 @@ export function EventLogsTab() {
               className={cn(
                 'group flex items-center gap-2',
                 'rounded-lg px-3 py-1.5',
-                'text-sm text-devonz-elements-textPrimary',
+                'text-sm text-bolt-elements-textPrimary',
                 'bg-transparent',
-                'border border-devonz-elements-borderColor',
-                'hover:bg-devonz-elements-item-backgroundAccent',
+                'border border-bolt-elements-borderColor',
+                'hover:bg-bolt-elements-item-backgroundAccent',
                 'transition-all duration-200',
                 { 'animate-spin': isRefreshing },
               )}
             >
-              <span className="i-ph:arrows-clockwise text-lg text-devonz-elements-textTertiary group-hover:text-devonz-elements-item-contentAccent transition-colors" />
+              <span className="i-ph:arrows-clockwise text-lg text-bolt-elements-textTertiary group-hover:text-bolt-elements-item-contentAccent transition-colors" />
               Refresh
             </button>
 
@@ -1043,14 +1043,14 @@ export function EventLogsTab() {
             className={cn(
               'flex flex-col items-center justify-center gap-4',
               'rounded-lg p-8 text-center',
-              'bg-devonz-elements-bg-depth-1',
-              'border border-devonz-elements-borderColor',
+              'bg-bolt-elements-bg-depth-1',
+              'border border-bolt-elements-borderColor',
             )}
           >
-            <span className="i-ph:clipboard-text text-4xl text-devonz-elements-textTertiary" />
+            <span className="i-ph:clipboard-text text-4xl text-bolt-elements-textTertiary" />
             <div className="flex flex-col gap-1">
-              <h3 className="text-sm font-medium text-devonz-elements-textPrimary">No Logs Found</h3>
-              <p className="text-sm text-devonz-elements-textSecondary">Try adjusting your search or filters</p>
+              <h3 className="text-sm font-medium text-bolt-elements-textPrimary">No Logs Found</h3>
+              <p className="text-sm text-bolt-elements-textSecondary">Try adjusting your search or filters</p>
             </div>
           </motion.div>
         ) : (

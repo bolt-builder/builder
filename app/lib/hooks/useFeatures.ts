@@ -4,7 +4,7 @@ import { createScopedLogger } from '~/utils/logger';
 
 const logger = createScopedLogger('Features');
 
-const VIEWED_FEATURES_KEY = 'devonz_viewed_features';
+const VIEWED_FEATURES_KEY = 'bolt_viewed_features';
 
 const getViewedFeatures = (): string[] => {
   try {

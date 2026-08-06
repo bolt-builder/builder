@@ -319,7 +319,7 @@ export function isConfigFile(filePath: string): boolean {
 function loadSettingsFromStorage(): StagingSettings {
   try {
     if (typeof localStorage !== 'undefined') {
-      const saved = localStorage.getItem('devonz-staging-settings');
+      const saved = localStorage.getItem('bolt-staging-settings');
 
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -340,7 +340,7 @@ function loadSettingsFromStorage(): StagingSettings {
 function saveSettingsToStorage(settings: StagingSettings): void {
   try {
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('devonz-staging-settings', JSON.stringify(settings));
+      localStorage.setItem('bolt-staging-settings', JSON.stringify(settings));
     }
   } catch (error) {
     logger.error('Failed to save staging settings to localStorage', error);

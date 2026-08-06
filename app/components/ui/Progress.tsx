@@ -10,11 +10,11 @@ function Progress({ className, value, ref, ...props }: ProgressProps) {
   return (
     <div
       ref={ref}
-      className={cn('relative h-2 w-full overflow-hidden rounded-full bg-devonz-elements-background', className)}
+      className={cn('relative h-2 w-full overflow-hidden rounded-full bg-bolt-elements-background', className)}
       {...props}
     >
       <div
-        className="h-full w-full flex-1 bg-devonz-elements-textPrimary transition-all"
+        className="h-full w-full flex-1 bg-bolt-elements-textPrimary transition-all"
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </div>

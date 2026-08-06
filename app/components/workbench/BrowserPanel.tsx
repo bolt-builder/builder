@@ -469,24 +469,24 @@ export const BrowserPanel = memo(() => {
   const showRemoteView = Boolean(currentUrl && !sessionError);
 
   return (
-    <div className="w-full h-full flex flex-col bg-devonz-elements-background-depth-1">
+    <div className="w-full h-full flex flex-col bg-bolt-elements-background-depth-1">
       {/* Toolbar */}
-      <div className="flex items-center gap-1.5 px-2 py-1.5 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2">
+      <div className="flex items-center gap-1.5 px-2 py-1.5 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-2">
         <IconButton icon="i-ph:caret-left" aria-label="Go back" disabled={!canGoBack} onClick={goBack} />
         <IconButton icon="i-ph:caret-right" aria-label="Go forward" disabled={!canGoForward} onClick={goForward} />
         <IconButton icon="i-ph:arrow-clockwise" aria-label="Reload page" disabled={!currentUrl} onClick={reload} />
 
-        <div className="flex-grow flex items-center gap-1 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-full px-3 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
+        <div className="flex-grow flex items-center gap-1 bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor rounded-full px-3 py-1 text-sm focus-within:border-accent-500/60 transition-colors">
           <span
             className={
               isLoading || isConnecting
                 ? 'i-svg-spinners:90-ring-with-bg text-accent-500 shrink-0'
-                : 'i-ph:globe-simple text-devonz-elements-textTertiary shrink-0'
+                : 'i-ph:globe-simple text-bolt-elements-textTertiary shrink-0'
             }
           />
           <input
             aria-label="Browser URL"
-            className="w-full bg-transparent outline-none text-xs font-mono truncate text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary"
+            className="w-full bg-transparent outline-none text-xs font-mono truncate text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary"
             type="text"
             inputMode="url"
             autoComplete="off"
@@ -526,7 +526,7 @@ export const BrowserPanel = memo(() => {
             tabIndex={0}
             role="application"
             aria-label="Embedded browser page"
-            className="w-full h-full bg-devonz-elements-background-depth-2 outline-none overflow-hidden relative"
+            className="w-full h-full bg-bolt-elements-background-depth-2 outline-none overflow-hidden relative"
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
             onPointerMove={onPointerMove}
@@ -546,16 +546,16 @@ export const BrowserPanel = memo(() => {
               className={`w-full h-full object-contain select-none ${hasFrame ? '' : 'opacity-0'}`}
             />
             {!hasFrame && (
-              <div className="absolute inset-0 flex items-center justify-center text-devonz-elements-textTertiary">
+              <div className="absolute inset-0 flex items-center justify-center text-bolt-elements-textTertiary">
                 <span className="i-svg-spinners:90-ring-with-bg text-2xl" />
               </div>
             )}
           </div>
         ) : sessionError ? (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center text-devonz-elements-textSecondary">
-            <span className="i-ph:warning-circle text-4xl text-devonz-elements-icon-error" />
-            <p className="text-sm font-medium text-devonz-elements-textPrimary">Embedded browser unavailable</p>
-            <p className="text-xs max-w-md text-devonz-elements-textTertiary">{sessionError}</p>
+          <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center text-bolt-elements-textSecondary">
+            <span className="i-ph:warning-circle text-4xl text-bolt-elements-icon-error" />
+            <p className="text-sm font-medium text-bolt-elements-textPrimary">Embedded browser unavailable</p>
+            <p className="text-xs max-w-md text-bolt-elements-textTertiary">{sessionError}</p>
             <button
               onClick={() => {
                 setSessionError(null);
@@ -564,17 +564,17 @@ export const BrowserPanel = memo(() => {
                   void navigateTo(currentUrl);
                 }
               }}
-              className="mt-2 px-3 py-1.5 rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3 text-xs text-devonz-elements-textPrimary transition-colors"
+              className="mt-2 px-3 py-1.5 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-background-depth-3 text-xs text-bolt-elements-textPrimary transition-colors"
             >
               Try again
             </button>
           </div>
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-6 text-devonz-elements-textSecondary">
+          <div className="w-full h-full flex flex-col items-center justify-center gap-6 text-bolt-elements-textSecondary">
             <div className="flex flex-col items-center gap-2">
-              <span className="i-ph:globe-hemisphere-west text-5xl text-devonz-elements-textTertiary" />
+              <span className="i-ph:globe-hemisphere-west text-5xl text-bolt-elements-textTertiary" />
               <p className="text-sm">Browse the web without leaving the workbench</p>
-              <p className="text-xs text-devonz-elements-textTertiary">
+              <p className="text-xs text-bolt-elements-textTertiary">
                 Rendered by a real Chrome instance — works on any site
               </p>
             </div>
@@ -583,7 +583,7 @@ export const BrowserPanel = memo(() => {
                 <button
                   key={link.url}
                   onClick={() => void navigateTo(link.url)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3 hover:border-accent-500/40 text-xs text-devonz-elements-textPrimary transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-background-depth-3 hover:border-accent-500/40 text-xs text-bolt-elements-textPrimary transition-colors"
                 >
                   <span className={`${link.icon} text-base text-accent-500`} />
                   {link.label}

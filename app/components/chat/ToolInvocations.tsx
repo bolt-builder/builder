@@ -196,21 +196,21 @@ export const ToolInvocations = memo(({ toolInvocations, toolCallAnnotations, add
   }
 
   return (
-    <div className="tool-invocation border border-devonz-elements-borderColor flex flex-col overflow-hidden rounded-lg w-full transition-border duration-150">
+    <div className="tool-invocation border border-bolt-elements-borderColor flex flex-col overflow-hidden rounded-lg w-full transition-border duration-150">
       <div className="flex">
         <button
-          className="flex items-stretch bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-artifacts-backgroundHover w-full overflow-hidden"
+          className="flex items-stretch bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-artifacts-backgroundHover w-full overflow-hidden"
           onClick={toggleDetails}
           aria-label={showDetails ? 'Collapse details' : 'Expand details'}
         >
           <div className="p-2.5">
-            <div className="i-ph:wrench text-xl text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors"></div>
+            <div className="i-ph:wrench text-xl text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors"></div>
           </div>
           <div className="p-2.5 w-full text-left">
-            <div className="w-full text-devonz-elements-textPrimary font-medium leading-5 text-sm">
+            <div className="w-full text-bolt-elements-textPrimary font-medium leading-5 text-sm">
               Tool Invocations{' '}
               {hasToolResults && (
-                <span className="w-full w-full text-devonz-elements-textSecondary text-xs mt-0.5">
+                <span className="w-full w-full text-bolt-elements-textSecondary text-xs mt-0.5">
                   ({toolResults.length} tool{hasToolResults ? 's' : ''} used)
                 </span>
               )}
@@ -224,12 +224,12 @@ export const ToolInvocations = memo(({ toolInvocations, toolCallAnnotations, add
               animate={{ width: 'auto' }}
               exit={{ width: 0 }}
               transition={{ duration: 0.15, ease: cubicEasingFn }}
-              className="bg-devonz-elements-artifacts-background hover:bg-devonz-elements-artifacts-backgroundHover"
+              className="bg-bolt-elements-artifacts-background hover:bg-bolt-elements-artifacts-backgroundHover"
               onClick={toggleDetails}
             >
               <div className="p-2">
                 <div
-                  className={`${showDetails ? 'i-ph:caret-up-bold' : 'i-ph:caret-down-bold'} text-xl text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors`}
+                  className={`${showDetails ? 'i-ph:caret-up-bold' : 'i-ph:caret-down-bold'} text-xl text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors`}
                 ></div>
               </div>
             </motion.button>
@@ -246,9 +246,9 @@ export const ToolInvocations = memo(({ toolInvocations, toolCallAnnotations, add
             exit={{ height: '0px' }}
             transition={{ duration: 0.15 }}
           >
-            <div className="bg-devonz-elements-artifacts-borderColor h-[1px]" />
+            <div className="bg-bolt-elements-artifacts-borderColor h-[1px]" />
 
-            <div className="px-3 py-3 text-left bg-devonz-elements-background-depth-2">
+            <div className="px-3 py-3 text-left bg-bolt-elements-background-depth-2">
               <ToolCallsList
                 toolInvocations={toolCalls}
                 toolCallAnnotations={toolCallAnnotations}
@@ -268,9 +268,9 @@ export const ToolInvocations = memo(({ toolInvocations, toolCallAnnotations, add
             exit={{ height: '0px' }}
             transition={{ duration: 0.15 }}
           >
-            <div className="bg-devonz-elements-artifacts-borderColor h-[1px]" />
+            <div className="bg-bolt-elements-artifacts-borderColor h-[1px]" />
 
-            <div className="p-5 text-left bg-devonz-elements-actions-background">
+            <div className="p-5 text-left bg-bolt-elements-actions-background">
               <ToolResultsList toolInvocations={toolResults} toolCallAnnotations={toolCallAnnotations} theme={theme} />
             </div>
           </motion.div>
@@ -422,44 +422,44 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
     >
       <div className="flex items-center gap-1.5 text-xs mb-1">
         {isErrorResult ? (
-          <div className="text-lg text-devonz-elements-icon-error">
+          <div className="text-lg text-bolt-elements-icon-error">
             <div className="i-ph:x"></div>
           </div>
         ) : (
-          <div className="text-lg text-devonz-elements-icon-success">
+          <div className="text-lg text-bolt-elements-icon-success">
             <div className="i-ph:check"></div>
           </div>
         )}
-        <div className="text-devonz-elements-textSecondary text-xs">Server:</div>
-        <div className="text-devonz-elements-textPrimary font-semibold">{annotation?.serverName}</div>
+        <div className="text-bolt-elements-textSecondary text-xs">Server:</div>
+        <div className="text-bolt-elements-textPrimary font-semibold">{annotation?.serverName}</div>
       </div>
 
       <div className="ml-6 mb-2">
-        <div className="text-devonz-elements-textSecondary text-xs mb-1">
-          Tool: <span className="text-devonz-elements-textPrimary font-semibold">{toolName}</span>
+        <div className="text-bolt-elements-textSecondary text-xs mb-1">
+          Tool: <span className="text-bolt-elements-textPrimary font-semibold">{toolName}</span>
         </div>
-        <div className="text-devonz-elements-textSecondary text-xs mb-1">
+        <div className="text-bolt-elements-textSecondary text-xs mb-1">
           Description:{' '}
-          <span className="text-devonz-elements-textPrimary font-semibold">{annotation?.toolDescription}</span>
+          <span className="text-bolt-elements-textPrimary font-semibold">{annotation?.toolDescription}</span>
         </div>
-        <div className="text-devonz-elements-textSecondary text-xs mb-1">Parameters:</div>
-        <div className="bg-devonz-elements-bg-depth-1 p-3 rounded-md">
+        <div className="text-bolt-elements-textSecondary text-xs mb-1">Parameters:</div>
+        <div className="bg-bolt-elements-bg-depth-1 p-3 rounded-md">
           <JsonCodeBlock className="mb-0" code={JSON.stringify(toolInvocation.args)} theme={theme} />
         </div>
 
         {/* Result header with view toggle, line count, and copy button */}
         <div className="flex items-center justify-between mt-3 mb-1">
           <div className="flex items-center gap-2">
-            <div className="text-devonz-elements-textSecondary text-xs">
+            <div className="text-bolt-elements-textSecondary text-xs">
               Result
               {viewMode === 'raw' && lineCount > 1 && (
-                <span className="ml-1.5 text-devonz-elements-textTertiary">({lineCount} lines)</span>
+                <span className="ml-1.5 text-bolt-elements-textTertiary">({lineCount} lines)</span>
               )}
             </div>
 
             {/* View mode toggle — only show when formatted content is available */}
             {hasFormattedContent && (
-              <div className="flex items-center rounded-md overflow-hidden border border-devonz-elements-borderColor">
+              <div className="flex items-center rounded-md overflow-hidden border border-bolt-elements-borderColor">
                 <button
                   onClick={() => {
                     setViewMode('formatted');
@@ -469,7 +469,7 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
                     'px-2 py-0.5 text-xs transition-colors',
                     viewMode === 'formatted'
                       ? 'bg-accent-500/15 text-accent-500'
-                      : 'text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary',
+                      : 'text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary',
                   )}
                   title="Show formatted content"
                 >
@@ -484,7 +484,7 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
                     'px-2 py-0.5 text-xs transition-colors',
                     viewMode === 'raw'
                       ? 'bg-accent-500/15 text-accent-500'
-                      : 'text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary',
+                      : 'text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary',
                   )}
                   title="Show raw JSON"
                 >
@@ -498,7 +498,7 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
             onClick={handleCopy}
             className={cn(
               'flex items-center gap-1 px-1.5 py-0.5 text-xs rounded transition-colors',
-              copied ? 'text-green-400' : 'text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary',
+              copied ? 'text-green-400' : 'text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary',
             )}
             title="Copy result to clipboard"
           >
@@ -508,7 +508,7 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
         </div>
 
         {/* Result content with collapse/expand for long outputs */}
-        <div className="bg-devonz-elements-bg-depth-1 p-3 rounded-md relative">
+        <div className="bg-bolt-elements-bg-depth-1 p-3 rounded-md relative">
           <div
             ref={resultContainerRef}
             className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
@@ -540,7 +540,7 @@ const ToolResultItem = memo(({ tool, annotation, theme }: ToolResultItemProps) =
           {shouldCollapse && (
             <button
               onClick={() => setIsExpanded((prev) => !prev)}
-              className="w-full mt-1 py-1 text-xs text-center text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary transition-colors"
+              className="w-full mt-1 py-1 text-xs text-center text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary transition-colors"
             >
               {isExpanded ? (
                 <span className="flex items-center justify-center gap-1">
@@ -608,7 +608,7 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
       const annotation = toolCallAnnotations.find((a) => a.toolCallId === toolCallId);
       const serverName = annotation?.serverName ?? '';
 
-      if (serverName === 'devonz-agent') {
+      if (serverName === 'bolt-agent') {
         // Execute agent tools on the CLIENT to avoid SSR runtime hang
         try {
           const { executeAgentTool } = await import('~/lib/services/agentToolsService');
@@ -665,7 +665,7 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
       const isMcpAutoApproved = autoApproveServers.includes(serverName);
 
       // Check agent tool auto-approve settings (fallback for edge cases)
-      const isAgentAutoApproved = serverName === 'devonz-agent' && shouldAutoApproveAgentTool(toolName, agentSettings);
+      const isAgentAutoApproved = serverName === 'bolt-agent' && shouldAutoApproveAgentTool(toolName, agentSettings);
 
       if (!isMcpAutoApproved && !isAgentAutoApproved) {
         return;
@@ -733,7 +733,7 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
           const serverName = annotation?.serverName ?? '';
           const isAutoApproving =
             autoApproveServers.includes(serverName) ||
-            (serverName === 'devonz-agent' && shouldAutoApproveAgentTool(toolName, agentSettings));
+            (serverName === 'bolt-agent' && shouldAutoApproveAgentTool(toolName, agentSettings));
 
           return (
             <motion.li
@@ -743,13 +743,13 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
               animate="visible"
               transition={{ duration: 0.2, ease: cubicEasingFn }}
             >
-              <div className="bg-devonz-elements-background-depth-3 rounded-lg p-2">
+              <div className="bg-bolt-elements-background-depth-3 rounded-lg p-2">
                 <div key={toolCallId} className="flex gap-1">
                   <div className="flex flex-col items-center ">
-                    <span className="mr-auto font-light font-normal text-md text-devonz-elements-textPrimary rounded-md">
+                    <span className="mr-auto font-light font-normal text-md text-bolt-elements-textPrimary rounded-md">
                       {toolName}
                     </span>
-                    <span className="text-xs text-devonz-elements-textSecondary font-light break-words max-w-64">
+                    <span className="text-xs text-bolt-elements-textSecondary font-light break-words max-w-64">
                       {annotation?.toolDescription}
                     </span>
                   </div>
@@ -765,7 +765,7 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
                           className={cn(
                             'h-10 px-2.5 py-1.5 rounded-lg text-xs h-auto',
                             'bg-transparent',
-                            'text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary',
+                            'text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary',
                             'transition-all duration-200',
                             'flex items-center gap-2',
                           )}
@@ -781,8 +781,8 @@ const ToolCallsList = memo(({ toolInvocations, toolCallAnnotations, addToolResul
                         <button
                           className={cn(
                             'h-10 inline-flex items-center gap-2 px-3 py-1.5 text-xs font-normal rounded-lg transition-colors',
-                            'bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor',
-                            'text-accent-500 hover:text-devonz-elements-textPrimary',
+                            'bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor',
+                            'text-accent-500 hover:text-bolt-elements-textPrimary',
                             'disabled:opacity-50 disabled:cursor-not-allowed',
                           )}
                           onClick={() => handleApprove(toolCallId)}

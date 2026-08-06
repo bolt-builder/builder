@@ -82,12 +82,12 @@ export function SupabaseConnection() {
 
   return (
     <div className="relative">
-      <div className="flex border border-devonz-elements-borderColor rounded-md overflow-hidden mr-2 text-sm">
+      <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden mr-2 text-sm">
         <Button
           active
           disabled={connecting}
           onClick={() => setIsDialogOpen(!isDialogOpen)}
-          className="hover:bg-devonz-elements-item-backgroundActive !text-white flex items-center gap-2"
+          className="hover:bg-bolt-elements-item-backgroundActive !text-white flex items-center gap-2"
         >
           <img
             className="w-4 h-4"
@@ -122,7 +122,7 @@ export function SupabaseConnection() {
                 </DialogTitle>
 
                 <div>
-                  <label className="block text-sm text-devonz-elements-textSecondary mb-2">Access Token</label>
+                  <label className="block text-sm text-bolt-elements-textSecondary mb-2">Access Token</label>
                   <input
                     type="password"
                     autoComplete="off"
@@ -133,14 +133,14 @@ export function SupabaseConnection() {
                     placeholder="Enter your Supabase access token"
                     className={cn(
                       'w-full px-3 py-2 rounded-lg text-sm',
-                      'bg-devonz-elements-bg-depth-2',
-                      'border border-devonz-elements-borderColor',
-                      'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
+                      'bg-bolt-elements-bg-depth-2',
+                      'border border-bolt-elements-borderColor',
+                      'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
                       'focus:outline-none focus:ring-1 focus:ring-[#3ECF8E]',
                       'disabled:opacity-50',
                     )}
                   />
-                  <div className="mt-2 text-sm text-devonz-elements-textSecondary">
+                  <div className="mt-2 text-sm text-bolt-elements-textSecondary">
                     <a
                       href="https://app.supabase.com/account/tokens"
                       target="_blank"
@@ -198,15 +198,15 @@ export function SupabaseConnection() {
                   </DialogTitle>
                 </div>
 
-                <div className="flex items-center gap-4 p-3 bg-devonz-elements-bg-depth-2 rounded-lg">
+                <div className="flex items-center gap-4 p-3 bg-bolt-elements-bg-depth-2 rounded-lg">
                   <div>
-                    <h4 className="text-sm font-medium text-devonz-elements-textPrimary">{supabaseConn.user?.email}</h4>
-                    <p className="text-xs text-devonz-elements-textSecondary">Role: {supabaseConn.user?.role}</p>
+                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary">{supabaseConn.user?.email}</h4>
+                    <p className="text-xs text-bolt-elements-textSecondary">Role: {supabaseConn.user?.role}</p>
                   </div>
                 </div>
 
                 {fetchingStats ? (
-                  <div className="flex items-center gap-2 text-sm text-devonz-elements-textSecondary">
+                  <div className="flex items-center gap-2 text-sm text-bolt-elements-textSecondary">
                     <div className="i-ph:spinner-gap w-4 h-4 animate-spin" />
                     Fetching projects...
                   </div>
@@ -215,7 +215,7 @@ export function SupabaseConnection() {
                     <div className="flex items-center justify-between mb-2">
                       <button
                         onClick={() => setIsProjectsExpanded(!isProjectsExpanded)}
-                        className="bg-transparent text-left text-sm font-medium text-devonz-elements-textPrimary flex items-center gap-2"
+                        className="bg-transparent text-left text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2"
                       >
                         <div className="i-ph:database w-4 h-4" />
                         Your Projects ({supabaseConn.stats?.totalProjects || 0})
@@ -229,7 +229,7 @@ export function SupabaseConnection() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => fetchSupabaseStats(supabaseConn.token)}
-                          className="px-2 py-1 rounded-md text-xs bg-devonz-elements-bg-depth-3 text-devonz-elements-textSecondary hover:bg-devonz-elements-bg-depth-4 flex items-center gap-1"
+                          className="px-2 py-1 rounded-md text-xs bg-bolt-elements-bg-depth-3 text-bolt-elements-textSecondary hover:bg-bolt-elements-bg-depth-4 flex items-center gap-1"
                           title="Refresh projects list"
                         >
                           <div className="i-ph:arrows-clockwise w-3 h-3" />
@@ -248,7 +248,7 @@ export function SupabaseConnection() {
                     {isProjectsExpanded && (
                       <>
                         {!supabaseConn.selectedProjectId && (
-                          <div className="mb-2 p-3 bg-devonz-elements-bg-depth-2 rounded-lg text-sm text-devonz-elements-textSecondary">
+                          <div className="mb-2 p-3 bg-bolt-elements-bg-depth-2 rounded-lg text-sm text-bolt-elements-textSecondary">
                             Select a project or create a new one for this chat
                           </div>
                         )}
@@ -258,15 +258,15 @@ export function SupabaseConnection() {
                             {supabaseConn.stats.projects.map((project) => (
                               <div
                                 key={project.id}
-                                className="block p-3 rounded-lg border border-devonz-elements-borderColor hover:border-[#3ECF8E] dark:hover:border-[#3ECF8E] transition-colors"
+                                className="block p-3 rounded-lg border border-bolt-elements-borderColor hover:border-[#3ECF8E] dark:hover:border-[#3ECF8E] transition-colors"
                               >
                                 <div className="flex items-center justify-between">
                                   <div>
-                                    <h5 className="text-sm font-medium text-devonz-elements-textPrimary flex items-center gap-1">
+                                    <h5 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-1">
                                       <div className="i-ph:database w-3 h-3 text-[#3ECF8E]" />
                                       {project.name}
                                     </h5>
-                                    <div className="text-xs text-devonz-elements-textSecondary mt-1">
+                                    <div className="text-xs text-bolt-elements-textSecondary mt-1">
                                       {project.region}
                                     </div>
                                   </div>
@@ -276,7 +276,7 @@ export function SupabaseConnection() {
                                       'px-3 py-1 rounded-md text-xs',
                                       supabaseConn.selectedProjectId === project.id
                                         ? 'bg-[#3ECF8E] text-white'
-                                        : 'bg-devonz-elements-bg-depth-3 text-devonz-elements-textSecondary hover:bg-[#3ECF8E] hover:text-white',
+                                        : 'bg-bolt-elements-bg-depth-3 text-bolt-elements-textSecondary hover:bg-[#3ECF8E] hover:text-white',
                                     )}
                                   >
                                     {supabaseConn.selectedProjectId === project.id ? (
@@ -293,7 +293,7 @@ export function SupabaseConnection() {
                             ))}
                           </div>
                         ) : (
-                          <div className="text-sm text-devonz-elements-textSecondary flex items-center gap-2">
+                          <div className="text-sm text-bolt-elements-textSecondary flex items-center gap-2">
                             <div className="i-ph:info w-4 h-4" />
                             No projects found
                           </div>
@@ -335,10 +335,10 @@ function Button({ active = false, disabled = false, children, onClick, className
       className={cn(
         'flex items-center p-1.5',
         {
-          'bg-devonz-elements-item-backgroundDefault hover:bg-devonz-elements-item-backgroundActive text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary':
+          'bg-bolt-elements-item-backgroundDefault hover:bg-bolt-elements-item-backgroundActive text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary':
             !active,
-          'bg-devonz-elements-item-backgroundDefault text-devonz-elements-item-contentAccent': active && !disabled,
-          'bg-devonz-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
+          'bg-bolt-elements-item-backgroundDefault text-bolt-elements-item-contentAccent': active && !disabled,
+          'bg-bolt-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
             disabled,
         },
         className,

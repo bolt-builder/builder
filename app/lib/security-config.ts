@@ -120,8 +120,8 @@ export interface AuthTokenConfig {
 
 export const AUTH_CONFIG: AuthTokenConfig = {
   tokenHeader: 'X-Auth-Token',
-  cookieName: 'devonz-auth',
-  envVariable: 'DEVONZ_AUTH_TOKEN',
+  cookieName: 'bolt-auth',
+  envVariable: 'BOLT_AUTH_TOKEN',
 } as const;
 
 /* Auth — Route protection presets */

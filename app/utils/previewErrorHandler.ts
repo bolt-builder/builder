@@ -187,7 +187,7 @@ class PreviewErrorHandler {
 
     /*
      * Preview errors are NOT auto-fixed — always show the alert and let the user
-     * decide whether to ask Devonz for help. Auto-fix from previews was too aggressive,
+     * decide whether to ask Bolt for help. Auto-fix from previews was too aggressive,
      * triggering on transient build errors (e.g., missing files while AI is still writing)
      * and wasting tokens on unnecessary LLM calls.
      */
@@ -210,7 +210,7 @@ class PreviewErrorHandler {
 
   /**
    * Reset the handler state
-   * Call this when user clicks "Ask Devonz" so the same error can be caught again
+   * Call this when user clicks "Ask Bolt" so the same error can be caught again
    */
   reset(): void {
     this.#recentErrorHashes.clear();
@@ -247,7 +247,7 @@ export function getPreviewErrorHandler(): PreviewErrorHandler {
  * Reset the preview error handler state
  * Call this when user requests a fix so the same error can be detected again.
  * Only resets internal state — does NOT destroy the singleton so errors
- * continue to be caught after the user clicks "Ask Devonz".
+ * continue to be caught after the user clicks "Ask Bolt".
  */
 export function resetPreviewErrorHandler(): void {
   if (handlerInstance) {

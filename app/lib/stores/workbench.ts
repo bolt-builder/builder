@@ -179,8 +179,8 @@ export class WorkbenchStore {
   get showTerminal() {
     return this.#terminalStore.showTerminal;
   }
-  get devonzTerminal() {
-    return this.#terminalStore.devonzTerminal;
+  get boltTerminal() {
+    return this.#terminalStore.boltTerminal;
   }
   get alert() {
     return this.actionAlert;
@@ -194,7 +194,7 @@ export class WorkbenchStore {
    * Useful before sending a fix request so the terminal is ready for new commands
    */
   interruptTerminal() {
-    this.#terminalStore.devonzTerminal.interruptExecution();
+    this.#terminalStore.boltTerminal.interruptExecution();
   }
 
   get SupabaseAlert() {
@@ -220,8 +220,8 @@ export class WorkbenchStore {
   attachTerminal(terminal: ITerminal, initialCommand?: string) {
     this.#terminalStore.attachTerminal(terminal, initialCommand);
   }
-  attachDevonzTerminal(terminal: ITerminal) {
-    this.#terminalStore.attachDevonzTerminal(terminal);
+  attachBoltTerminal(terminal: ITerminal) {
+    this.#terminalStore.attachBoltTerminal(terminal);
   }
 
   detachTerminal(terminal: ITerminal) {
@@ -599,7 +599,7 @@ export class WorkbenchStore {
 
     const runner = new ActionRunner(
       runtime,
-      () => this.devonzTerminal,
+      () => this.boltTerminal,
       (alert) => {
         if (this.#reloadedMessages.has(messageId)) {
           return;
@@ -851,7 +851,7 @@ export class WorkbenchStore {
    *
    * Call this whenever the `data` array from `useChat()` changes. It tracks
    * the last processed index internally so duplicate processing is avoided.
-   * Each item is checked for a `devonz_event` wrapper key, validated against
+   * Each item is checked for a `bolt_event` wrapper key, validated against
    * the streamingEventSchema Zod union, and dispatched to the
    * StreamEventRouter on success.
    *
@@ -875,13 +875,13 @@ export class WorkbenchStore {
     for (let i = startIndex; i < data.length; i++) {
       const item = data[i];
 
-      // Filter for objects containing the devonz_event wrapper key
-      if (typeof item !== 'object' || item === null || !('devonz_event' in item)) {
+      // Filter for objects containing the bolt_event wrapper key
+      if (typeof item !== 'object' || item === null || !('bolt_event' in item)) {
         continue;
       }
 
       const wrapper = item as Record<string, unknown>;
-      const rawEvent = wrapper.devonz_event;
+      const rawEvent = wrapper.bolt_event;
 
       // Validate the event payload against the Zod schema
       const result = streamingEventSchema.safeParse(rawEvent);

@@ -21,7 +21,7 @@ import type {
 
 const logger = createScopedLogger('MonacoEditor');
 
-const DARK_THEME = 'devonz-dark';
+const DARK_THEME = 'bolt-dark';
 const LIGHT_THEME = 'vs';
 
 let monacoConfigured = false;

@@ -85,7 +85,7 @@ async function netlifyDeployAction({ request }: ActionFunctionArgs) {
 
     // If no siteId provided, create a new site
     if (!targetSiteId) {
-      const siteName = `devonz-${chatId}-${Date.now()}`;
+      const siteName = `bolt-${chatId}-${Date.now()}`;
       const createSiteResponse = await fetch('https://api.netlify.com/api/v1/sites', {
         method: 'POST',
         signal: AbortSignal.timeout(30_000),
@@ -144,7 +144,7 @@ async function netlifyDeployAction({ request }: ActionFunctionArgs) {
 
       // If no siteId provided or site doesn't exist, create a new site
       if (!targetSiteId) {
-        const siteName = `devonz-${chatId}-${Date.now()}`;
+        const siteName = `bolt-${chatId}-${Date.now()}`;
         const createSiteResponse = await fetch('https://api.netlify.com/api/v1/sites', {
           method: 'POST',
           signal: AbortSignal.timeout(30_000),

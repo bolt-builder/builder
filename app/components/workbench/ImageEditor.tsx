@@ -197,7 +197,7 @@ export const ImageEditor = memo(
       <div className="space-y-3">
         {/* Preview thumbnail */}
         {previewSrc && !previewError && (
-          <div className="relative rounded border border-devonz-elements-borderColor overflow-hidden bg-[#0d0d0d]">
+          <div className="relative rounded border border-bolt-elements-borderColor overflow-hidden bg-[#0d0d0d]">
             <img
               src={previewSrc}
               alt={localAlt || 'Image preview'}
@@ -227,7 +227,7 @@ export const ImageEditor = memo(
           <fieldset className="space-y-1">
             <label
               htmlFor="image-src-input"
-              className="text-[10px] font-medium text-devonz-elements-textSecondary uppercase tracking-wider"
+              className="text-[10px] font-medium text-bolt-elements-textSecondary uppercase tracking-wider"
             >
               Source URL
             </label>
@@ -243,12 +243,12 @@ export const ImageEditor = memo(
                 onBlur={handleSrcCommit}
                 onKeyDown={handleSrcKeyDown}
                 disabled={isDataUrl}
-                className="flex-1 bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor rounded px-2 py-1.5 text-devonz-elements-textPrimary text-xs font-mono focus:outline-none focus:border-accent-400 disabled:opacity-50 disabled:cursor-not-allowed min-w-0"
+                className="flex-1 bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor rounded px-2 py-1.5 text-bolt-elements-textPrimary text-xs font-mono focus:outline-none focus:border-accent-400 disabled:opacity-50 disabled:cursor-not-allowed min-w-0"
                 placeholder="https://example.com/image.png"
               />
             </div>
             {uploadInfo && (
-              <p className="text-[10px] text-devonz-elements-textSecondary truncate" title={uploadInfo}>
+              <p className="text-[10px] text-bolt-elements-textSecondary truncate" title={uploadInfo}>
                 {uploadInfo}
               </p>
             )}
@@ -267,7 +267,7 @@ export const ImageEditor = memo(
           />
           <button
             onClick={triggerFileInput}
-            className="w-full flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded border border-dashed border-devonz-elements-borderColor bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary hover:border-accent-400 hover:text-accent-400 transition-colors"
+            className="w-full flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded border border-dashed border-bolt-elements-borderColor bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary hover:border-accent-400 hover:text-accent-400 transition-colors"
           >
             <div className="i-ph:upload-simple w-3.5 h-3.5" aria-hidden="true" />
             Upload Image
@@ -279,7 +279,7 @@ export const ImageEditor = memo(
           <fieldset className="space-y-1">
             <label
               htmlFor="image-alt-input"
-              className="text-[10px] font-medium text-devonz-elements-textSecondary uppercase tracking-wider flex items-center gap-1"
+              className="text-[10px] font-medium text-bolt-elements-textSecondary uppercase tracking-wider flex items-center gap-1"
             >
               Alt Text
               {!localAlt && (
@@ -298,7 +298,7 @@ export const ImageEditor = memo(
               onChange={(e) => setLocalAlt(e.target.value)}
               onBlur={handleAltCommit}
               onKeyDown={handleAltKeyDown}
-              className="w-full bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor rounded px-2 py-1.5 text-devonz-elements-textPrimary text-xs focus:outline-none focus:border-accent-400 min-w-0"
+              className="w-full bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor rounded px-2 py-1.5 text-bolt-elements-textPrimary text-xs focus:outline-none focus:border-accent-400 min-w-0"
               placeholder="Describe the image for accessibility"
             />
           </fieldset>
@@ -309,7 +309,7 @@ export const ImageEditor = memo(
           <fieldset className="space-y-1">
             <label
               htmlFor="image-bg-input"
-              className="text-[10px] font-medium text-devonz-elements-textSecondary uppercase tracking-wider"
+              className="text-[10px] font-medium text-bolt-elements-textSecondary uppercase tracking-wider"
             >
               Background Image
             </label>
@@ -320,7 +320,7 @@ export const ImageEditor = memo(
               onChange={(e) => setLocalBgUrl(e.target.value)}
               onBlur={handleBgCommit}
               onKeyDown={handleBgKeyDown}
-              className="w-full bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor rounded px-2 py-1.5 text-devonz-elements-textPrimary text-xs font-mono focus:outline-none focus:border-accent-400 min-w-0"
+              className="w-full bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor rounded px-2 py-1.5 text-bolt-elements-textPrimary text-xs font-mono focus:outline-none focus:border-accent-400 min-w-0"
               placeholder="https://example.com/bg.png"
             />
           </fieldset>

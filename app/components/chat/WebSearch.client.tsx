@@ -119,7 +119,7 @@ export function WebSearch({ onSearchResult, disabled }: WebSearchProps) {
         className="transition-all"
       >
         {isSearching ? (
-          <div className="i-svg-spinners:90-ring-with-bg text-devonz-elements-loader-progress text-xl animate-spin" />
+          <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-loader-progress text-xl animate-spin" />
         ) : (
           <div className="i-ph:globe text-xl" />
         )}
@@ -128,7 +128,7 @@ export function WebSearch({ onSearchResult, disabled }: WebSearchProps) {
         <div
           className={cn(
             'absolute bottom-full left-0 mb-2 flex items-center gap-2',
-            'rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 p-2 shadow-lg',
+            'rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 p-2 shadow-lg',
           )}
         >
           <input
@@ -151,9 +151,9 @@ export function WebSearch({ onSearchResult, disabled }: WebSearchProps) {
             aria-label="URL to fetch"
             className={cn(
               'w-64 px-3 py-1.5 rounded-md text-sm',
-              'bg-devonz-elements-background-depth-1 text-devonz-elements-textPrimary',
-              'placeholder-devonz-elements-textTertiary',
-              'focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus',
+              'bg-bolt-elements-background-depth-1 text-bolt-elements-textPrimary',
+              'placeholder-bolt-elements-textTertiary',
+              'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
             )}
           />
           <button
@@ -161,8 +161,8 @@ export function WebSearch({ onSearchResult, disabled }: WebSearchProps) {
             disabled={isSearching || !url.trim()}
             className={cn(
               'px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap',
-              'bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text',
-              'hover:bg-devonz-elements-button-primary-backgroundHover',
+              'bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text',
+              'hover:bg-bolt-elements-button-primary-backgroundHover',
               'disabled:opacity-50 disabled:cursor-not-allowed',
             )}
           >

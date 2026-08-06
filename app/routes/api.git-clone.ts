@@ -26,7 +26,7 @@ import { z } from 'zod';
 const logger = createScopedLogger('GitClone');
 
 /** Base directory for project workspaces. */
-const PROJECTS_DIR = nodePath.join(os.homedir(), '.devonz', 'projects');
+const PROJECTS_DIR = nodePath.join(os.homedir(), '.bolt', 'projects');
 
 /**
  * Only allow cloning from known Git hosting domains.

@@ -7,7 +7,7 @@ interface Profile {
 }
 
 // Initialize with stored profile or defaults
-const storedProfile = typeof window !== 'undefined' ? localStorage.getItem('devonz_profile') : null;
+const storedProfile = typeof window !== 'undefined' ? localStorage.getItem('bolt_profile') : null;
 let initialProfile: Profile;
 
 if (storedProfile) {
@@ -27,6 +27,6 @@ export const updateProfile = (updates: Partial<Profile>) => {
 
   // Persist to localStorage
   if (typeof window !== 'undefined') {
-    localStorage.setItem('devonz_profile', JSON.stringify(profileStore.get()));
+    localStorage.setItem('bolt_profile', JSON.stringify(profileStore.get()));
   }
 };

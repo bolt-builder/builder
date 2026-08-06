@@ -1,12 +1,12 @@
 # API Routes
 
-> All server endpoints in Devonz, documented by category.
+> All server endpoints in Bolt, documented by category.
 
 ---
 
 ## Overview
 
-Devonz uses Remix file-based routing. All API endpoints are in `app/routes/api.*.ts`. Routes export:
+Bolt uses Remix file-based routing. All API endpoints are in `app/routes/api.*.ts`. Routes export:
 
 - `action()` — Handles POST/PUT/DELETE requests
 - `loader()` — Handles GET requests
@@ -191,7 +191,7 @@ Server-side local runtime for code execution, file I/O, and shell management. `L
 
 | Endpoint | Method | Purpose |
 | -------- | ------ | ------- |
-| `/api/runtime/exec` | GET/POST | Process execution and runtime lifecycle. POST `op`: `boot` (initialize project runtime at `~/.devonz/projects/{projectId}/`), `exec` (execute a process), `teardown` (destroy runtime). GET `op`: `portEvents` (SSE stream for port detection — strips ANSI codes, fires `PortEvent` → `RuntimeClient` → `PreviewsStore` → iframe at `http://localhost:PORT`) |
+| `/api/runtime/exec` | GET/POST | Process execution and runtime lifecycle. POST `op`: `boot` (initialize project runtime at `~/.bolt/projects/{projectId}/`), `exec` (execute a process), `teardown` (destroy runtime). GET `op`: `portEvents` (SSE stream for port detection — strips ANSI codes, fires `PortEvent` → `RuntimeClient` → `PreviewsStore` → iframe at `http://localhost:PORT`) |
 | `/api/runtime/fs` | GET/POST | File system operations. GET `op`: `readFile`, `readFileRaw`, `readdir`, `stat`, `exists`, `watch` (SSE). POST `op`: `writeFile`, `mkdir`, `rm`, `rename` |
 | `/api/runtime/terminal` | POST | Shell session management — create, write, kill, list, resize. Uses Git Bash on Windows, system shell otherwise |
 | `/api/runtime/search` | GET | Code search across project files — supports regex patterns, include/exclude filters |
@@ -268,9 +268,9 @@ classifyError(message)  →  { category, severity, recoverable, suggestion }
        ▼
 shouldShowFullAlert(classified)?
   ├── true  (fatal / error)  →  ChatAlert dialog (workbenchStore.actionAlert)
-  │                              User manually clicks "Ask Devonz" to send to LLM
+  │                              User manually clicks "Ask Bolt" to send to LLM
   └── false (warning / info) →  Sonner toast notification (showErrorToast)
                                  Auto-dismissed, no LLM involvement
 ```
 
-> **No auto-fix auto-triggering.** Errors are never automatically sent to the LLM. The old auto-fix system that auto-triggered LLM calls on detected errors has been completely removed. Users must explicitly click "Ask Devonz" in the ChatAlert dialog to request a fix.
+> **No auto-fix auto-triggering.** Errors are never automatically sent to the LLM. The old auto-fix system that auto-triggered LLM calls on detected errors has been completely removed. Users must explicitly click "Ask Bolt" in the ChatAlert dialog to request a fix.

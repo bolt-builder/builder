@@ -2,7 +2,7 @@
  * Knowledge base — user-uploaded reference documents (style guides, specs,
  * API docs) that are injected into the system prompt on every LLM call.
  *
- * Documents live inside the project at `.devonz/knowledge/` so they persist
+ * Documents live inside the project at `.bolt/knowledge/` so they persist
  * with the project, sync through the normal runtime file watcher into the
  * client `FileMap`, and reach the server with every chat request.
  *
@@ -10,8 +10,8 @@
  * injection), so it must stay free of client-store and server-only imports.
  */
 
-export const KNOWLEDGE_DIR_RELATIVE = '.devonz/knowledge';
-export const KNOWLEDGE_DIR_ABSOLUTE = '/home/project/.devonz/knowledge';
+export const KNOWLEDGE_DIR_RELATIVE = '.bolt/knowledge';
+export const KNOWLEDGE_DIR_ABSOLUTE = '/home/project/.bolt/knowledge';
 
 /** Extensions accepted by the upload UI (plain-text reference material). */
 export const KNOWLEDGE_ALLOWED_EXTENSIONS = ['.md', '.markdown', '.txt'] as const;
@@ -60,7 +60,7 @@ export function sanitizeKnowledgeFileName(rawName: string): string | undefined {
 }
 
 export interface KnowledgeDocument {
-  /** Absolute path inside the project (e.g. `/home/project/.devonz/knowledge/style.md`). */
+  /** Absolute path inside the project (e.g. `/home/project/.bolt/knowledge/style.md`). */
   path: string;
 
   /** File name shown to the user and the LLM. */

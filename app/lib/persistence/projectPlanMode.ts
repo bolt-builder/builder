@@ -3,7 +3,7 @@ import { createScopedLogger } from '~/utils/logger';
 
 const logger = createScopedLogger('PlanMode');
 
-const PROJECT_PLAN_MODE_PREFIX = 'devonz_plan_mode';
+const PROJECT_PLAN_MODE_PREFIX = 'bolt_plan_mode';
 const isClient = typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 
 export interface ProjectPlanModeSettings {

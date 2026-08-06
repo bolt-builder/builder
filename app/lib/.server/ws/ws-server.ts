@@ -3,7 +3,7 @@
  * WebSocket server for real-time streaming alongside SSE fallback.
  *
  * Runs on the same HTTP server as Remix via the `upgrade` event handler.
- * Authenticates connections using the DEVONZ_API_KEY (query param `?token=`).
+ * Authenticates connections using the BOLT_API_KEY (query param `?token=`).
  * Routes messages to type-specific handlers (chat, terminal, filesystem).
  *
  * @see {@link ./ws-handlers.ts} for message handler implementations
@@ -156,11 +156,11 @@ export function shutdownWebSocketServer(): void {
  */
 
 /**
- * Validate a token against DEVONZ_API_KEY using timing-safe comparison.
+ * Validate a token against BOLT_API_KEY using timing-safe comparison.
  * Returns true when the token matches, false otherwise.
  */
 export function validateWsToken(token: string | null): boolean {
-  const expected = process.env.DEVONZ_API_KEY;
+  const expected = process.env.BOLT_API_KEY;
 
   if (!expected || !token) {
     return false;

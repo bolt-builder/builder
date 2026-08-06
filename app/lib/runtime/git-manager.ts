@@ -95,8 +95,8 @@ export function initGitRepo(projectDir: string): boolean {
     }
 
     gitExec('git init', projectDir);
-    gitExec('git config user.email "devonz@local"', projectDir);
-    gitExec('git config user.name "Devonz"', projectDir);
+    gitExec('git config user.email "bolt@local"', projectDir);
+    gitExec('git config user.name "Bolt"', projectDir);
 
     const gitignorePath = nodePath.join(projectDir, '.gitignore');
 

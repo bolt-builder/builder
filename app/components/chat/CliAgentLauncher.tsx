@@ -17,7 +17,7 @@ export function CliAgentLauncher() {
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-1">
-      <span className="text-xs text-devonz-elements-textTertiary mr-1">or chat with a CLI agent</span>
+      <span className="text-xs text-bolt-elements-textTertiary mr-1">or chat with a CLI agent</span>
       {agents.map((agent) => (
         <button
           key={agent.id}
@@ -27,8 +27,8 @@ export function CliAgentLauncher() {
           className={cn(
             'flex items-center gap-1.5 justify-center h-8 px-3 rounded-lg text-xs font-medium bg-transparent',
             agent.installed
-              ? 'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-2 cursor-pointer'
-              : 'text-devonz-elements-textTertiary opacity-50 cursor-not-allowed',
+              ? 'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-2 cursor-pointer'
+              : 'text-bolt-elements-textTertiary opacity-50 cursor-not-allowed',
           )}
           onClick={() => {
             if (agent.installed) {
@@ -38,7 +38,7 @@ export function CliAgentLauncher() {
         >
           <span className="i-ph:robot w-3.5 h-3.5" />
           <span>{agent.name}</span>
-          {agent.version && <span className="text-devonz-elements-textTertiary">v{agent.version}</span>}
+          {agent.version && <span className="text-bolt-elements-textTertiary">v{agent.version}</span>}
         </button>
       ))}
     </div>

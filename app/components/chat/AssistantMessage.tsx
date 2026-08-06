@@ -30,19 +30,19 @@ const ThinkingBlock = memo(({ reasoningParts }: { reasoningParts: ReasoningUIPar
   }
 
   return (
-    <div className="mb-3 rounded-lg border border-devonz-elements-borderColor overflow-hidden">
+    <div className="mb-3 rounded-lg border border-bolt-elements-borderColor overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-devonz-elements-textSecondary bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-bolt-elements-textSecondary bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-background-depth-3 transition-colors"
       >
-        <div className="i-ph:brain w-4 h-4 text-devonz-elements-item-contentAccent" />
+        <div className="i-ph:brain w-4 h-4 text-bolt-elements-item-contentAccent" />
         <span>Thinking</span>
         <div
           className={`i-ph:caret-right w-3 h-3 ml-auto transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
         />
       </button>
       {isOpen && (
-        <div className="px-3 py-2 text-xs text-devonz-elements-textSecondary bg-devonz-elements-background-depth-1 border-t border-devonz-elements-borderColor max-h-64 overflow-y-auto whitespace-pre-wrap leading-relaxed">
+        <div className="px-3 py-2 text-xs text-bolt-elements-textSecondary bg-bolt-elements-background-depth-1 border-t border-bolt-elements-borderColor max-h-64 overflow-y-auto whitespace-pre-wrap leading-relaxed">
           {combinedText}
         </div>
       )}
@@ -66,12 +66,12 @@ interface AssistantMessageProps {
   addToolResult: ({ toolCallId, result }: { toolCallId: string; result: unknown }) => void;
 }
 
-const COMPLETE_ARTIFACT_BLOCK_RE = /<devonzArtifact[^>]*>[\s\S]*?<\/devonzArtifact>/g;
-const COMPLETE_ACTION_BLOCK_RE = /<devonzAction[^>]*>[\s\S]*?<\/devonzAction>/g;
-const UNCLOSED_ARTIFACT_RE = /<devonzArtifact[^>]*>[\s\S]*$/;
-const UNCLOSED_ACTION_RE = /<devonzAction[^>]*>[\s\S]*$/;
-const LEFTOVER_TAG_RE = /<\/?devonz(?:Artifact|Action)[^>]*>/g;
-const PARTIAL_DEVONZ_TAG_RE = /<devonz[A-Za-z]*(?:\s[^>]*)?$/;
+const COMPLETE_ARTIFACT_BLOCK_RE = /<boltArtifact[^>]*>[\s\S]*?<\/boltArtifact>/g;
+const COMPLETE_ACTION_BLOCK_RE = /<boltAction[^>]*>[\s\S]*?<\/boltAction>/g;
+const UNCLOSED_ARTIFACT_RE = /<boltArtifact[^>]*>[\s\S]*$/;
+const UNCLOSED_ACTION_RE = /<boltAction[^>]*>[\s\S]*$/;
+const LEFTOVER_TAG_RE = /<\/?bolt(?:Artifact|Action)[^>]*>/g;
+const PARTIAL_BOLT_TAG_RE = /<bolt[A-Za-z]*(?:\s[^>]*)?$/;
 
 /** Matches complete or partial `</assistant>` / `<assistant>` XML tags that LLMs sometimes emit */
 const ASSISTANT_TAG_RE = /<\/?assist(?:ant)?>|<\/assis(?:t(?:a(?:n(?:t)?)?)?)?\s*$/g;
@@ -90,26 +90,26 @@ const UNCLOSED_CODE_BLOCK_RE = /```[\w]*\n[\s\S]*$/;
  * Strip raw artifact/action markup — including file CONTENT — that leaks
  * through the parser during streaming.
  *
- * 1. Complete `<devonzArtifact>` blocks (wrapper + all actions + content)
- * 2. Complete `<devonzAction>` blocks (handles cases where the parser
+ * 1. Complete `<boltArtifact>` blocks (wrapper + all actions + content)
+ * 2. Complete `<boltAction>` blocks (handles cases where the parser
  *    already consumed the artifact wrapper but left action tags + code)
- * 3. Everything after an unclosed `<devonzArtifact` or `<devonzAction`
+ * 3. Everything after an unclosed `<boltArtifact` or `<boltAction`
  *    tag (content still streaming)
  * 4. Leftover individual open/close tags
- * 5. Partial `<devonz...` tags mid-stream (e.g. `<devonzArt`)
+ * 5. Partial `<bolt...` tags mid-stream (e.g. `<boltArt`)
  *
  * Also strips stray `</assistant>` fragments and `<chain_of_thought>` blocks.
  */
 function stripRawArtifactTags(text: string): string {
   let result = text;
 
-  if (result.includes('<devonz')) {
+  if (result.includes('<bolt')) {
     result = result.replace(COMPLETE_ARTIFACT_BLOCK_RE, '');
     result = result.replace(COMPLETE_ACTION_BLOCK_RE, '');
     result = result.replace(UNCLOSED_ARTIFACT_RE, '');
     result = result.replace(UNCLOSED_ACTION_RE, '');
     result = result.replace(LEFTOVER_TAG_RE, '');
-    result = result.replace(PARTIAL_DEVONZ_TAG_RE, '');
+    result = result.replace(PARTIAL_BOLT_TAG_RE, '');
   }
 
   if (result.includes('assis') || result.includes('Assis')) {
@@ -124,7 +124,7 @@ function stripRawArtifactTags(text: string): string {
    * Strip leaked code blocks when artifacts are present — code content
    * should only appear inside artifact actions, never in chat text
    */
-  if (result.includes('__devonzArtifact__')) {
+  if (result.includes('__boltArtifact__')) {
     result = result.replace(LEAKED_CODE_BLOCK_RE, '');
     result = result.replace(UNCLOSED_CODE_BLOCK_RE, '');
   }
@@ -201,36 +201,36 @@ export const AssistantMessage = memo(
       <div className="overflow-hidden w-full">
         {/* Assistant Header - Blink style */}
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-6 h-6 rounded-full bg-devonz-elements-bg-depth-3 border border-devonz-elements-borderColor flex items-center justify-center">
-            <span className="text-xs font-bold text-devonz-elements-textPrimary">D</span>
+          <div className="w-6 h-6 rounded-full bg-bolt-elements-bg-depth-3 border border-bolt-elements-borderColor flex items-center justify-center">
+            <span className="text-xs font-bold text-bolt-elements-textPrimary">D</span>
           </div>
-          <span className="text-sm font-medium text-devonz-elements-textSecondary">Devonz</span>
+          <span className="text-sm font-medium text-bolt-elements-textSecondary">Bolt</span>
           {(codeContext || chatSummary) && (
             <Popover
               side="right"
               align="start"
               trigger={
-                <div className="i-ph:info text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary transition-colors cursor-pointer" />
+                <div className="i-ph:info text-bolt-elements-textTertiary hover:text-bolt-elements-textSecondary transition-colors cursor-pointer" />
               }
             >
               {chatSummary && (
                 <div className="max-w-chat">
                   <div className="summary max-h-96 flex flex-col">
-                    <h2 className="border border-devonz-elements-borderColor rounded-md p4">Summary</h2>
+                    <h2 className="border border-bolt-elements-borderColor rounded-md p4">Summary</h2>
                     <div style={{ zoom: 0.7 }} className="overflow-y-auto m4">
                       <Markdown>{chatSummary}</Markdown>
                     </div>
                   </div>
                   {codeContext && (
-                    <div className="code-context flex flex-col p4 border border-devonz-elements-borderColor rounded-md">
+                    <div className="code-context flex flex-col p4 border border-bolt-elements-borderColor rounded-md">
                       <h2>Context</h2>
-                      <div className="flex gap-4 mt-4 devonz" style={{ zoom: 0.6 }}>
+                      <div className="flex gap-4 mt-4 bolt" style={{ zoom: 0.6 }}>
                         {codeContext.map((x, i) => {
                           const normalized = normalizedFilePath(x);
                           return (
                             <Fragment key={`${normalized}-${i}`}>
                               <code
-                                className="bg-devonz-elements-artifacts-inlineCode-background text-devonz-elements-artifacts-inlineCode-text px-1.5 py-1 rounded-md text-devonz-elements-item-contentAccent hover:underline cursor-pointer"
+                                className="bg-bolt-elements-artifacts-inlineCode-background text-bolt-elements-artifacts-inlineCode-text px-1.5 py-1 rounded-md text-bolt-elements-item-contentAccent hover:underline cursor-pointer"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
@@ -252,7 +252,7 @@ export const AssistantMessage = memo(
           )}
           <div className="flex-1" />
           {usage && (
-            <div className="text-xs text-devonz-elements-textTertiary">{usage.totalTokens.toLocaleString()} tokens</div>
+            <div className="text-xs text-bolt-elements-textTertiary">{usage.totalTokens.toLocaleString()} tokens</div>
           )}
           {(onRewind || onFork) && messageId && (
             <div className="flex gap-1.5">
@@ -262,7 +262,7 @@ export const AssistantMessage = memo(
                     onClick={() => onRewind(messageId)}
                     key="i-ph:arrow-u-up-left"
                     aria-label="Restore checkpoint (chat + code)"
-                    className="i-ph:arrow-u-up-left text-lg text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary transition-colors"
+                    className="i-ph:arrow-u-up-left text-lg text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary transition-colors"
                   />
                 </WithTooltip>
               )}
@@ -271,7 +271,7 @@ export const AssistantMessage = memo(
                   <button
                     onClick={() => onFork(messageId)}
                     key="i-ph:git-fork"
-                    className="i-ph:git-fork text-lg text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary transition-colors"
+                    className="i-ph:git-fork text-lg text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary transition-colors"
                   />
                 </WithTooltip>
               )}
@@ -283,7 +283,7 @@ export const AssistantMessage = memo(
         {reasoningParts && reasoningParts.length > 0 && <ThinkingBlock reasoningParts={reasoningParts} />}
 
         {/* Message Content */}
-        <div className="text-devonz-elements-textPrimary text-sm leading-relaxed">
+        <div className="text-bolt-elements-textPrimary text-sm leading-relaxed">
           <Markdown
             append={append}
             chatMode={chatMode}

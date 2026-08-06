@@ -29,7 +29,7 @@ const bugReportSchema = z.object({
       browser: z.string().optional(),
       os: z.string().optional(),
       screenResolution: z.string().optional(),
-      devonzVersion: z.string().optional(),
+      boltVersion: z.string().optional(),
       aiProviders: z.string().optional(),
       projectType: z.string().optional(),
       currentModel: z.string().optional(),
@@ -131,8 +131,8 @@ function formatIssueBody(data: z.infer<typeof bugReportSchema>): string {
       body += `- Screen: ${data.environmentInfo.screenResolution}\n`;
     }
 
-    if (data.environmentInfo.devonzVersion) {
-      body += `- Devonz: ${data.environmentInfo.devonzVersion}\n`;
+    if (data.environmentInfo.boltVersion) {
+      body += `- Bolt: ${data.environmentInfo.boltVersion}\n`;
     }
 
     if (data.environmentInfo.aiProviders) {
@@ -154,7 +154,7 @@ function formatIssueBody(data: z.infer<typeof bugReportSchema>): string {
     body += `**Contact:** ${data.contactEmail}\n\n`;
   }
 
-  body += '---\n*Submitted via Devonz bug report feature*';
+  body += '---\n*Submitted via Bolt bug report feature*';
 
   return body;
 }
@@ -216,7 +216,7 @@ async function bugReportAction({ request, context }: ActionFunctionArgs) {
 
     // Get GitHub configuration
     const githubToken = context?.cloudflare?.env?.GITHUB_BUG_REPORT_TOKEN || process.env.GITHUB_BUG_REPORT_TOKEN;
-    const targetRepo = context?.cloudflare?.env?.BUG_REPORT_REPO || process.env.BUG_REPORT_REPO || 'zebbern/Devonz';
+    const targetRepo = context?.cloudflare?.env?.BUG_REPORT_REPO || process.env.BUG_REPORT_REPO || 'zebbern/Bolt';
 
     if (!githubToken) {
       logger.error('GitHub bug report token not configured');
@@ -232,7 +232,7 @@ async function bugReportAction({ request, context }: ActionFunctionArgs) {
     // Initialize GitHub client
     const octokit = new Octokit({
       auth: githubToken,
-      userAgent: 'devonz-bug-reporter',
+      userAgent: 'bolt-bug-reporter',
     });
 
     // Create GitHub issue

@@ -37,7 +37,7 @@ import { createScopedLogger } from '~/utils/logger';
 const logger = createScopedLogger('LocalRuntime');
 
 /** Default base directory for project workspaces. */
-const DEFAULT_PROJECTS_DIR = nodePath.join(os.homedir(), '.devonz', 'projects');
+const DEFAULT_PROJECTS_DIR = nodePath.join(os.homedir(), '.bolt', 'projects');
 
 /**
  * Detect the default shell for the current OS.
@@ -927,12 +927,12 @@ export class LocalRuntime implements RuntimeProvider {
 
   /**
    * Check if a port should be excluded from detection.
-   * The host app's own port (Devonz dev server) must not be treated as a
+   * The host app's own port (Bolt dev server) must not be treated as a
    * project preview server.
    */
   #isExcludedPort(port: number): boolean {
     /*
-     * The Devonz app runs on PORT env var (default 5173 in dev, set explicitly
+     * The Bolt app runs on PORT env var (default 5173 in dev, set explicitly
      * in Dockerfile). Exclude it so the preview iframe never shows the host app.
      */
     const hostPort = parseInt(process.env.PORT || '5173', 10);
@@ -991,7 +991,7 @@ export class RuntimeManager {
   #shell: string;
 
   private constructor(options?: { projectsDir?: string; shell?: string }) {
-    this.#projectsDir = options?.projectsDir ?? process.env.DEVONZ_PROJECTS_DIR ?? DEFAULT_PROJECTS_DIR;
+    this.#projectsDir = options?.projectsDir ?? process.env.BOLT_PROJECTS_DIR ?? DEFAULT_PROJECTS_DIR;
     this.#shell = options?.shell ?? detectShell();
     this.#startIdleTimer();
   }

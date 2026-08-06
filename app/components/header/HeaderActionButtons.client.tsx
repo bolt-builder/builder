@@ -47,7 +47,7 @@ export function HeaderActionButtons() {
       {shouldShowButtons && (
         <button
           onClick={handleVersionsClick}
-          className={`rounded-md items-center justify-center px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 hover:text-accent-400 outline-accent-500 flex gap-1.5 transition-colors ${
+          className={`rounded-md items-center justify-center px-3 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 hover:text-accent-400 outline-accent-500 flex gap-1.5 transition-colors ${
             currentView === 'versions' ? 'text-accent-400 border-accent-500/50' : ''
           }`}
         >
@@ -60,7 +60,7 @@ export function HeaderActionButtons() {
       {showVercelButton && (
         <button
           onClick={() => setIsVercelModalOpen(true)}
-          className="rounded-md items-center justify-center px-2 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 hover:text-devonz-elements-textPrimary hover:border-accent-500/50 outline-accent-500 flex gap-1 transition-colors"
+          className="rounded-md items-center justify-center px-2 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 hover:text-bolt-elements-textPrimary hover:border-accent-500/50 outline-accent-500 flex gap-1 transition-colors"
           title="Vercel Domain Settings"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 76 65" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

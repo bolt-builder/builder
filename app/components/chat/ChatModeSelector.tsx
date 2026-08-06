@@ -52,8 +52,8 @@ export function ChatModeSelector({ chatMode, setChatMode, planMode, setPlanMode 
           className={cn(
             'transition-all flex items-center gap-1 px-1.5',
             activeMode !== 'build'
-              ? 'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent'
-              : 'bg-devonz-elements-item-backgroundDefault text-devonz-elements-item-contentDefault',
+              ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent'
+              : 'bg-bolt-elements-item-backgroundDefault text-bolt-elements-item-contentDefault',
           )}
         >
           <div className={cn(activeModeConfig.icon, 'text-xl')} />
@@ -74,9 +74,9 @@ export function ChatModeSelector({ chatMode, setChatMode, planMode, setPlanMode 
                 key={mode.id}
                 className={cn(
                   'w-full flex items-center gap-3 px-3 py-2 rounded-md text-left transition-colors border-none',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-focus',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-focus',
                   activeMode === mode.id
-                    ? 'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent'
+                    ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent'
                     : 'bg-transparent text-[#9ca3af] hover:bg-[#1a1f2e] hover:text-white',
                 )}
                 onClick={() => handleSelect(mode.id)}

@@ -34,7 +34,7 @@ export interface SourceLocatable {
  * Normalise an inspector-reported source path to a project-relative path
  * usable with the runtime filesystem API.
  *
- * Handles absolute host paths (`/home/user/.devonz/projects/<id>/src/App.tsx`),
+ * Handles absolute host paths (`/home/user/.bolt/projects/<id>/src/App.tsx`),
  * virtual workdir paths (`/home/project/src/App.tsx`), and plain relative
  * paths with or without a leading slash.
  */

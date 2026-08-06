@@ -12,7 +12,7 @@ import type {
 import { DEFAULT_INSPECTOR_CONFIG } from '~/lib/inspector/types';
 import type { UseInspectorReturn } from '~/lib/hooks/useInspector';
 
-const STORAGE_KEY = 'devonz-inspector-config';
+const STORAGE_KEY = 'bolt-inspector-config';
 
 /* ------------------------------------------------------------------ */
 /*  Core state                                                         */

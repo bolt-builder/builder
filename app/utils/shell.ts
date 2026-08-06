@@ -10,9 +10,9 @@ const logger = createScopedLogger('Shell');
 
 /**
  * Unique marker prefix used to detect command completion in terminal output.
- * The full marker format is `__DEVONZ_CMD_DONE__<id>_<exitCode>`.
+ * The full marker format is `__BOLT_CMD_DONE__<id>_<exitCode>`.
  */
-const MARKER_PREFIX = '__DEVONZ_CMD_DONE__';
+const MARKER_PREFIX = '__BOLT_CMD_DONE__';
 
 /** Regex that matches the marker in terminal output. */
 const MARKER_REGEX = new RegExp(`${MARKER_PREFIX}_(\\w+)_(\\d+)`);
@@ -116,7 +116,7 @@ export type ExecutionResult = { output: string; exitCode: number } | undefined;
  * Replaces the previous WebContainer jsh+OSC-based approach with a marker pattern
  * that works with any real shell (bash, zsh, powershell, cmd).
  */
-export class DevonzShell {
+export class BoltShell {
   #initialized: (() => void) | undefined;
   #readyPromise: Promise<void>;
   #terminal: ITerminal | undefined;
@@ -294,8 +294,8 @@ export class DevonzShell {
   /**
    * Strip internal shell mechanics from terminal output so users
    * only see meaningful command output. Removes:
-   * - Marker echo suffixes from command lines (e.g. `; echo "__DEVONZ_CMD_DONE__..."`).
-   * - Standalone echo commands for markers (e.g. `$ echo "__DEVONZ_CMD_DONE___READY"`).
+   * - Marker echo suffixes from command lines (e.g. `; echo "__BOLT_CMD_DONE__..."`).
+   * - Standalone echo commands for markers (e.g. `$ echo "__BOLT_CMD_DONE___READY"`).
    * - Standalone marker output lines.
    * - Common bash startup noise (ioctl warnings, no job control).
    */
@@ -312,15 +312,15 @@ export class DevonzShell {
 
     if (hasMarker) {
       /* Strip the marker echo suffix appended to commands (e.g. `; echo "marker"`) */
-      filtered = filtered.replace(/;\s*echo\s+"[^"]*__DEVONZ_CMD_DONE__[^"]*"\s*/g, '');
+      filtered = filtered.replace(/;\s*echo\s+"[^"]*__BOLT_CMD_DONE__[^"]*"\s*/g, '');
 
       /*
        * Remove ALL lines containing the marker prefix.
        * Covers: standalone echo commands (`$ echo "marker"`),
-       * bare marker output (`__DEVONZ_CMD_DONE___READY`),
-       * and command-completion markers (`__DEVONZ_CMD_DONE__abc_0`).
+       * bare marker output (`__BOLT_CMD_DONE___READY`),
+       * and command-completion markers (`__BOLT_CMD_DONE__abc_0`).
        */
-      filtered = filtered.replace(/^.*__DEVONZ_CMD_DONE__.*$/gm, '');
+      filtered = filtered.replace(/^.*__BOLT_CMD_DONE__.*$/gm, '');
     }
 
     if (hasBashNoise) {
@@ -455,9 +455,9 @@ export function cleanTerminalOutput(input: string): string {
 }
 
 /**
- * Create a new DevonzShell instance.
+ * Create a new BoltShell instance.
  * Factory function for consistent construction.
  */
-export function newDevonzShellProcess() {
-  return new DevonzShell();
+export function newBoltShellProcess() {
+  return new BoltShell();
 }

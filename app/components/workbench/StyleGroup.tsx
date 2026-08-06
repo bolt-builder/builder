@@ -31,10 +31,10 @@ export const StyleGroup = memo(({ label, icon, defaultOpen = false, children }: 
   }, []);
 
   return (
-    <div className="border-b border-devonz-elements-borderColor last:border-b-0">
+    <div className="border-b border-bolt-elements-borderColor last:border-b-0">
       <button
         onClick={toggle}
-        className="w-full flex items-center gap-2 px-3 py-2.5 text-xs font-medium bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3 transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-2.5 text-xs font-medium bg-transparent text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-3 transition-colors"
         aria-expanded={isOpen}
         aria-controls={`style-group-${label}`}
       >

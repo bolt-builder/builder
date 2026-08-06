@@ -6,7 +6,7 @@ import { csrfFetch } from '~/lib/api/csrf-client';
 
 const logger = createScopedLogger('MigrationBanner');
 
-const MIGRATION_FLAG_KEY = 'devonz_migration_complete';
+const MIGRATION_FLAG_KEY = 'bolt_migration_complete';
 
 type MigrationState = 'idle' | 'checking' | 'ready' | 'migrating' | 'done' | 'error';
 
@@ -157,18 +157,18 @@ export function MigrationBanner() {
   return (
     <div
       role="alert"
-      className="flex items-center gap-3 px-4 py-3 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 text-devonz-elements-textPrimary text-sm"
+      className="flex items-center gap-3 px-4 py-3 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 text-bolt-elements-textPrimary text-sm"
     >
       {state === 'ready' && (
         <>
-          <div className="i-ph:database text-lg text-devonz-elements-item-contentAccent" />
+          <div className="i-ph:database text-lg text-bolt-elements-item-contentAccent" />
           <span className="flex-1">
             Found <strong>{unmigratedCount}</strong> chat{unmigratedCount !== 1 ? 's' : ''} in your browser storage.
             Migrate to the new database for faster performance and sync support.
           </span>
           <button
             onClick={runMigration}
-            className="px-3 py-1.5 rounded-md bg-devonz-elements-item-backgroundAccent text-white font-medium hover:brightness-110 transition-all text-xs"
+            className="px-3 py-1.5 rounded-md bg-bolt-elements-item-backgroundAccent text-white font-medium hover:brightness-110 transition-all text-xs"
           >
             Migrate Now
           </button>
@@ -177,13 +177,13 @@ export function MigrationBanner() {
 
       {state === 'migrating' && (
         <>
-          <div className="i-svg-spinners:90-ring-with-bg text-lg text-devonz-elements-item-contentAccent" />
+          <div className="i-svg-spinners:90-ring-with-bg text-lg text-bolt-elements-item-contentAccent" />
           <span className="flex-1">
             Migrating chat {progress.current} of {progress.total}...
           </span>
-          <div className="w-32 h-2 bg-devonz-elements-background-depth-3 rounded-full overflow-hidden">
+          <div className="w-32 h-2 bg-bolt-elements-background-depth-3 rounded-full overflow-hidden">
             <div
-              className="h-full bg-devonz-elements-item-backgroundAccent transition-all duration-300"
+              className="h-full bg-bolt-elements-item-backgroundAccent transition-all duration-300"
               style={{ width: `${progress.total > 0 ? (progress.current / progress.total) * 100 : 0}%` }}
             />
           </div>

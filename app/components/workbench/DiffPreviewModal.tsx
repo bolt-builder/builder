@@ -131,7 +131,7 @@ function getChangeTypeColor(type: StagedChange['type']): string {
     case 'delete':
       return 'bg-red-500/20 text-red-400 border-red-500/30';
     default:
-      return 'bg-gray-500/20 text-devonz-elements-textTertiary border-gray-500/30';
+      return 'bg-gray-500/20 text-bolt-elements-textTertiary border-gray-500/30';
   }
 }
 
@@ -185,7 +185,7 @@ const DiffLineRow = memo(({ line }: DiffLineRowProps) => {
       case 'removed':
         return 'text-red-400';
       default:
-        return 'text-devonz-elements-textSecondary';
+        return 'text-bolt-elements-textSecondary';
     }
   }, [line.type]);
 
@@ -204,19 +204,19 @@ const DiffLineRow = memo(({ line }: DiffLineRowProps) => {
     <div className={cn('flex text-sm font-mono', bgColor)}>
       {/* Line numbers */}
       <div
-        className="w-12 flex-shrink-0 text-right pr-2 select-none border-r border-devonz-elements-borderColor"
+        className="w-12 flex-shrink-0 text-right pr-2 select-none border-r border-bolt-elements-borderColor"
         style={{
-          backgroundColor: 'var(--devonz-elements-background-depth-4)',
-          color: 'var(--devonz-elements-textSecondary)',
+          backgroundColor: 'var(--bolt-elements-background-depth-4)',
+          color: 'var(--bolt-elements-textSecondary)',
         }}
       >
         {line.lineNumberBefore ?? ''}
       </div>
       <div
-        className="w-12 flex-shrink-0 text-right pr-2 select-none border-r border-devonz-elements-borderColor"
+        className="w-12 flex-shrink-0 text-right pr-2 select-none border-r border-bolt-elements-borderColor"
         style={{
-          backgroundColor: 'var(--devonz-elements-background-depth-4)',
-          color: 'var(--devonz-elements-textSecondary)',
+          backgroundColor: 'var(--bolt-elements-background-depth-4)',
+          color: 'var(--bolt-elements-textSecondary)',
         }}
       >
         {line.lineNumberAfter ?? ''}
@@ -265,13 +265,13 @@ const DiffContent = memo(({ change }: DiffContentProps) => {
       <div
         className="flex items-center gap-4 px-4 py-2"
         style={{
-          backgroundColor: 'var(--devonz-elements-background-depth-4)',
-          borderBottom: '1px solid var(--devonz-elements-borderColor)',
+          backgroundColor: 'var(--bolt-elements-background-depth-4)',
+          borderBottom: '1px solid var(--bolt-elements-borderColor)',
         }}
       >
         <span className="text-sm text-green-400">+{stats.added} additions</span>
         <span className="text-sm text-red-400">-{stats.removed} deletions</span>
-        <span className="text-sm" style={{ color: 'var(--devonz-elements-textSecondary)' }}>
+        <span className="text-sm" style={{ color: 'var(--bolt-elements-textSecondary)' }}>
           {diffLines.filter((l) => l.type === 'unchanged').length} unchanged
         </span>
       </div>
@@ -279,7 +279,7 @@ const DiffContent = memo(({ change }: DiffContentProps) => {
       {/* Diff lines */}
       <div
         className="flex-1 overflow-auto diff-modal-content"
-        style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)' }}
+        style={{ backgroundColor: 'var(--bolt-elements-bg-depth-3)' }}
       >
         {diffLines.map((line, index) => (
           <DiffLineRow key={`${index}-${line.type}-${line.content.slice(0, 20)}`} line={line} />
@@ -438,8 +438,8 @@ export const DiffPreviewModal = memo(() => {
                 <div
                   className="w-[90vw] max-w-5xl h-[85vh] rounded-lg shadow-xl flex flex-col focus:outline-none"
                   style={{
-                    backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                    borderColor: 'var(--devonz-elements-borderColor)',
+                    backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                    borderColor: 'var(--bolt-elements-borderColor)',
                     borderWidth: '1px',
                     borderStyle: 'solid',
                   }}
@@ -465,18 +465,18 @@ export const DiffPreviewModal = memo(() => {
                   <div
                     className="flex items-center justify-between px-4 py-3 rounded-t-lg"
                     style={{
-                      backgroundColor: 'var(--devonz-elements-background-depth-4)',
-                      borderBottom: '1px solid var(--devonz-elements-borderColor)',
+                      backgroundColor: 'var(--bolt-elements-background-depth-4)',
+                      borderBottom: '1px solid var(--bolt-elements-borderColor)',
                     }}
                   >
                     <div className="flex items-center gap-3">
                       {/* File icon and path */}
                       <div className={cn('w-5 h-5', getFileIcon(change.filePath))} />
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium" style={{ color: 'var(--devonz-elements-textPrimary)' }}>
+                        <span className="text-sm font-medium" style={{ color: 'var(--bolt-elements-textPrimary)' }}>
                           {fileName}
                         </span>
-                        <span className="text-xs" style={{ color: 'var(--devonz-elements-textSecondary)' }}>
+                        <span className="text-xs" style={{ color: 'var(--bolt-elements-textSecondary)' }}>
                           {change.filePath}
                         </span>
                       </div>
@@ -496,7 +496,7 @@ export const DiffPreviewModal = memo(() => {
                     <div className="flex items-center gap-2">
                       {position.total > 1 && (
                         <>
-                          <span className="text-sm" style={{ color: 'var(--devonz-elements-textSecondary)' }}>
+                          <span className="text-sm" style={{ color: 'var(--bolt-elements-textSecondary)' }}>
                             {position.current} of {position.total}
                           </span>
                           <IconButton
@@ -511,7 +511,7 @@ export const DiffPreviewModal = memo(() => {
                           />
                           <div
                             className="w-px h-6 mx-2"
-                            style={{ backgroundColor: 'var(--devonz-elements-borderColor)' }}
+                            style={{ backgroundColor: 'var(--bolt-elements-borderColor)' }}
                           />
                         </>
                       )}
@@ -519,7 +519,7 @@ export const DiffPreviewModal = memo(() => {
                         icon="i-ph:x"
                         onClick={handleClose}
                         title="Close (Escape)"
-                        className="text-devonz-elements-textSecondary"
+                        className="text-bolt-elements-textSecondary"
                       />
                     </div>
                   </div>
@@ -533,21 +533,21 @@ export const DiffPreviewModal = memo(() => {
                   <div
                     className="flex items-center justify-between px-4 py-3 rounded-b-lg"
                     style={{
-                      backgroundColor: 'var(--devonz-elements-background-depth-4)',
-                      borderTop: '1px solid var(--devonz-elements-borderColor)',
+                      backgroundColor: 'var(--bolt-elements-background-depth-4)',
+                      borderTop: '1px solid var(--bolt-elements-borderColor)',
                     }}
                   >
                     {/* Keyboard hints */}
                     <div
                       className="flex items-center gap-4 text-xs"
-                      style={{ color: 'var(--devonz-elements-textTertiary)' }}
+                      style={{ color: 'var(--bolt-elements-textTertiary)' }}
                     >
                       <span>
                         <kbd
                           className="px-1.5 py-0.5 rounded"
                           style={{
-                            backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                            color: 'var(--devonz-elements-textSecondary)',
+                            backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                            color: 'var(--bolt-elements-textSecondary)',
                           }}
                         >
                           ←
@@ -556,8 +556,8 @@ export const DiffPreviewModal = memo(() => {
                         <kbd
                           className="px-1.5 py-0.5 rounded"
                           style={{
-                            backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                            color: 'var(--devonz-elements-textSecondary)',
+                            backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                            color: 'var(--bolt-elements-textSecondary)',
                           }}
                         >
                           →
@@ -568,8 +568,8 @@ export const DiffPreviewModal = memo(() => {
                         <kbd
                           className="px-1.5 py-0.5 rounded"
                           style={{
-                            backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                            color: 'var(--devonz-elements-textSecondary)',
+                            backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                            color: 'var(--bolt-elements-textSecondary)',
                           }}
                         >
                           Ctrl
@@ -578,8 +578,8 @@ export const DiffPreviewModal = memo(() => {
                         <kbd
                           className="px-1.5 py-0.5 rounded"
                           style={{
-                            backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                            color: 'var(--devonz-elements-textSecondary)',
+                            backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                            color: 'var(--bolt-elements-textSecondary)',
                           }}
                         >
                           Enter
@@ -596,8 +596,8 @@ export const DiffPreviewModal = memo(() => {
                           onClick={handleSkip}
                           disabled={isProcessing}
                           style={{
-                            backgroundColor: 'var(--devonz-elements-bg-depth-3)',
-                            color: 'var(--devonz-elements-textSecondary)',
+                            backgroundColor: 'var(--bolt-elements-bg-depth-3)',
+                            color: 'var(--bolt-elements-textSecondary)',
                           }}
                         >
                           Skip

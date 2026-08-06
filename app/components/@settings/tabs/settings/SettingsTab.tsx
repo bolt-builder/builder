@@ -26,13 +26,13 @@ const getModifierSymbol = (modifier: string): string => {
 export default function SettingsTab() {
   const [currentTimezone, setCurrentTimezone] = useState('');
   const [settings, setSettings] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem('devonz_user_profile');
+    const saved = localStorage.getItem('bolt_user_profile');
 
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch {
-        localStorage.removeItem('devonz_user_profile');
+        localStorage.removeItem('bolt_user_profile');
       }
     }
 
@@ -51,7 +51,7 @@ export default function SettingsTab() {
   useEffect(() => {
     try {
       // Get existing profile data
-      const existingProfile = JSON.parse(localStorage.getItem('devonz_user_profile') || '{}');
+      const existingProfile = JSON.parse(localStorage.getItem('bolt_user_profile') || '{}');
 
       // Merge with new settings
       const updatedProfile = {
@@ -61,7 +61,7 @@ export default function SettingsTab() {
         timezone: settings.timezone,
       };
 
-      localStorage.setItem('devonz_user_profile', JSON.stringify(updatedProfile));
+      localStorage.setItem('bolt_user_profile', JSON.stringify(updatedProfile));
       toast.success('Settings updated');
     } catch (error) {
       logger.error('Error saving settings:', error);
@@ -73,20 +73,20 @@ export default function SettingsTab() {
     <div className="space-y-4">
       {/* Language & Notifications */}
       <motion.div
-        className="bg-devonz-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4 space-y-4"
+        className="bg-bolt-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4 space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
       >
         <div className="flex items-center gap-2 mb-4">
-          <div className="i-ph:palette-fill w-4 h-4 text-devonz-elements-item-contentAccent" />
-          <span className="text-sm font-medium text-devonz-elements-textPrimary">Preferences</span>
+          <div className="i-ph:palette-fill w-4 h-4 text-bolt-elements-item-contentAccent" />
+          <span className="text-sm font-medium text-bolt-elements-textPrimary">Preferences</span>
         </div>
 
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <div className="i-ph:translate-fill w-4 h-4 text-devonz-elements-textSecondary" />
-            <label className="block text-sm text-devonz-elements-textSecondary">Language</label>
+            <div className="i-ph:translate-fill w-4 h-4 text-bolt-elements-textSecondary" />
+            <label className="block text-sm text-bolt-elements-textSecondary">Language</label>
           </div>
           <select
             aria-label="Language"
@@ -94,10 +94,10 @@ export default function SettingsTab() {
             onChange={(e) => setSettings((prev) => ({ ...prev, language: e.target.value }))}
             className={cn(
               'w-full px-3 py-2 rounded-lg text-sm',
-              'bg-devonz-elements-bg-depth-1',
-              'border border-devonz-elements-borderColor',
-              'text-devonz-elements-textPrimary',
-              'focus:outline-none focus:ring-2 focus:ring-devonz-elements-borderColorActive',
+              'bg-bolt-elements-bg-depth-1',
+              'border border-bolt-elements-borderColor',
+              'text-bolt-elements-textPrimary',
+              'focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColorActive',
               'transition-all duration-200',
             )}
           >
@@ -116,11 +116,11 @@ export default function SettingsTab() {
 
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <div className="i-ph:bell-fill w-4 h-4 text-devonz-elements-textSecondary" />
-            <label className="block text-sm text-devonz-elements-textSecondary">Notifications</label>
+            <div className="i-ph:bell-fill w-4 h-4 text-bolt-elements-textSecondary" />
+            <label className="block text-sm text-bolt-elements-textSecondary">Notifications</label>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-devonz-elements-textSecondary">
+            <span className="text-sm text-bolt-elements-textSecondary">
               {settings.notifications ? 'Notifications are enabled' : 'Notifications are disabled'}
             </span>
             <Switch
@@ -133,7 +133,7 @@ export default function SettingsTab() {
                 let existingProfile = {};
 
                 try {
-                  existingProfile = JSON.parse(localStorage.getItem('devonz_user_profile') || '{}');
+                  existingProfile = JSON.parse(localStorage.getItem('bolt_user_profile') || '{}');
                 } catch {
                   // Ignore corrupted data
                 }
@@ -142,12 +142,12 @@ export default function SettingsTab() {
                   ...existingProfile,
                   notifications: checked,
                 };
-                localStorage.setItem('devonz_user_profile', JSON.stringify(updatedProfile));
+                localStorage.setItem('bolt_user_profile', JSON.stringify(updatedProfile));
 
                 // Dispatch storage event for other components
                 window.dispatchEvent(
                   new StorageEvent('storage', {
-                    key: 'devonz_user_profile',
+                    key: 'bolt_user_profile',
                     newValue: JSON.stringify(updatedProfile),
                   }),
                 );
@@ -161,20 +161,20 @@ export default function SettingsTab() {
 
       {/* Timezone */}
       <motion.div
-        className="bg-devonz-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4"
+        className="bg-bolt-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
         <div className="flex items-center gap-2 mb-4">
-          <div className="i-ph:clock-fill w-4 h-4 text-devonz-elements-item-contentAccent" />
-          <span className="text-sm font-medium text-devonz-elements-textPrimary">Time Settings</span>
+          <div className="i-ph:clock-fill w-4 h-4 text-bolt-elements-item-contentAccent" />
+          <span className="text-sm font-medium text-bolt-elements-textPrimary">Time Settings</span>
         </div>
 
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <div className="i-ph:globe-fill w-4 h-4 text-devonz-elements-textSecondary" />
-            <label className="block text-sm text-devonz-elements-textSecondary">Timezone</label>
+            <div className="i-ph:globe-fill w-4 h-4 text-bolt-elements-textSecondary" />
+            <label className="block text-sm text-bolt-elements-textSecondary">Timezone</label>
           </div>
           <select
             aria-label="Timezone"
@@ -182,10 +182,10 @@ export default function SettingsTab() {
             onChange={(e) => setSettings((prev) => ({ ...prev, timezone: e.target.value }))}
             className={cn(
               'w-full px-3 py-2 rounded-lg text-sm',
-              'bg-devonz-elements-bg-depth-1',
-              'border border-devonz-elements-borderColor',
-              'text-devonz-elements-textPrimary',
-              'focus:outline-none focus:ring-2 focus:ring-devonz-elements-borderColorActive',
+              'bg-bolt-elements-bg-depth-1',
+              'border border-bolt-elements-borderColor',
+              'text-bolt-elements-textPrimary',
+              'focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColorActive',
               'transition-all duration-200',
             )}
           >
@@ -196,33 +196,33 @@ export default function SettingsTab() {
 
       {/* Simplified Keyboard Shortcuts */}
       <motion.div
-        className="bg-devonz-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4"
+        className="bg-bolt-elements-bg-depth-1 rounded-lg shadow-sm dark:shadow-none p-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
         <div className="flex items-center gap-2 mb-4">
-          <div className="i-ph:keyboard-fill w-4 h-4 text-devonz-elements-item-contentAccent" />
-          <span className="text-sm font-medium text-devonz-elements-textPrimary">Keyboard Shortcuts</span>
+          <div className="i-ph:keyboard-fill w-4 h-4 text-bolt-elements-item-contentAccent" />
+          <span className="text-sm font-medium text-bolt-elements-textPrimary">Keyboard Shortcuts</span>
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center justify-between p-2 rounded-lg bg-devonz-elements-bg-depth-2">
+          <div className="flex items-center justify-between p-2 rounded-lg bg-bolt-elements-bg-depth-2">
             <div className="flex flex-col">
-              <span className="text-sm text-devonz-elements-textPrimary">Toggle Theme</span>
-              <span className="text-xs text-devonz-elements-textSecondary">Switch between light and dark mode</span>
+              <span className="text-sm text-bolt-elements-textPrimary">Toggle Theme</span>
+              <span className="text-xs text-bolt-elements-textSecondary">Switch between light and dark mode</span>
             </div>
             <div className="flex items-center gap-1">
-              <kbd className="px-2 py-1 text-xs font-semibold text-devonz-elements-textSecondary bg-devonz-elements-bg-depth-1 border border-devonz-elements-borderColor rounded shadow-sm">
+              <kbd className="px-2 py-1 text-xs font-semibold text-bolt-elements-textSecondary bg-bolt-elements-bg-depth-1 border border-bolt-elements-borderColor rounded shadow-sm">
                 {getModifierSymbol('meta')}
               </kbd>
-              <kbd className="px-2 py-1 text-xs font-semibold text-devonz-elements-textSecondary bg-devonz-elements-bg-depth-1 border border-devonz-elements-borderColor rounded shadow-sm">
+              <kbd className="px-2 py-1 text-xs font-semibold text-bolt-elements-textSecondary bg-bolt-elements-bg-depth-1 border border-bolt-elements-borderColor rounded shadow-sm">
                 {getModifierSymbol('alt')}
               </kbd>
-              <kbd className="px-2 py-1 text-xs font-semibold text-devonz-elements-textSecondary bg-devonz-elements-bg-depth-1 border border-devonz-elements-borderColor rounded shadow-sm">
+              <kbd className="px-2 py-1 text-xs font-semibold text-bolt-elements-textSecondary bg-bolt-elements-bg-depth-1 border border-bolt-elements-borderColor rounded shadow-sm">
                 {getModifierSymbol('shift')}
               </kbd>
-              <kbd className="px-2 py-1 text-xs font-semibold text-devonz-elements-textSecondary bg-devonz-elements-bg-depth-1 border border-devonz-elements-borderColor rounded shadow-sm">
+              <kbd className="px-2 py-1 text-xs font-semibold text-bolt-elements-textSecondary bg-bolt-elements-bg-depth-1 border border-bolt-elements-borderColor rounded shadow-sm">
                 D
               </kbd>
             </div>

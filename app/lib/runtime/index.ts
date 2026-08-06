@@ -1,6 +1,6 @@
 /**
  * @module runtime
- * Client-side entry point for the Devonz runtime.
+ * Client-side entry point for the Bolt runtime.
  *
  * Exposes a `Promise<RuntimeProvider>` singleton that resolves once
  * the runtime is booted. All stores and components import `runtime`

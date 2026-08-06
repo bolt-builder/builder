@@ -1,6 +1,6 @@
 # Architecture
 
-> System design, layers, and data flow for Devonz.
+> System design, layers, and data flow for Bolt.
 
 ---
 
@@ -36,7 +36,7 @@
 │  ┌──────▼─────────────────▼──────────────────▼────────┐  │
 │  │          LocalRuntime (Server-Side Execution)       │  │
 │  │   File I/O · Shell (Git Bash / system) · Dev server │  │
-│  │   Projects at ~/.devonz/projects/{projectId}/       │  │
+│  │   Projects at ~/.bolt/projects/{projectId}/       │  │
 │  └────────────────────────────────────────────────────┘  │
 │         │                 │                  │           │
 │  ┌──────▼─────────────────▼──────────────────▼────────┐  │
@@ -76,7 +76,7 @@ Business logic separated from UI:
 | `agentToolsService.ts` | Agent tool definitions and execution |
 | `agentChatIntegration.ts` | Bridges agent mode with chat API |
 | `mcpService.ts` | MCP (Model Context Protocol) client management — includes schema sanitization for Gemini compatibility (strips `anyOf`, `oneOf`, `allOf`, `additionalProperties`), auto-approve per-server toggle, and formatted markdown rendering of tool results |
-| `autoFixService.ts` | Error formatting and fix-attempt tracking — used when the user manually clicks "Ask Devonz" in a ChatAlert dialog (no auto-triggering) |
+| `autoFixService.ts` | Error formatting and fix-attempt tracking — used when the user manually clicks "Ask Bolt" in a ChatAlert dialog (no auto-triggering) |
 | `githubApiService.ts` | GitHub API operations |
 | `gitlabApiService.ts` | GitLab API operations |
 | `importExportService.ts` | Chat import/export functionality |
@@ -103,7 +103,7 @@ classifyError(message) → ClassifiedError { category, severity, recoverable, su
        ▼
 shouldShowFullAlert(classified)?
        ├── true  (severity = fatal | error)  → ChatAlert dialog
-       │         User clicks "Ask Devonz" to send error to LLM
+       │         User clicks "Ask Bolt" to send error to LLM
        └── false (severity = warning | info) → Sonner toast notification
                  Auto-dismissed, no LLM involvement
 ```
@@ -113,7 +113,7 @@ shouldShowFullAlert(classified)?
 - `terminalErrorDetector.ts` — detects errors in terminal output, classifies via this layer, routes to ChatAlert or toast
 - `previewErrorHandler.ts` — detects errors in preview iframe, classifies via this layer, routes to ChatAlert or toast
 
-> **No auto-fix auto-triggering.** The old system that automatically sent errors to the LLM has been completely removed. All error handling now requires explicit user action — clicking "Ask Devonz" in the ChatAlert dialog for serious errors, or simply reading the toast for minor ones.
+> **No auto-fix auto-triggering.** The old system that automatically sent errors to the LLM has been completely removed. All error handling now requires explicit user action — clicking "Ask Bolt" in the ChatAlert dialog for serious errors, or simply reading the toast for minor ones.
 
 ### 5. LLM Layer (`app/lib/modules/llm/`)
 
@@ -213,12 +213,12 @@ User enables Agent Mode + sends task
   │       ▼                              │
   │  AgentToolsService.execute()         │
   │       │                              │
-  │       ├── devonz_read_file           │
-  │       ├── devonz_write_file          │
-  │       ├── devonz_list_directory      │
-  │       ├── devonz_run_command         │
-  │       ├── devonz_search_code         │
-  │       └── devonz_get_errors          │
+  │       ├── bolt_read_file           │
+  │       ├── bolt_write_file          │
+  │       ├── bolt_list_directory      │
+  │       ├── bolt_run_command         │
+  │       ├── bolt_search_code         │
+  │       └── bolt_get_errors          │
   │       │                              │
   │       ▼                              │
   │  Check: needs approval?              │
@@ -239,7 +239,7 @@ User enables Agent Mode + sends task
 
 ## Key Design Decisions
 
-1. **LocalRuntime for execution**: Code runs on the host machine via `LocalRuntime` (server-side). `RuntimeClient` (browser-side) communicates with it through `/api/runtime/*` Remix routes. `bootRuntime(projectId)` initializes a project runtime with files stored at `~/.devonz/projects/{projectId}/`. Supports native binaries, real Git, and full shell access (Git Bash preferred on Windows). Port detection uses ANSI-stripped regex matching, firing events via SSE to `PreviewsStore` for iframe preview at `http://localhost:PORT`. COEP/COOP headers have been removed (they were WebContainer-only); CSP `frame-src` allows localhost.
+1. **LocalRuntime for execution**: Code runs on the host machine via `LocalRuntime` (server-side). `RuntimeClient` (browser-side) communicates with it through `/api/runtime/*` Remix routes. `bootRuntime(projectId)` initializes a project runtime with files stored at `~/.bolt/projects/{projectId}/`. Supports native binaries, real Git, and full shell access (Git Bash preferred on Windows). Port detection uses ANSI-stripped regex matching, firing events via SSE to `PreviewsStore` for iframe preview at `http://localhost:PORT`. COEP/COOP headers have been removed (they were WebContainer-only); CSP `frame-src` allows localhost.
 
    **Runtime lifecycle guarantees:**
    - **Single instance enforcement** — `RuntimeManager` is a server-side singleton that maps project IDs to `LocalRuntime` instances. Concurrent `bootRuntime()` calls for the same project coalesce into a single promise. On chat exit, `teardown()` destroys the runtime and releases all resources.
@@ -260,7 +260,7 @@ User enables Agent Mode + sends task
 
 6. **Extended Thinking**: Supported for Anthropic Claude and Google Gemini models. Allows models to expose their internal reasoning process before producing a final answer, with a configurable thinking budget per request.
 
-7. **CSS custom properties for theming**: All theme colors flow through `--devonz-elements-*` variables, enabling runtime theme switching without rebuilds.
+7. **CSS custom properties for theming**: All theme colors flow through `--bolt-elements-*` variables, enabling runtime theme switching without rebuilds.
 
 8. **Security by default** — Every API route is wrapped with `withSecurity()` from `app/lib/security.ts` (except `/api/sentry-tunnel`, which is CSRF-exempt for Sentry SDK requests), enforcing CORS origin validation, SameSite cookie attributes, request sanitization, and a URL allowlist on the git proxy.
 

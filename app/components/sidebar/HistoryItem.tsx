@@ -71,8 +71,8 @@ export function HistoryItem({
   return (
     <div
       className={cn(
-        'group rounded-lg text-sm text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-3/50 overflow-hidden flex justify-between items-center px-3 py-2.5 transition-colors',
-        { 'text-devonz-elements-textPrimary bg-accent-500/10 border-l-2 border-accent-500': isActiveChat },
+        'group rounded-lg text-sm text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-3/50 overflow-hidden flex justify-between items-center px-3 py-2.5 transition-colors',
+        { 'text-bolt-elements-textPrimary bg-accent-500/10 border-l-2 border-accent-500': isActiveChat },
         { 'cursor-pointer': selectionMode },
       )}
       onClick={selectionMode ? handleItemClick : undefined}
@@ -92,7 +92,7 @@ export function HistoryItem({
         <form onSubmit={handleSubmit} className="flex-1 flex items-center gap-2">
           <input
             type="text"
-            className="flex-1 bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary rounded-md px-3 py-1.5 text-sm border border-devonz-elements-borderColor focus:outline-none focus:ring-1 focus:ring-accent-500/50"
+            className="flex-1 bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary rounded-md px-3 py-1.5 text-sm border border-bolt-elements-borderColor focus:outline-none focus:ring-1 focus:ring-accent-500/50"
             autoFocus
             value={currentDescription}
             onChange={handleChange}
@@ -119,7 +119,7 @@ export function HistoryItem({
           <div
             className={cn('absolute right-0 top-0 bottom-0 flex items-center bg-transparent px-2 transition-colors')}
           >
-            <div className="flex items-center gap-2.5 text-devonz-elements-textTertiary opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-2.5 text-bolt-elements-textTertiary opacity-0 group-hover:opacity-100 transition-opacity">
               <ChatActionButton
                 toolTipContent="Export"
                 icon="i-ph:download-simple h-4 w-4"
@@ -180,7 +180,7 @@ function ChatActionButton({
         ref={ref}
         type="button"
         aria-label={toolTipContent}
-        className={`text-devonz-elements-textTertiary hover:text-blue-500 transition-colors ${icon} ${className ? className : ''}`}
+        className={`text-bolt-elements-textTertiary hover:text-blue-500 transition-colors ${icon} ${className ? className : ''}`}
         onClick={onClick}
       />
     </WithTooltip>

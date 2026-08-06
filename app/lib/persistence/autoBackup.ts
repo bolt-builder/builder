@@ -6,8 +6,8 @@ import { createScopedLogger } from '~/utils/logger';
 
 const logger = createScopedLogger('AutoBackup');
 
-const BACKUP_KEY_PREFIX = 'devonz_backup_';
-const BACKUP_META_KEY = 'devonz_backup_meta';
+const BACKUP_KEY_PREFIX = 'bolt_backup_';
+const BACKUP_META_KEY = 'bolt_backup_meta';
 const MAX_BACKUPS = 3;
 const DEFAULT_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
 const MAX_BACKUP_CHATS = 10;
@@ -302,7 +302,7 @@ export async function downloadBackup(db: IDBDatabase): Promise<void> {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `devonz-backup-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+  a.download = `bolt-backup-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

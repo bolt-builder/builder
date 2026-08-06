@@ -20,13 +20,15 @@ const PORT = Number(process.env.PORT) || 5173;
 
 function log(level: string, ...args: unknown[]) {
   const timestamp = new Date().toISOString();
-  // eslint-disable-next-line no-console
+
   console[level === 'error' ? 'error' : 'log'](`[${timestamp}] [Server]`, ...args);
 }
 
-// ---------------------------------------------------------------------------
-// React Router request handler
-// ---------------------------------------------------------------------------
+/*
+ * ---------------------------------------------------------------------------
+ * React Router request handler
+ * ---------------------------------------------------------------------------
+ */
 
 // @ts-ignore — build output is JavaScript, no type declarations
 const build = await import('./build/server/index.js');
@@ -34,9 +36,11 @@ const build = await import('./build/server/index.js');
 // @ts-expect-error — build is untyped (JS output), but satisfies ServerBuild at runtime
 const requestHandler = createRequestHandler({ build, mode: process.env.NODE_ENV });
 
-// ---------------------------------------------------------------------------
-// Node → Web Request adapter
-// ---------------------------------------------------------------------------
+/*
+ * ---------------------------------------------------------------------------
+ * Node → Web Request adapter
+ * ---------------------------------------------------------------------------
+ */
 
 function createWebRequest(req: IncomingMessage): Request {
   const host = req.headers.host ?? `localhost:${PORT}`;
@@ -75,9 +79,11 @@ function createWebRequest(req: IncomingMessage): Request {
   return new Request(url.href, init);
 }
 
-// ---------------------------------------------------------------------------
-// Web Response → Node adapter
-// ---------------------------------------------------------------------------
+/*
+ * ---------------------------------------------------------------------------
+ * Web Response → Node adapter
+ * ---------------------------------------------------------------------------
+ */
 
 async function sendWebResponse(res: ServerResponse, webResponse: Response): Promise<void> {
   res.statusCode = webResponse.status;
@@ -118,9 +124,11 @@ async function sendWebResponse(res: ServerResponse, webResponse: Response): Prom
   }
 }
 
-// ---------------------------------------------------------------------------
-// HTTP Server
-// ---------------------------------------------------------------------------
+/*
+ * ---------------------------------------------------------------------------
+ * HTTP Server
+ * ---------------------------------------------------------------------------
+ */
 
 const server = createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
@@ -144,19 +152,23 @@ server.on('upgrade', (req, socket, head) => {
     return;
   }
 
-  // Not our path — destroy the socket so other upgrade handlers aren't confused
-  // (In production there shouldn't be any HMR upgrades, but guard anyway.)
+  /*
+   * Not our path — destroy the socket so other upgrade handlers aren't confused
+   * (In production there shouldn't be any HMR upgrades, but guard anyway.)
+   */
   socket.destroy();
 });
 
 server.listen(PORT, () => {
-  log('info', `Devonz server listening on http://localhost:${PORT}`);
+  log('info', `Bolt server listening on http://localhost:${PORT}`);
   log('info', `WebSocket endpoint: ws://localhost:${PORT}/ws`);
 });
 
-// ---------------------------------------------------------------------------
-// Graceful shutdown — release port on SIGINT / SIGTERM
-// ---------------------------------------------------------------------------
+/*
+ * ---------------------------------------------------------------------------
+ * Graceful shutdown — release port on SIGINT / SIGTERM
+ * ---------------------------------------------------------------------------
+ */
 
 function shutdown(signal: string) {
   log('info', `Received ${signal}, shutting down…`);

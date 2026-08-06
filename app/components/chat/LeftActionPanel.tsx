@@ -66,16 +66,16 @@ export function LeftActionPanel({ importChat }: LeftActionPanelProps) {
   const compactButtonClass = cn(
     '!flex items-center gap-1.5 justify-center',
     'h-8 px-3 py-0 rounded-lg text-xs font-medium',
-    'text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary',
-    'border border-transparent hover:border-devonz-elements-borderColor',
-    'bg-transparent hover:bg-devonz-elements-bg-depth-3',
+    'text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary',
+    'border border-transparent hover:border-bolt-elements-borderColor',
+    'bg-transparent hover:bg-bolt-elements-bg-depth-3',
     'transition-all duration-200 ease-in-out',
     'shadow-none',
   );
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-1">
-      <span className="text-xs text-devonz-elements-textTertiary mr-1">or start from</span>
+      <span className="text-xs text-bolt-elements-textTertiary mr-1">or start from</span>
 
       {/* Hidden file input */}
       <input

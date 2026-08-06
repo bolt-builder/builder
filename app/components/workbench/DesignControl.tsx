@@ -172,7 +172,7 @@ export const DesignControl = memo(({ property, value, onChange, isModified = fal
     <div className="flex items-center gap-2 text-xs group">
       {/* Property label (scrubable for numeric) */}
       <span
-        className={`min-w-[90px] truncate select-none ${isModified ? 'text-accent-400 font-medium' : 'text-devonz-elements-textSecondary'} ${isNumeric ? 'cursor-ew-resize hover:text-devonz-elements-textPrimary' : ''} ${isScrubbing ? 'text-accent-400' : ''}`}
+        className={`min-w-[90px] truncate select-none ${isModified ? 'text-accent-400 font-medium' : 'text-bolt-elements-textSecondary'} ${isNumeric ? 'cursor-ew-resize hover:text-bolt-elements-textPrimary' : ''} ${isScrubbing ? 'text-accent-400' : ''}`}
         title={`${property}${isNumeric ? ' (drag to scrub)' : ''}`}
         onMouseDown={handleLabelMouseDown}
         role={isNumeric ? 'slider' : undefined}
@@ -186,7 +186,7 @@ export const DesignControl = memo(({ property, value, onChange, isModified = fal
       <div className="flex-1 flex items-center gap-1">
         {/* Color swatch */}
         {color && (
-          <div className="relative w-5 h-5 rounded border border-devonz-elements-borderColor shrink-0 overflow-hidden">
+          <div className="relative w-5 h-5 rounded border border-bolt-elements-borderColor shrink-0 overflow-hidden">
             <input
               type="color"
               value={toHex(color)}
@@ -204,7 +204,7 @@ export const DesignControl = memo(({ property, value, onChange, isModified = fal
           <select
             value={value}
             onChange={(e) => onChange(property, e.target.value)}
-            className="flex-1 bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor rounded px-2 py-1 text-devonz-elements-textPrimary font-mono text-xs focus:outline-none focus:border-accent-400 appearance-none cursor-pointer"
+            className="flex-1 bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor rounded px-2 py-1 text-bolt-elements-textPrimary font-mono text-xs focus:outline-none focus:border-accent-400 appearance-none cursor-pointer"
             aria-label={`Value for ${property}`}
           >
             {/* If current value is not in options, show it */}
@@ -223,7 +223,7 @@ export const DesignControl = memo(({ property, value, onChange, isModified = fal
             value={value}
             onChange={(e) => onChange(property, e.target.value)}
             onKeyDown={handleKeyDown}
-            className={`flex-1 bg-devonz-elements-background-depth-3 border rounded px-2 py-1 text-devonz-elements-textPrimary font-mono text-xs focus:outline-none focus:border-accent-400 ${isModified ? 'border-accent-400/50' : 'border-devonz-elements-borderColor'}`}
+            className={`flex-1 bg-bolt-elements-background-depth-3 border rounded px-2 py-1 text-bolt-elements-textPrimary font-mono text-xs focus:outline-none focus:border-accent-400 ${isModified ? 'border-accent-400/50' : 'border-bolt-elements-borderColor'}`}
             aria-label={`Value for ${property}`}
           />
         )}

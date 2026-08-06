@@ -235,7 +235,7 @@ export default function VercelTab() {
   const renderProjects = useCallback(() => {
     if (fetchingStats) {
       return (
-        <div className="flex items-center gap-2 text-sm text-devonz-elements-textSecondary">
+        <div className="flex items-center gap-2 text-sm text-bolt-elements-textSecondary">
           <div className="i-ph:spinner-gap w-4 h-4 animate-spin" />
           Fetching Vercel projects...
         </div>
@@ -245,16 +245,16 @@ export default function VercelTab() {
     return (
       <Collapsible open={isProjectsExpanded} onOpenChange={setIsProjectsExpanded}>
         <CollapsibleTrigger asChild>
-          <div className="flex items-center justify-between p-4 rounded-lg bg-devonz-elements-background dark:bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive/70 dark:hover:border-devonz-elements-borderColorActive/70 transition-all duration-200 cursor-pointer">
+          <div className="flex items-center justify-between p-4 rounded-lg bg-bolt-elements-background dark:bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive/70 dark:hover:border-bolt-elements-borderColorActive/70 transition-all duration-200 cursor-pointer">
             <div className="flex items-center gap-2">
-              <div className="i-ph:buildings w-4 h-4 text-devonz-elements-item-contentAccent" />
-              <span className="text-sm font-medium text-devonz-elements-textPrimary">
+              <div className="i-ph:buildings w-4 h-4 text-bolt-elements-item-contentAccent" />
+              <span className="text-sm font-medium text-bolt-elements-textPrimary">
                 Your Projects ({connection.stats?.totalProjects || 0})
               </span>
             </div>
             <div
               className={cn(
-                'i-ph:caret-down w-4 h-4 transform transition-transform duration-200 text-devonz-elements-textSecondary',
+                'i-ph:caret-down w-4 h-4 transform transition-transform duration-200 text-bolt-elements-textSecondary',
                 isProjectsExpanded ? 'rotate-180' : '',
               )}
             />
@@ -266,32 +266,32 @@ export default function VercelTab() {
             {connection.stats?.projects?.length ? (
               <div className="mb-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <div className="bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg p-3">
-                    <div className="text-lg font-semibold text-devonz-elements-textPrimary">
+                  <div className="bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg p-3">
+                    <div className="text-lg font-semibold text-bolt-elements-textPrimary">
                       {connection.stats.totalProjects}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Total Projects</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Total Projects</div>
                   </div>
-                  <div className="bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg p-3">
-                    <div className="text-lg font-semibold text-devonz-elements-textPrimary">
+                  <div className="bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg p-3">
+                    <div className="text-lg font-semibold text-bolt-elements-textPrimary">
                       {connection.stats.projects.filter((p) => p.latestDeployments?.[0]?.state === 'READY').length}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Live (READY)</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Live (READY)</div>
                   </div>
-                  <div className="bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg p-3">
-                    <div className="text-lg font-semibold text-devonz-elements-textPrimary">
+                  <div className="bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg p-3">
+                    <div className="text-lg font-semibold text-bolt-elements-textPrimary">
                       {new Set(connection.stats.projects.map((p) => p.framework).filter(Boolean)).size}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Frameworks</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Frameworks</div>
                   </div>
-                  <div className="bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg p-3">
-                    <div className="text-lg font-semibold text-devonz-elements-textPrimary">
+                  <div className="bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg p-3">
+                    <div className="text-lg font-semibold text-bolt-elements-textPrimary">
                       {connection.stats.projects.reduce(
                         (sum, p) => sum + (p.targets?.production?.alias ? p.targets.production.alias.length : 0),
                         0,
                       )}
                     </div>
-                    <div className="text-xs text-devonz-elements-textSecondary">Domains</div>
+                    <div className="text-xs text-bolt-elements-textSecondary">Domains</div>
                   </div>
                 </div>
                 {/* Alert bar for errors or building projects */}
@@ -309,7 +309,7 @@ export default function VercelTab() {
                   }
 
                   return (
-                    <div className="mt-3 flex items-center gap-3 px-3 py-2 rounded-lg bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor text-xs text-devonz-elements-textSecondary">
+                    <div className="mt-3 flex items-center gap-3 px-3 py-2 rounded-lg bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor text-xs text-bolt-elements-textSecondary">
                       {errorCount > 0 && (
                         <span className="flex items-center gap-1 text-red-500">
                           <div className="i-ph:warning w-3.5 h-3.5" />
@@ -333,22 +333,22 @@ export default function VercelTab() {
                 {connection.stats.projects.map((project) => (
                   <div
                     key={project.id}
-                    className="p-4 rounded-lg border border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive/70 transition-colors bg-devonz-elements-background-depth-1"
+                    className="p-4 rounded-lg border border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive/70 transition-colors bg-bolt-elements-background-depth-1"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h5 className="text-sm font-medium text-devonz-elements-textPrimary flex items-center gap-2">
-                          <div className="i-ph:globe w-4 h-4 text-devonz-elements-borderColorActive" />
+                        <h5 className="text-sm font-medium text-bolt-elements-textPrimary flex items-center gap-2">
+                          <div className="i-ph:globe w-4 h-4 text-bolt-elements-borderColorActive" />
                           {project.name}
                         </h5>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-devonz-elements-textSecondary">
+                        <div className="flex items-center gap-2 mt-2 text-xs text-bolt-elements-textSecondary">
                           {project.targets?.production?.alias && project.targets.production.alias.length > 0 ? (
                             <>
                               <a
                                 href={`https://${project.targets.production.alias.find((a: string) => a.endsWith('.vercel.app') && !a.includes('-projects.vercel.app')) || project.targets.production.alias[0]}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-devonz-elements-borderColorActive underline"
+                                className="hover:text-bolt-elements-borderColorActive underline"
                               >
                                 {project.targets.production.alias.find(
                                   (a: string) => a.endsWith('.vercel.app') && !a.includes('-projects.vercel.app'),
@@ -366,7 +366,7 @@ export default function VercelTab() {
                                 href={`https://${project.latestDeployments[0].url}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-devonz-elements-borderColorActive underline"
+                                className="hover:text-bolt-elements-borderColorActive underline"
                               >
                                 {project.latestDeployments[0].url}
                               </a>
@@ -405,7 +405,7 @@ export default function VercelTab() {
                           </div>
                         )}
                         {project.framework && (
-                          <div className="text-xs text-devonz-elements-textSecondary px-2 py-1 rounded-md bg-devonz-elements-background-depth-2">
+                          <div className="text-xs text-bolt-elements-textSecondary px-2 py-1 rounded-md bg-bolt-elements-background-depth-2">
                             <span className="flex items-center gap-1">
                               <div className="i-ph:code w-3 h-3" />
                               {project.framework}
@@ -418,7 +418,7 @@ export default function VercelTab() {
                           onClick={() =>
                             window.open(`https://vercel.com/dashboard/${project.id}`, '_blank', 'noopener,noreferrer')
                           }
-                          className="flex items-center gap-1 text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary"
+                          className="flex items-center gap-1 text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary"
                         >
                           <div className="i-ph:arrow-square-out w-3 h-3" />
                           View
@@ -426,7 +426,7 @@ export default function VercelTab() {
                       </div>
                     </div>
 
-                    <div className="flex items-center flex-wrap gap-1 mt-3 pt-3 border-t border-devonz-elements-borderColor">
+                    <div className="flex items-center flex-wrap gap-1 mt-3 pt-3 border-t border-bolt-elements-borderColor">
                       {projectActions.map((action) => (
                         <Button
                           key={action.name}
@@ -434,7 +434,7 @@ export default function VercelTab() {
                           size="sm"
                           onClick={() => handleProjectAction(project.id, action)}
                           disabled={isProjectActionLoading}
-                          className="flex items-center gap-1 text-xs px-2 py-1 text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary"
+                          className="flex items-center gap-1 text-xs px-2 py-1 text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary"
                         >
                           <div className={`${action.icon} w-2.5 h-2.5`} />
                           {action.name}
@@ -445,7 +445,7 @@ export default function VercelTab() {
                 ))}
               </div>
             ) : (
-              <div className="text-sm text-devonz-elements-textSecondary flex items-center gap-2 p-4">
+              <div className="text-sm text-bolt-elements-textSecondary flex items-center gap-2 p-4">
                 <div className="i-ph:info w-4 h-4" />
                 No projects found in your Vercel account
               </div>
@@ -479,7 +479,7 @@ export default function VercelTab() {
 
       {/* Main Connection Component */}
       <motion.div
-        className="bg-devonz-elements-background dark:bg-devonz-elements-background border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor rounded-lg"
+        className="bg-bolt-elements-background dark:bg-bolt-elements-background border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor rounded-lg"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -487,11 +487,11 @@ export default function VercelTab() {
         <div className="p-6 space-y-6">
           {!connection.user ? (
             <div className="space-y-4">
-              <div className="text-xs text-devonz-elements-textSecondary bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-1 p-3 rounded-lg mb-4">
+              <div className="text-xs text-bolt-elements-textSecondary bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-1 p-3 rounded-lg mb-4">
                 <p className="flex items-center gap-1 mb-1">
-                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-devonz-elements-icon-success dark:text-devonz-elements-icon-success" />
+                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-bolt-elements-icon-success dark:text-bolt-elements-icon-success" />
                   <span className="font-medium">Tip:</span> You can also set the{' '}
-                  <code className="px-1 py-0.5 bg-devonz-elements-background-depth-2 dark:bg-devonz-elements-background-depth-2 rounded">
+                  <code className="px-1 py-0.5 bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-2 rounded">
                     VITE_VERCEL_ACCESS_TOKEN
                   </code>{' '}
                   environment variable to connect automatically.
@@ -499,7 +499,7 @@ export default function VercelTab() {
               </div>
 
               <div>
-                <label className="block text-sm text-devonz-elements-textSecondary mb-2">Personal Access Token</label>
+                <label className="block text-sm text-bolt-elements-textSecondary mb-2">Personal Access Token</label>
                 <input
                   type="password"
                   autoComplete="off"
@@ -510,19 +510,19 @@ export default function VercelTab() {
                   placeholder="Enter your Vercel personal access token"
                   className={cn(
                     'w-full px-3 py-2 rounded-lg text-sm',
-                    'bg-devonz-elements-background-depth-1',
-                    'border border-devonz-elements-borderColor',
-                    'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
-                    'focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive',
+                    'bg-bolt-elements-background-depth-1',
+                    'border border-bolt-elements-borderColor',
+                    'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                    'focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive',
                     'disabled:opacity-50',
                   )}
                 />
-                <div className="mt-2 text-sm text-devonz-elements-textSecondary">
+                <div className="mt-2 text-sm text-bolt-elements-textSecondary">
                   <a
                     href="https://vercel.com/account/tokens"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-devonz-elements-borderColorActive hover:underline inline-flex items-center gap-1"
+                    className="text-bolt-elements-borderColorActive hover:underline inline-flex items-center gap-1"
                   >
                     Get your token
                     <div className="i-ph:arrow-square-out w-4 h-4" />
@@ -535,7 +535,7 @@ export default function VercelTab() {
                 disabled={connecting || !connection.token}
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm flex items-center gap-2',
-                  'bg-devonz-elements-bg-depth-3 text-devonz-elements-textPrimary',
+                  'bg-bolt-elements-bg-depth-3 text-bolt-elements-textPrimary',
                   'hover:bg-[#5E41D0] hover:text-white',
                   'disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200',
                   'transform active:scale-95',
@@ -569,7 +569,7 @@ export default function VercelTab() {
                     <div className="i-ph:plug w-4 h-4" />
                     Disconnect
                   </button>
-                  <span className="text-sm text-devonz-elements-textSecondary flex items-center gap-1">
+                  <span className="text-sm text-bolt-elements-textSecondary flex items-center gap-1">
                     <div className="i-ph:check-circle w-4 h-4 text-green-500" />
                     Connected to Vercel
                   </span>
@@ -577,23 +577,23 @@ export default function VercelTab() {
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-1 rounded-lg">
+                <div className="flex items-center gap-4 p-4 bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-1 rounded-lg">
                   <img
                     loading="lazy"
                     src={`https://vercel.com/api/www/avatar?u=${connection.user?.username}`}
                     referrerPolicy="no-referrer"
                     crossOrigin="anonymous"
                     alt="User Avatar"
-                    className="w-12 h-12 rounded-full border-2 border-devonz-elements-borderColorActive"
+                    className="w-12 h-12 rounded-full border-2 border-bolt-elements-borderColorActive"
                   />
                   <div className="flex-1">
-                    <h4 className="text-sm font-medium text-devonz-elements-textPrimary">
+                    <h4 className="text-sm font-medium text-bolt-elements-textPrimary">
                       {connection.user?.username || 'Vercel User'}
                     </h4>
-                    <p className="text-sm text-devonz-elements-textSecondary">
+                    <p className="text-sm text-bolt-elements-textSecondary">
                       {connection.user?.email || 'No email available'}
                     </p>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-devonz-elements-textSecondary">
+                    <div className="flex items-center gap-4 mt-2 text-xs text-bolt-elements-textSecondary">
                       <span className="flex items-center gap-1">
                         <div className="i-ph:buildings w-3 h-3" />
                         {connection.stats?.totalProjects || 0} Projects
@@ -615,12 +615,12 @@ export default function VercelTab() {
 
                 {/* Usage Metrics */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                  <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="i-ph:buildings w-4 h-4 text-devonz-elements-item-contentAccent" />
-                      <span className="text-xs font-medium text-devonz-elements-textPrimary">Projects</span>
+                      <div className="i-ph:buildings w-4 h-4 text-bolt-elements-item-contentAccent" />
+                      <span className="text-xs font-medium text-bolt-elements-textPrimary">Projects</span>
                     </div>
-                    <div className="text-sm text-devonz-elements-textSecondary">
+                    <div className="text-sm text-bolt-elements-textSecondary">
                       <div>
                         Active:{' '}
                         {connection.stats?.projects.filter((p) => p.latestDeployments?.[0]?.state === 'READY').length ||
@@ -629,23 +629,23 @@ export default function VercelTab() {
                       <div>Total: {connection.stats?.totalProjects || 0}</div>
                     </div>
                   </div>
-                  <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                  <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="i-ph:globe w-4 h-4 text-devonz-elements-item-contentAccent" />
-                      <span className="text-xs font-medium text-devonz-elements-textPrimary">Domains</span>
+                      <div className="i-ph:globe w-4 h-4 text-bolt-elements-item-contentAccent" />
+                      <span className="text-xs font-medium text-bolt-elements-textPrimary">Domains</span>
                     </div>
-                    <div className="text-sm text-devonz-elements-textSecondary">
+                    <div className="text-sm text-bolt-elements-textSecondary">
                       {/* Domain usage would be fetched from API */}
                       <div>Custom: --</div>
                       <div>Vercel: --</div>
                     </div>
                   </div>
-                  <div className="p-3 bg-devonz-elements-background-depth-1 rounded-lg border border-devonz-elements-borderColor">
+                  <div className="p-3 bg-bolt-elements-background-depth-1 rounded-lg border border-bolt-elements-borderColor">
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="i-ph:activity w-4 h-4 text-devonz-elements-item-contentAccent" />
-                      <span className="text-xs font-medium text-devonz-elements-textPrimary">Usage</span>
+                      <div className="i-ph:activity w-4 h-4 text-bolt-elements-item-contentAccent" />
+                      <span className="text-xs font-medium text-bolt-elements-textPrimary">Usage</span>
                     </div>
-                    <div className="text-sm text-devonz-elements-textSecondary">
+                    <div className="text-sm text-bolt-elements-textSecondary">
                       {/* Usage metrics would be fetched from API */}
                       <div>Bandwidth: --</div>
                       <div>Requests: --</div>

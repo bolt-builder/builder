@@ -79,9 +79,9 @@ function isAutoFixableError(message) {
 function isInspectorInternalError(message, stack) {
   var combined = (message || '') + '\n' + (stack || '');
   var inspectorPatterns = [
-    /_devonz-inspector/,
-    /_devonz-capture/,
-    /_devonz-html2canvas/,
+    /_bolt-inspector/,
+    /_bolt-capture/,
+    /_bolt-html2canvas/,
     /screenshot-capture/,
     /error-capture\.js/,
     /inspector-core/,

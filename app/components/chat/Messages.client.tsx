@@ -70,12 +70,12 @@ function BranchIndicator({ parentChatId }: { parentChatId: string }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 mb-2 rounded-md bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor text-xs">
-      <div className="i-ph:git-branch text-devonz-elements-textTertiary w-4 h-4 shrink-0" />
-      <span className="text-devonz-elements-textSecondary">Branched from</span>
+    <div className="flex items-center gap-2 px-3 py-1.5 mb-2 rounded-md bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor text-xs">
+      <div className="i-ph:git-branch text-bolt-elements-textTertiary w-4 h-4 shrink-0" />
+      <span className="text-bolt-elements-textSecondary">Branched from</span>
       <button
         onClick={() => navigate(`/chat/${parentChatId}`)}
-        className="text-devonz-elements-item-contentAccent hover:underline truncate max-w-48"
+        className="text-bolt-elements-item-contentAccent hover:underline truncate max-w-48"
       >
         parent conversation
       </button>
@@ -126,8 +126,8 @@ function BranchSelector({ messageId, count }: { messageId: string; count: number
         onClick={handleToggle}
         className={cn(
           'flex items-center gap-1.5 px-2 py-1 rounded-md text-xs transition-colors',
-          'text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary',
-          'hover:bg-devonz-elements-background-depth-2',
+          'text-bolt-elements-textTertiary hover:text-bolt-elements-textSecondary',
+          'hover:bg-bolt-elements-background-depth-2',
         )}
       >
         <div className="i-ph:git-branch w-3.5 h-3.5" />
@@ -137,13 +137,13 @@ function BranchSelector({ messageId, count }: { messageId: string; count: number
         <div className={cn('i-ph:caret-down w-3 h-3 transition-transform', { 'rotate-180': open })} />
       </button>
       {open && (
-        <div className="absolute left-0 top-full mt-1 z-40 min-w-56 rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 shadow-lg overflow-hidden">
+        <div className="absolute left-0 top-full mt-1 z-40 min-w-56 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 shadow-lg overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center py-3">
-              <div className="i-svg-spinners:90-ring-with-bg text-devonz-elements-textTertiary" />
+              <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-textTertiary" />
             </div>
           ) : branches.length === 0 ? (
-            <div className="px-3 py-2 text-xs text-devonz-elements-textTertiary">No branches found</div>
+            <div className="px-3 py-2 text-xs text-bolt-elements-textTertiary">No branches found</div>
           ) : (
             branches.map((branch) => (
               <button
@@ -152,12 +152,12 @@ function BranchSelector({ messageId, count }: { messageId: string; count: number
                   setOpen(false);
                   navigate(`/chat/${branch.branchId}`);
                 }}
-                className="w-full text-left px-3 py-2 text-xs hover:bg-devonz-elements-background-depth-3 transition-colors flex items-center gap-2"
+                className="w-full text-left px-3 py-2 text-xs hover:bg-bolt-elements-background-depth-3 transition-colors flex items-center gap-2"
               >
-                <div className="i-ph:git-branch w-3.5 h-3.5 text-devonz-elements-textTertiary shrink-0" />
+                <div className="i-ph:git-branch w-3.5 h-3.5 text-bolt-elements-textTertiary shrink-0" />
                 <div className="flex flex-col min-w-0">
-                  <span className="text-devonz-elements-textPrimary truncate">{branch.label}</span>
-                  <span className="text-devonz-elements-textTertiary">
+                  <span className="text-bolt-elements-textPrimary truncate">{branch.label}</span>
+                  <span className="text-bolt-elements-textTertiary">
                     {new Date(branch.createdAt).toLocaleDateString()}
                   </span>
                 </div>
@@ -202,11 +202,11 @@ function AgentPhaseIndicator({ phase }: { phase: string }) {
   const label = AGENT_PHASE_LABELS[phase] ?? phase;
 
   return (
-    <div className="flex items-center gap-2 py-2 px-3 my-1 rounded-md bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor">
-      <div className="i-svg-spinners:90-ring-with-bg text-devonz-elements-textTertiary w-3.5 h-3.5" />
+    <div className="flex items-center gap-2 py-2 px-3 my-1 rounded-md bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor">
+      <div className="i-svg-spinners:90-ring-with-bg text-bolt-elements-textTertiary w-3.5 h-3.5" />
       <div className={cn('w-4 h-4', iconClass)} />
       <span className={cn('text-xs font-medium px-1.5 py-0.5 rounded-md', colorClass)}>{label}</span>
-      <span className="text-xs text-devonz-elements-textTertiary">in progress</span>
+      <span className="text-xs text-bolt-elements-textTertiary">in progress</span>
     </div>
   );
 }
@@ -233,7 +233,7 @@ export function Messages(props: MessagesProps) {
     // Check if the current chat is a branch (child) by looking up localStorage
     if (currentUrlId) {
       try {
-        const stored = localStorage.getItem(`devonz_branch_parent_${currentUrlId}`);
+        const stored = localStorage.getItem(`bolt_branch_parent_${currentUrlId}`);
 
         if (stored) {
           currentBranchParentAtom.set(JSON.parse(stored));
@@ -318,7 +318,7 @@ export function Messages(props: MessagesProps) {
       // Store parent mapping so the child chat can display its branch indicator
       try {
         localStorage.setItem(
-          `devonz_branch_parent_${urlId}`,
+          `bolt_branch_parent_${urlId}`,
           JSON.stringify({ parentChatId: parentId, branchPointMessageId: messageId }),
         );
       } catch {
@@ -397,11 +397,11 @@ export function Messages(props: MessagesProps) {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="flex items-center justify-center gap-2 w-full mt-4"
           >
-            <div className="i-svg-spinners:3-dots-fade text-xl text-devonz-elements-item-contentAccent" />
+            <div className="i-svg-spinners:3-dots-fade text-xl text-bolt-elements-item-contentAccent" />
             <motion.span
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-sm text-devonz-elements-textSecondary"
+              className="text-sm text-bolt-elements-textSecondary"
             >
               Generating...
             </motion.span>

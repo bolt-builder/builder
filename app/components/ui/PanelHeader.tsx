@@ -10,10 +10,10 @@ export const PanelHeader = memo(({ className, children }: PanelHeaderProps) => {
   return (
     <div
       className={cn(
-        'flex items-center gap-2 text-devonz-elements-textSecondary border-b border-devonz-elements-borderColor px-4 py-1 min-h-[34px] text-sm',
+        'flex items-center gap-2 text-bolt-elements-textSecondary border-b border-bolt-elements-borderColor px-4 py-1 min-h-[34px] text-sm',
         className,
       )}
-      style={{ background: 'var(--devonz-elements-bg-depth-1)' }}
+      style={{ background: 'var(--bolt-elements-bg-depth-1)' }}
     >
       {children}
     </div>

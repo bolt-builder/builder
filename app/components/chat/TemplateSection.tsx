@@ -71,7 +71,7 @@ export const TemplateSection: React.FC = () => {
     return (
       <div className="w-full max-w-chat mx-auto mt-4 px-4">
         <div className="flex items-center justify-center py-4">
-          <div className="i-svg-spinners:90-ring-with-bg text-lg text-devonz-elements-loader-progress" />
+          <div className="i-svg-spinners:90-ring-with-bg text-lg text-bolt-elements-loader-progress" />
         </div>
       </div>
     );

@@ -786,7 +786,7 @@ export const ChatImpl = memo(
         if (selectedElement) {
           logger.debug('Selected Element:', selectedElement);
 
-          const elementInfo = `<div class=\"__devonzSelectedElement__\" data-element='${JSON.stringify(selectedElement)}'>${JSON.stringify(`${selectedElement.displayText}`)}</div>`;
+          const elementInfo = `<div class=\"__boltSelectedElement__\" data-element='${JSON.stringify(selectedElement)}'>${JSON.stringify(`${selectedElement.displayText}`)}</div>`;
           finalMessageContent = messageContent + elementInfo;
         }
 
@@ -1112,9 +1112,9 @@ export const ChatImpl = memo(
     return (
       <div className="relative flex flex-col flex-1 min-h-0">
         {agentState.planPhase !== 'idle' && (
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor shadow-md pointer-events-none">
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor shadow-md pointer-events-none">
             <div className={`w-2 h-2 rounded-full ${AGENT_PHASE_DOT_COLORS[agentState.planPhase]}`} />
-            <span className="text-xs font-medium text-devonz-elements-textSecondary">
+            <span className="text-xs font-medium text-bolt-elements-textSecondary">
               Agent {AGENT_PHASE_LABELS[agentState.planPhase]}
             </span>
           </div>

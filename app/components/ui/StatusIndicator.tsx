@@ -76,10 +76,7 @@ export function StatusIndicator({ status, size = 'md', pulse = false, label, cla
       {/* Optional label */}
       {label && (
         <span
-          className={cn(
-            'text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary-dark',
-            textSizeClass,
-          )}
+          className={cn('text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark', textSizeClass)}
         >
           {label}
         </span>

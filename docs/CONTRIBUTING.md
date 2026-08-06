@@ -1,6 +1,6 @@
 # Contributing
 
-> Conventions, tooling, and workflow for contributing to Devonz.
+> Conventions, tooling, and workflow for contributing to Bolt.
 
 ---
 
@@ -241,7 +241,7 @@ const cookieHeader = request.headers.get('Cookie') || '';
 
 - **State management** — the project uses **nanostores** (`atom()`, `map()`, `computed()`) for all shared state. Do NOT introduce Redux, Zustand, Jotai, or other state libraries. See [STATE-MANAGEMENT.md](STATE-MANAGEMENT.md)
 - **Error classifier** — `app/lib/errors/error-classifier.ts` classifies errors by category (`network`, `auth`, `validation`, `build`, `runtime`, `unknown`) and severity (`fatal`, `error`, `warning`, `info`). Use it to decide routing: fatal/build errors → ChatAlert dialog; recoverable errors → toast notification via `error-toast.ts`
-- **No auto-fix pattern** — Devonz does NOT automatically patch or retry on error. All errors are surfaced to the user through ChatAlert or toast. Never add silent error recovery that hides failures from the user
+- **No auto-fix pattern** — Bolt does NOT automatically patch or retry on error. All errors are surfaced to the user through ChatAlert or toast. Never add silent error recovery that hides failures from the user
 
 ---
 

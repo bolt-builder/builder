@@ -109,7 +109,7 @@ export function useDataOperations({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'devonz-settings.json';
+      a.download = 'bolt-settings.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -200,7 +200,7 @@ export function useDataOperations({
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `devonz-settings-${categoryIds.join('-')}.json`;
+        a.download = `bolt-settings-${categoryIds.join('-')}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -322,7 +322,7 @@ export function useDataOperations({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'devonz-chats.json';
+      a.download = 'bolt-chats.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -428,7 +428,7 @@ export function useDataOperations({
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'devonz-selected-chats.json';
+        a.download = 'bolt-selected-chats.json';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -909,7 +909,7 @@ export function useDataOperations({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'devonz-api-keys-template.json';
+      a.download = 'bolt-api-keys-template.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -982,7 +982,7 @@ export function useDataOperations({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'devonz-api-keys.json';
+      a.download = 'bolt-api-keys.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

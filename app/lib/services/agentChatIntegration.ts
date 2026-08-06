@@ -1,7 +1,7 @@
 /**
  * Agent Chat Integration
  *
- * Integrates the Devonz Agent Mode with the chat flow.
+ * Integrates the Bolt Agent Mode with the chat flow.
  * Exposes agent tools in MCP-compatible format for the LLM to use.
  */
 
@@ -180,7 +180,7 @@ export function processAgentToolCall(
     dataStream.writeMessageAnnotation({
       type: 'toolCall',
       toolCallId,
-      serverName: 'devonz-agent',
+      serverName: 'bolt-agent',
       toolName,
       toolDescription: definition.description,
     } satisfies ToolCallAnnotation);
@@ -381,7 +381,7 @@ export function emitPlanPhaseEvent(
   taskId?: string,
 ): void {
   dataStream.writeData({
-    devonz_event: {
+    bolt_event: {
       type: 'plan_phase_changed' as const,
       timestamp: new Date().toISOString(),
       fromPhase,
@@ -404,7 +404,7 @@ export function emitReviewCycleEvent(dataStream: DataStreamWriter, reviewResult:
   const cycle = reviewResult.reviewCycle;
 
   dataStream.writeData({
-    devonz_event: {
+    bolt_event: {
       type: 'review_cycle' as const,
       timestamp: new Date().toISOString(),
       cycleNumber: cycle.cycleNumber,
@@ -496,7 +496,7 @@ export async function handleAgentStepReview(
  */
 export function emitStepBudgetWarning(dataStream: DataStreamWriter, remainingSteps: number): void {
   dataStream.writeData({
-    devonz_event: {
+    bolt_event: {
       type: 'error' as const,
       timestamp: new Date().toISOString(),
       code: 'STEP_BUDGET_LOW',
@@ -521,8 +521,8 @@ export function isAgentReviewLoopActive(): boolean {
 /**
  * Execute a batch of tool calls with parallel support for read-only tools.
  *
- * When **all** tool calls in the batch are read-only (`devonz_read_file`,
- * `devonz_list_directory`, `devonz_search_code`, `devonz_get_errors`), they
+ * When **all** tool calls in the batch are read-only (`bolt_read_file`,
+ * `bolt_list_directory`, `bolt_search_code`, `bolt_get_errors`), they
  * are executed concurrently via `Promise.allSettled`. Otherwise, the batch
  * falls back to sequential execution.
  *
@@ -548,7 +548,7 @@ export async function executeParallelToolBatch(
 
   // ── Emit "executing" event ────────────────────────────────────────────
   dataStream.writeData({
-    devonz_event: {
+    bolt_event: {
       type: 'parallel_tool_batch' as const,
       timestamp: new Date().toISOString(),
       batchId,
@@ -567,7 +567,7 @@ export async function executeParallelToolBatch(
 
   // ── Emit "complete" / "failed" event ──────────────────────────────────
   dataStream.writeData({
-    devonz_event: {
+    bolt_event: {
       type: 'parallel_tool_batch' as const,
       timestamp: new Date().toISOString(),
       batchId,

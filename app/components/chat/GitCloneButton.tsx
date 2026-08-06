@@ -1,7 +1,7 @@
 import ignore from 'ignore';
 import { useGit } from '~/lib/hooks/useGit';
 import type { Message } from 'ai';
-import { detectProjectCommands, createCommandsMessage, escapeDevonzTags } from '~/utils/projectCommands';
+import { detectProjectCommands, createCommandsMessage, escapeBoltTags } from '~/utils/projectCommands';
 import { generateId } from '~/utils/fileUtils';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -133,16 +133,16 @@ ${skippedFiles.map((f) => `- ${f}`).join('\n')}`
     : ''
 }
 
-<devonzArtifact id="imported-files" title="Git Cloned Files" type="bundled">
+<boltArtifact id="imported-files" title="Git Cloned Files" type="bundled">
 ${fileContents
   .map(
     (file) =>
-      `<devonzAction type="file" filePath="${file.path}">
-${escapeDevonzTags(file.content)}
-</devonzAction>`,
+      `<boltAction type="file" filePath="${file.path}">
+${escapeBoltTags(file.content)}
+</boltAction>`,
   )
   .join('\n')}
-</devonzArtifact>`,
+</boltArtifact>`,
           id: generateId(),
           createdAt: new Date(),
         };
@@ -176,13 +176,13 @@ ${escapeDevonzTags(file.content)}
         className={cn(
           'flex gap-2',
           'text-gray-300 hover:text-white',
-          'border border-devonz-elements-borderColor hover:border-purple-500/50',
+          'border border-bolt-elements-borderColor hover:border-purple-500/50',
           'h-10 px-4 py-2 justify-center',
           'transition-all duration-200 ease-in-out',
           'hover:shadow-[0_0_12px_rgba(168,85,247,0.15)]',
           className,
         )}
-        style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)', ...style }}
+        style={{ backgroundColor: 'var(--bolt-elements-bg-depth-3)', ...style }}
         disabled={!ready || loading}
       >
         Clone a repo
@@ -196,8 +196,8 @@ ${escapeDevonzTags(file.content)}
       {isDialogOpen && !selectedProvider && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div
-            className="rounded-xl shadow-2xl border border-devonz-elements-borderColor max-w-md w-full"
-            style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)' }}
+            className="rounded-xl shadow-2xl border border-bolt-elements-borderColor max-w-md w-full"
+            style={{ backgroundColor: 'var(--bolt-elements-bg-depth-3)' }}
           >
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
@@ -205,7 +205,7 @@ ${escapeDevonzTags(file.content)}
                 <button
                   onClick={() => setIsDialogOpen(false)}
                   aria-label="Close dialog"
-                  className="p-2 rounded-lg bg-transparent hover:bg-devonz-elements-bg-depth-3 text-gray-400 hover:text-white transition-all duration-200 hover:scale-105 active:scale-95"
+                  className="p-2 rounded-lg bg-transparent hover:bg-bolt-elements-bg-depth-3 text-gray-400 hover:text-white transition-all duration-200 hover:scale-105 active:scale-95"
                 >
                   <div className="i-ph:x size-5 transition-transform duration-200 hover:rotate-90" />
                 </button>
@@ -214,8 +214,8 @@ ${escapeDevonzTags(file.content)}
               <div className="space-y-3">
                 <button
                   onClick={() => setSelectedProvider('github')}
-                  className="w-full p-4 rounded-lg border border-devonz-elements-borderColor hover:border-purple-500/50 transition-all duration-200 text-left group hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-                  style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)' }}
+                  className="w-full p-4 rounded-lg border border-bolt-elements-borderColor hover:border-purple-500/50 transition-all duration-200 text-left group hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+                  style={{ backgroundColor: 'var(--bolt-elements-bg-depth-3)' }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
@@ -230,8 +230,8 @@ ${escapeDevonzTags(file.content)}
 
                 <button
                   onClick={() => setSelectedProvider('gitlab')}
-                  className="w-full p-4 rounded-lg border border-devonz-elements-borderColor hover:border-purple-500/50 transition-all duration-200 text-left group hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
-                  style={{ backgroundColor: 'var(--devonz-elements-bg-depth-3)' }}
+                  className="w-full p-4 rounded-lg border border-bolt-elements-borderColor hover:border-purple-500/50 transition-all duration-200 text-left group hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
+                  style={{ backgroundColor: 'var(--bolt-elements-bg-depth-3)' }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center group-hover:bg-orange-500/30 transition-colors">
@@ -252,17 +252,17 @@ ${escapeDevonzTags(file.content)}
       {/* GitHub Repository Selection */}
       {isDialogOpen && selectedProvider === 'github' && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-950 rounded-xl shadow-xl border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor w-full max-w-4xl max-h-[90vh] overflow-hidden">
-            <div className="p-6 border-b border-devonz-elements-borderColor dark:border-devonz-elements-borderColor flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-950 rounded-xl shadow-xl border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor w-full max-w-4xl max-h-[90vh] overflow-hidden">
+            <div className="p-6 border-b border-bolt-elements-borderColor dark:border-bolt-elements-borderColor flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center">
                   <div className="i-ph:github-logo size-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary">
+                  <h3 className="text-lg font-semibold text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary">
                     Import GitHub Repository
                   </h3>
-                  <p className="text-sm text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary">
+                  <p className="text-sm text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary">
                     Clone a repository from GitHub to your workspace
                   </p>
                 </div>
@@ -273,7 +273,7 @@ ${escapeDevonzTags(file.content)}
                   setSelectedProvider(null);
                 }}
                 aria-label="Close dialog"
-                className="p-2 rounded-lg bg-transparent hover:bg-devonz-elements-background-depth-1 dark:hover:bg-devonz-elements-background-depth-1 text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary dark:hover:text-devonz-elements-textPrimary transition-all duration-200 hover:scale-105 active:scale-95"
+                className="p-2 rounded-lg bg-transparent hover:bg-bolt-elements-background-depth-1 dark:hover:bg-bolt-elements-background-depth-1 text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary dark:hover:text-bolt-elements-textPrimary transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 <div className="i-ph:x size-5 transition-transform duration-200 hover:rotate-90" />
               </button>
@@ -289,17 +289,17 @@ ${escapeDevonzTags(file.content)}
       {/* GitLab Repository Selection */}
       {isDialogOpen && selectedProvider === 'gitlab' && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-gray-950 rounded-xl shadow-xl border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor w-full max-w-4xl max-h-[90vh] overflow-hidden">
-            <div className="p-6 border-b border-devonz-elements-borderColor dark:border-devonz-elements-borderColor flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-950 rounded-xl shadow-xl border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor w-full max-w-4xl max-h-[90vh] overflow-hidden">
+            <div className="p-6 border-b border-bolt-elements-borderColor dark:border-bolt-elements-borderColor flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 flex items-center justify-center">
                   <div className="i-ph:git-branch size-6 text-orange-600 dark:text-orange-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-devonz-elements-textPrimary dark:text-devonz-elements-textPrimary">
+                  <h3 className="text-lg font-semibold text-bolt-elements-textPrimary dark:text-bolt-elements-textPrimary">
                     Import GitLab Repository
                   </h3>
-                  <p className="text-sm text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary">
+                  <p className="text-sm text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary">
                     Clone a repository from GitLab to your workspace
                   </p>
                 </div>
@@ -310,7 +310,7 @@ ${escapeDevonzTags(file.content)}
                   setSelectedProvider(null);
                 }}
                 aria-label="Close dialog"
-                className="p-2 rounded-lg bg-transparent hover:bg-devonz-elements-background-depth-1 dark:hover:bg-devonz-elements-background-depth-1 text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary dark:hover:text-devonz-elements-textPrimary transition-all duration-200 hover:scale-105 active:scale-95"
+                className="p-2 rounded-lg bg-transparent hover:bg-bolt-elements-background-depth-1 dark:hover:bg-bolt-elements-background-depth-1 text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary dark:hover:text-bolt-elements-textPrimary transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 <div className="i-ph:x size-5 transition-transform duration-200 hover:rotate-90" />
               </button>

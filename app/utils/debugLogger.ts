@@ -3,10 +3,10 @@ import { isMobile } from './mobile';
 import { PROVIDER_LIST, DEFAULT_MODEL } from './constants';
 import { logger } from './logger';
 
-/** Augment Window with devonz-specific globals */
+/** Augment Window with bolt-specific globals */
 declare global {
   interface Window {
-    __devonz_workbench_store?: { get?: () => Record<string, unknown> };
+    __bolt_workbench_store?: { get?: () => Record<string, unknown> };
   }
 
   interface Performance {
@@ -841,7 +841,7 @@ class DebugLogger {
     try {
       if (typeof window !== 'undefined') {
         // Access stores if available
-        const workbenchStore = window.__devonz_workbench_store;
+        const workbenchStore = window.__bolt_workbench_store;
 
         if (workbenchStore) {
           const state = workbenchStore.get?.() || {};
@@ -887,7 +887,7 @@ class DebugLogger {
     try {
       // Try to get from localStorage or environment
       if (typeof window !== 'undefined') {
-        const stored = localStorage.getItem('devonz_current_model');
+        const stored = localStorage.getItem('bolt_current_model');
 
         if (stored) {
           return stored;
@@ -903,7 +903,7 @@ class DebugLogger {
   private _getCurrentProvider(): string {
     try {
       if (typeof window !== 'undefined') {
-        const stored = localStorage.getItem('devonz_current_provider');
+        const stored = localStorage.getItem('bolt_current_provider');
 
         if (stored) {
           return stored;
@@ -919,7 +919,7 @@ class DebugLogger {
   private _getProjectType(): string {
     try {
       if (typeof window !== 'undefined') {
-        const stored = localStorage.getItem('devonz_project_type');
+        const stored = localStorage.getItem('bolt_project_type');
 
         if (stored) {
           return stored;
@@ -973,7 +973,7 @@ class DebugLogger {
   private _getGitInfoFallback(): AppInfo['gitInfo'] {
     try {
       // Try to get from localStorage (could be set by the app)
-      const stored = localStorage.getItem('devonz_git_info');
+      const stored = localStorage.getItem('bolt_git_info');
 
       if (stored) {
         return JSON.parse(stored);
@@ -1050,7 +1050,7 @@ class DebugLogger {
 
     try {
       if (typeof window !== 'undefined') {
-        const workbenchStore = window.__devonz_workbench_store;
+        const workbenchStore = window.__bolt_workbench_store;
 
         if (workbenchStore) {
           const state = workbenchStore.get?.() || {};

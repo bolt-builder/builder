@@ -14,7 +14,7 @@ const PHASE_LABELS: Record<string, string> = {
 };
 
 const PHASE_COLORS: Record<string, string> = {
-  idle: 'bg-devonz-elements-item-backgroundDefault text-devonz-elements-item-contentDefault',
+  idle: 'bg-bolt-elements-item-backgroundDefault text-bolt-elements-item-contentDefault',
   planning: 'bg-blue-500/15 text-blue-400',
   executing: 'bg-green-500/15 text-green-400',
   reviewing: 'bg-amber-500/15 text-amber-400',
@@ -56,16 +56,16 @@ export default function ProgressCompilation({ data }: { data?: ProgressAnnotatio
     <AnimatePresence>
       <div
         className={cn(
-          'bg-devonz-elements-background-depth-2',
-          'border border-devonz-elements-borderColor',
+          'bg-bolt-elements-background-depth-2',
+          'border border-bolt-elements-borderColor',
           'shadow-lg rounded-lg  relative w-full max-w-chat mx-auto z-prompt',
           'p-1',
         )}
       >
         <div
           className={cn(
-            'bg-devonz-elements-item-backgroundAccent',
-            'p-1 rounded-lg text-devonz-elements-item-contentAccent',
+            'bg-bolt-elements-item-backgroundAccent',
+            'p-1 rounded-lg text-bolt-elements-item-contentAccent',
             'flex ',
           )}
         >
@@ -102,7 +102,7 @@ export default function ProgressCompilation({ data }: { data?: ProgressAnnotatio
             animate={{ width: 'auto' }}
             exit={{ width: 0 }}
             transition={{ duration: 0.15, ease: cubicEasingFn }}
-            className=" p-1 rounded-lg bg-devonz-elements-item-backgroundAccent hover:bg-devonz-elements-artifacts-backgroundHover"
+            className=" p-1 rounded-lg bg-bolt-elements-item-backgroundAccent hover:bg-bolt-elements-artifacts-backgroundHover"
             onClick={() => setExpanded((v) => !v)}
           >
             <div className={expanded ? 'i-ph:caret-up-bold' : 'i-ph:caret-down-bold'}></div>
@@ -149,9 +149,9 @@ const PlanPhaseBadge = ({ fromPhase, toPhase }: { fromPhase: string; toPhase: st
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
     >
-      <div className="i-ph:arrows-clockwise text-devonz-elements-item-contentDefault" />
-      <span className="text-devonz-elements-item-contentDefault">{PHASE_LABELS[fromPhase] ?? fromPhase}</span>
-      <div className="i-ph:arrow-right text-devonz-elements-item-contentDefault" />
+      <div className="i-ph:arrows-clockwise text-bolt-elements-item-contentDefault" />
+      <span className="text-bolt-elements-item-contentDefault">{PHASE_LABELS[fromPhase] ?? fromPhase}</span>
+      <div className="i-ph:arrow-right text-bolt-elements-item-contentDefault" />
       <span className={cn('px-1.5 py-0.5 rounded-md text-xs font-medium', colorClass)}>{label}</span>
     </motion.div>
   );
@@ -172,8 +172,8 @@ const ReviewCycleIndicator = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
     >
-      <div className="i-ph:magnifying-glass text-devonz-elements-item-contentDefault" />
-      <span className="text-devonz-elements-item-contentDefault">Review #{cycle.cycleNumber}</span>
+      <div className="i-ph:magnifying-glass text-bolt-elements-item-contentDefault" />
+      <span className="text-bolt-elements-item-contentDefault">Review #{cycle.cycleNumber}</span>
       {errorCount > 0 && (
         <span className="px-1.5 py-0.5 rounded-md bg-red-500/15 text-red-400 font-medium">
           {errorCount} {errorCount === 1 ? 'error' : 'errors'}

@@ -223,10 +223,10 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
 
   if (!selectedElement) {
     return (
-      <div className="flex flex-col h-full w-full bg-devonz-elements-background-depth-2 items-center justify-center p-6 text-center">
-        <div className="i-ph:cursor-click text-4xl text-devonz-elements-textSecondary mb-3" />
-        <h3 className="text-sm font-medium text-devonz-elements-textPrimary mb-1">No Element Selected</h3>
-        <p className="text-xs text-devonz-elements-textSecondary max-w-[200px]">
+      <div className="flex flex-col h-full w-full bg-bolt-elements-background-depth-2 items-center justify-center p-6 text-center">
+        <div className="i-ph:cursor-click text-4xl text-bolt-elements-textSecondary mb-3" />
+        <h3 className="text-sm font-medium text-bolt-elements-textPrimary mb-1">No Element Selected</h3>
+        <p className="text-xs text-bolt-elements-textSecondary max-w-[200px]">
           Click on any element in the preview to inspect and edit its styles
         </p>
       </div>
@@ -237,19 +237,19 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
 
   return (
     <div
-      className="flex flex-col h-full w-full bg-devonz-elements-background-depth-2 overflow-hidden"
+      className="flex flex-col h-full w-full bg-bolt-elements-background-depth-2 overflow-hidden"
       role="region"
       aria-label="Element Inspector"
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-3 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-3">
+      <div className="flex items-center justify-between p-3 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-3">
         <div className="flex items-center gap-2">
           <div className="i-ph:cursor-click text-accent-400" aria-hidden="true" />
-          <h3 className="font-medium text-devonz-elements-textPrimary text-sm">Inspector</h3>
+          <h3 className="font-medium text-bolt-elements-textPrimary text-sm">Inspector</h3>
         </div>
         <button
           onClick={inspector.closePanel}
-          className="text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors p-1 rounded hover:bg-devonz-elements-background-depth-4"
+          className="text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors p-1 rounded hover:bg-bolt-elements-background-depth-4"
           aria-label="Close inspector panel"
         >
           <div className="i-ph:x w-4 h-4" />
@@ -259,16 +259,16 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
       {/* Element info badge */}
       <section
         aria-label="Selected element"
-        className="p-3 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2"
+        className="p-3 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-2"
       >
-        <div className="font-mono text-xs bg-devonz-elements-background-depth-3 px-2 py-1.5 rounded border border-devonz-elements-borderColor flex items-center gap-1 flex-wrap">
+        <div className="font-mono text-xs bg-bolt-elements-background-depth-3 px-2 py-1.5 rounded border border-bolt-elements-borderColor flex items-center gap-1 flex-wrap">
           <span className="text-blue-400">{selectedElement.tagName.toLowerCase()}</span>
           {selectedElement.id && <span className="text-green-400">#{selectedElement.id}</span>}
           {selectedElement.className && (
             <span className="text-yellow-400">.{selectedElement.className.split(' ')[0]}</span>
           )}
           {selectedElement.rect && (
-            <span className="text-devonz-elements-textSecondary ml-auto">
+            <span className="text-bolt-elements-textSecondary ml-auto">
               {Math.round(selectedElement.rect.width)} &times; {Math.round(selectedElement.rect.height)}
             </span>
           )}
@@ -276,19 +276,19 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
 
         {/* Image info */}
         {selectedElement.isImage && selectedElement.imageSrc && (
-          <div className="mt-2 flex items-center gap-2 p-2 rounded border border-devonz-elements-borderColor bg-devonz-elements-background-depth-3">
+          <div className="mt-2 flex items-center gap-2 p-2 rounded border border-bolt-elements-borderColor bg-bolt-elements-background-depth-3">
             <div className="i-ph:image text-purple-400 w-4 h-4 shrink-0" aria-hidden="true" />
             <div className="flex-1 min-w-0 text-xs">
-              <p className="text-devonz-elements-textPrimary truncate" title={selectedElement.imageSrc}>
+              <p className="text-bolt-elements-textPrimary truncate" title={selectedElement.imageSrc}>
                 {selectedElement.imageSrc.split('/').pop() || selectedElement.imageSrc}
               </p>
               {selectedElement.imageNaturalWidth != null && selectedElement.imageNaturalHeight != null && (
-                <p className="text-devonz-elements-textSecondary">
+                <p className="text-bolt-elements-textSecondary">
                   {selectedElement.imageNaturalWidth} &times; {selectedElement.imageNaturalHeight} native
                 </p>
               )}
               {selectedElement.imageAlt && (
-                <p className="text-devonz-elements-textSecondary truncate" title={selectedElement.imageAlt}>
+                <p className="text-bolt-elements-textSecondary truncate" title={selectedElement.imageAlt}>
                   alt: {selectedElement.imageAlt}
                 </p>
               )}
@@ -320,7 +320,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
       </section>
 
       {/* Bulk style selector */}
-      <div className="p-3 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2">
+      <div className="p-3 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-2">
         <BulkStyleSelector
           currentTagName={selectedElement.tagName}
           selectedTarget={bulkTarget}
@@ -331,8 +331,8 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
 
       {/* Tabs */}
       <div
-        className="flex border-b border-devonz-elements-borderColor"
-        style={{ background: 'var(--devonz-elements-bg-depth-3)' }}
+        className="flex border-b border-bolt-elements-borderColor"
+        style={{ background: 'var(--bolt-elements-bg-depth-3)' }}
         role="tablist"
         aria-label="Inspector tabs"
         onKeyDown={handleTabKeyDown}
@@ -348,8 +348,8 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
             onClick={() => inspector.setActiveTab(tab)}
             className="flex-1 flex items-center justify-center gap-1.5 px-1.5 py-2 text-[10px] font-medium capitalize transition-colors"
             style={{
-              background: activeTab === tab ? 'var(--devonz-elements-bg-depth-2)' : 'transparent',
-              color: activeTab === tab ? 'var(--color-accent-500, #3b82f6)' : 'var(--devonz-elements-textSecondary)',
+              background: activeTab === tab ? 'var(--bolt-elements-bg-depth-2)' : 'transparent',
+              color: activeTab === tab ? 'var(--color-accent-500, #3b82f6)' : 'var(--bolt-elements-textSecondary)',
               borderBottom: activeTab === tab ? '2px solid var(--color-accent-500, #3b82f6)' : '2px solid transparent',
             }}
           >
@@ -361,7 +361,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
 
       {/* Tab content */}
       <div
-        className="overflow-y-auto flex-1 min-h-0 bg-devonz-elements-background-depth-2"
+        className="overflow-y-auto flex-1 min-h-0 bg-bolt-elements-background-depth-2"
         role="tabpanel"
         id={`inspector-tabpanel-${activeTab}`}
         aria-labelledby={`inspector-tab-${activeTab}`}
@@ -402,7 +402,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
       </div>
 
       {/* Footer with action buttons */}
-      <div className="p-3 border-t border-devonz-elements-borderColor bg-devonz-elements-background-depth-3 space-y-2">
+      <div className="p-3 border-t border-bolt-elements-borderColor bg-bolt-elements-background-depth-3 space-y-2">
         {/* Bulk CSS section */}
         {accumulatedBulkChanges.length > 0 && (
           <div className="space-y-2 p-2 rounded-lg border border-green-500/30 bg-green-500/5">
@@ -413,7 +413,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
               </span>
               <button
                 onClick={inspector.clearBulkChanges}
-                className="text-devonz-elements-textTertiary hover:text-red-400 transition-colors"
+                className="text-bolt-elements-textTertiary hover:text-red-400 transition-colors"
                 title="Clear all bulk changes"
                 aria-label="Clear all bulk changes"
               >
@@ -435,7 +435,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
             <div className="flex gap-2">
               <button
                 onClick={handleCopyCSS}
-                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border border-devonz-elements-borderColor bg-devonz-elements-background-depth-2 text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-4 transition-colors"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-4 transition-colors"
               >
                 <div className="i-ph:clipboard w-3.5 h-3.5" aria-hidden="true" />
                 {copyFeedback || 'Copy CSS'}
@@ -463,7 +463,7 @@ export const InspectorPanel = memo(({ inspector }: InspectorPanelProps) => {
             </button>
           </div>
         ) : (
-          <p className="text-devonz-elements-textTertiary text-xs text-center">Edit values above to see live changes</p>
+          <p className="text-bolt-elements-textTertiary text-xs text-center">Edit values above to see live changes</p>
         )}
 
         {/* Delete element */}

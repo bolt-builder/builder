@@ -20,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const agentId = (data as { agentId?: string } | undefined)?.agentId ?? 'Agent';
   return [
-    { title: `${agentId} · Devonz Agent Console` },
+    { title: `${agentId} · Bolt Agent Console` },
     { name: 'description', content: 'Chat with a CLI coding agent in a dedicated console' },
   ];
 };

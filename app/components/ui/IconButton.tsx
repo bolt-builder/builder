@@ -47,8 +47,8 @@ export const IconButton = memo(
         ref={ref}
         {...rest}
         className={cn(
-          'flex items-center text-devonz-elements-item-contentDefault bg-transparent enabled:hover:text-devonz-elements-item-contentActive rounded-md p-1 enabled:hover:bg-devonz-elements-item-backgroundActive disabled:cursor-not-allowed',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-focus',
+          'flex items-center text-bolt-elements-item-contentDefault bg-transparent enabled:hover:text-bolt-elements-item-contentActive rounded-md p-1 enabled:hover:bg-bolt-elements-item-backgroundActive disabled:cursor-not-allowed',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-focus',
           {
             [cn('opacity-30', disabledClassName)]: disabled,
           },

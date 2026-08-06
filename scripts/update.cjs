@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Cross-platform update script for Devonz (devonz.diy).
+ * Cross-platform update script for Bolt (bolt.diy).
  * Pulls latest from main, installs deps, and optionally rebuilds.
  *
  * Usage:
@@ -17,7 +17,7 @@ const run = (cmd) => execSync(cmd, { cwd: ROOT, stdio: 'inherit' });
 const args = process.argv.slice(2);
 const doBuild = args.includes('--build');
 
-console.log('\n🔄 Updating Devonz to latest version...\n');
+console.log('\n🔄 Updating Bolt to latest version...\n');
 
 // 1. Check we're in a git repo
 if (!existsSync(resolve(ROOT, '.git'))) {

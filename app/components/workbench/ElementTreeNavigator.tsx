@@ -43,7 +43,7 @@ const TreeNode = memo(
         className={`w-full text-left px-2 py-1.5 text-xs font-mono rounded transition-all flex items-center gap-1.5 ${
           isActive
             ? 'bg-accent-500/20 text-accent-400 border border-accent-500/30'
-            : 'hover:bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary'
+            : 'hover:bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary'
         }`}
         style={{ paddingLeft: `${indent * 12 + 8}px` }}
         title={element.selector}
@@ -54,7 +54,7 @@ const TreeNode = memo(
         {element.classes.length > 0 && !element.id && (
           <span className="text-yellow-400 truncate">.{element.classes[0]}</span>
         )}
-        {element.hasChildren && <span className="text-devonz-elements-textTertiary ml-auto">›</span>}
+        {element.hasChildren && <span className="text-bolt-elements-textTertiary ml-auto">›</span>}
       </button>
     );
   },
@@ -72,7 +72,7 @@ export const ElementTreeNavigator = memo(({ hierarchy, onSelectElement }: Elemen
 
   if (!hierarchy || !hierarchy.current) {
     return (
-      <div className="text-center py-8 text-devonz-elements-textTertiary text-xs">
+      <div className="text-center py-8 text-bolt-elements-textTertiary text-xs">
         <div className="i-ph:tree-structure w-8 h-8 mx-auto mb-2 opacity-40" />
         <p>Select an element to view its tree</p>
       </div>
@@ -84,11 +84,11 @@ export const ElementTreeNavigator = memo(({ hierarchy, onSelectElement }: Elemen
       {/* Parent Chain */}
       {hierarchy.parents.length > 0 && (
         <div className="space-y-0.5">
-          <div className="flex items-center gap-1.5 text-[10px] text-devonz-elements-textTertiary uppercase tracking-wide mb-1">
+          <div className="flex items-center gap-1.5 text-[10px] text-bolt-elements-textTertiary uppercase tracking-wide mb-1">
             <span className="i-ph:arrow-up w-3 h-3" />
             Parents
           </div>
-          <div className="border-l-2 border-devonz-elements-borderColor ml-1.5 pl-1">
+          <div className="border-l-2 border-bolt-elements-borderColor ml-1.5 pl-1">
             {hierarchy.parents.map((parent, index) => (
               <TreeNode
                 key={`parent-${index}`}
@@ -115,12 +115,12 @@ export const ElementTreeNavigator = memo(({ hierarchy, onSelectElement }: Elemen
       {hierarchy.children.length > 0 && (
         <div className="space-y-0.5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-[10px] text-devonz-elements-textTertiary uppercase tracking-wide mb-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-bolt-elements-textTertiary uppercase tracking-wide mb-1">
               <span className="i-ph:arrow-down w-3 h-3" />
               Children
             </div>
             {hierarchy.totalChildren > hierarchy.children.length && (
-              <span className="text-[10px] text-devonz-elements-textTertiary">
+              <span className="text-[10px] text-bolt-elements-textTertiary">
                 +{hierarchy.totalChildren - hierarchy.children.length} more
               </span>
             )}
@@ -143,17 +143,17 @@ export const ElementTreeNavigator = memo(({ hierarchy, onSelectElement }: Elemen
       {hierarchy.siblings.length > 0 && (
         <div className="space-y-0.5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-[10px] text-devonz-elements-textTertiary uppercase tracking-wide mb-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-bolt-elements-textTertiary uppercase tracking-wide mb-1">
               <span className="i-ph:arrows-horizontal w-3 h-3" />
               Siblings
             </div>
             {hierarchy.totalSiblings > hierarchy.siblings.length && (
-              <span className="text-[10px] text-devonz-elements-textTertiary">
+              <span className="text-[10px] text-bolt-elements-textTertiary">
                 +{hierarchy.totalSiblings - hierarchy.siblings.length} more
               </span>
             )}
           </div>
-          <div className="border-l-2 border-devonz-elements-borderColor ml-1.5 pl-1 opacity-75">
+          <div className="border-l-2 border-bolt-elements-borderColor ml-1.5 pl-1 opacity-75">
             {hierarchy.siblings.slice(0, 5).map((sibling, index) => (
               <TreeNode
                 key={`sibling-${index}`}
@@ -168,8 +168,8 @@ export const ElementTreeNavigator = memo(({ hierarchy, onSelectElement }: Elemen
       )}
 
       {/* Quick Navigation Hint */}
-      <div className="pt-2 border-t border-devonz-elements-borderColor">
-        <p className="text-[10px] text-devonz-elements-textTertiary text-center">
+      <div className="pt-2 border-t border-bolt-elements-borderColor">
+        <p className="text-[10px] text-bolt-elements-textTertiary text-center">
           Click any element to navigate and inspect it
         </p>
       </div>

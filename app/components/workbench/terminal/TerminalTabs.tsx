@@ -47,7 +47,7 @@ export const TerminalTabs = memo(() => {
     setActiveTerminal(0);
 
     try {
-      const shell = workbenchStore.devonzTerminal;
+      const shell = workbenchStore.boltTerminal;
       await shell.ready();
 
       let devCommand = 'npm run dev';
@@ -122,7 +122,7 @@ export const TerminalTabs = memo(() => {
     (index: number) => {
       if (index === 0) {
         return;
-      } // Can't close devonz terminal
+      } // Can't close bolt terminal
 
       const terminalRef = terminalRefs.current.get(index);
 
@@ -233,10 +233,10 @@ export const TerminalTabs = memo(() => {
       }}
     >
       <div className="h-full">
-        <div className="h-full flex flex-col" style={{ background: 'var(--devonz-elements-bg-depth-1)' }}>
+        <div className="h-full flex flex-col" style={{ background: 'var(--bolt-elements-bg-depth-1)' }}>
           <div
-            className="flex items-center border-y border-devonz-elements-borderColor gap-1.5 min-h-[34px] p-2"
-            style={{ background: 'var(--devonz-elements-bg-depth-1)' }}
+            className="flex items-center border-y border-bolt-elements-borderColor gap-1.5 min-h-[34px] p-2"
+            style={{ background: 'var(--bolt-elements-bg-depth-1)' }}
           >
             {Array.from({ length: terminalCount + 1 }, (_, index) => {
               const isActive = activeTerminal === index;
@@ -249,9 +249,8 @@ export const TerminalTabs = memo(() => {
                       className={cn(
                         'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full',
                         {
-                          'bg-devonz-elements-terminals-buttonBackground hover:text-devonz-elements-textPrimary':
-                            isActive,
-                          'bg-devonz-elements-background-depth-2 text-devonz-elements-textSecondary hover:bg-devonz-elements-terminals-buttonBackground':
+                          'bg-bolt-elements-terminals-buttonBackground hover:text-bolt-elements-textPrimary': isActive,
+                          'bg-bolt-elements-background-depth-2 text-bolt-elements-textSecondary hover:bg-bolt-elements-terminals-buttonBackground':
                             !isActive,
                         },
                       )}
@@ -268,8 +267,8 @@ export const TerminalTabs = memo(() => {
                         className={cn(
                           'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full',
                           {
-                            'bg-devonz-elements-terminals-buttonBackground': isActive,
-                            'bg-devonz-elements-background-depth-2 text-devonz-elements-textSecondary hover:bg-devonz-elements-terminals-buttonBackground':
+                            'bg-bolt-elements-terminals-buttonBackground': isActive,
+                            'bg-bolt-elements-background-depth-2 text-bolt-elements-textSecondary hover:bg-bolt-elements-terminals-buttonBackground':
                               !isActive,
                           },
                         )}
@@ -281,7 +280,7 @@ export const TerminalTabs = memo(() => {
                         />
                         {agentLabels[index] ?? <>Terminal {terminalCount > 1 && index}</>}
                         <button
-                          className="bg-transparent text-devonz-elements-textTertiary hover:text-devonz-elements-textPrimary hover:bg-transparent rounded"
+                          className="bg-transparent text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary hover:bg-transparent rounded"
                           onClick={(e) => {
                             e.stopPropagation();
                             closeTerminal(index);
@@ -302,7 +301,7 @@ export const TerminalTabs = memo(() => {
               <DropdownMenu.Trigger
                 title="Launch a CLI coding agent in this workspace"
                 aria-label="Launch CLI agent"
-                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-transparent text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary hover:bg-devonz-elements-terminals-buttonBackground transition-all cursor-pointer"
+                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium bg-transparent text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary hover:bg-bolt-elements-terminals-buttonBackground transition-all cursor-pointer"
               >
                 <div className="i-ph:robot text-sm" />
                 Agent
@@ -312,9 +311,9 @@ export const TerminalTabs = memo(() => {
                 <DropdownMenu.Content
                   className={cn(
                     'min-w-[260px] z-[9999]',
-                    'bg-devonz-elements-background-depth-2',
+                    'bg-bolt-elements-background-depth-2',
                     'rounded-lg shadow-lg',
-                    'border border-devonz-elements-borderColor',
+                    'border border-bolt-elements-borderColor',
                     'animate-in fade-in-0 zoom-in-95',
                     'py-1',
                   )}
@@ -322,7 +321,7 @@ export const TerminalTabs = memo(() => {
                   align="start"
                 >
                   {cliAgents.length === 0 && (
-                    <div className="px-4 py-2 text-xs text-devonz-elements-textTertiary">Detecting installed CLIs…</div>
+                    <div className="px-4 py-2 text-xs text-bolt-elements-textTertiary">Detecting installed CLIs…</div>
                   )}
                   {cliAgents.map((agent) => (
                     <DropdownMenu.Item
@@ -332,19 +331,19 @@ export const TerminalTabs = memo(() => {
                       className={cn(
                         'flex flex-col items-start w-full px-4 py-2 gap-0.5 rounded-md',
                         agent.installed
-                          ? 'cursor-pointer text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive'
-                          : 'cursor-default opacity-60 text-devonz-elements-textSecondary',
+                          ? 'cursor-pointer text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive'
+                          : 'cursor-default opacity-60 text-bolt-elements-textSecondary',
                       )}
                     >
                       <div className="flex items-center gap-2 text-sm">
                         <div className="i-ph:robot" />
                         {agent.name}
                         {agent.installed && agent.version && (
-                          <span className="text-xs text-devonz-elements-textTertiary">v{agent.version}</span>
+                          <span className="text-xs text-bolt-elements-textTertiary">v{agent.version}</span>
                         )}
                       </div>
                       {!agent.installed && (
-                        <span className="text-xs font-mono text-devonz-elements-textTertiary">{agent.installHint}</span>
+                        <span className="text-xs font-mono text-bolt-elements-textTertiary">{agent.installHint}</span>
                       )}
                     </DropdownMenu.Item>
                   ))}
@@ -364,7 +363,7 @@ export const TerminalTabs = memo(() => {
                   terminal.focus();
 
                   if (activeTerminal === 0) {
-                    workbenchStore.attachDevonzTerminal(terminal);
+                    workbenchStore.attachBoltTerminal(terminal);
                   } else {
                     workbenchStore.attachTerminal(terminal);
                   }
@@ -379,7 +378,7 @@ export const TerminalTabs = memo(() => {
                 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all',
                 isRestarting
                   ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-devonz-elements-terminals-buttonBackground cursor-pointer',
+                  : 'hover:bg-bolt-elements-terminals-buttonBackground cursor-pointer',
               )}
               style={{ color: '#22D3EE' }}
             >
@@ -397,7 +396,7 @@ export const TerminalTabs = memo(() => {
           {Array.from({ length: terminalCount + 1 }, (_, index) => {
             const isActive = activeTerminal === index;
 
-            logger.debug(`Starting devonz terminal [${index}]`);
+            logger.debug(`Starting bolt terminal [${index}]`);
 
             if (index === 0) {
               return (
@@ -413,7 +412,7 @@ export const TerminalTabs = memo(() => {
                         terminalRefs.current.set(index, ref);
                       }
                     }}
-                    onTerminalReady={(terminal) => workbenchStore.attachDevonzTerminal(terminal)}
+                    onTerminalReady={(terminal) => workbenchStore.attachBoltTerminal(terminal)}
                     onTerminalResize={(cols, rows) => workbenchStore.onTerminalResize(cols, rows)}
                     theme={theme}
                   />

@@ -1,12 +1,12 @@
 # State Management
 
-> Stores, hooks, and data flow patterns in Devonz.
+> Stores, hooks, and data flow patterns in Bolt.
 
 ---
 
 ## Overview
 
-Devonz uses **Nanostores** as its primary state management solution. Nanostores provides lightweight, framework-agnostic atomic stores with React bindings via `@nanostores/react`.
+Bolt uses **Nanostores** as its primary state management solution. Nanostores provides lightweight, framework-agnostic atomic stores with React bindings via `@nanostores/react`.
 
 ### Why Nanostores
 
@@ -203,14 +203,14 @@ All hooks live in `app/lib/hooks/`. They often wrap store access or provide data
 
 | Storage | What's Stored | Access Pattern |
 | ------- | ------------- | -------------- |
-| **IndexedDB** (`devonzHistory`) | Chat messages, snapshots | `app/lib/persistence/db.ts` |
+| **IndexedDB** (`boltHistory`) | Chat messages, snapshots | `app/lib/persistence/db.ts` |
 | **Cookies** | API keys, provider settings | `js-cookie` library |
 | **localStorage** | Theme preference, MCP settings, locked files, project plan mode | `app/lib/persistence/localStorage.ts` |
 | **URL Parameters** | Chat ID | Remix route params |
 
 ### IndexedDB Schema
 
-Database: `devonzHistory` (version 3)
+Database: `boltHistory` (version 3)
 
 **Object Stores:**
 

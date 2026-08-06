@@ -8,7 +8,7 @@ const IV_LENGTH = 12;
 const AUTH_TAG_LENGTH = 16;
 
 /**
- * Resolve the 32-byte encryption key from the DEVONZ_ENCRYPTION_KEY env var.
+ * Resolve the 32-byte encryption key from the BOLT_ENCRYPTION_KEY env var.
  * Accepts hex-encoded (64 chars), base64-encoded (44 chars), or raw 32-byte values.
  *
  * If the env var is not set, auto-generates a random key suitable for local-only use.
@@ -16,15 +16,15 @@ const AUTH_TAG_LENGTH = 16;
  * will become undecryptable (the cookie layer handles this gracefully via fallback).
  */
 function resolveEncryptionKey(): Buffer {
-  const raw = process.env.DEVONZ_ENCRYPTION_KEY;
+  const raw = process.env.BOLT_ENCRYPTION_KEY;
 
   if (!raw) {
     const generated = randomBytes(32);
 
     logger.warn(
-      'DEVONZ_ENCRYPTION_KEY is not set — auto-generated a random key. ' +
+      'BOLT_ENCRYPTION_KEY is not set — auto-generated a random key. ' +
         'Encrypted values will NOT persist across restarts. ' +
-        'Set DEVONZ_ENCRYPTION_KEY in your environment for persistent encryption. ' +
+        'Set BOLT_ENCRYPTION_KEY in your environment for persistent encryption. ' +
         "Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
     );
 
@@ -45,7 +45,7 @@ function resolveEncryptionKey(): Buffer {
     const generated = randomBytes(32);
 
     logger.warn(
-      `DEVONZ_ENCRYPTION_KEY is invalid (expected 32 bytes, got ${key.length}). ` +
+      `BOLT_ENCRYPTION_KEY is invalid (expected 32 bytes, got ${key.length}). ` +
         `Falling back to auto-generated key. Encrypted values will NOT persist across restarts. ` +
         `Provide a 64-character hex string, a 44-character base64 string, or a 32-byte raw value.`,
     );
@@ -60,7 +60,7 @@ function resolveEncryptionKey(): Buffer {
  * Lazily resolved encryption key — initialized on first use of encrypt() or
  * decrypt(), NOT at module-import time.  This prevents the module from
  * throwing during import when the env var is absent (e.g. in Docker
- * containers that haven't set DEVONZ_ENCRYPTION_KEY).
+ * containers that haven't set BOLT_ENCRYPTION_KEY).
  */
 let _cachedKey: Buffer | null = null;
 

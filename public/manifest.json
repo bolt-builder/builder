@@ -1,6 +1,6 @@
 {
-  "name": "Devonz",
-  "short_name": "Devonz",
+  "name": "Bolt",
+  "short_name": "Bolt",
   "description": "AI-powered full-stack development agent",
   "start_url": "/",
   "display": "standalone",

@@ -47,8 +47,8 @@ const FeatureCard = memo(
       layoutId={feature.id}
       className={cn(
         'relative group cursor-pointer',
-        'bg-devonz-elements-background-depth-2',
-        'hover:bg-devonz-elements-background-depth-3',
+        'bg-bolt-elements-background-depth-2',
+        'hover:bg-bolt-elements-background-depth-3',
         'transition-colors duration-200',
         'rounded-lg overflow-hidden',
       )}
@@ -59,9 +59,9 @@ const FeatureCard = memo(
       <div className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={cn(feature.icon, 'w-5 h-5 text-devonz-elements-textSecondary')} />
+            <div className={cn(feature.icon, 'w-5 h-5 text-bolt-elements-textSecondary')} />
             <div className="flex items-center gap-2">
-              <h4 className="font-medium text-devonz-elements-textPrimary">{feature.title}</h4>
+              <h4 className="font-medium text-bolt-elements-textPrimary">{feature.title}</h4>
               {feature.beta && (
                 <span className="px-2 py-0.5 text-xs rounded-full bg-blue-500/10 text-blue-500 font-medium">Beta</span>
               )}
@@ -74,8 +74,8 @@ const FeatureCard = memo(
           </div>
           <Switch checked={feature.enabled} onCheckedChange={(checked) => onToggle(feature.id, checked)} />
         </div>
-        <p className="mt-2 text-sm text-devonz-elements-textSecondary">{feature.description}</p>
-        {feature.tooltip && <p className="mt-1 text-xs text-devonz-elements-textTertiary">{feature.tooltip}</p>}
+        <p className="mt-2 text-sm text-bolt-elements-textSecondary">{feature.description}</p>
+        {feature.tooltip && <p className="mt-1 text-xs text-bolt-elements-textTertiary">{feature.tooltip}</p>}
       </div>
     </motion.div>
   ),
@@ -103,10 +103,10 @@ const FeatureSection = memo(
       transition={{ duration: 0.3 }}
     >
       <div className="flex items-center gap-3">
-        <div className={cn(icon, 'text-xl text-devonz-elements-item-contentAccent')} />
+        <div className={cn(icon, 'text-xl text-bolt-elements-item-contentAccent')} />
         <div>
-          <h3 className="text-lg font-medium text-devonz-elements-textPrimary">{title}</h3>
-          <p className="text-sm text-devonz-elements-textSecondary">{description}</p>
+          <h3 className="text-lg font-medium text-bolt-elements-textPrimary">{title}</h3>
+          <p className="text-sm text-bolt-elements-textSecondary">{description}</p>
         </div>
       </div>
 
@@ -442,16 +442,16 @@ export default function FeaturesTab() {
   return (
     <div className="flex flex-col">
       {/* Tab Navigation */}
-      <div className="flex gap-2 border-b border-devonz-elements-borderColor pb-2 mb-6">
+      <div className="flex gap-2 border-b border-bolt-elements-borderColor pb-2 mb-6">
         {featureTabSections.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveSection(tab.id)}
             className="px-4 py-2 text-sm font-medium rounded-t-lg transition-colors"
             style={{
-              backgroundColor: activeSection === tab.id ? 'var(--devonz-elements-bg-depth-3)' : 'transparent',
+              backgroundColor: activeSection === tab.id ? 'var(--bolt-elements-bg-depth-3)' : 'transparent',
               color:
-                activeSection === tab.id ? 'var(--devonz-elements-textPrimary)' : 'var(--devonz-elements-textTertiary)',
+                activeSection === tab.id ? 'var(--bolt-elements-textPrimary)' : 'var(--bolt-elements-textTertiary)',
               borderBottom: activeSection === tab.id ? '2px solid #06B6D4' : '2px solid transparent',
             }}
           >
@@ -487,8 +487,8 @@ export default function FeaturesTab() {
         <motion.div
           layout
           className={cn(
-            'bg-devonz-elements-background-depth-2',
-            'hover:bg-devonz-elements-background-depth-3',
+            'bg-bolt-elements-background-depth-2',
+            'hover:bg-bolt-elements-background-depth-3',
             'transition-all duration-200',
             'rounded-lg p-4',
             'group',
@@ -501,18 +501,18 @@ export default function FeaturesTab() {
             <div
               className={cn(
                 'p-2 rounded-lg text-xl',
-                'bg-devonz-elements-background-depth-3 group-hover:bg-devonz-elements-background-depth-4',
+                'bg-bolt-elements-background-depth-3 group-hover:bg-bolt-elements-background-depth-4',
                 'transition-colors duration-200',
-                'text-devonz-elements-item-contentAccent',
+                'text-bolt-elements-item-contentAccent',
               )}
             >
               <div className="i-ph:book" />
             </div>
             <div className="flex-1">
-              <h4 className="text-sm font-medium text-devonz-elements-textPrimary group-hover:text-devonz-elements-item-contentAccent transition-colors">
+              <h4 className="text-sm font-medium text-bolt-elements-textPrimary group-hover:text-bolt-elements-item-contentAccent transition-colors">
                 Prompt Library
               </h4>
-              <p className="text-xs text-devonz-elements-textSecondary mt-0.5">
+              <p className="text-xs text-bolt-elements-textSecondary mt-0.5">
                 Choose a prompt from the library to use as the system prompt
               </p>
             </div>
@@ -525,10 +525,10 @@ export default function FeaturesTab() {
               }}
               className={cn(
                 'p-2 rounded-lg text-sm min-w-[200px]',
-                'bg-devonz-elements-background-depth-3 border border-devonz-elements-borderColor',
-                'text-devonz-elements-textPrimary',
-                'focus:outline-none focus:ring-2 focus:ring-devonz-elements-borderColorActive',
-                'group-hover:border-devonz-elements-borderColorActive/30',
+                'bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor',
+                'text-bolt-elements-textPrimary',
+                'focus:outline-none focus:ring-2 focus:ring-bolt-elements-borderColorActive',
+                'group-hover:border-bolt-elements-borderColorActive/30',
                 'transition-all duration-200',
               )}
             >

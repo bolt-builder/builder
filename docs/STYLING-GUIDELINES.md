@@ -1,4 +1,4 @@
-# Styling Guidelines for Devonz
+# Styling Guidelines for Bolt
 
 ## Dark Mode Implementation
 

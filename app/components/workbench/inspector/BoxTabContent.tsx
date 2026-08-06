@@ -27,7 +27,7 @@ export const BoxTabContent = memo(({ selectedElement, onNavigate, onBoxModelChan
     <div className="p-3 space-y-3">
       {/* Element Tree / Hierarchy */}
       {selectedElement.hierarchy && (
-        <div className="pb-3 border-b border-devonz-elements-borderColor">
+        <div className="pb-3 border-b border-bolt-elements-borderColor">
           <ElementTreeNavigator hierarchy={selectedElement.hierarchy} onSelectElement={onNavigate} />
         </div>
       )}

@@ -100,7 +100,7 @@ export const Artifact = memo(({ artifactId }: ArtifactProps) => {
         className="artifact border border-white/10 flex flex-col overflow-hidden rounded-xl w-full transition-all duration-150"
         style={{
           background:
-            'linear-gradient(180deg, var(--devonz-elements-bg-depth-3) 0%, var(--devonz-elements-bg-depth-2) 100%)',
+            'linear-gradient(180deg, var(--bolt-elements-bg-depth-3) 0%, var(--bolt-elements-bg-depth-2) 100%)',
         }}
       >
         {/* Header - Glossy dark style */}
@@ -131,18 +131,18 @@ export const Artifact = memo(({ artifactId }: ArtifactProps) => {
               transition={{ duration: 0.2, ease: cubicEasingFn }}
             >
               {/* Actions header with progress bar */}
-              <div className="px-3 py-2 border-t border-devonz-elements-borderColor bg-devonz-elements-background-depth-2">
+              <div className="px-3 py-2 border-t border-bolt-elements-borderColor bg-bolt-elements-background-depth-2">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-1.5">
-                    <div className="i-ph:list-checks text-devonz-elements-textTertiary text-xs" />
-                    <span className="text-xs text-devonz-elements-textSecondary">Actions</span>
+                    <div className="i-ph:list-checks text-bolt-elements-textTertiary text-xs" />
+                    <span className="text-xs text-bolt-elements-textSecondary">Actions</span>
                   </div>
-                  <span className="text-xs text-devonz-elements-textTertiary">
+                  <span className="text-xs text-bolt-elements-textTertiary">
                     {actions.filter((a) => a.status === 'complete').length} of {actions.length} Done
                   </span>
                 </div>
                 {/* Progress Bar */}
-                <div className="h-0.5 bg-devonz-elements-borderColor rounded-full overflow-hidden">
+                <div className="h-0.5 bg-bolt-elements-borderColor rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-green-500"
                     initial={{ width: 0 }}
@@ -155,24 +155,24 @@ export const Artifact = memo(({ artifactId }: ArtifactProps) => {
               </div>
 
               {/* Action list */}
-              <div className="px-3 py-2 bg-devonz-elements-background-depth-1">
+              <div className="px-3 py-2 bg-bolt-elements-background-depth-1">
                 <ActionList actions={actions} />
               </div>
 
               {/* Workbench button */}
               <button
-                className="flex items-center gap-2 w-full px-3 py-2 border-t border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-3 transition-colors group bg-devonz-elements-background-depth-2"
+                className="flex items-center gap-2 w-full px-3 py-2 border-t border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-3 transition-colors group bg-bolt-elements-background-depth-2"
                 onClick={() => {
                   const showWorkbench = workbenchStore.showWorkbench.get();
                   workbenchStore.showWorkbench.set(!showWorkbench);
                 }}
               >
-                <div className="i-ph:code-duotone text-devonz-elements-button-primary-background text-base" />
+                <div className="i-ph:code-duotone text-bolt-elements-button-primary-background text-base" />
                 <div className="flex-1 text-left">
-                  <div className="text-xs text-devonz-elements-textPrimary">{dynamicTitle}</div>
-                  <div className="text-xs text-devonz-elements-textTertiary">Click to open Workbench</div>
+                  <div className="text-xs text-bolt-elements-textPrimary">{dynamicTitle}</div>
+                  <div className="text-xs text-bolt-elements-textTertiary">Click to open Workbench</div>
                 </div>
-                <div className="i-ph:pencil-simple text-devonz-elements-textTertiary group-hover:text-devonz-elements-textSecondary transition-colors text-xs" />
+                <div className="i-ph:pencil-simple text-bolt-elements-textTertiary group-hover:text-bolt-elements-textSecondary transition-colors text-xs" />
               </button>
             </motion.div>
           )}
@@ -359,8 +359,8 @@ const ActionList = memo(({ actions }: ActionListProps) => {
                 }}
                 className={cn(
                   'w-full flex items-center gap-2 px-2.5 py-1.5 rounded-md transition-all duration-150',
-                  'bg-devonz-elements-background-depth-2 hover:bg-devonz-elements-background-depth-3',
-                  isExpanded && 'ring-1 ring-devonz-elements-borderColor',
+                  'bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-background-depth-3',
+                  isExpanded && 'ring-1 ring-bolt-elements-borderColor',
                 )}
               >
                 {/* Status indicator - small checkmark */}
@@ -373,7 +373,7 @@ const ActionList = memo(({ actions }: ActionListProps) => {
                         ? 'bg-blue-500'
                         : isFailed
                           ? 'bg-red-500 text-white'
-                          : 'border border-devonz-elements-borderColor',
+                          : 'border border-bolt-elements-borderColor',
                   )}
                 >
                   {isComplete ? (
@@ -391,11 +391,11 @@ const ActionList = memo(({ actions }: ActionListProps) => {
                 )}
 
                 {/* Action label */}
-                <span className="text-xs text-devonz-elements-textSecondary flex-shrink-0">{actionLabel}</span>
+                <span className="text-xs text-bolt-elements-textSecondary flex-shrink-0">{actionLabel}</span>
 
                 {/* File name */}
                 {type === 'file' && fileName && (
-                  <span className="text-xs font-medium text-devonz-elements-textPrimary truncate">{fileName}</span>
+                  <span className="text-xs font-medium text-bolt-elements-textPrimary truncate">{fileName}</span>
                 )}
 
                 {/* Edit icon for modified files */}
@@ -415,7 +415,7 @@ const ActionList = memo(({ actions }: ActionListProps) => {
                 {hasExpandableContent && (
                   <div
                     className={cn(
-                      'transition-transform duration-200 text-devonz-elements-textTertiary',
+                      'transition-transform duration-200 text-bolt-elements-textTertiary',
                       !diffStats && 'ml-auto',
                       isExpanded ? 'rotate-180' : '',
                     )}
@@ -435,7 +435,7 @@ const ActionList = memo(({ actions }: ActionListProps) => {
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="mt-1.5 p-2 rounded-md bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor max-h-[200px] overflow-auto">
+                    <div className="mt-1.5 p-2 rounded-md bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor max-h-[200px] overflow-auto">
                       {type === 'file' && fileContent ? (
                         <CodeBlock code={fileContent} language={syntaxLanguage} maxLines={25} className="opacity-90" />
                       ) : (
@@ -456,19 +456,19 @@ const ActionList = memo(({ actions }: ActionListProps) => {
 function getIconColor(status: ActionState['status']) {
   switch (status) {
     case 'pending': {
-      return 'text-devonz-elements-textTertiary';
+      return 'text-bolt-elements-textTertiary';
     }
     case 'running': {
-      return 'text-devonz-elements-loader-progress';
+      return 'text-bolt-elements-loader-progress';
     }
     case 'complete': {
-      return 'text-devonz-elements-icon-success';
+      return 'text-bolt-elements-icon-success';
     }
     case 'aborted': {
-      return 'text-devonz-elements-textSecondary';
+      return 'text-bolt-elements-textSecondary';
     }
     case 'failed': {
-      return 'text-devonz-elements-icon-error';
+      return 'text-bolt-elements-icon-error';
     }
     default: {
       return undefined;

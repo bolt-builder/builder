@@ -71,7 +71,7 @@ export class EnhancedStreamingMessageParser extends StreamingMessageParser {
       /*
        * Artifacts ARE present — strip any markdown code blocks that leaked
        * outside artifact tags. These are file contents the AI included in
-       * explanation text instead of inside <devonzArtifact> actions.
+       * explanation text instead of inside <boltArtifact> actions.
        */
       const stripped = this._stripLeakedCodeBlocks(output);
 
@@ -85,7 +85,7 @@ export class EnhancedStreamingMessageParser extends StreamingMessageParser {
   }
 
   private _hasDetectedArtifacts(input: string): boolean {
-    return input.includes('<devonzArtifact') || input.includes('</devonzArtifact>');
+    return input.includes('<boltArtifact') || input.includes('</boltArtifact>');
   }
 
   private _detectAndWrapCodeBlocks(messageId: string, input: string): string {
@@ -238,21 +238,21 @@ export class EnhancedStreamingMessageParser extends StreamingMessageParser {
   private _wrapInArtifact(artifactId: string, filePath: string, content: string): string {
     const title = filePath.split('/').pop() || 'File';
 
-    return `<devonzArtifact id="${artifactId}" title="${title}" type="bundled">
-<devonzAction type="file" filePath="${filePath}">
+    return `<boltArtifact id="${artifactId}" title="${title}" type="bundled">
+<boltAction type="file" filePath="${filePath}">
 ${content}
-</devonzAction>
-</devonzArtifact>`;
+</boltAction>
+</boltArtifact>`;
   }
 
   private _wrapInShellAction(content: string, messageId: string): string {
     const artifactId = `artifact-${messageId}-${this._artifactCounter++}`;
 
-    return `<devonzArtifact id="${artifactId}" title="Shell Command" type="shell">
-<devonzAction type="shell">
+    return `<boltArtifact id="${artifactId}" title="Shell Command" type="shell">
+<boltAction type="shell">
 ${content.trim()}
-</devonzAction>
-</devonzArtifact>`;
+</boltAction>
+</boltArtifact>`;
   }
 
   private _normalizeFilePath(filePath: string): string {

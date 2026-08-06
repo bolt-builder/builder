@@ -48,15 +48,13 @@ export class PanelErrorBoundary extends Component<PanelErrorBoundaryProps, Panel
       const { error } = this.state;
 
       return (
-        <div className="flex flex-col items-center justify-center p-8 text-center bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-lg w-full h-full min-h-[200px]">
+        <div className="flex flex-col items-center justify-center p-8 text-center bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor rounded-lg w-full h-full min-h-[200px]">
           <div className="w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center mb-5">
             <div className="i-ph:warning-circle-duotone text-2xl text-red-400" />
           </div>
 
-          <h3 className="text-lg font-semibold text-devonz-elements-textPrimary mb-1.5">
-            {this.props.panelName} Error
-          </h3>
-          <p className="text-sm text-devonz-elements-textSecondary mb-5 max-w-sm">
+          <h3 className="text-lg font-semibold text-bolt-elements-textPrimary mb-1.5">{this.props.panelName} Error</h3>
+          <p className="text-sm text-bolt-elements-textSecondary mb-5 max-w-sm">
             Something went wrong in the {this.props.panelName} panel. You can try again or reload the page.
           </p>
 
@@ -73,15 +71,15 @@ export class PanelErrorBoundary extends Component<PanelErrorBoundaryProps, Panel
 
           {!import.meta.env.PROD && error && (
             <details className="w-full max-w-md text-left">
-              <summary className="cursor-pointer text-xs text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary transition-colors">
+              <summary className="cursor-pointer text-xs text-bolt-elements-textTertiary hover:text-bolt-elements-textSecondary transition-colors">
                 Error Details
               </summary>
-              <div className="mt-2 p-3 bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg overflow-auto max-h-48">
+              <div className="mt-2 p-3 bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg overflow-auto max-h-48">
                 <p className="text-xs text-red-400 font-mono font-semibold mb-1.5">
                   {error.name}: {error.message}
                 </p>
                 {error.stack && (
-                  <pre className="text-xs text-devonz-elements-textTertiary font-mono whitespace-pre-wrap break-words">
+                  <pre className="text-xs text-bolt-elements-textTertiary font-mono whitespace-pre-wrap break-words">
                     {error.stack}
                   </pre>
                 )}

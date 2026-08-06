@@ -1,7 +1,7 @@
 /**
  * Agent Mode Store
  *
- * State management for the Devonz AI Agent Mode feature.
+ * State management for the Bolt AI Agent Mode feature.
  * Provides reactive state for agent mode settings and status tracking.
  */
 
@@ -72,7 +72,7 @@ function loadSettings(): AgentModeSettings {
   }
 
   try {
-    const stored = localStorage.getItem('devonz_agent_mode_settings');
+    const stored = localStorage.getItem('bolt_agent_mode_settings');
 
     if (stored) {
       const parsed = JSON.parse(stored);
@@ -91,7 +91,7 @@ function loadSettings(): AgentModeSettings {
         parsed._version = SETTINGS_VERSION;
 
         // Re-save with migration applied
-        localStorage.setItem('devonz_agent_mode_settings', JSON.stringify({ ...DEFAULT_AGENT_SETTINGS, ...parsed }));
+        localStorage.setItem('bolt_agent_mode_settings', JSON.stringify({ ...DEFAULT_AGENT_SETTINGS, ...parsed }));
         logger.debug('Migrated agent mode settings to version', SETTINGS_VERSION);
       }
 
@@ -111,7 +111,7 @@ function saveSettings(settings: AgentModeSettings): void {
   }
 
   try {
-    localStorage.setItem('devonz_agent_mode_settings', JSON.stringify(settings));
+    localStorage.setItem('bolt_agent_mode_settings', JSON.stringify(settings));
     logger.debug('Agent mode settings saved');
   } catch (error) {
     logger.error('Failed to save agent mode settings:', error);

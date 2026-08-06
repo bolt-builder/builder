@@ -12,7 +12,7 @@ import { RuntimeManager } from '~/lib/runtime/local-runtime';
 import { isValidProjectId } from '~/lib/runtime/runtime-provider';
 import { StreamingMessageParser } from '~/lib/runtime/message-parser';
 import { applyActions, type AppliedActionResult } from '~/lib/.server/agent/action-applier';
-import type { DevonzAction } from '~/types/actions';
+import type { BoltAction } from '~/types/actions';
 
 const logger = createScopedLogger('api.v1.agent');
 
@@ -20,12 +20,12 @@ const logger = createScopedLogger('api.v1.agent');
  * Headless backend agent (experimental, feature-flagged).
  *
  * Runs a full LLM build turn server-side and applies the resulting
- * devonzArtifact actions (file writes, diffs, shell/build commands) directly
+ * boltArtifact actions (file writes, diffs, shell/build commands) directly
  * against the project's runtime — no browser required to drive the work.
  *
  * Gating (both required):
- *   - DEVONZ_API_KEY        — bearer token auth for the whole /api/v1 surface
- *   - DEVONZ_BACKEND_AGENT=1 — opt-in flag for this endpoint
+ *   - BOLT_API_KEY        — bearer token auth for the whole /api/v1 surface
+ *   - BOLT_BACKEND_AGENT=1 — opt-in flag for this endpoint
  */
 
 const v1AgentRequestSchema = z.object({
@@ -37,13 +37,13 @@ const v1AgentRequestSchema = z.object({
 });
 
 function isBackendAgentEnabled(): boolean {
-  return process.env.DEVONZ_BACKEND_AGENT === '1' || process.env.DEVONZ_BACKEND_AGENT === 'true';
+  return process.env.BOLT_BACKEND_AGENT === '1' || process.env.BOLT_BACKEND_AGENT === 'true';
 }
 
 async function v1AgentAction({ context, request }: ActionFunctionArgs): Promise<Response> {
   if (!isBackendAgentEnabled()) {
     return errorResponse(
-      new AppError(AppErrorType.NOT_FOUND, 'Backend agent is disabled. Set DEVONZ_BACKEND_AGENT=1 to enable it.'),
+      new AppError(AppErrorType.NOT_FOUND, 'Backend agent is disabled. Set BOLT_BACKEND_AGENT=1 to enable it.'),
     );
   }
 
@@ -105,8 +105,8 @@ async function v1AgentAction({ context, request }: ActionFunctionArgs): Promise<
       }
     }
 
-    // Parse devonzArtifact actions out of the completed response
-    const actions: DevonzAction[] = [];
+    // Parse boltArtifact actions out of the completed response
+    const actions: BoltAction[] = [];
     const parser = new StreamingMessageParser({
       callbacks: {
         onActionClose: (data) => {

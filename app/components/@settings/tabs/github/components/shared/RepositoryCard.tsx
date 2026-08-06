@@ -122,19 +122,19 @@ export function RepositoryCard({
       <button
         onClick={onSelect}
         className={cn(
-          'w-full text-left p-3 rounded-lg border border-devonz-elements-borderColor hover:border-devonz-elements-borderColorActive hover:bg-devonz-elements-background-depth-1 transition-all duration-200',
+          'w-full text-left p-3 rounded-lg border border-bolt-elements-borderColor hover:border-bolt-elements-borderColorActive hover:bg-bolt-elements-background-depth-1 transition-all duration-200',
           className,
         )}
       >
         <div className="flex items-start justify-between mb-2">
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-medium text-devonz-elements-textPrimary">{repository.name}</h4>
-            {repository.private && <div className="i-ph:lock size-3 text-devonz-elements-textTertiary" />}
-            {repository.fork && <div className="i-ph:git-fork size-3 text-devonz-elements-textTertiary" />}
-            {repository.archived && <div className="i-ph:archive size-3 text-devonz-elements-textTertiary" />}
+            <h4 className="text-sm font-medium text-bolt-elements-textPrimary">{repository.name}</h4>
+            {repository.private && <div className="i-ph:lock size-3 text-bolt-elements-textTertiary" />}
+            {repository.fork && <div className="i-ph:git-fork size-3 text-bolt-elements-textTertiary" />}
+            {repository.archived && <div className="i-ph:archive size-3 text-bolt-elements-textTertiary" />}
           </div>
 
-          <div className="flex items-center gap-3 text-xs text-devonz-elements-textSecondary">
+          <div className="flex items-center gap-3 text-xs text-bolt-elements-textSecondary">
             <span className="flex items-center gap-1">
               <div className="i-ph:star size-3" />
               {repository.stargazers_count}
@@ -147,11 +147,11 @@ export function RepositoryCard({
         </div>
 
         {repository.description && (
-          <p className="text-xs text-devonz-elements-textSecondary mb-2 line-clamp-2">{repository.description}</p>
+          <p className="text-xs text-bolt-elements-textSecondary mb-2 line-clamp-2">{repository.description}</p>
         )}
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 text-xs text-devonz-elements-textTertiary">
+          <div className="flex items-center gap-3 text-xs text-bolt-elements-textTertiary">
             {repository.language && (
               <span className="flex items-center gap-1">
                 <div className="w-2 h-2 rounded-full bg-current opacity-60" />
@@ -161,7 +161,7 @@ export function RepositoryCard({
             {repository.size && <span>{formatSize(repository.size * 1024)}</span>}
           </div>
 
-          <span className="flex items-center gap-1 text-xs text-devonz-elements-textTertiary">
+          <span className="flex items-center gap-1 text-xs text-bolt-elements-textTertiary">
             <div className="i-ph:clock size-3" />
             {formatTimeAgo()}
           </span>
@@ -175,7 +175,7 @@ export function RepositoryCard({
     ? {
         onClick: onSelect,
         className: cn(
-          'group cursor-pointer hover:border-devonz-elements-borderColorActive dark:hover:border-devonz-elements-borderColorActive transition-all duration-200',
+          'group cursor-pointer hover:border-bolt-elements-borderColorActive dark:hover:border-bolt-elements-borderColorActive transition-all duration-200',
           className,
         ),
       }
@@ -185,7 +185,7 @@ export function RepositoryCard({
     <Component
       {...interactiveProps}
       className={cn(
-        'block p-4 rounded-lg bg-devonz-elements-background-depth-1 dark:bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor dark:border-devonz-elements-borderColor relative',
+        'block p-4 rounded-lg bg-bolt-elements-background-depth-1 dark:bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor dark:border-bolt-elements-borderColor relative',
         interactiveProps.className,
       )}
     >
@@ -200,44 +200,44 @@ export function RepositoryCard({
       <div className="space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-            <div className="i-ph:git-branch size-4 text-devonz-elements-icon-tertiary" />
+            <div className="i-ph:git-branch size-4 text-bolt-elements-icon-tertiary" />
             <h5
               className={cn(
-                'text-sm font-medium text-devonz-elements-textPrimary',
-                onSelect && 'group-hover:text-devonz-elements-item-contentAccent transition-colors',
+                'text-sm font-medium text-bolt-elements-textPrimary',
+                onSelect && 'group-hover:text-bolt-elements-item-contentAccent transition-colors',
               )}
             >
               {repository.name}
             </h5>
             {repository.fork && (
               <span title="Forked repository">
-                <div className="i-ph:git-fork size-3 text-devonz-elements-textTertiary" />
+                <div className="i-ph:git-fork size-3 text-bolt-elements-textTertiary" />
               </span>
             )}
             {repository.archived && (
               <span title="Archived repository">
-                <div className="i-ph:archive size-3 text-devonz-elements-textTertiary" />
+                <div className="i-ph:archive size-3 text-bolt-elements-textTertiary" />
               </span>
             )}
           </div>
-          <div className="flex items-center gap-3 text-xs text-devonz-elements-textSecondary">
+          <div className="flex items-center gap-3 text-xs text-bolt-elements-textSecondary">
             <span className="flex items-center gap-1" title="Stars">
-              <div className="i-ph:star size-3.5 text-devonz-elements-icon-warning" />
+              <div className="i-ph:star size-3.5 text-bolt-elements-icon-warning" />
               {repository.stargazers_count.toLocaleString()}
             </span>
             <span className="flex items-center gap-1" title="Forks">
-              <div className="i-ph:git-fork size-3.5 text-devonz-elements-icon-info" />
+              <div className="i-ph:git-fork size-3.5 text-bolt-elements-icon-info" />
               {repository.forks_count.toLocaleString()}
             </span>
             {showExtendedMetrics && repository.issues_count !== undefined && (
               <span className="flex items-center gap-1" title="Open Issues">
-                <div className="i-ph:circle size-3.5 text-devonz-elements-icon-error" />
+                <div className="i-ph:circle size-3.5 text-bolt-elements-icon-error" />
                 {repository.issues_count}
               </span>
             )}
             {showExtendedMetrics && repository.pull_requests_count !== undefined && (
               <span className="flex items-center gap-1" title="Pull Requests">
-                <div className="i-ph:git-pull-request size-3.5 text-devonz-elements-icon-success" />
+                <div className="i-ph:git-pull-request size-3.5 text-bolt-elements-icon-success" />
                 {repository.pull_requests_count}
               </span>
             )}
@@ -246,13 +246,13 @@ export function RepositoryCard({
 
         <div className="space-y-2">
           {repository.description && (
-            <p className="text-xs text-devonz-elements-textSecondary line-clamp-2">{repository.description}</p>
+            <p className="text-xs text-bolt-elements-textSecondary line-clamp-2">{repository.description}</p>
           )}
 
           {/* Repository metrics bar */}
           <div className="flex items-center gap-2 text-xs">
             {repository.license && (
-              <span className="px-2 py-0.5 rounded-full bg-devonz-elements-background-depth-2 text-devonz-elements-textTertiary">
+              <span className="px-2 py-0.5 rounded-full bg-bolt-elements-background-depth-2 text-bolt-elements-textTertiary">
                 {repository.license.spdx_id || repository.license.name}
               </span>
             )}
@@ -271,7 +271,7 @@ export function RepositoryCard({
               </span>
             )}
             {repository.fork && (
-              <span className="px-2 py-0.5 rounded-full bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent">
+              <span className="px-2 py-0.5 rounded-full bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent">
                 Fork
               </span>
             )}
@@ -279,7 +279,7 @@ export function RepositoryCard({
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 text-xs text-devonz-elements-textSecondary">
+          <div className="flex items-center gap-3 text-xs text-bolt-elements-textSecondary">
             <span className="flex items-center gap-1" title="Default Branch">
               <div className="i-ph:git-branch size-3.5" />
               {repository.default_branch}
@@ -330,7 +330,7 @@ export function RepositoryCard({
               <span
                 className={cn(
                   'flex items-center gap-1 ml-2 transition-colors',
-                  'group-hover:text-devonz-elements-item-contentAccent',
+                  'group-hover:text-bolt-elements-item-contentAccent',
                 )}
               >
                 <div className="i-ph:arrow-square-out size-3.5" />

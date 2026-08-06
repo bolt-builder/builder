@@ -21,13 +21,13 @@ interface PlanProps {
 }
 
 const taskStatusColors: Record<PlanTask['status'], string> = {
-  'not-started': 'text-devonz-elements-textSecondary',
+  'not-started': 'text-bolt-elements-textSecondary',
   'in-progress': 'text-blue-500',
   completed: 'text-green-500',
 };
 
 const subTaskStatusColors: Record<SubTaskStatus, string> = {
-  pending: 'text-devonz-elements-textSecondary',
+  pending: 'text-bolt-elements-textSecondary',
   'in-progress': 'text-blue-500',
   done: 'text-green-500',
   failed: 'text-red-500',
@@ -51,7 +51,7 @@ const StatusIcon = memo(({ status }: { status: PlanTask['status'] }) => {
         </div>
       );
     default:
-      return <div className="w-5 h-5 rounded-full border-2 border-devonz-elements-borderColor bg-transparent" />;
+      return <div className="w-5 h-5 rounded-full border-2 border-bolt-elements-borderColor bg-transparent" />;
   }
 });
 
@@ -81,7 +81,7 @@ const SubTaskStatusIcon = memo(({ status }: { status: SubTaskStatus }) => {
         </div>
       );
     default:
-      return <div className="w-4 h-4 rounded-full border border-devonz-elements-borderColor bg-transparent" />;
+      return <div className="w-4 h-4 rounded-full border border-bolt-elements-borderColor bg-transparent" />;
   }
 });
 
@@ -134,7 +134,7 @@ const DependencyChips = memo(({ dependsOn, allTasks }: { dependsOn: string[]; al
 
   return (
     <div className="flex flex-wrap items-center gap-1 mt-1">
-      <div className="i-ph:arrow-bend-down-right text-xs text-devonz-elements-textSecondary" />
+      <div className="i-ph:arrow-bend-down-right text-xs text-bolt-elements-textSecondary" />
       {dependsOn.map((depId, i) => {
         const depTask = allTasks.find((t) => t.id === depId);
         const isDone = depTask?.status === 'completed';
@@ -147,7 +147,7 @@ const DependencyChips = memo(({ dependsOn, allTasks }: { dependsOn: string[]; al
               'text-xs px-1.5 py-0.5 rounded-full border font-mono',
               isDone
                 ? 'bg-green-500/10 text-green-500/80 border-green-500/20 line-through'
-                : 'bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary border-devonz-elements-borderColor',
+                : 'bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary border-bolt-elements-borderColor',
             )}
           >
             {depId}
@@ -227,7 +227,7 @@ const TaskItem = memo(({ task, index, allTasks }: TaskItemProps) => {
         'rounded-lg transition-colors',
         task.status === 'in-progress'
           ? 'bg-blue-500/10 border border-blue-500/30'
-          : 'bg-devonz-elements-background-depth-2 border border-transparent',
+          : 'bg-bolt-elements-background-depth-2 border border-transparent',
       )}
     >
       {/* Main task row */}
@@ -241,7 +241,7 @@ const TaskItem = memo(({ task, index, allTasks }: TaskItemProps) => {
           >
             <div
               className={cn(
-                'i-ph:caret-right text-sm text-devonz-elements-textSecondary transition-transform',
+                'i-ph:caret-right text-sm text-bolt-elements-textSecondary transition-transform',
                 subTasksOpen ? 'rotate-90' : '',
               )}
             />
@@ -269,12 +269,12 @@ const TaskItem = memo(({ task, index, allTasks }: TaskItemProps) => {
 
             {/* Sub-task completion percentage */}
             {completionPct !== null && (
-              <span className="text-xs text-devonz-elements-textSecondary ml-auto flex-shrink-0">{completionPct}%</span>
+              <span className="text-xs text-bolt-elements-textSecondary ml-auto flex-shrink-0">{completionPct}%</span>
             )}
           </div>
 
           {task.description && (
-            <div className="text-xs text-devonz-elements-textSecondary mt-1 line-clamp-2">{task.description}</div>
+            <div className="text-xs text-bolt-elements-textSecondary mt-1 line-clamp-2">{task.description}</div>
           )}
 
           {/* Dependency chips */}
@@ -285,7 +285,7 @@ const TaskItem = memo(({ task, index, allTasks }: TaskItemProps) => {
               {task.fileActions.map((file, i) => (
                 <span
                   key={`${file}-${i}`}
-                  className="text-xs px-1.5 py-0.5 rounded bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary font-mono"
+                  className="text-xs px-1.5 py-0.5 rounded bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary font-mono"
                 >
                   {file}
                 </span>
@@ -310,7 +310,7 @@ const TaskItem = memo(({ task, index, allTasks }: TaskItemProps) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="border-t border-devonz-elements-borderColor/50 pb-2"
+              className="border-t border-bolt-elements-borderColor/50 pb-2"
             >
               {task.subTasks!.map((sub, i) => (
                 <SubTaskItem key={`${task.id}-${sub.id}-${i}`} subTask={sub} />
@@ -416,23 +416,23 @@ export const Plan = memo(({ className }: PlanProps) => {
   const totalCount = state.tasks.length;
 
   return (
-    <div className={cn('border-b border-devonz-elements-borderColor', className)}>
+    <div className={cn('border-b border-bolt-elements-borderColor', className)}>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
           <button
             className={cn(
               'w-full flex items-center justify-between p-4',
-              'bg-devonz-elements-background-depth-1 hover:bg-devonz-elements-background-depth-2',
+              'bg-bolt-elements-background-depth-1 hover:bg-bolt-elements-background-depth-2',
               'transition-colors cursor-pointer',
             )}
           >
             <div className="flex items-center gap-3">
-              <div className="i-ph:list-checks-fill text-xl text-devonz-elements-textPrimary" />
+              <div className="i-ph:list-checks-fill text-xl text-bolt-elements-textPrimary" />
               <div className="text-left">
-                <h3 className="font-semibold text-devonz-elements-textPrimary">
+                <h3 className="font-semibold text-bolt-elements-textPrimary">
                   {state.planTitle || 'Implementation Plan'}
                 </h3>
-                <p className="text-xs text-devonz-elements-textSecondary">
+                <p className="text-xs text-bolt-elements-textSecondary">
                   {completedCount} of {totalCount} tasks completed
                 </p>
               </div>
@@ -444,13 +444,13 @@ export const Plan = memo(({ className }: PlanProps) => {
                 <div className="w-24 hidden sm:block">
                   <Progress value={progress} />
                 </div>
-                <span className="text-sm font-medium text-devonz-elements-textSecondary">{progress}%</span>
+                <span className="text-sm font-medium text-bolt-elements-textSecondary">{progress}%</span>
               </div>
 
               {/* Chevron */}
               <div
                 className={cn(
-                  'i-ph:caret-down text-devonz-elements-textSecondary transition-transform',
+                  'i-ph:caret-down text-bolt-elements-textSecondary transition-transform',
                   isOpen ? 'rotate-180' : '',
                 )}
               />
@@ -474,7 +474,7 @@ export const Plan = memo(({ className }: PlanProps) => {
               </div>
 
               {/* Approval actions */}
-              <div className="pt-3 border-t border-devonz-elements-borderColor">
+              <div className="pt-3 border-t border-bolt-elements-borderColor">
                 <PlanActions approvedByUser={state.approvedByUser} progress={progress} />
               </div>
             </motion.div>

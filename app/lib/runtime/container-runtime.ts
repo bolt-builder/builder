@@ -39,9 +39,9 @@ const logger = createScopedLogger('ContainerRuntime');
 const execFileAsync = promisify(execFile);
 
 /** Default base directory for project workspaces. */
-const DEFAULT_PROJECTS_DIR = nodePath.join(os.homedir(), '.devonz', 'projects');
+const DEFAULT_PROJECTS_DIR = nodePath.join(os.homedir(), '.bolt', 'projects');
 
-/** Default container image — configurable via DEVONZ_CONTAINER_IMAGE env var. */
+/** Default container image — configurable via BOLT_CONTAINER_IMAGE env var. */
 const DEFAULT_CONTAINER_IMAGE = 'node:20-slim';
 
 /** Container timeout: 30 minutes. */
@@ -120,7 +120,7 @@ export class ContainerRuntime implements RuntimeProvider {
     resourceLimits?: Partial<ContainerResourceLimits>;
   }) {
     this.#projectsDir = options?.projectsDir ?? DEFAULT_PROJECTS_DIR;
-    this.#containerImage = options?.containerImage ?? process.env.DEVONZ_CONTAINER_IMAGE ?? DEFAULT_CONTAINER_IMAGE;
+    this.#containerImage = options?.containerImage ?? process.env.BOLT_CONTAINER_IMAGE ?? DEFAULT_CONTAINER_IMAGE;
     this.#resourceLimits = { ...DEFAULT_RESOURCE_LIMITS, ...options?.resourceLimits };
     this.fs = new LocalFileSystem(this.#projectsDir);
   }
@@ -165,7 +165,7 @@ export class ContainerRuntime implements RuntimeProvider {
     auditCommand(this.#projectId, fullCommand, 'spawn');
 
     const sessionId = randomUUID();
-    const containerName = `devonz-${this.#projectId}-${sessionId.slice(0, 8)}`;
+    const containerName = `bolt-${this.#projectId}-${sessionId.slice(0, 8)}`;
     const cwd = options.cwd ?? '/workspace';
 
     const dockerArgs = this.#buildDockerRunArgs({
@@ -279,7 +279,7 @@ export class ContainerRuntime implements RuntimeProvider {
 
     auditCommand(this.#projectId, command, 'exec');
 
-    const containerName = `devonz-exec-${this.#projectId}-${randomUUID().slice(0, 8)}`;
+    const containerName = `bolt-exec-${this.#projectId}-${randomUUID().slice(0, 8)}`;
     const cwd = options.cwd ?? '/workspace';
     const timeout = options.timeout ?? 5 * 60 * 1000;
 

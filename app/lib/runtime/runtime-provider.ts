@@ -1,6 +1,6 @@
 /**
  * @module runtime-provider
- * Core interface definitions for the Devonz runtime abstraction layer.
+ * Core interface definitions for the Bolt runtime abstraction layer.
  *
  * Defines the contract between application code and the execution backend.
  * The default implementation uses local Node.js (`child_process` + native `fs`),
@@ -255,7 +255,7 @@ export interface RuntimeFileSystem {
 export interface RuntimeConfig {
   /**
    * Base directory for all project workspaces.
-   * Default: `~/.devonz/projects`
+   * Default: `~/.bolt/projects`
    */
   projectsDir: string;
 

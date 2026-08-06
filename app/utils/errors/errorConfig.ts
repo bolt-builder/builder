@@ -26,8 +26,7 @@ export const SUPPRESSION_PATTERNS: Array<{
 }> = [
   // Inspector / DevTools internal errors - not user code issues
   {
-    pattern:
-      /_devonz-inspector|_devonz-capture|_devonz-html2canvas|inspector-core|screenshot-capture|error-capture\.js/i,
+    pattern: /_bolt-inspector|_bolt-capture|_bolt-html2canvas|inspector-core|screenshot-capture|error-capture\.js/i,
     reason: 'Internal inspector tooling errors should not trigger AutoFix',
     categories: ['preview'],
   },

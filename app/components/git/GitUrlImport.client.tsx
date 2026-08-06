@@ -3,7 +3,7 @@ import { generateId, type Message } from 'ai';
 import { useEffect, useState } from 'react';
 import { Chat } from '~/components/chat/Chat.client';
 import { useChatHistory } from '~/lib/persistence';
-import { createCommandsMessage, detectProjectCommands, escapeDevonzTags } from '~/utils/projectCommands';
+import { createCommandsMessage, detectProjectCommands, escapeBoltTags } from '~/utils/projectCommands';
 import { cleanPackageJson } from '~/utils/packageJsonCleaner';
 import { LoadingOverlay } from '~/components/ui/LoadingOverlay';
 import { toast } from 'sonner';
@@ -88,16 +88,16 @@ export function GitUrlImport() {
       const filesMessage: Message = {
         role: 'assistant',
         content: `Cloning the repo ${repoUrl} into /home/project
-<devonzArtifact id="imported-files" title="Git Cloned Files" type="bundled" preloaded="true">
+<boltArtifact id="imported-files" title="Git Cloned Files" type="bundled" preloaded="true">
 ${fileContents
   .map(
     (file) =>
-      `<devonzAction type="file" filePath="${file.path}">
-${escapeDevonzTags(file.content)}
-</devonzAction>`,
+      `<boltAction type="file" filePath="${file.path}">
+${escapeBoltTags(file.content)}
+</boltAction>`,
   )
   .join('\n')}
-</devonzArtifact>`,
+</boltArtifact>`,
         id: generateId(),
         createdAt: new Date(),
       };

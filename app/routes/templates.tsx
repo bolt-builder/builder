@@ -8,10 +8,7 @@ const TemplatesGallery = clientLazy(() => import('~/components/templates/Templat
 // ── Route metadata ──────────────────────────────────────────────────────────
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'Templates | Devonz' },
-    { name: 'description', content: 'Browse curated website templates for Devonz' },
-  ];
+  return [{ title: 'Templates | Bolt' }, { name: 'description', content: 'Browse curated website templates for Bolt' }];
 };
 
 export const loader = () => Response.json({});
@@ -33,7 +30,7 @@ export function ErrorBoundary() {
   const error = useRouteError();
 
   useEffect(() => {
-    console.error('[Devonz:TemplatesRouteError]', {
+    console.error('[Bolt:TemplatesRouteError]', {
       timestamp: new Date().toISOString(),
       route: 'templates',
       ...(isRouteErrorResponse(error)
@@ -51,37 +48,37 @@ export function ErrorBoundary() {
       : 'An unexpected error occurred while loading templates.';
 
   return (
-    <main className="flex flex-col items-center justify-center h-full w-full bg-devonz-elements-background-depth-1 text-devonz-elements-textPrimary px-6">
+    <main className="flex flex-col items-center justify-center h-full w-full bg-bolt-elements-background-depth-1 text-bolt-elements-textPrimary px-6">
       <div className="max-w-lg w-full text-center">
         <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
           <div className="i-ph:layout text-3xl text-red-400" />
         </div>
         <h1 className="text-2xl font-bold mb-2">Templates Error</h1>
-        <p className="text-sm text-devonz-elements-textSecondary mb-8">{message}</p>
+        <p className="text-sm text-bolt-elements-textSecondary mb-8">{message}</p>
         <div className="flex gap-3 justify-center">
           <a
             href="/"
-            className="px-5 py-2.5 rounded-lg text-sm font-medium border border-devonz-elements-borderColor bg-transparent text-devonz-elements-textPrimary hover:bg-devonz-elements-background-depth-2 transition-colors duration-200"
+            className="px-5 py-2.5 rounded-lg text-sm font-medium border border-bolt-elements-borderColor bg-transparent text-bolt-elements-textPrimary hover:bg-bolt-elements-background-depth-2 transition-colors duration-200"
           >
             Go Home
           </a>
           <button
             onClick={() => window.location.reload()}
-            className="px-5 py-2.5 rounded-lg text-sm font-medium bg-devonz-elements-button-primary-background text-devonz-elements-button-primary-text hover:bg-devonz-elements-button-primary-backgroundHover transition-colors duration-200"
+            className="px-5 py-2.5 rounded-lg text-sm font-medium bg-bolt-elements-button-primary-background text-bolt-elements-button-primary-text hover:bg-bolt-elements-button-primary-backgroundHover transition-colors duration-200"
           >
             Reload
           </button>
         </div>
         {error instanceof Error && error.stack && (
           <details className="mt-8 text-left w-full">
-            <summary className="cursor-pointer text-xs text-devonz-elements-textTertiary hover:text-devonz-elements-textSecondary transition-colors">
+            <summary className="cursor-pointer text-xs text-bolt-elements-textTertiary hover:text-bolt-elements-textSecondary transition-colors">
               Error Details
             </summary>
-            <div className="mt-3 p-4 bg-devonz-elements-background-depth-2 border border-devonz-elements-borderColor rounded-lg overflow-auto max-h-64">
+            <div className="mt-3 p-4 bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor rounded-lg overflow-auto max-h-64">
               <p className="text-xs text-red-400 font-mono font-semibold mb-2">
                 {error.name}: {error.message}
               </p>
-              <pre className="text-xs text-devonz-elements-textTertiary font-mono whitespace-pre-wrap break-words">
+              <pre className="text-xs text-bolt-elements-textTertiary font-mono whitespace-pre-wrap break-words">
                 {error.stack}
               </pre>
             </div>

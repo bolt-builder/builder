@@ -12,9 +12,9 @@ const logger = createScopedLogger('API');
 
 /**
  * Validate a Bearer token from the `Authorization` header against the
- * `DEVONZ_API_KEY` environment variable.
+ * `BOLT_API_KEY` environment variable.
  *
- * - If `DEVONZ_API_KEY` is not set, **all requests are rejected** (unlike the
+ * - If `BOLT_API_KEY` is not set, **all requests are rejected** (unlike the
  *   UI auth which is permissive when unconfigured).  The programmatic API is
  *   opt-in and must be explicitly enabled.
  * - Uses timing-safe comparison to prevent timing attacks.
@@ -26,7 +26,7 @@ export function validateBearerToken(request: Request): {
   valid: boolean;
   reason?: 'missing_header' | 'malformed' | 'not_configured' | 'invalid';
 } {
-  const expected = process.env.DEVONZ_API_KEY;
+  const expected = process.env.BOLT_API_KEY;
 
   if (!expected) {
     return { valid: false, reason: 'not_configured' };

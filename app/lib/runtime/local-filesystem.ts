@@ -26,7 +26,7 @@ const logger = createScopedLogger('LocalFileSystem');
  *
  * Two injection paths:
  *   1. Static HTML apps  → inline <script> injected into index.html
- *   2. Server-rendered apps (Next.js, Remix, etc.) → external _devonz-capture.js
+ *   2. Server-rendered apps (Next.js, Remix, etc.) → external _bolt-capture.js
  *      written to public/ and a <script> tag injected into root layout files
  */
 
@@ -35,8 +35,8 @@ const CAPTURE_JS = `(function(){var L=false,G=false,C=[];function lh(cb){if(L&&w
 
 /* ── Path 1: index.html inline injection ────────────────────────────────── */
 
-const CAPTURE_MARKER_START = '<!-- devonz:capture-start -->';
-const CAPTURE_MARKER_END = '<!-- devonz:capture-end -->';
+const CAPTURE_MARKER_START = '<!-- bolt:capture-start -->';
+const CAPTURE_MARKER_END = '<!-- bolt:capture-end -->';
 
 const CAPTURE_SCRIPT = `${CAPTURE_MARKER_START}<script>${CAPTURE_JS}</script>${CAPTURE_MARKER_END}`;
 
@@ -86,13 +86,13 @@ function injectCaptureScript(html: string): string {
 import { getInspectorScript, getHtml2CanvasScript } from '~/lib/inspector/build-inspector-script';
 
 /** Name of the external inspector script written to the user's public/. */
-const INSPECTOR_SCRIPT_FILENAME = '_devonz-inspector.js';
+const INSPECTOR_SCRIPT_FILENAME = '_bolt-inspector.js';
 
 /** Tag injected into HTML files. Uses a data attribute as a stripping marker. */
-const INSPECTOR_TAG = `<script src="/${INSPECTOR_SCRIPT_FILENAME}" data-devonz-inspector="true"></script>`;
+const INSPECTOR_TAG = `<script src="/${INSPECTOR_SCRIPT_FILENAME}" data-bolt-inspector="true"></script>`;
 
 /** Regex to strip the injected inspector script tag. */
-const INSPECTOR_TAG_RE = /\s*<script\s[^>]*data-devonz-inspector[^>]*><\/script>/g;
+const INSPECTOR_TAG_RE = /\s*<script\s[^>]*data-bolt-inspector[^>]*><\/script>/g;
 
 /** Strip the inspector script tag from file content. */
 function stripInspectorTag(content: string): string {
@@ -102,16 +102,16 @@ function stripInspectorTag(content: string): string {
 /* ── Path 2: Root layout injection (Next.js App Router, etc.) ───────────── */
 
 /** Name of the external capture script written to public/. */
-const CAPTURE_SCRIPT_FILENAME = '_devonz-capture.js';
+const CAPTURE_SCRIPT_FILENAME = '_bolt-capture.js';
 
 /** Tag injected into root layout files. Uses a data attribute as a marker. */
-const LAYOUT_CAPTURE_TAG = `<script src="/${CAPTURE_SCRIPT_FILENAME}" data-devonz-capture="true"></script>`;
+const LAYOUT_CAPTURE_TAG = `<script src="/${CAPTURE_SCRIPT_FILENAME}" data-bolt-capture="true"></script>`;
 
 /** Regex to strip the injected layout capture tag. */
-const LAYOUT_CAPTURE_RE = /\s*<script\s[^>]*data-devonz-capture[^>]*><\/script>/g;
+const LAYOUT_CAPTURE_RE = /\s*<script\s[^>]*data-bolt-capture[^>]*><\/script>/g;
 
 /** Name of the html2canvas bundle written to the user's public/. */
-const HTML2CANVAS_FILENAME = '_devonz-html2canvas.min.js';
+const HTML2CANVAS_FILENAME = '_bolt-html2canvas.min.js';
 
 /**
  * Check if a path + content represents a root HTML layout file.
@@ -168,7 +168,7 @@ export class LocalFileSystem implements RuntimeFileSystem {
   }
 
   /**
-   * Write the external capture script to public/_devonz-capture.js.
+   * Write the external capture script to public/_bolt-capture.js.
    * Skips if already written this session (idempotent).
    */
   async #ensureCaptureScriptFile(): Promise<void> {
@@ -183,11 +183,11 @@ export class LocalFileSystem implements RuntimeFileSystem {
     await fs.writeFile(captureFile, CAPTURE_JS, 'utf-8');
     this.#captureScriptWritten = true;
 
-    logger.debug('Wrote external capture script to public/_devonz-capture.js');
+    logger.debug('Wrote external capture script to public/_bolt-capture.js');
   }
 
   /**
-   * Write the inspector script to public/_devonz-inspector.js.
+   * Write the inspector script to public/_bolt-inspector.js.
    * Skips if already written this session or if the inspector source is unavailable.
    */
   async #ensureInspectorScriptFile(): Promise<void> {
@@ -205,7 +205,7 @@ export class LocalFileSystem implements RuntimeFileSystem {
     await fs.writeFile(inspectorFile, inspectorScript, 'utf-8');
     this.#inspectorScriptWritten = true;
 
-    logger.debug('Wrote inspector script to public/_devonz-inspector.js');
+    logger.debug('Wrote inspector script to public/_bolt-inspector.js');
   }
 
   /**
@@ -221,7 +221,7 @@ export class LocalFileSystem implements RuntimeFileSystem {
   }
 
   /**
-   * Write the html2canvas bundle to public/_devonz-html2canvas.min.js.
+   * Write the html2canvas bundle to public/_bolt-html2canvas.min.js.
    * Skips if already written this session or if the bundle is unavailable.
    */
   async #ensureHtml2CanvasFile(): Promise<void> {
@@ -242,7 +242,7 @@ export class LocalFileSystem implements RuntimeFileSystem {
     await fs.writeFile(html2canvasFile, html2canvasContent, 'utf-8');
     this.#html2canvasWritten = true;
 
-    logger.debug('Wrote html2canvas bundle to public/_devonz-html2canvas.min.js');
+    logger.debug('Wrote html2canvas bundle to public/_bolt-html2canvas.min.js');
   }
 
   /** Resolve a relative path to an absolute path within the project root. */
@@ -271,12 +271,12 @@ export class LocalFileSystem implements RuntimeFileSystem {
     }
 
     // Strip injected capture tag from root layout files
-    if (content.includes('data-devonz-capture') && isRootLayout(path, content)) {
+    if (content.includes('data-bolt-capture') && isRootLayout(path, content)) {
       content = stripLayoutCaptureTag(content);
     }
 
     // Strip injected inspector tag so editor/git see clean content
-    if (content.includes('data-devonz-inspector')) {
+    if (content.includes('data-bolt-inspector')) {
       content = stripInspectorTag(content);
     }
 

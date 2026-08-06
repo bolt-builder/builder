@@ -107,7 +107,7 @@ export const ResizeHandle = memo(
         <div
           className={cn(
             'absolute inset-y-0 left-1/2 -translate-x-1/2 w-[3px] rounded-full transition-all duration-150',
-            'bg-devonz-elements-borderColor',
+            'bg-bolt-elements-borderColor',
             {
               'bg-accent-500 w-[4px]': isDragging,
               'group-hover:bg-accent-500/70 group-hover:w-[4px]': !disabled && !isDragging,

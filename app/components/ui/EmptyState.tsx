@@ -86,8 +86,8 @@ export function EmptyState({
     <div
       className={cn(
         'flex flex-col items-center justify-center',
-        'text-devonz-elements-textSecondary dark:text-devonz-elements-textSecondary-dark',
-        'bg-devonz-elements-background-depth-2 dark:bg-devonz-elements-background-depth-3 rounded-lg',
+        'text-bolt-elements-textSecondary dark:text-bolt-elements-textSecondary-dark',
+        'bg-bolt-elements-background-depth-2 dark:bg-bolt-elements-background-depth-3 rounded-lg',
         styles.container,
         className,
       )}
@@ -95,7 +95,7 @@ export function EmptyState({
       {/* Icon */}
       <div
         className={cn(
-          'rounded-full bg-devonz-elements-background-depth-3 dark:bg-devonz-elements-background-depth-4 flex items-center justify-center',
+          'rounded-full bg-bolt-elements-background-depth-3 dark:bg-bolt-elements-background-depth-4 flex items-center justify-center',
           styles.icon.container,
         )}
       >
@@ -103,7 +103,7 @@ export function EmptyState({
           className={cn(
             icon,
             styles.icon.size,
-            'text-devonz-elements-textTertiary dark:text-devonz-elements-textTertiary-dark',
+            'text-bolt-elements-textTertiary dark:text-bolt-elements-textTertiary-dark',
           )}
         />
       </div>
@@ -115,7 +115,7 @@ export function EmptyState({
       {description && (
         <p
           className={cn(
-            'text-devonz-elements-textTertiary dark:text-devonz-elements-textTertiary-dark text-center max-w-xs',
+            'text-bolt-elements-textTertiary dark:text-bolt-elements-textTertiary-dark text-center max-w-xs',
             styles.description,
           )}
         >

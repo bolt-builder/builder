@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Setup wizard for Devonz local installs.
+ * Setup wizard for Bolt local installs.
  *
  * Goals:
  * - Make initial configuration repeatable (init .env.local, optionally sync .env for Docker Compose).
  * - Allow users to set any env key via CLI flags or an interactive prompt (without echoing secrets).
  *
- * Based on upstream devonz.diy PR #2124 by embire2.
+ * Based on upstream bolt.diy PR #2124 by embire2.
  * This is intentionally dependency-free and cross-platform (Node-based).
  */
 

@@ -58,7 +58,7 @@ function CurrentDateTime() {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 text-sm text-devonz-elements-textSecondary border-b border-devonz-elements-borderColor">
+    <div className="flex items-center gap-2 px-4 py-2 text-sm text-bolt-elements-textSecondary border-b border-bolt-elements-borderColor">
       <div className="h-4 w-4 i-ph:clock opacity-80" />
       <div className="flex gap-2">
         <span>{dateTime.toLocaleDateString()}</span>
@@ -336,14 +336,14 @@ export const Menu = () => {
         style={{ width: '340px' }}
         className={cn(
           'flex selection-accent flex-col side-menu fixed top-0 h-full rounded-r-2xl',
-          'bg-devonz-elements-background-depth-1 border-r border-devonz-elements-borderColor',
+          'bg-bolt-elements-background-depth-1 border-r border-bolt-elements-borderColor',
           'shadow-xl backdrop-blur-sm text-sm',
           isSettingsOpen ? 'z-40' : 'z-sidebar',
         )}
       >
         <PanelErrorBoundary panelName="sidebar">
-          <div className="h-12 flex items-center justify-between px-4 border-b border-devonz-elements-borderColor bg-devonz-elements-background-depth-2/80 rounded-tr-2xl">
-            <span className="text-devonz-elements-textPrimary font-semibold text-lg">Devonz</span>
+          <div className="h-12 flex items-center justify-between px-4 border-b border-bolt-elements-borderColor bg-bolt-elements-background-depth-2/80 rounded-tr-2xl">
+            <span className="text-bolt-elements-textPrimary font-semibold text-lg">Bolt</span>
             <div className="flex items-center gap-2">
               <SettingsButton onClick={handleSettingsClick} />
               <ThemeSwitch />
@@ -366,7 +366,7 @@ export const Menu = () => {
                     'flex gap-1 items-center rounded-lg px-3 py-2 transition-colors',
                     selectionMode
                       ? 'bg-accent-500 text-white border border-accent-600'
-                      : 'bg-devonz-elements-background-depth-3 text-devonz-elements-textSecondary hover:bg-devonz-elements-background-depth-4 border border-devonz-elements-borderColor',
+                      : 'bg-bolt-elements-background-depth-3 text-bolt-elements-textSecondary hover:bg-bolt-elements-background-depth-4 border border-bolt-elements-borderColor',
                   )}
                   aria-label={selectionMode ? 'Exit selection mode' : 'Enter selection mode'}
                 >
@@ -375,10 +375,10 @@ export const Menu = () => {
               </div>
               <div className="relative w-full">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2">
-                  <span className="i-ph:magnifying-glass h-4 w-4 text-devonz-elements-textTertiary" />
+                  <span className="i-ph:magnifying-glass h-4 w-4 text-bolt-elements-textTertiary" />
                 </div>
                 <input
-                  className="w-full bg-devonz-elements-background-depth-3 relative pl-9 pr-3 py-2.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-accent-500/50 text-sm text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary border border-devonz-elements-borderColor"
+                  className="w-full bg-bolt-elements-background-depth-3 relative pl-9 pr-3 py-2.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-accent-500/50 text-sm text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary border border-bolt-elements-borderColor"
                   type="search"
                   placeholder="Search chats..."
                   onChange={handleSearchChange}
@@ -387,7 +387,7 @@ export const Menu = () => {
               </div>
             </div>
             <div className="flex items-center justify-between text-sm px-4 py-2">
-              <div className="font-medium text-devonz-elements-textSecondary">Your Chats</div>
+              <div className="font-medium text-bolt-elements-textSecondary">Your Chats</div>
               {selectionMode && (
                 <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" onClick={selectAll}>
@@ -406,14 +406,14 @@ export const Menu = () => {
             </div>
             <div className="flex-1 overflow-auto px-3 pb-3 modern-scrollbar">
               {filteredList.length === 0 && (
-                <div className="px-4 text-devonz-elements-textTertiary text-sm">
+                <div className="px-4 text-bolt-elements-textTertiary text-sm">
                   {list.length === 0 ? 'No previous conversations' : 'No matches found'}
                 </div>
               )}
               <DialogRoot open={dialogContent !== null}>
                 {binDates(filteredList).map(({ category, items }) => (
                   <div key={category} className="mt-2 first:mt-0 space-y-1">
-                    <div className="text-xs font-medium text-devonz-elements-textTertiary sticky top-0 z-1 bg-devonz-elements-background-depth-1 px-4 py-1">
+                    <div className="text-xs font-medium text-bolt-elements-textTertiary sticky top-0 z-1 bg-bolt-elements-background-depth-1 px-4 py-1">
                       {category}
                     </div>
                     <div className="space-y-0.5 pr-1">
@@ -440,19 +440,19 @@ export const Menu = () => {
                 <Dialog onBackdrop={closeDialog} onClose={closeDialog}>
                   {dialogContent?.type === 'delete' && (
                     <>
-                      <div className="p-6 bg-devonz-elements-bg-depth-1">
-                        <DialogTitle className="text-devonz-elements-textPrimary">Delete Chat?</DialogTitle>
-                        <DialogDescription className="mt-2 text-devonz-elements-textSecondary">
+                      <div className="p-6 bg-bolt-elements-bg-depth-1">
+                        <DialogTitle className="text-bolt-elements-textPrimary">Delete Chat?</DialogTitle>
+                        <DialogDescription className="mt-2 text-bolt-elements-textSecondary">
                           <p>
                             You are about to delete{' '}
-                            <span className="font-medium text-devonz-elements-textPrimary">
+                            <span className="font-medium text-bolt-elements-textPrimary">
                               {dialogContent.item.description}
                             </span>
                           </p>
                           <p className="mt-2">Are you sure you want to delete this chat?</p>
                         </DialogDescription>
                       </div>
-                      <div className="flex justify-end gap-3 px-6 py-4 bg-devonz-elements-bg-depth-2 border-t border-devonz-elements-borderColor">
+                      <div className="flex justify-end gap-3 px-6 py-4 bg-bolt-elements-bg-depth-2 border-t border-bolt-elements-borderColor">
                         <DialogButton type="secondary" onClick={closeDialog}>
                           Cancel
                         </DialogButton>
@@ -471,20 +471,18 @@ export const Menu = () => {
                   )}
                   {dialogContent?.type === 'bulkDelete' && (
                     <>
-                      <div className="p-6 bg-devonz-elements-bg-depth-1">
-                        <DialogTitle className="text-devonz-elements-textPrimary">Delete Selected Chats?</DialogTitle>
-                        <DialogDescription className="mt-2 text-devonz-elements-textSecondary">
+                      <div className="p-6 bg-bolt-elements-bg-depth-1">
+                        <DialogTitle className="text-bolt-elements-textPrimary">Delete Selected Chats?</DialogTitle>
+                        <DialogDescription className="mt-2 text-bolt-elements-textSecondary">
                           <p>
                             You are about to delete {dialogContent.items.length}{' '}
                             {dialogContent.items.length === 1 ? 'chat' : 'chats'}:
                           </p>
-                          <div className="mt-2 max-h-32 overflow-auto border border-devonz-elements-borderColor rounded-md bg-devonz-elements-bg-depth-2 p-2">
+                          <div className="mt-2 max-h-32 overflow-auto border border-bolt-elements-borderColor rounded-md bg-bolt-elements-bg-depth-2 p-2">
                             <ul className="list-disc pl-5 space-y-1">
                               {dialogContent.items.map((item) => (
                                 <li key={item.id} className="text-sm">
-                                  <span className="font-medium text-devonz-elements-textPrimary">
-                                    {item.description}
-                                  </span>
+                                  <span className="font-medium text-bolt-elements-textPrimary">{item.description}</span>
                                 </li>
                               ))}
                             </ul>
@@ -492,7 +490,7 @@ export const Menu = () => {
                           <p className="mt-3">Are you sure you want to delete these chats?</p>
                         </DialogDescription>
                       </div>
-                      <div className="flex justify-end gap-3 px-6 py-4 bg-devonz-elements-bg-depth-2 border-t border-devonz-elements-borderColor">
+                      <div className="flex justify-end gap-3 px-6 py-4 bg-bolt-elements-bg-depth-2 border-t border-bolt-elements-borderColor">
                         <DialogButton type="secondary" onClick={closeDialog}>
                           Cancel
                         </DialogButton>

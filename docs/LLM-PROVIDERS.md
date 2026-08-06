@@ -1,12 +1,12 @@
 # LLM Providers
 
-> Provider system architecture and how to add new LLM providers to Devonz.
+> Provider system architecture and how to add new LLM providers to Bolt.
 
 ---
 
 ## Overview
 
-Devonz supports **22 LLM providers** through a pluggable provider system built on the [Vercel AI SDK](https://sdk.vercel.ai/). Each provider is a self-contained class that extends `BaseProvider`.
+Bolt supports **22 LLM providers** through a pluggable provider system built on the [Vercel AI SDK](https://sdk.vercel.ai/). Each provider is a self-contained class that extends `BaseProvider`.
 
 ---
 

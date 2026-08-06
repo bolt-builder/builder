@@ -88,15 +88,13 @@ const CommitCard = memo(
         className="rounded-xl transition-all"
         style={{
           background: isCheckedOut
-            ? 'var(--devonz-elements-button-primary-background)'
+            ? 'var(--bolt-elements-button-primary-background)'
             : isHovered
-              ? 'var(--devonz-elements-bg-depth-4)'
+              ? 'var(--bolt-elements-bg-depth-4)'
               : 'transparent',
           opacity: isCheckedOut ? 0.95 : 1,
-          borderBottom: '1px solid var(--devonz-elements-borderColor)',
-          borderLeft: isHovered
-            ? '2px solid var(--devonz-elements-button-primary-background)'
-            : '2px solid transparent',
+          borderBottom: '1px solid var(--bolt-elements-borderColor)',
+          borderLeft: isHovered ? '2px solid var(--bolt-elements-button-primary-background)' : '2px solid transparent',
         }}
       >
         {/* Main card row */}
@@ -122,8 +120,8 @@ const CommitCard = memo(
                 alt={`Preview for ${commit.shortSha}`}
                 className="rounded-md object-contain w-full h-full cursor-zoom-in"
                 style={{
-                  border: '1px solid var(--devonz-elements-borderColor)',
-                  background: 'var(--devonz-elements-bg-depth-3)',
+                  border: '1px solid var(--bolt-elements-borderColor)',
+                  background: 'var(--bolt-elements-bg-depth-3)',
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -143,12 +141,12 @@ const CommitCard = memo(
               <div
                 className="rounded-md flex items-center justify-center w-full h-full"
                 style={{
-                  background: 'var(--devonz-elements-bg-depth-3)',
-                  border: '1px solid var(--devonz-elements-borderColor)',
+                  background: 'var(--bolt-elements-bg-depth-3)',
+                  border: '1px solid var(--bolt-elements-borderColor)',
                   minHeight: '36px',
                 }}
               >
-                <div className="i-ph:image text-base" style={{ color: 'var(--devonz-elements-textTertiary)' }} />
+                <div className="i-ph:image text-base" style={{ color: 'var(--bolt-elements-textTertiary)' }} />
               </div>
             )}
           </div>
@@ -159,8 +157,8 @@ const CommitCard = memo(
               <span
                 className="px-1.5 py-0.5 rounded text-xs font-mono"
                 style={{
-                  background: 'var(--devonz-elements-button-secondary-background)',
-                  color: 'var(--devonz-elements-textSecondary)',
+                  background: 'var(--bolt-elements-button-secondary-background)',
+                  color: 'var(--bolt-elements-textSecondary)',
                 }}
               >
                 {commit.shortSha}
@@ -170,8 +168,8 @@ const CommitCard = memo(
                 <span
                   className="px-2 py-0.5 rounded text-xs font-medium"
                   style={{
-                    background: 'var(--devonz-elements-button-primary-background)',
-                    color: 'var(--devonz-elements-button-primary-text)',
+                    background: 'var(--bolt-elements-button-primary-background)',
+                    color: 'var(--bolt-elements-button-primary-text)',
                   }}
                 >
                   Latest
@@ -182,8 +180,8 @@ const CommitCard = memo(
                 <span
                   className="px-2 py-0.5 rounded text-xs font-medium"
                   style={{
-                    background: 'var(--devonz-elements-item-backgroundAccent)',
-                    color: 'var(--devonz-elements-item-contentAccent)',
+                    background: 'var(--bolt-elements-item-backgroundAccent)',
+                    color: 'var(--bolt-elements-item-contentAccent)',
                   }}
                 >
                   Active
@@ -199,8 +197,8 @@ const CommitCard = memo(
                   }}
                   className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors"
                   style={{
-                    background: 'var(--devonz-elements-button-secondary-background)',
-                    color: 'var(--devonz-elements-textSecondary)',
+                    background: 'var(--bolt-elements-button-secondary-background)',
+                    color: 'var(--bolt-elements-textSecondary)',
                   }}
                   title="View changed files"
                 >
@@ -214,8 +212,8 @@ const CommitCard = memo(
                     }}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors"
                     style={{
-                      background: 'var(--devonz-elements-button-secondary-background)',
-                      color: 'var(--devonz-elements-textSecondary)',
+                      background: 'var(--bolt-elements-button-secondary-background)',
+                      color: 'var(--bolt-elements-textSecondary)',
                     }}
                     title="Fork from this version"
                   >
@@ -231,8 +229,8 @@ const CommitCard = memo(
                       }}
                       className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors"
                       style={{
-                        background: 'var(--devonz-elements-button-secondary-background)',
-                        color: 'var(--devonz-elements-textSecondary)',
+                        background: 'var(--bolt-elements-button-secondary-background)',
+                        color: 'var(--bolt-elements-textSecondary)',
                       }}
                       title="Download project at this version"
                     >
@@ -248,8 +246,8 @@ const CommitCard = memo(
                     }}
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors"
                     style={{
-                      background: 'var(--devonz-elements-button-primary-background)',
-                      color: 'var(--devonz-elements-button-primary-text)',
+                      background: 'var(--bolt-elements-button-primary-background)',
+                      color: 'var(--bolt-elements-button-primary-text)',
                     }}
                   >
                     <div className="i-ph:arrow-counter-clockwise text-xs" />
@@ -259,9 +257,9 @@ const CommitCard = memo(
               </div>
             </div>
 
-            <h3 className="text-sm font-medium text-devonz-elements-textPrimary truncate mb-0.5">{commit.message}</h3>
+            <h3 className="text-sm font-medium text-bolt-elements-textPrimary truncate mb-0.5">{commit.message}</h3>
 
-            <div className="flex items-center gap-1 text-xs text-devonz-elements-textTertiary">
+            <div className="flex items-center gap-1 text-xs text-bolt-elements-textTertiary">
               <div className="i-ph:clock text-xs" />
               <span>{formatRelativeTime(commit.timestamp)}</span>
               {totalTokens != null && totalTokens > 0 && (
@@ -281,7 +279,7 @@ const CommitCard = memo(
               {/* Expand chevron */}
               <motion.div
                 className="i-ph:caret-down text-xs ml-auto"
-                style={{ color: 'var(--devonz-elements-textTertiary)' }}
+                style={{ color: 'var(--bolt-elements-textTertiary)' }}
                 animate={{ rotate: isExpanded ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
               />
@@ -301,24 +299,24 @@ const CommitCard = memo(
             >
               <div
                 className="px-3 pb-3 pt-1 text-xs"
-                style={{ borderTop: '1px solid var(--devonz-elements-borderColor)' }}
+                style={{ borderTop: '1px solid var(--bolt-elements-borderColor)' }}
               >
                 {chatSummary && (
                   <div className="mb-2">
-                    <div className="font-medium text-devonz-elements-textSecondary mb-1">Summary</div>
-                    <div className="text-devonz-elements-textTertiary prose-sm max-w-none">
+                    <div className="font-medium text-bolt-elements-textSecondary mb-1">Summary</div>
+                    <div className="text-bolt-elements-textTertiary prose-sm max-w-none">
                       <Markdown>{chatSummary}</Markdown>
                     </div>
                   </div>
                 )}
                 {totalTokens != null && totalTokens > 0 && (
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-devonz-elements-textSecondary">Tokens:</span>
-                    <span className="font-mono text-devonz-elements-textTertiary">{totalTokens.toLocaleString()}</span>
+                    <span className="font-medium text-bolt-elements-textSecondary">Tokens:</span>
+                    <span className="font-mono text-bolt-elements-textTertiary">{totalTokens.toLocaleString()}</span>
                   </div>
                 )}
                 {!chatSummary && (totalTokens == null || totalTokens === 0) && (
-                  <div className="text-devonz-elements-textTertiary italic">No additional details available.</div>
+                  <div className="text-bolt-elements-textTertiary italic">No additional details available.</div>
                 )}
               </div>
             </motion.div>
@@ -575,13 +573,13 @@ export const Versions = memo(() => {
   );
 
   return (
-    <div className="h-full flex flex-col" style={{ background: 'var(--devonz-elements-bg-depth-1)' }}>
+    <div className="h-full flex flex-col" style={{ background: 'var(--bolt-elements-bg-depth-1)' }}>
       {/* Header */}
-      <div className="p-4 border-b border-devonz-elements-borderColor">
+      <div className="p-4 border-b border-bolt-elements-borderColor">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="i-ph:git-branch text-lg text-devonz-elements-textSecondary" />
-            <h2 className="text-lg font-semibold text-devonz-elements-textPrimary">Git History</h2>
+            <div className="i-ph:git-branch text-lg text-bolt-elements-textSecondary" />
+            <h2 className="text-lg font-semibold text-bolt-elements-textPrimary">Git History</h2>
           </div>
           <div className="flex items-center gap-2">
             {checkedOutSha && (
@@ -590,8 +588,8 @@ export const Versions = memo(() => {
                 disabled={restoring}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs transition-colors"
                 style={{
-                  background: 'var(--devonz-elements-button-primary-background)',
-                  color: 'var(--devonz-elements-button-primary-text)',
+                  background: 'var(--bolt-elements-button-primary-background)',
+                  color: 'var(--bolt-elements-button-primary-text)',
                 }}
               >
                 <div className="i-ph:arrow-up text-xs" />
@@ -603,33 +601,33 @@ export const Versions = memo(() => {
               disabled={loading}
               className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs transition-colors"
               style={{
-                background: 'var(--devonz-elements-button-secondary-background)',
-                color: 'var(--devonz-elements-textSecondary)',
+                background: 'var(--bolt-elements-button-secondary-background)',
+                color: 'var(--bolt-elements-textSecondary)',
               }}
               title="Refresh"
             >
               <div className={`i-ph:arrow-clockwise text-sm ${loading ? 'animate-spin' : ''}`} />
             </button>
-            <span className="text-sm text-devonz-elements-textTertiary">{commits.length} commits</span>
+            <span className="text-sm text-bolt-elements-textTertiary">{commits.length} commits</span>
           </div>
         </div>
 
-        <p className="text-xs text-devonz-elements-textTertiary mb-3">
+        <p className="text-xs text-bolt-elements-textTertiary mb-3">
           Every AI response is automatically committed. Restore any previous version with one click.
         </p>
 
         {/* Search */}
         <div className="relative">
-          <div className="i-ph:magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-devonz-elements-textTertiary" />
+          <div className="i-ph:magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-bolt-elements-textTertiary" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search commits..."
-            className="w-full pl-9 pr-4 py-2 rounded-lg text-sm text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary outline-none"
+            className="w-full pl-9 pr-4 py-2 rounded-lg text-sm text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary outline-none"
             style={{
-              background: 'var(--devonz-elements-button-secondary-background)',
-              border: '1px solid var(--devonz-elements-borderColor)',
+              background: 'var(--bolt-elements-button-secondary-background)',
+              border: '1px solid var(--bolt-elements-borderColor)',
             }}
           />
         </div>
@@ -639,8 +637,8 @@ export const Versions = memo(() => {
       <div className="flex-1 overflow-y-auto p-2">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-full">
-            <div className="i-ph:spinner-gap-bold animate-spin text-2xl text-devonz-elements-textTertiary mb-2" />
-            <span className="text-sm text-devonz-elements-textTertiary">Loading history...</span>
+            <div className="i-ph:spinner-gap-bold animate-spin text-2xl text-bolt-elements-textTertiary mb-2" />
+            <span className="text-sm text-bolt-elements-textTertiary">Loading history...</span>
           </div>
         ) : filteredCommits.length > 0 ? (
           <AnimatePresence>
@@ -670,17 +668,17 @@ export const Versions = memo(() => {
           </AnimatePresence>
         ) : commits.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center p-8">
-            <div className="i-ph:git-commit text-4xl text-devonz-elements-textTertiary mb-4" />
-            <h3 className="text-sm font-medium text-devonz-elements-textSecondary mb-1">No commits yet</h3>
-            <p className="text-xs text-devonz-elements-textTertiary max-w-xs">
+            <div className="i-ph:git-commit text-4xl text-bolt-elements-textTertiary mb-4" />
+            <h3 className="text-sm font-medium text-bolt-elements-textSecondary mb-1">No commits yet</h3>
+            <p className="text-xs text-bolt-elements-textTertiary max-w-xs">
               Commits are created automatically after each AI response. Start a conversation to see history here.
             </p>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center p-8">
-            <div className="i-ph:magnifying-glass text-4xl text-devonz-elements-textTertiary mb-4" />
-            <h3 className="text-sm font-medium text-devonz-elements-textSecondary mb-1">No matches</h3>
-            <p className="text-xs text-devonz-elements-textTertiary">No commits match &quot;{searchQuery}&quot;</p>
+            <div className="i-ph:magnifying-glass text-4xl text-bolt-elements-textTertiary mb-4" />
+            <h3 className="text-sm font-medium text-bolt-elements-textSecondary mb-1">No matches</h3>
+            <p className="text-xs text-bolt-elements-textTertiary">No commits match &quot;{searchQuery}&quot;</p>
           </div>
         )}
       </div>
@@ -711,7 +709,7 @@ export const Versions = memo(() => {
                 maxWidth: '90vw',
                 maxHeight: '90vh',
                 objectFit: 'contain',
-                border: '2px solid var(--devonz-elements-borderColor)',
+                border: '2px solid var(--bolt-elements-borderColor)',
               }}
               onClick={(e) => e.stopPropagation()}
             />
@@ -756,24 +754,24 @@ export const Versions = memo(() => {
                 width: '90vw',
                 maxWidth: '1000px',
                 maxHeight: '85vh',
-                background: 'var(--devonz-elements-bg-depth-2)',
-                border: '2px solid var(--devonz-elements-borderColor)',
+                background: 'var(--bolt-elements-bg-depth-2)',
+                border: '2px solid var(--bolt-elements-borderColor)',
               }}
               onClick={(e) => e.stopPropagation()}
             >
               <div
                 className="flex items-center justify-between px-4 py-3"
-                style={{ borderBottom: '1px solid var(--devonz-elements-borderColor)' }}
+                style={{ borderBottom: '1px solid var(--bolt-elements-borderColor)' }}
               >
-                <span className="text-sm font-medium text-devonz-elements-textPrimary">Full Diff</span>
+                <span className="text-sm font-medium text-bolt-elements-textPrimary">Full Diff</span>
                 <button
                   onClick={() => setDiffModalContent(null)}
                   className="flex items-center justify-center rounded-full transition-colors"
                   style={{
                     width: '28px',
                     height: '28px',
-                    background: 'var(--devonz-elements-button-secondary-background)',
-                    color: 'var(--devonz-elements-textSecondary)',
+                    background: 'var(--bolt-elements-button-secondary-background)',
+                    color: 'var(--bolt-elements-textSecondary)',
                   }}
                   aria-label="Close diff"
                 >
@@ -784,12 +782,12 @@ export const Versions = memo(() => {
                 <pre
                   className="rounded-md p-3 text-xs font-mono leading-relaxed"
                   style={{
-                    background: 'var(--devonz-elements-bg-depth-1)',
-                    border: '1px solid var(--devonz-elements-borderColor)',
+                    background: 'var(--bolt-elements-bg-depth-1)',
+                    border: '1px solid var(--bolt-elements-borderColor)',
                   }}
                 >
                   {diffModalContent.split('\n').map((line, i) => {
-                    let color = 'var(--devonz-elements-textTertiary)';
+                    let color = 'var(--bolt-elements-textTertiary)';
                     let bg = 'transparent';
 
                     if (line.startsWith('+') && !line.startsWith('+++')) {
@@ -801,7 +799,7 @@ export const Versions = memo(() => {
                     } else if (line.startsWith('@@')) {
                       color = '#60a5fa';
                     } else if (line.startsWith('diff ') || line.startsWith('index ')) {
-                      color = 'var(--devonz-elements-textTertiary)';
+                      color = 'var(--bolt-elements-textTertiary)';
                     }
 
                     return (
@@ -841,25 +839,25 @@ export const Versions = memo(() => {
                 width: '90vw',
                 maxWidth: '1000px',
                 maxHeight: '85vh',
-                background: 'var(--devonz-elements-bg-depth-2)',
-                border: '2px solid var(--devonz-elements-borderColor)',
+                background: 'var(--bolt-elements-bg-depth-2)',
+                border: '2px solid var(--bolt-elements-borderColor)',
               }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div
                 className="flex items-center justify-between px-4 py-3"
-                style={{ borderBottom: '1px solid var(--devonz-elements-borderColor)' }}
+                style={{ borderBottom: '1px solid var(--bolt-elements-borderColor)' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-devonz-elements-textPrimary">
+                  <span className="text-sm font-medium text-bolt-elements-textPrimary">
                     {filesModal.files.length} file{filesModal.files.length !== 1 ? 's' : ''} changed
                   </span>
                   <span
                     className="px-1.5 py-0.5 rounded text-xs font-mono"
                     style={{
-                      background: 'var(--devonz-elements-button-secondary-background)',
-                      color: 'var(--devonz-elements-textSecondary)',
+                      background: 'var(--bolt-elements-button-secondary-background)',
+                      color: 'var(--bolt-elements-textSecondary)',
                     }}
                   >
                     {filesModal.sha.slice(0, 7)}
@@ -870,8 +868,8 @@ export const Versions = memo(() => {
                     onClick={() => handleDownload(filesModal.sha, 'changed')}
                     className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs transition-colors"
                     style={{
-                      background: 'var(--devonz-elements-button-secondary-background)',
-                      color: 'var(--devonz-elements-textSecondary)',
+                      background: 'var(--bolt-elements-button-secondary-background)',
+                      color: 'var(--bolt-elements-textSecondary)',
                     }}
                     title="Download changed files"
                   >
@@ -882,8 +880,8 @@ export const Versions = memo(() => {
                     onClick={() => handleDownload(filesModal.sha, 'full')}
                     className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs transition-colors"
                     style={{
-                      background: 'var(--devonz-elements-button-secondary-background)',
-                      color: 'var(--devonz-elements-textSecondary)',
+                      background: 'var(--bolt-elements-button-secondary-background)',
+                      color: 'var(--bolt-elements-textSecondary)',
                     }}
                     title="Download full project"
                   >
@@ -896,8 +894,8 @@ export const Versions = memo(() => {
                     style={{
                       width: '28px',
                       height: '28px',
-                      background: 'var(--devonz-elements-button-secondary-background)',
-                      color: 'var(--devonz-elements-textSecondary)',
+                      background: 'var(--bolt-elements-button-secondary-background)',
+                      color: 'var(--bolt-elements-textSecondary)',
                     }}
                     aria-label="Close changed files"
                   >
@@ -927,11 +925,11 @@ export const Versions = memo(() => {
                   }
 
                   return (
-                    <div key={file} style={{ borderBottom: '1px solid var(--devonz-elements-borderColor)' }}>
+                    <div key={file} style={{ borderBottom: '1px solid var(--bolt-elements-borderColor)' }}>
                       <button
                         type="button"
                         className="flex items-center gap-2 px-4 py-2 w-full text-left cursor-pointer transition-colors hover:brightness-110"
-                        style={{ background: 'var(--devonz-elements-bg-depth-3)' }}
+                        style={{ background: 'var(--bolt-elements-bg-depth-3)' }}
                         onClick={() => {
                           setExpandedFiles((prev) => {
                             const next = new Set(prev);
@@ -948,7 +946,7 @@ export const Versions = memo(() => {
                         aria-expanded={isExpanded}
                       >
                         <div
-                          className={`i-ph:caret-right text-xs transition-transform text-devonz-elements-textSecondary ${isExpanded ? 'rotate-90' : ''}`}
+                          className={`i-ph:caret-right text-xs transition-transform text-bolt-elements-textSecondary ${isExpanded ? 'rotate-90' : ''}`}
                         />
                         <span
                           className="w-4 text-center font-mono font-bold text-xs"
@@ -958,8 +956,8 @@ export const Versions = memo(() => {
                         >
                           {status}
                         </span>
-                        <div className="i-ph:file-text text-xs text-devonz-elements-textSecondary" />
-                        <span className="font-mono text-sm text-devonz-elements-textPrimary flex-1">{file}</span>
+                        <div className="i-ph:file-text text-xs text-bolt-elements-textSecondary" />
+                        <span className="font-mono text-sm text-bolt-elements-textPrimary flex-1">{file}</span>
                         {(additions > 0 || deletions > 0) && (
                           <span className="flex items-center gap-1.5 font-mono text-xs ml-auto">
                             {additions > 0 && <span style={{ color: '#4ade80' }}>+{additions}</span>}
@@ -970,10 +968,10 @@ export const Versions = memo(() => {
                       {isExpanded && diff && (
                         <pre
                           className="px-4 py-2 text-xs font-mono leading-relaxed overflow-x-auto"
-                          style={{ background: 'var(--devonz-elements-bg-depth-1)' }}
+                          style={{ background: 'var(--bolt-elements-bg-depth-1)' }}
                         >
                           {diff.split('\n').map((line, i) => {
-                            let color = 'var(--devonz-elements-textTertiary)';
+                            let color = 'var(--bolt-elements-textTertiary)';
                             let bg = 'transparent';
 
                             if (line.startsWith('+') && !line.startsWith('+++')) {
@@ -985,7 +983,7 @@ export const Versions = memo(() => {
                             } else if (line.startsWith('@@')) {
                               color = '#60a5fa';
                             } else if (line.startsWith('diff ') || line.startsWith('index ')) {
-                              color = 'var(--devonz-elements-textTertiary)';
+                              color = 'var(--bolt-elements-textTertiary)';
                             }
 
                             return (

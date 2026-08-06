@@ -248,25 +248,25 @@ describe('sanitizeErrorMessage', () => {
  * ---------------------------------------------------------------------------
  */
 describe('validateAuthToken', () => {
-  const originalEnv = process.env.DEVONZ_AUTH_TOKEN;
+  const originalEnv = process.env.BOLT_AUTH_TOKEN;
 
   afterEach(() => {
     if (originalEnv !== undefined) {
-      process.env.DEVONZ_AUTH_TOKEN = originalEnv;
+      process.env.BOLT_AUTH_TOKEN = originalEnv;
     } else {
-      delete process.env.DEVONZ_AUTH_TOKEN;
+      delete process.env.BOLT_AUTH_TOKEN;
     }
   });
 
-  it('bypasses auth when DEVONZ_AUTH_TOKEN is not set', () => {
-    delete process.env.DEVONZ_AUTH_TOKEN;
+  it('bypasses auth when BOLT_AUTH_TOKEN is not set', () => {
+    delete process.env.BOLT_AUTH_TOKEN;
 
     const req = createMockRequest({ url: '/api/chat' });
     expect(validateAuthToken(req)).toBe(true);
   });
 
   it('validates a correct token from the X-Auth-Token header', () => {
-    process.env.DEVONZ_AUTH_TOKEN = 'my-secret-token';
+    process.env.BOLT_AUTH_TOKEN = 'my-secret-token';
 
     const req = createMockRequest({
       url: '/api/chat',
@@ -276,7 +276,7 @@ describe('validateAuthToken', () => {
   });
 
   it('rejects an incorrect token from the header', () => {
-    process.env.DEVONZ_AUTH_TOKEN = 'my-secret-token';
+    process.env.BOLT_AUTH_TOKEN = 'my-secret-token';
 
     const req = createMockRequest({
       url: '/api/chat',
@@ -285,18 +285,18 @@ describe('validateAuthToken', () => {
     expect(validateAuthToken(req)).toBe(false);
   });
 
-  it('reads token from the devonz-auth cookie as fallback', () => {
-    process.env.DEVONZ_AUTH_TOKEN = 'cookie-token';
+  it('reads token from the bolt-auth cookie as fallback', () => {
+    process.env.BOLT_AUTH_TOKEN = 'cookie-token';
 
     const req = createMockRequest({
       url: '/api/chat',
-      headers: { Cookie: 'other=val; devonz-auth=cookie-token; extra=foo' },
+      headers: { Cookie: 'other=val; bolt-auth=cookie-token; extra=foo' },
     });
     expect(validateAuthToken(req)).toBe(true);
   });
 
   it('rejects request when token is missing entirely', () => {
-    process.env.DEVONZ_AUTH_TOKEN = 'expected-token';
+    process.env.BOLT_AUTH_TOKEN = 'expected-token';
 
     const req = createMockRequest({ url: '/api/chat' });
     expect(validateAuthToken(req)).toBe(false);
@@ -323,7 +323,7 @@ describe('withSecurity', () => {
   });
 
   it('returns 401 when requireAuth is enabled and token is missing', async () => {
-    process.env.DEVONZ_AUTH_TOKEN = 'required-token';
+    process.env.BOLT_AUTH_TOKEN = 'required-token';
 
     const secured = withSecurity(okHandler, { requireAuth: true, rateLimit: false });
     const ctx = createMockContext({ method: 'GET', url: '/api/test' });
@@ -334,11 +334,11 @@ describe('withSecurity', () => {
     expect(body.error).toBe(true);
     expect(body.message).toBe('Unauthorized');
 
-    delete process.env.DEVONZ_AUTH_TOKEN;
+    delete process.env.BOLT_AUTH_TOKEN;
   });
 
   it('adds security headers to successful responses', async () => {
-    delete process.env.DEVONZ_AUTH_TOKEN;
+    delete process.env.BOLT_AUTH_TOKEN;
 
     const secured = withSecurity(okHandler, { rateLimit: false });
     const ctx = createMockContext({

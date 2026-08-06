@@ -99,7 +99,7 @@ describe('WebSocket Server', () => {
   let testServer: Awaited<ReturnType<typeof createTestServer>>;
 
   beforeEach(async () => {
-    process.env = { ...ORIGINAL_ENV, DEVONZ_API_KEY: TEST_TOKEN };
+    process.env = { ...ORIGINAL_ENV, BOLT_API_KEY: TEST_TOKEN };
     testServer = await createTestServer();
   });
 
@@ -173,8 +173,8 @@ describe('WebSocket Server', () => {
       ).resolves.toBeUndefined();
     });
 
-    it('rejects when DEVONZ_API_KEY is not configured', async () => {
-      delete process.env.DEVONZ_API_KEY;
+    it('rejects when BOLT_API_KEY is not configured', async () => {
+      delete process.env.BOLT_API_KEY;
 
       await expect(
         new Promise<void>((resolve, reject) => {
@@ -339,8 +339,8 @@ describe('WebSocket Server', () => {
       expect(validateWsToken('wrong-token')).toBe(false);
     });
 
-    it('returns false when DEVONZ_API_KEY is not set', () => {
-      delete process.env.DEVONZ_API_KEY;
+    it('returns false when BOLT_API_KEY is not set', () => {
+      delete process.env.BOLT_API_KEY;
       expect(validateWsToken('any-token')).toBe(false);
     });
   });

@@ -235,10 +235,10 @@ export function sanitizeErrorMessage(error: unknown, isDevelopment = false): str
 
 /**
  * Validates the auth token from the request against the configured
- * `DEVONZ_AUTH_TOKEN` environment variable.
+ * `BOLT_AUTH_TOKEN` environment variable.
  *
- * Token is read from the `X-Auth-Token` header or the `devonz-auth` cookie.
- * If `DEVONZ_AUTH_TOKEN` is not set, auth is bypassed (local dev friendly).
+ * Token is read from the `X-Auth-Token` header or the `bolt-auth` cookie.
+ * If `BOLT_AUTH_TOKEN` is not set, auth is bypassed (local dev friendly).
  * Uses timing-safe comparison to prevent timing attacks.
  *
  * @param request - The incoming request to validate.

@@ -5,7 +5,7 @@
     "description": "Interactive 3D product exploded view with Three.js animations",
     "category": "landing-page",
     "vercelUrl": "https://3d-product-explode.vercel.app",
-    "githubRepo": "devonz-templates/3d-product-explode",
+    "githubRepo": "bolt-templates/3d-product-explode",
     "tags": ["3d", "threejs", "interactive", "product"],
     "icon": "i-ph:cube-duotone"
   },
@@ -15,7 +15,7 @@
     "description": "AI-powered 3D model generation and visualization tool",
     "category": "ai-app",
     "vercelUrl": "https://3d-model-generator-psi.vercel.app",
-    "githubRepo": "devonz-templates/3d-model-generator",
+    "githubRepo": "bolt-templates/3d-model-generator",
     "tags": ["3d", "ai", "generative", "modeling"],
     "icon": "i-ph:cube-transparent-duotone"
   },
@@ -25,7 +25,7 @@
     "description": "System for visualizing and exploring 3D vector data",
     "category": "dashboard",
     "vercelUrl": "https://3d-vector-visualization-system.vercel.app",
-    "githubRepo": "devonz-templates/3d-vector-visualization-system",
+    "githubRepo": "bolt-templates/3d-vector-visualization-system",
     "tags": ["3d", "data-viz", "vectors", "analytics"],
     "icon": "i-ph:chart-scatter-duotone"
   },
@@ -35,7 +35,7 @@
     "description": "Modern landing page template for AI-powered products",
     "category": "landing-page",
     "vercelUrl": "https://ai-landing-page-puce.vercel.app",
-    "githubRepo": "devonz-templates/ai-landing-page",
+    "githubRepo": "bolt-templates/ai-landing-page",
     "tags": ["ai", "marketing", "hero", "conversion"],
     "icon": "i-ph:robot-duotone"
   },
@@ -45,7 +45,7 @@
     "description": "Premium personal portfolio with elegant aesthetics",
     "category": "portfolio",
     "vercelUrl": "https://luxury-portfolio-phi.vercel.app",
-    "githubRepo": "devonz-templates/luxury-portfolio",
+    "githubRepo": "bolt-templates/luxury-portfolio",
     "tags": ["portfolio", "luxury", "personal", "creative"],
     "icon": "i-ph:diamond-duotone"
   },
@@ -55,7 +55,7 @@
     "description": "Agency website with liquid glass morphism effects",
     "category": "landing-page",
     "vercelUrl": "https://modern-agency-website-liquid-glass-ruddy.vercel.app",
-    "githubRepo": "devonz-templates/modern-agency-website-liquid-glass",
+    "githubRepo": "bolt-templates/modern-agency-website-liquid-glass",
     "tags": ["agency", "glassmorphism", "modern", "creative"],
     "icon": "i-ph:globe-duotone"
   },
@@ -65,7 +65,7 @@
     "description": "Conversion-focused landing page for SaaS products",
     "category": "saas",
     "vercelUrl": "https://saa-s-landing-page-beta-sand.vercel.app",
-    "githubRepo": "devonz-templates/saa-s-landing-page",
+    "githubRepo": "bolt-templates/saa-s-landing-page",
     "tags": ["saas", "startup", "pricing", "features"],
     "icon": "i-ph:rocket-launch-duotone"
   },
@@ -75,7 +75,7 @@
     "description": "Visual AI agent workflow builder with ReactFlow nodes",
     "category": "ai-app",
     "vercelUrl": "https://ai-agent-builder-weld.vercel.app",
-    "githubRepo": "devonz-templates/ai-agent-builder",
+    "githubRepo": "bolt-templates/ai-agent-builder",
     "tags": ["ai", "agent", "workflow", "reactflow"],
     "icon": "i-ph:flow-arrow-duotone"
   },
@@ -85,7 +85,7 @@
     "description": "SaaS landing page with integrations and pricing sections",
     "category": "saas",
     "vercelUrl": "https://auralink-saas-landing.vercel.app",
-    "githubRepo": "devonz-templates/auralink-saas-landing",
+    "githubRepo": "bolt-templates/auralink-saas-landing",
     "tags": ["saas", "integrations", "pricing", "startup"],
     "icon": "i-ph:link-duotone"
   },
@@ -95,7 +95,7 @@
     "description": "Animated background paths component with smooth transitions",
     "category": "landing-page",
     "vercelUrl": "https://background-paths-kappa.vercel.app",
-    "githubRepo": "devonz-templates/background-paths",
+    "githubRepo": "bolt-templates/background-paths",
     "tags": ["animation", "paths", "background", "creative"],
     "icon": "i-ph:path-duotone"
   },
@@ -105,7 +105,7 @@
     "description": "Digital lab portfolio with projects grid and blog",
     "category": "portfolio",
     "vercelUrl": "https://digital-lab-weld.vercel.app",
-    "githubRepo": "devonz-templates/digital-lab",
+    "githubRepo": "bolt-templates/digital-lab",
     "tags": ["portfolio", "lab", "projects", "blog"],
     "icon": "i-ph:flask-duotone"
   },
@@ -115,7 +115,7 @@
     "description": "Electric-themed landing page with video gallery and animations",
     "category": "landing-page",
     "vercelUrl": "https://electric-landing-page-nu.vercel.app",
-    "githubRepo": "devonz-templates/electric-landing-page",
+    "githubRepo": "bolt-templates/electric-landing-page",
     "tags": ["electric", "video", "animation", "landing"],
     "icon": "i-ph:lightning-duotone"
   },
@@ -125,7 +125,7 @@
     "description": "AI agent landing page with GSAP animations and effects",
     "category": "ai-app",
     "vercelUrl": "https://future-is-now-agent.vercel.app",
-    "githubRepo": "devonz-templates/future-is-now-agent",
+    "githubRepo": "bolt-templates/future-is-now-agent",
     "tags": ["ai", "agent", "gsap", "futuristic"],
     "icon": "i-ph:robot-duotone"
   },
@@ -135,7 +135,7 @@
     "description": "Home services SaaS landing page with booking features",
     "category": "saas",
     "vercelUrl": "https://homie-template.vercel.app",
-    "githubRepo": "devonz-templates/homie-template",
+    "githubRepo": "bolt-templates/homie-template",
     "tags": ["services", "home", "booking", "saas"],
     "icon": "i-ph:house-duotone"
   },
@@ -145,7 +145,7 @@
     "description": "Interactive portfolio with hover video cards and effects",
     "category": "portfolio",
     "vercelUrl": "https://interactive-portfolio-gallery.vercel.app",
-    "githubRepo": "devonz-templates/interactive-portfolio-gallery",
+    "githubRepo": "bolt-templates/interactive-portfolio-gallery",
     "tags": ["portfolio", "gallery", "video", "interactive"],
     "icon": "i-ph:video-camera-duotone"
   },
@@ -155,7 +155,7 @@
     "description": "Modern task management dashboard with kanban board",
     "category": "dashboard",
     "vercelUrl": "https://modern-task-dashboard.vercel.app",
-    "githubRepo": "devonz-templates/modern-task-dashboard",
+    "githubRepo": "bolt-templates/modern-task-dashboard",
     "tags": ["dashboard", "tasks", "kanban", "productivity"],
     "icon": "i-ph:kanban-duotone"
   },
@@ -165,7 +165,7 @@
     "description": "Personal portfolio and services website with contact forms",
     "category": "portfolio",
     "vercelUrl": "https://personal-portfolio-services.vercel.app",
-    "githubRepo": "devonz-templates/personal-portfolio-services",
+    "githubRepo": "bolt-templates/personal-portfolio-services",
     "tags": ["portfolio", "services", "personal", "contact"],
     "icon": "i-ph:user-circle-duotone"
   },
@@ -175,7 +175,7 @@
     "description": "Developer portfolio with project showcase and skills",
     "category": "portfolio",
     "vercelUrl": "https://portfolio-website-design-orpin.vercel.app",
-    "githubRepo": "devonz-templates/portfolio-website-design",
+    "githubRepo": "bolt-templates/portfolio-website-design",
     "tags": ["portfolio", "developer", "projects", "skills"],
     "icon": "i-ph:palette-duotone"
   },
@@ -185,7 +185,7 @@
     "description": "AI security product landing page with modern design",
     "category": "ai-app",
     "vercelUrl": "https://skydda-ai-sentinel.vercel.app",
-    "githubRepo": "devonz-templates/skydda-ai-sentinel",
+    "githubRepo": "bolt-templates/skydda-ai-sentinel",
     "tags": ["ai", "security", "sentinel", "product"],
     "icon": "i-ph:shield-check-duotone"
   }

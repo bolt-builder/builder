@@ -225,14 +225,14 @@ export function GitHubCacheManager({ className = '', showStats = true }: GitHubC
   return (
     <div
       className={cn(
-        'space-y-4 p-4 bg-devonz-elements-background-depth-1 border border-devonz-elements-borderColor rounded-lg',
+        'space-y-4 p-4 bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor rounded-lg',
         className,
       )}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="i-ph:database w-4 h-4 text-devonz-elements-item-contentAccent" />
-          <h3 className="text-sm font-medium text-devonz-elements-textPrimary">GitHub Cache Management</h3>
+          <div className="i-ph:database w-4 h-4 text-bolt-elements-item-contentAccent" />
+          <h3 className="text-sm font-medium text-bolt-elements-textPrimary">GitHub Cache Management</h3>
         </div>
 
         <div className="flex items-center gap-2">
@@ -244,38 +244,38 @@ export function GitHubCacheManager({ className = '', showStats = true }: GitHubC
 
       {showStats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg">
+          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-1">
-              <div className="i-ph:hard-drive w-3 h-3 text-devonz-elements-textSecondary" />
-              <span className="text-xs font-medium text-devonz-elements-textSecondary">Total Size</span>
+              <div className="i-ph:hard-drive w-3 h-3 text-bolt-elements-textSecondary" />
+              <span className="text-xs font-medium text-bolt-elements-textSecondary">Total Size</span>
             </div>
-            <p className="text-sm font-semibold text-devonz-elements-textPrimary">
+            <p className="text-sm font-semibold text-bolt-elements-textPrimary">
               {CacheManagerService.formatSize(cacheStats.totalSize)}
             </p>
           </div>
 
-          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg">
+          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-1">
-              <div className="i-ph:database w-3 h-3 text-devonz-elements-textSecondary" />
-              <span className="text-xs font-medium text-devonz-elements-textSecondary">Entries</span>
+              <div className="i-ph:database w-3 h-3 text-bolt-elements-textSecondary" />
+              <span className="text-xs font-medium text-bolt-elements-textSecondary">Entries</span>
             </div>
-            <p className="text-sm font-semibold text-devonz-elements-textPrimary">{cacheStats.totalEntries}</p>
+            <p className="text-sm font-semibold text-bolt-elements-textPrimary">{cacheStats.totalEntries}</p>
           </div>
 
-          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg">
+          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-1">
-              <div className="i-ph:clock w-3 h-3 text-devonz-elements-textSecondary" />
-              <span className="text-xs font-medium text-devonz-elements-textSecondary">Oldest</span>
+              <div className="i-ph:clock w-3 h-3 text-bolt-elements-textSecondary" />
+              <span className="text-xs font-medium text-bolt-elements-textSecondary">Oldest</span>
             </div>
-            <p className="text-xs text-devonz-elements-textSecondary">
+            <p className="text-xs text-bolt-elements-textSecondary">
               {cacheStats.oldestEntry ? new Date(cacheStats.oldestEntry).toLocaleDateString() : 'N/A'}
             </p>
           </div>
 
-          <div className="bg-devonz-elements-background-depth-2 p-3 rounded-lg">
+          <div className="bg-bolt-elements-background-depth-2 p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-1">
-              <div className="i-ph:check-circle w-3 h-3 text-devonz-elements-textSecondary" />
-              <span className="text-xs font-medium text-devonz-elements-textSecondary">Status</span>
+              <div className="i-ph:check-circle w-3 h-3 text-bolt-elements-textSecondary" />
+              <span className="text-xs font-medium text-bolt-elements-textSecondary">Status</span>
             </div>
             <p className="text-xs text-green-600 dark:text-green-400">
               {cacheStats.totalEntries > 0 ? 'Active' : 'Empty'}
@@ -286,7 +286,7 @@ export function GitHubCacheManager({ className = '', showStats = true }: GitHubC
 
       {cacheEntries.length > 0 && (
         <div className="space-y-2">
-          <h4 className="text-xs font-medium text-devonz-elements-textSecondary">
+          <h4 className="text-xs font-medium text-bolt-elements-textSecondary">
             Cache Entries ({cacheEntries.length})
           </h4>
 
@@ -294,13 +294,13 @@ export function GitHubCacheManager({ className = '', showStats = true }: GitHubC
             {cacheEntries.map((entry) => (
               <div
                 key={entry.key}
-                className="flex items-center justify-between p-2 bg-devonz-elements-background-depth-2 rounded border border-devonz-elements-borderColor"
+                className="flex items-center justify-between p-2 bg-bolt-elements-background-depth-2 rounded border border-bolt-elements-borderColor"
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-devonz-elements-textPrimary truncate">
+                  <p className="text-xs font-medium text-bolt-elements-textPrimary truncate">
                     {entry.key.replace('github_', '')}
                   </p>
-                  <p className="text-xs text-devonz-elements-textSecondary">
+                  <p className="text-xs text-bolt-elements-textSecondary">
                     {CacheManagerService.formatSize(entry.size)} • {new Date(entry.lastAccessed).toLocaleString()}
                   </p>
                 </div>
@@ -320,7 +320,7 @@ export function GitHubCacheManager({ className = '', showStats = true }: GitHubC
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2 pt-2 border-t border-devonz-elements-borderColor">
+      <div className="flex flex-wrap gap-2 pt-2 border-t border-bolt-elements-borderColor">
         <Button
           variant="outline"
           size="sm"

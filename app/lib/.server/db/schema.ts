@@ -2,7 +2,7 @@ import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 /**
- * SQLite schema for Devonz — mirrors the IndexedDB v3 structure
+ * SQLite schema for Bolt — mirrors the IndexedDB v3 structure
  * so that data can be migrated from client-side IndexedDB to
  * server-side SQLite seamlessly.
  *

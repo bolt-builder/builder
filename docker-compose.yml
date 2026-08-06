@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-# Devonz (devonz.diy) — Docker Compose
+# Bolt (bolt.diy) — Docker Compose
 # Local development & production profiles
 #
 # Usage:
@@ -16,12 +16,12 @@
 services:
   # ── Production ────────────────────────────────────────────
   # Pulls from GHCR by default. Use --build to build locally.
-  devonz:
-    image: ghcr.io/zebbern/devonz:latest
+  bolt:
+    image: ghcr.io/zebbern/bolt:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: devonz
+    container_name: bolt
     restart: unless-stopped
     ports:
       - "${PORT:-5173}:5173"
@@ -36,11 +36,11 @@ services:
       # (encrypted cookies will not persist across container restarts).
       # For persistent encryption, generate a key and uncomment:
       #   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-      # - DEVONZ_ENCRYPTION_KEY=your_64_char_hex_key_here
+      # - BOLT_ENCRYPTION_KEY=your_64_char_hex_key_here
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      - "com.centurylinklabs.watchtower.scope=devonz"
+      - "com.centurylinklabs.watchtower.scope=bolt"
       - "com.centurylinklabs.watchtower.enable=true"
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://localhost:5173/api/health').then(r=>{if(!r.ok)throw 1})"]
@@ -50,12 +50,12 @@ services:
       start_period: 15s
 
   # ── Development (hot reload via bind mount) ───────────────
-  devonz-dev:
+  bolt-dev:
     build:
       context: .
       dockerfile: Dockerfile
       target: deps
-    container_name: devonz-dev
+    container_name: bolt-dev
     profiles: ["dev"]
     ports:
       - "${PORT:-5173}:5173"
@@ -80,7 +80,7 @@ services:
   # Polls GHCR every 5 minutes for new images and restarts
   watchtower:
     image: containrrr/watchtower
-    container_name: devonz-watchtower
+    container_name: bolt-watchtower
     profiles: ["auto-update"]
     restart: unless-stopped
     volumes:
@@ -92,4 +92,4 @@ services:
       - WATCHTOWER_LABEL_ENABLE=true
     command: --label-enable
     labels:
-      - "com.centurylinklabs.watchtower.scope=devonz"
+      - "com.centurylinklabs.watchtower.scope=bolt"

@@ -5,7 +5,7 @@ import { defineConfig, presetIcons, presetUno, transformerDirectives } from 'uno
 
 const iconPaths = globSync('./icons/*.svg');
 
-const collectionName = 'devonz';
+const collectionName = 'bolt';
 
 const customIconCollection = iconPaths.reduce(
   (acc, iconPath) => {
@@ -113,11 +113,11 @@ const COLOR_PRIMITIVES = {
 };
 
 export default defineConfig({
-  safelist: [...Object.keys(customIconCollection[collectionName] || {}).map((x) => `i-devonz:${x}`)],
+  safelist: [...Object.keys(customIconCollection[collectionName] || {}).map((x) => `i-bolt:${x}`)],
   shortcuts: {
-    'devonz-ease-cubic-bezier': 'ease-[cubic-bezier(0.4,0,0.2,1)]',
-    'transition-theme': 'transition-[background-color,border-color,color] duration-150 devonz-ease-cubic-bezier',
-    kdb: 'bg-devonz-elements-code-background text-devonz-elements-code-text py-1 px-1.5 rounded-md',
+    'bolt-ease-cubic-bezier': 'ease-[cubic-bezier(0.4,0,0.2,1)]',
+    'transition-theme': 'transition-[background-color,border-color,color] duration-150 bolt-ease-cubic-bezier',
+    kdb: 'bg-bolt-elements-code-background text-bolt-elements-code-text py-1 px-1.5 rounded-md',
     'max-w-chat': 'max-w-[var(--chat-max-width)]',
   },
   rules: [
@@ -130,115 +130,115 @@ export default defineConfig({
   theme: {
     colors: {
       ...COLOR_PRIMITIVES,
-      devonz: {
+      bolt: {
         elements: {
-          borderColor: 'var(--devonz-elements-borderColor)',
-          borderColorActive: 'var(--devonz-elements-borderColorActive)',
+          borderColor: 'var(--bolt-elements-borderColor)',
+          borderColorActive: 'var(--bolt-elements-borderColorActive)',
           background: {
             depth: {
-              1: 'var(--devonz-elements-bg-depth-1)',
-              2: 'var(--devonz-elements-bg-depth-2)',
-              3: 'var(--devonz-elements-bg-depth-3)',
-              4: 'var(--devonz-elements-bg-depth-4)',
+              1: 'var(--bolt-elements-bg-depth-1)',
+              2: 'var(--bolt-elements-bg-depth-2)',
+              3: 'var(--bolt-elements-bg-depth-3)',
+              4: 'var(--bolt-elements-bg-depth-4)',
             },
           },
-          textPrimary: 'var(--devonz-elements-textPrimary)',
-          textSecondary: 'var(--devonz-elements-textSecondary)',
-          textTertiary: 'var(--devonz-elements-textTertiary)',
+          textPrimary: 'var(--bolt-elements-textPrimary)',
+          textSecondary: 'var(--bolt-elements-textSecondary)',
+          textTertiary: 'var(--bolt-elements-textTertiary)',
           code: {
-            background: 'var(--devonz-elements-code-background)',
-            text: 'var(--devonz-elements-code-text)',
+            background: 'var(--bolt-elements-code-background)',
+            text: 'var(--bolt-elements-code-text)',
           },
           button: {
             primary: {
-              background: 'var(--devonz-elements-button-primary-background)',
-              backgroundHover: 'var(--devonz-elements-button-primary-backgroundHover)',
-              text: 'var(--devonz-elements-button-primary-text)',
+              background: 'var(--bolt-elements-button-primary-background)',
+              backgroundHover: 'var(--bolt-elements-button-primary-backgroundHover)',
+              text: 'var(--bolt-elements-button-primary-text)',
             },
             secondary: {
-              background: 'var(--devonz-elements-button-secondary-background)',
-              backgroundHover: 'var(--devonz-elements-button-secondary-backgroundHover)',
-              text: 'var(--devonz-elements-button-secondary-text)',
+              background: 'var(--bolt-elements-button-secondary-background)',
+              backgroundHover: 'var(--bolt-elements-button-secondary-backgroundHover)',
+              text: 'var(--bolt-elements-button-secondary-text)',
             },
             danger: {
-              background: 'var(--devonz-elements-button-danger-background)',
-              backgroundHover: 'var(--devonz-elements-button-danger-backgroundHover)',
-              text: 'var(--devonz-elements-button-danger-text)',
+              background: 'var(--bolt-elements-button-danger-background)',
+              backgroundHover: 'var(--bolt-elements-button-danger-backgroundHover)',
+              text: 'var(--bolt-elements-button-danger-text)',
             },
           },
           item: {
-            contentDefault: 'var(--devonz-elements-item-contentDefault)',
-            contentActive: 'var(--devonz-elements-item-contentActive)',
-            contentAccent: 'var(--devonz-elements-item-contentAccent)',
-            contentDanger: 'var(--devonz-elements-item-contentDanger)',
-            backgroundDefault: 'var(--devonz-elements-item-backgroundDefault)',
-            backgroundActive: 'var(--devonz-elements-item-backgroundActive)',
-            backgroundAccent: 'var(--devonz-elements-item-backgroundAccent)',
-            backgroundDanger: 'var(--devonz-elements-item-backgroundDanger)',
+            contentDefault: 'var(--bolt-elements-item-contentDefault)',
+            contentActive: 'var(--bolt-elements-item-contentActive)',
+            contentAccent: 'var(--bolt-elements-item-contentAccent)',
+            contentDanger: 'var(--bolt-elements-item-contentDanger)',
+            backgroundDefault: 'var(--bolt-elements-item-backgroundDefault)',
+            backgroundActive: 'var(--bolt-elements-item-backgroundActive)',
+            backgroundAccent: 'var(--bolt-elements-item-backgroundAccent)',
+            backgroundDanger: 'var(--bolt-elements-item-backgroundDanger)',
           },
           actions: {
-            background: 'var(--devonz-elements-actions-background)',
+            background: 'var(--bolt-elements-actions-background)',
             code: {
-              background: 'var(--devonz-elements-actions-code-background)',
+              background: 'var(--bolt-elements-actions-code-background)',
             },
           },
           artifacts: {
-            background: 'var(--devonz-elements-artifacts-background)',
-            backgroundHover: 'var(--devonz-elements-artifacts-backgroundHover)',
-            borderColor: 'var(--devonz-elements-artifacts-borderColor)',
+            background: 'var(--bolt-elements-artifacts-background)',
+            backgroundHover: 'var(--bolt-elements-artifacts-backgroundHover)',
+            borderColor: 'var(--bolt-elements-artifacts-borderColor)',
             inlineCode: {
-              background: 'var(--devonz-elements-artifacts-inlineCode-background)',
-              text: 'var(--devonz-elements-artifacts-inlineCode-text)',
+              background: 'var(--bolt-elements-artifacts-inlineCode-background)',
+              text: 'var(--bolt-elements-artifacts-inlineCode-text)',
             },
           },
           messages: {
-            background: 'var(--devonz-elements-messages-background)',
-            linkColor: 'var(--devonz-elements-messages-linkColor)',
+            background: 'var(--bolt-elements-messages-background)',
+            linkColor: 'var(--bolt-elements-messages-linkColor)',
             code: {
-              background: 'var(--devonz-elements-messages-code-background)',
+              background: 'var(--bolt-elements-messages-code-background)',
             },
             inlineCode: {
-              background: 'var(--devonz-elements-messages-inlineCode-background)',
-              text: 'var(--devonz-elements-messages-inlineCode-text)',
+              background: 'var(--bolt-elements-messages-inlineCode-background)',
+              text: 'var(--bolt-elements-messages-inlineCode-text)',
             },
           },
           icon: {
-            success: 'var(--devonz-elements-icon-success)',
-            error: 'var(--devonz-elements-icon-error)',
-            primary: 'var(--devonz-elements-icon-primary)',
-            secondary: 'var(--devonz-elements-icon-secondary)',
-            tertiary: 'var(--devonz-elements-icon-tertiary)',
+            success: 'var(--bolt-elements-icon-success)',
+            error: 'var(--bolt-elements-icon-error)',
+            primary: 'var(--bolt-elements-icon-primary)',
+            secondary: 'var(--bolt-elements-icon-secondary)',
+            tertiary: 'var(--bolt-elements-icon-tertiary)',
           },
           preview: {
             addressBar: {
-              background: 'var(--devonz-elements-preview-addressBar-background)',
-              backgroundHover: 'var(--devonz-elements-preview-addressBar-backgroundHover)',
-              backgroundActive: 'var(--devonz-elements-preview-addressBar-backgroundActive)',
-              text: 'var(--devonz-elements-preview-addressBar-text)',
-              textActive: 'var(--devonz-elements-preview-addressBar-textActive)',
+              background: 'var(--bolt-elements-preview-addressBar-background)',
+              backgroundHover: 'var(--bolt-elements-preview-addressBar-backgroundHover)',
+              backgroundActive: 'var(--bolt-elements-preview-addressBar-backgroundActive)',
+              text: 'var(--bolt-elements-preview-addressBar-text)',
+              textActive: 'var(--bolt-elements-preview-addressBar-textActive)',
             },
           },
           terminals: {
-            background: 'var(--devonz-elements-terminals-background)',
-            buttonBackground: 'var(--devonz-elements-terminals-buttonBackground)',
+            background: 'var(--bolt-elements-terminals-background)',
+            buttonBackground: 'var(--bolt-elements-terminals-buttonBackground)',
           },
-          dividerColor: 'var(--devonz-elements-dividerColor)',
+          dividerColor: 'var(--bolt-elements-dividerColor)',
           loader: {
-            background: 'var(--devonz-elements-loader-background)',
-            progress: 'var(--devonz-elements-loader-progress)',
+            background: 'var(--bolt-elements-loader-background)',
+            progress: 'var(--bolt-elements-loader-progress)',
           },
           prompt: {
-            background: 'var(--devonz-elements-prompt-background)',
+            background: 'var(--bolt-elements-prompt-background)',
           },
           sidebar: {
-            dropdownShadow: 'var(--devonz-elements-sidebar-dropdownShadow)',
-            buttonBackgroundDefault: 'var(--devonz-elements-sidebar-buttonBackgroundDefault)',
-            buttonBackgroundHover: 'var(--devonz-elements-sidebar-buttonBackgroundHover)',
-            buttonText: 'var(--devonz-elements-sidebar-buttonText)',
+            dropdownShadow: 'var(--bolt-elements-sidebar-dropdownShadow)',
+            buttonBackgroundDefault: 'var(--bolt-elements-sidebar-buttonBackgroundDefault)',
+            buttonBackgroundHover: 'var(--bolt-elements-sidebar-buttonBackgroundHover)',
+            buttonText: 'var(--bolt-elements-sidebar-buttonText)',
           },
           cta: {
-            background: 'var(--devonz-elements-cta-background)',
-            text: 'var(--devonz-elements-cta-text)',
+            background: 'var(--bolt-elements-cta-background)',
+            text: 'var(--bolt-elements-cta-text)',
           },
         },
       },

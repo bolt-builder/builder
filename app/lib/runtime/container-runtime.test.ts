@@ -477,7 +477,7 @@ describe('ContainerRuntime', () => {
   // ─── Test 10: Container image configuration ───────────────────────────
 
   describe('container image configuration', () => {
-    it('uses default image when DEVONZ_CONTAINER_IMAGE is not set', async () => {
+    it('uses default image when BOLT_CONTAINER_IMAGE is not set', async () => {
       const defaultRuntime = new ContainerRuntime({
         projectsDir: '/tmp/test-projects',
       });
@@ -500,7 +500,7 @@ describe('ContainerRuntime', () => {
     it('uses custom image passed via constructor', async () => {
       const customRuntime = new ContainerRuntime({
         projectsDir: '/tmp/test-projects',
-        containerImage: 'custom-devonz:latest',
+        containerImage: 'custom-bolt:latest',
       });
       await customRuntime.boot('test-project');
 
@@ -512,7 +512,7 @@ describe('ContainerRuntime', () => {
 
       if (dockerRunCall) {
         const args = dockerRunCall[1] as string[];
-        expect(args).toContain('custom-devonz:latest');
+        expect(args).toContain('custom-bolt:latest');
       }
 
       await customRuntime.teardown();

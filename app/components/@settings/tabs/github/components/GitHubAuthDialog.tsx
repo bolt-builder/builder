@@ -47,25 +47,25 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
           onPointerDownOutside={handleClose}
         >
           <motion.div
-            className="bg-devonz-elements-background border border-devonz-elements-borderColor rounded-lg shadow-lg"
+            className="bg-bolt-elements-background border border-bolt-elements-borderColor rounded-lg shadow-lg"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
           >
             <div className="p-6 space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-devonz-elements-textPrimary">Connect to GitHub</h2>
+                <h2 className="text-lg font-semibold text-bolt-elements-textPrimary">Connect to GitHub</h2>
                 <button
                   onClick={handleClose}
-                  className="p-1 rounded-md hover:bg-devonz-elements-item-backgroundActive/10"
+                  className="p-1 rounded-md hover:bg-bolt-elements-item-backgroundActive/10"
                 >
-                  <div className="i-ph:x w-4 h-4 text-devonz-elements-textSecondary" />
+                  <div className="i-ph:x w-4 h-4 text-bolt-elements-textSecondary" />
                 </button>
               </div>
 
-              <div className="text-xs text-devonz-elements-textSecondary bg-devonz-elements-background-depth-1 p-3 rounded-lg">
+              <div className="text-xs text-bolt-elements-textSecondary bg-bolt-elements-background-depth-1 p-3 rounded-lg">
                 <p className="flex items-center gap-1 mb-1">
-                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-devonz-elements-icon-success" />
+                  <span className="i-ph:lightbulb w-3.5 h-3.5 text-bolt-elements-icon-success" />
                   <span className="font-medium">Tip:</span> You need a GitHub token to deploy repositories.
                 </p>
                 <p>Required scopes: repo, read:org, read:user</p>
@@ -73,7 +73,7 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
 
               <form onSubmit={handleConnect} className="space-y-4">
                 <div>
-                  <label className="block text-sm text-devonz-elements-textSecondary mb-2">Token Type</label>
+                  <label className="block text-sm text-bolt-elements-textSecondary mb-2">Token Type</label>
                   <select
                     aria-label="Token type"
                     value={tokenType}
@@ -81,10 +81,10 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
                     disabled={isConnecting}
                     className={cn(
                       'w-full px-3 py-2 rounded-lg text-sm',
-                      'bg-devonz-elements-background-depth-1',
-                      'border border-devonz-elements-borderColor',
-                      'text-devonz-elements-textPrimary',
-                      'focus:outline-none focus:ring-1 focus:ring-devonz-elements-item-contentAccent',
+                      'bg-bolt-elements-background-depth-1',
+                      'border border-bolt-elements-borderColor',
+                      'text-bolt-elements-textPrimary',
+                      'focus:outline-none focus:ring-1 focus:ring-bolt-elements-item-contentAccent',
                       'disabled:opacity-50',
                     )}
                   >
@@ -94,7 +94,7 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
                 </div>
 
                 <div>
-                  <label className="block text-sm text-devonz-elements-textSecondary mb-2">
+                  <label className="block text-sm text-bolt-elements-textSecondary mb-2">
                     {tokenType === 'classic' ? 'Personal Access Token' : 'Fine-grained Token'}
                   </label>
                   <input
@@ -109,19 +109,19 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
                     }`}
                     className={cn(
                       'w-full px-3 py-2 rounded-lg text-sm',
-                      'bg-devonz-elements-background-depth-1',
-                      'border border-devonz-elements-borderColor',
-                      'text-devonz-elements-textPrimary placeholder-devonz-elements-textTertiary',
-                      'focus:outline-none focus:ring-1 focus:ring-devonz-elements-borderColorActive',
+                      'bg-bolt-elements-background-depth-1',
+                      'border border-bolt-elements-borderColor',
+                      'text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary',
+                      'focus:outline-none focus:ring-1 focus:ring-bolt-elements-borderColorActive',
                       'disabled:opacity-50',
                     )}
                   />
-                  <div className="mt-2 text-sm text-devonz-elements-textSecondary">
+                  <div className="mt-2 text-sm text-bolt-elements-textSecondary">
                     <a
                       href={`https://github.com/settings/tokens${tokenType === 'fine-grained' ? '/beta' : '/new'}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-devonz-elements-borderColorActive hover:underline inline-flex items-center gap-1"
+                      className="text-bolt-elements-borderColorActive hover:underline inline-flex items-center gap-1"
                     >
                       Get your token
                       <div className="i-ph:arrow-square-out w-4 h-4" />
@@ -139,7 +139,7 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="px-4 py-2 text-sm text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary"
+                    className="px-4 py-2 text-sm text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary"
                   >
                     Cancel
                   </button>
@@ -148,7 +148,7 @@ export function GitHubAuthDialog({ isOpen, onClose, onSuccess }: GitHubAuthDialo
                     disabled={isConnecting || !token.trim()}
                     className={cn(
                       'px-4 py-2 rounded-lg text-sm flex items-center gap-2',
-                      'bg-devonz-elements-bg-depth-3 text-devonz-elements-textPrimary',
+                      'bg-bolt-elements-bg-depth-3 text-bolt-elements-textPrimary',
                       'hover:bg-[#5E41D0] hover:text-white',
                       'disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200',
                     )}

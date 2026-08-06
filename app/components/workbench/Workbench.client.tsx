@@ -144,7 +144,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
               workbenchLogger.debug('Failed to parse package.json for dev command detection:', e);
             }
 
-            const shell = workbenchStore.devonzTerminal;
+            const shell = workbenchStore.boltTerminal;
 
             shell
               .ready()
@@ -254,14 +254,14 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
         style={fullWidth ? undefined : { width: width || 'var(--workbench-width)', maxWidth: '100%' }}
       >
         <div
-          className={cn('h-full flex flex-col bg-devonz-elements-background-depth-2 overflow-hidden', {
-            'border-l border-devonz-elements-borderColor': !fullWidth,
+          className={cn('h-full flex flex-col bg-bolt-elements-background-depth-2 overflow-hidden', {
+            'border-l border-bolt-elements-borderColor': !fullWidth,
           })}
         >
-          <div className="flex items-center px-3 py-2.5 border-b border-devonz-elements-borderColor gap-2 bg-devonz-elements-background-depth-2/80">
+          <div className="flex items-center px-3 py-2.5 border-b border-bolt-elements-borderColor gap-2 bg-bolt-elements-background-depth-2/80">
             <button
               aria-label="Toggle file explorer"
-              className={`${showChat ? 'i-ph:sidebar-simple-fill' : 'i-ph:sidebar-simple'} text-lg text-devonz-elements-textSecondary hover:text-devonz-elements-textPrimary transition-colors mr-1`}
+              className={`${showChat ? 'i-ph:sidebar-simple-fill' : 'i-ph:sidebar-simple'} text-lg text-bolt-elements-textSecondary hover:text-bolt-elements-textPrimary transition-colors mr-1`}
               disabled={!canHideChat || isSmallViewport}
               onClick={() => {
                 if (canHideChat) {
@@ -278,11 +278,11 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                 <ExportChatButton exportChat={exportChat} />
 
                 {/* Sync Button */}
-                <div className="flex border border-devonz-elements-borderColor rounded-lg overflow-hidden ml-1">
+                <div className="flex border border-bolt-elements-borderColor rounded-lg overflow-hidden ml-1">
                   <DropdownMenu.Root>
                     <DropdownMenu.Trigger
                       disabled={isSyncing || streaming}
-                      className="rounded-lg items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.5 transition-colors"
+                      className="rounded-lg items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.5 transition-colors"
                     >
                       {isSyncing ? 'Syncing...' : 'Sync'}
                       <span className={cn('i-ph:caret-down transition-transform')} />
@@ -291,9 +291,9 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                       <DropdownMenu.Content
                         className={cn(
                           'min-w-[240px] z-[9999]',
-                          'bg-devonz-elements-background-depth-2',
+                          'bg-bolt-elements-background-depth-2',
                           'rounded-lg shadow-lg',
-                          'border border-devonz-elements-borderColor',
+                          'border border-bolt-elements-borderColor',
                           'animate-in fade-in-0 zoom-in-95',
                           'py-1',
                         )}
@@ -302,7 +302,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                       >
                         <DropdownMenu.Item
                           className={cn(
-                            'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-devonz-elements-textPrimary hover:bg-devonz-elements-item-backgroundActive gap-2 rounded-md group relative',
+                            'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
                           )}
                           onClick={handleSyncFiles}
                           disabled={isSyncing}
@@ -318,12 +318,12 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
                 </div>
 
                 {/* Toggle Terminal Button */}
-                <div className="flex border border-devonz-elements-borderColor rounded-md overflow-hidden ml-1">
+                <div className="flex border border-bolt-elements-borderColor rounded-md overflow-hidden ml-1">
                   <button
                     onClick={() => {
                       workbenchStore.toggleTerminal(!workbenchStore.showTerminal.get());
                     }}
-                    className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-devonz-elements-background-depth-3 text-devonz-elements-textPrimary border border-devonz-elements-borderColor hover:bg-devonz-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7"
+                    className="rounded-md items-center justify-center [&:is(:disabled,.disabled)]:cursor-not-allowed [&:is(:disabled,.disabled)]:opacity-60 px-3 py-1.5 text-xs bg-bolt-elements-background-depth-3 text-bolt-elements-textPrimary border border-bolt-elements-borderColor hover:bg-bolt-elements-background-depth-4 [&:not(:disabled,.disabled)]:hover:text-accent-400 outline-accent-500 flex gap-1.7"
                   >
                     <div className="i-ph:terminal" />
                     Toggle Terminal
@@ -354,7 +354,7 @@ export const Workbench = memo(({ chatStarted, isStreaming, setSelectedElement, w
           <Suspense
             fallback={
               <div className="flex items-center justify-center h-full">
-                <div className="animate-spin w-8 h-8 border-2 border-devonz-elements-item-contentAccent border-t-transparent rounded-full" />
+                <div className="animate-spin w-8 h-8 border-2 border-bolt-elements-item-contentAccent border-t-transparent rounded-full" />
               </div>
             }
           >

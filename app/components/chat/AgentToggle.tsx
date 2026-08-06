@@ -9,7 +9,7 @@ type AgentMode = 'standard' | 'agent';
 
 const agentModes: { id: AgentMode; icon: string; label: string; description: string }[] = [
   { id: 'standard', icon: 'i-ph:cursor-click', label: 'Standard', description: 'Normal AI assistant mode' },
-  { id: 'agent', icon: 'i-devonz:mode', label: 'Agent', description: 'Autonomous AI agent with tools' },
+  { id: 'agent', icon: 'i-bolt:mode', label: 'Agent', description: 'Autonomous AI agent with tools' },
 ];
 
 /**
@@ -36,8 +36,8 @@ export function AgentToggle() {
           className={cn(
             'transition-all flex items-center gap-1 px-1.5',
             enabled
-              ? 'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent'
-              : 'bg-devonz-elements-item-backgroundDefault text-devonz-elements-item-contentDefault',
+              ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent'
+              : 'bg-bolt-elements-item-backgroundDefault text-bolt-elements-item-contentDefault',
           )}
         >
           <div className={cn(activeModeConfig.icon, 'text-xl')} />
@@ -58,9 +58,9 @@ export function AgentToggle() {
                 key={mode.id}
                 className={cn(
                   'w-full flex items-center gap-3 px-3 py-2 rounded-md text-left transition-colors border-none',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-focus',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-focus',
                   activeMode === mode.id
-                    ? 'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent'
+                    ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent'
                     : 'bg-transparent text-[#9ca3af] hover:bg-[#1a1f2e] hover:text-white',
                 )}
                 onClick={() => handleSelect(mode.id)}

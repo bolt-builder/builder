@@ -106,7 +106,7 @@ async function vercelProxyAction({ request, context }: ActionFunctionArgs) {
       signal: AbortSignal.timeout(30_000),
       headers: {
         Authorization: `Bearer ${vercelToken}`,
-        'User-Agent': 'devonz-app',
+        'User-Agent': 'bolt-app',
         'Content-Type': 'application/json',
       },
     };

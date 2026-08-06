@@ -182,7 +182,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
         // ── Structured event protocol handshake ───────────────────────────
         dataStream.writeData({
-          devonz_event: {
+          bolt_event: {
             type: 'stream_start',
             timestamp: new Date().toISOString(),
             protocol: STREAMING_PROTOCOL_VERSION,
@@ -199,7 +199,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
           const events: StreamingEvent[] = parser.parseChunk(delta);
 
           for (const event of events) {
-            dataStream.writeData({ devonz_event: event });
+            dataStream.writeData({ bolt_event: event });
           }
         };
 
@@ -399,7 +399,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
               };
 
               dataStream.writeData({
-                devonz_event: {
+                bolt_event: {
                   type: 'agent_checkpoint' as const,
                   timestamp: new Date().toISOString(),
                   checkpointId,
@@ -447,7 +447,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
           // Emit blueprint phase event for client phase tracking
           dataStream.writeData({
-            devonz_event: {
+            bolt_event: {
               type: 'phase_change',
               timestamp: new Date().toISOString(),
               phase: buildPhaseEvent('blueprint'),
@@ -513,7 +513,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
               // Report error to client — flow falls back to standard pipeline
               dataStream.writeData({
-                devonz_event: {
+                bolt_event: {
                   type: 'error',
                   timestamp: new Date().toISOString(),
                   code: blueprintResult.error.code,
@@ -535,7 +535,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
             logger.error(`Blueprint generation threw: ${bpErrMsg}`);
 
             dataStream.writeData({
-              devonz_event: {
+              bolt_event: {
                 type: 'error',
                 timestamp: new Date().toISOString(),
                 code: 'GENERATION_FAILED',
@@ -587,7 +587,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
                   : -1;
 
               dataStream.writeData({
-                devonz_event: {
+                bolt_event: {
                   type: 'token_budget_update' as const,
                   timestamp: new Date().toISOString(),
                   promptTokens: cumulativeUsage.promptTokens,
@@ -781,7 +781,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
                   ];
 
                   dataStream.writeData({
-                    devonz_event: {
+                    bolt_event: {
                       type: 'context_summary' as const,
                       timestamp: new Date().toISOString(),
                       originalTokenCount: summaryResult.originalTokenCount,
@@ -871,7 +871,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
               summary,
               messageSliceId,
               onTextDelta,
-              onErrorValidation: (event) => dataStream.writeData({ devonz_event: event }),
+              onErrorValidation: (event) => dataStream.writeData({ bolt_event: event }),
               operationType: blueprintMode ? ('blueprint' as const) : undefined,
               modelRoutingConfig,
             });
@@ -922,7 +922,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
           summary,
           messageSliceId,
           onTextDelta,
-          onErrorValidation: (event) => dataStream.writeData({ devonz_event: event }),
+          onErrorValidation: (event) => dataStream.writeData({ bolt_event: event }),
           operationType: blueprintMode ? ('blueprint' as const) : undefined,
           modelRoutingConfig,
           ...(blueprintMode ? { phaseWise: true } : {}),
@@ -999,7 +999,7 @@ async function chatAction({ context, request }: ActionFunctionArgs) {
 
           if (typeof chunk === 'string') {
             if (chunk.startsWith('g') && !lastChunk.startsWith('g')) {
-              controller.enqueue(encoder.encode(`0: "<div class=\\"__devonzThought__\\">"\n`));
+              controller.enqueue(encoder.encode(`0: "<div class=\\"__boltThought__\\">"\n`));
             }
 
             if (lastChunk.startsWith('g') && !chunk.startsWith('g')) {

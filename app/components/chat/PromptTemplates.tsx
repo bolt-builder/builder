@@ -57,7 +57,7 @@ export function PromptTemplates({ input, onInsert }: PromptTemplatesProps) {
         className={cn(
           'flex-1 min-w-0 flex flex-col items-start gap-0.5 px-3 py-2 rounded-md text-left transition-colors border-none bg-transparent',
           'text-[#9ca3af] hover:bg-[#1a1f2e] hover:text-white',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-devonz-elements-focus',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bolt-elements-focus',
         )}
       >
         <span className="text-sm font-medium">{template.label}</span>
@@ -67,7 +67,7 @@ export function PromptTemplates({ input, onInsert }: PromptTemplatesProps) {
         <button
           onClick={() => removeUserTemplate(template.id)}
           aria-label={`Delete template ${template.label}`}
-          className="i-ph:trash shrink-0 text-sm mx-2 text-devonz-elements-textTertiary hover:text-devonz-elements-item-contentDanger opacity-0 group-hover:opacity-100 transition-opacity bg-transparent border-none"
+          className="i-ph:trash shrink-0 text-sm mx-2 text-bolt-elements-textTertiary hover:text-bolt-elements-item-contentDanger opacity-0 group-hover:opacity-100 transition-opacity bg-transparent border-none"
         />
       )}
     </div>
@@ -81,8 +81,8 @@ export function PromptTemplates({ input, onInsert }: PromptTemplatesProps) {
           className={cn(
             'transition-all',
             open
-              ? 'bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent'
-              : 'bg-devonz-elements-item-backgroundDefault text-devonz-elements-item-contentDefault',
+              ? 'bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent'
+              : 'bg-bolt-elements-item-backgroundDefault text-bolt-elements-item-contentDefault',
           )}
         >
           <div className="i-ph:bookmark-simple text-xl" />
@@ -99,13 +99,13 @@ export function PromptTemplates({ input, onInsert }: PromptTemplatesProps) {
           <div className="p-1 max-h-[360px] overflow-y-auto" style={{ backgroundColor: '#0f1219' }}>
             {userTemplates.length > 0 && (
               <>
-                <div className="px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-devonz-elements-textTertiary">
+                <div className="px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-bolt-elements-textTertiary">
                   Your templates
                 </div>
                 {userTemplates.map(renderTemplate)}
               </>
             )}
-            <div className="px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-devonz-elements-textTertiary">
+            <div className="px-3 pt-2 pb-1 text-xs font-medium uppercase tracking-wide text-bolt-elements-textTertiary">
               Built-in
             </div>
             {BUILT_IN_TEMPLATES.map(renderTemplate)}
@@ -127,12 +127,12 @@ export function PromptTemplates({ input, onInsert }: PromptTemplatesProps) {
                     }
                   }}
                   placeholder="Template name"
-                  className="flex-1 min-w-0 px-2 py-1.5 text-sm rounded-md bg-[#1a1f2e] text-white border border-[#1e293b] focus:outline-none focus:ring-2 focus:ring-devonz-elements-focus"
+                  className="flex-1 min-w-0 px-2 py-1.5 text-sm rounded-md bg-[#1a1f2e] text-white border border-[#1e293b] focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus"
                 />
                 <button
                   onClick={handleSave}
                   disabled={!newLabel.trim() || !input.trim()}
-                  className="px-2 py-1.5 text-sm rounded-md border-none bg-devonz-elements-item-backgroundAccent text-devonz-elements-item-contentAccent disabled:opacity-40"
+                  className="px-2 py-1.5 text-sm rounded-md border-none bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent disabled:opacity-40"
                 >
                   Save
                 </button>
