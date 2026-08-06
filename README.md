@@ -6,7 +6,7 @@
 
 [![Node](https://img.shields.io/badge/Node-18.18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 [Features](#features) · [Quick Start](#quick-start) · [Environment Variables](#environment-variables) · [Docker](#docker) · [Tech Stack](#tech-stack) · [Contributing](#contributing)
 
@@ -290,7 +290,7 @@ Bolt is forked from [bolt.diy](https://github.com/stackblitz-labs/bolt.diy) (ori
 
 ## License
 
-[MIT](https://opensource.org/licenses/MIT)
+[AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0)
 
 ---
 

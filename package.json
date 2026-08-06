@@ -2,7 +2,7 @@
   "name": "bolt",
   "description": "AI-powered local vibe coding platform for full-stack development",
   "private": true,
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "sideEffects": false,
   "type": "module",
   "version": "1.0.0",
