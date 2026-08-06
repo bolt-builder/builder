@@ -19,6 +19,7 @@ import { encryptApiKeyValue, isEncryptedValue } from '~/lib/api/encrypt-value';
 import Cookies from 'js-cookie';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import styles from './BaseChat.module.scss';
+import { CliAgentLauncher } from '~/components/chat/CliAgentLauncher';
 import { LeftActionPanel } from '~/components/chat/LeftActionPanel';
 import { TemplateSection } from '~/components/chat/TemplateSection';
 import type { ProviderInfo } from '~/types/model';
@@ -712,6 +713,13 @@ export const BaseChat = React.memo(
                       {!chatStarted && (
                         <div className="flex justify-center mt-2 max-w-chat mx-auto w-full">
                           <LeftActionPanel importChat={importChat} />
+                        </div>
+                      )}
+
+                      {/* CLI agent console launchers - below import/clone actions */}
+                      {!chatStarted && (
+                        <div className="flex justify-center mt-1 max-w-chat mx-auto w-full">
+                          <CliAgentLauncher />
                         </div>
                       )}
                     </div>
