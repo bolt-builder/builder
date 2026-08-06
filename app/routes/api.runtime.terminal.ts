@@ -76,6 +76,11 @@ async function terminalLoader({ request }: LoaderFunctionArgs) {
         start(controller) {
           const encoder = new TextEncoder();
 
+          // Track listeners registered on sessions so we can remove them when
+          // the client disconnects — otherwise every reconnect leaks a listener
+          // that keeps enqueuing on a closed controller.
+          const disposers: Array<() => void> = [];
+
           // Search all runtimes for the session
           for (const projectId of manager.listProjects()) {
             // We need to use an async IIFE to manage the Promise-based getRuntime
@@ -89,14 +94,35 @@ async function terminalLoader({ request }: LoaderFunctionArgs) {
                 }
 
                 // Register data listener for this session
-                session.dataListeners.push((data: string) => {
+                const onData = (data: string) => {
                   try {
                     const payload = JSON.stringify({ type: 'data', data });
                     controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
                   } catch {
                     // Stream may have been closed
                   }
-                });
+                };
+                session.dataListeners.push(onData);
+
+                const dispose = () => {
+                  const idx = session.dataListeners.indexOf(onData);
+
+                  if (idx !== -1) {
+                    session.dataListeners.splice(idx, 1);
+                  }
+                };
+
+                /*
+                 * If the client already disconnected while we were resolving the
+                 * runtime, remove the listener immediately — the abort handler
+                 * ran before this disposer was registered.
+                 */
+                if (request.signal.aborted) {
+                  dispose();
+                  return;
+                }
+
+                disposers.push(dispose);
 
                 // Listen for process exit
                 session.exitPromise
@@ -146,6 +172,10 @@ async function terminalLoader({ request }: LoaderFunctionArgs) {
           // Clean up on disconnect
           request.signal.addEventListener('abort', () => {
             clearInterval(heartbeat);
+
+            for (const dispose of disposers) {
+              dispose();
+            }
 
             try {
               controller.close();
