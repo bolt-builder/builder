@@ -20,26 +20,26 @@ export function setDecryptor(fn: DecryptFn): void {
  * Attempt to decrypt a cookie value. Values prefixed with "enc:" are treated
  * as encrypted; all others pass through unchanged (plaintext migration).
  *
- * On decryption failure (key rotation, corruption), falls back to returning
- * the raw ciphertext without the prefix — never throws.
+ * On decryption failure (missing decryptor, key rotation, corruption) returns
+ * `null` so the caller can drop the value. Returning the raw ciphertext would
+ * hand the encrypted blob downstream as if it were a real API key, producing
+ * confusing auth failures against providers. Never throws.
  */
-function decryptCookieValue(value: string): string {
+function decryptCookieValue(value: string): string | null {
   if (!value.startsWith(ENC_PREFIX)) {
     return value;
   }
 
-  const ciphertext = value.slice(ENC_PREFIX.length);
-
   if (!_decryptor) {
-    logger.warn('Encrypted cookie value found but no decryptor registered, returning raw ciphertext');
-    return ciphertext;
+    logger.warn('Encrypted cookie value found but no decryptor registered; dropping value');
+    return null;
   }
 
   try {
-    return _decryptor(ciphertext);
+    return _decryptor(value.slice(ENC_PREFIX.length));
   } catch (error) {
-    logger.warn('Failed to decrypt cookie value, falling back to raw ciphertext:', error);
-    return ciphertext;
+    logger.warn('Failed to decrypt cookie value; dropping value:', error);
+    return null;
   }
 }
 
@@ -84,7 +84,14 @@ export function getApiKeysFromCookie(cookieHeader: string | null): Record<string
 
     for (const [provider, value] of Object.entries(keys)) {
       if (typeof value === 'string' && value.startsWith(ENC_PREFIX)) {
-        keys[provider] = decryptCookieValue(value);
+        const decrypted = decryptCookieValue(value);
+
+        // Drop keys we can't decrypt rather than leaking ciphertext downstream.
+        if (decrypted === null) {
+          delete keys[provider];
+        } else {
+          keys[provider] = decrypted;
+        }
       }
     }
 

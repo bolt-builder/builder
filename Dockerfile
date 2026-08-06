@@ -37,6 +37,10 @@ RUN pnpm prune --prod --ignore-scripts
 FROM node:20-slim AS runtime
 ENV NODE_ENV="production"
 ENV PORT="5173"
+# Bind all interfaces so published ports work; the bind guard in
+# instrument.server.mjs then requires BOLT_AUTH_TOKEN to actually start,
+# because the runtime API grants shell execution and file access.
+ENV HOST="0.0.0.0"
 WORKDIR /app
 
 # git: needed by api.git-info.ts (execSync('git ...'))
@@ -53,6 +57,9 @@ COPY --from=build /app/build ./build
 # Copy package.json (needed by @react-router/serve)
 COPY --from=build /app/package.json ./
 
+# Copy the server instrumentation / bind-policy guard loaded via --import
+COPY --from=build /app/instrument.server.mjs ./
+
 # Non-root user for security
 RUN groupadd --system --gid 1001 appgroup && \
     useradd --system --uid 1001 --gid appgroup --create-home appuser && \
@@ -60,4 +67,4 @@ RUN groupadd --system --gid 1001 appgroup && \
 USER appuser
 
 EXPOSE 5173
-CMD ["node", "node_modules/@react-router/serve/dist/cli.js", "./build/server/index.js"]
+CMD ["node", "--import", "./instrument.server.mjs", "node_modules/@react-router/serve/dist/cli.js", "./build/server/index.js"]
