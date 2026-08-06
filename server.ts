@@ -18,6 +18,19 @@ import { handleUpgrade } from './app/lib/.server/ws/ws-server';
 
 const PORT = Number(process.env.PORT) || 5173;
 
+/*
+ * Bind to loopback by default. The app exposes a runtime API that executes
+ * arbitrary shell commands and reads/writes files, so a non-loopback bind
+ * (e.g. HOST=0.0.0.0 for Docker port publishing) is only allowed when
+ * BOLT_AUTH_TOKEN is configured — otherwise anyone who can reach the port gets
+ * host command execution. Set HOST + BOLT_AUTH_TOKEN to expose it deliberately.
+ */
+const HOST = process.env.HOST || '127.0.0.1';
+
+function isLoopbackHost(host: string): boolean {
+  return host === '127.0.0.1' || host === '::1' || host === 'localhost';
+}
+
 function log(level: string, ...args: unknown[]) {
   const timestamp = new Date().toISOString();
 
@@ -159,9 +172,18 @@ server.on('upgrade', (req, socket, head) => {
   socket.destroy();
 });
 
-server.listen(PORT, () => {
-  log('info', `Bolt server listening on http://localhost:${PORT}`);
-  log('info', `WebSocket endpoint: ws://localhost:${PORT}/ws`);
+if (!isLoopbackHost(HOST) && !process.env.BOLT_AUTH_TOKEN) {
+  log(
+    'error',
+    `Refusing to bind ${HOST} without authentication: the runtime API grants shell execution and file access. ` +
+      `Set BOLT_AUTH_TOKEN to expose the server beyond localhost, or unset HOST to bind 127.0.0.1.`,
+  );
+  process.exit(1);
+}
+
+server.listen(PORT, HOST, () => {
+  log('info', `Bolt server listening on http://${HOST}:${PORT}`);
+  log('info', `WebSocket endpoint: ws://${HOST}:${PORT}/ws`);
 });
 
 /*
