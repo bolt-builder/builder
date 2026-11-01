@@ -27,7 +27,7 @@ This is a **local development tool**, not a hosted web service. You run it on yo
 ## Features
 
 - **Real-time code generation** — AI streaming produces code as you watch, with live diffs applied to the editor.
-- **In-browser code execution** — run and preview generated applications directly in the browser via WebContainer.
+- **Local code execution**: generated projects run on your machine in `~/.bolt/projects`, with a live preview in the workbench.
 - **22+ LLM providers** — OpenAI, Anthropic, Google, xAI, Groq, Mistral, DeepSeek, OpenRouter, Ollama, LM Studio, and [more](docs/LLM-PROVIDERS.md). Swap models mid-conversation.
 - **Agent mode** — handles complex multi-step tasks with autonomous planning and execution.
 - **Template system** — start from React, Astro, Vite + Shadcn, and other popular boilerplates, then customise with AI.
@@ -55,14 +55,14 @@ Enable pnpm via Corepack:
 
 ```bash
 corepack enable
-corepack prepare pnpm@9.14.4 --activate
+corepack prepare pnpm@9.15.9 --activate
 ```
 
 ### Setup
 
 ```bash
 git clone https://github.com/bolt-builder/builder.git
-cd Bolt
+cd builder
 cp .env.example .env.local      # add at least one API key
 pnpm install
 pnpm run dev
@@ -147,7 +147,7 @@ No local Node.js required — just Docker.
 
 ```bash
 git clone https://github.com/bolt-builder/builder.git
-cd Bolt
+cd builder
 cp .env.example .env.local      # add at least one API key
 docker compose up -d
 ```
@@ -189,11 +189,11 @@ pnpm docker:update         # Pull latest image + restart
 | Database | Drizzle ORM |
 | State | Nanostores |
 | AI | Vercel AI SDK (22 providers) |
-| Runtime | WebContainer API |
+| Runtime | LocalRuntime (server-side execution) |
 | Editor | CodeMirror 6 |
 | Terminal | xterm.js |
 | Testing | Vitest + Testing Library + Playwright |
-| Package Manager | pnpm 9.14.4 |
+| Package Manager | pnpm 9.15.9 |
 
 ---
 
